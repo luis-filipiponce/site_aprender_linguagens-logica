@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Estruturas de Dados | Aprenda Programação</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+</head>
+<body>
+<div id="scroll-bar" style="position:fixed;top:0;left:0;height:3px;width:0;background:var(--orange);z-index:2000;transition:width .1s;"></div>
+
+<nav id="main-nav">
+  <a class="logo" href="../index.html">&#60;<span>code</span>/&#62; Aprenda Prog.</a>
+  <a class="nav-link" href="../index.html">Home</a>
+  <a class="nav-link" href="logica.html">Lógica</a>
+  <a class="nav-link" href="algoritmos.html">Algoritmos</a>
+  <a class="nav-link" href="estruturas.html">Estruturas</a>
+  <a class="nav-link" href="linguagens.html">Linguagens</a>
+  <a class="nav-link" href="paradigmas.html">Paradigmas</a>
+  <a class="nav-link" href="web.html">Web</a>
+  <a class="nav-link" href="banco.html">Banco de Dados</a>
+  <a class="nav-link" href="carreira.html">Carreira</a>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-hero">
+    <h1>🗂️ Estruturas de Dados</h1>
+    <p>Formas de organizar, armazenar e gerenciar dados na memória. Escolher a estrutura certa é a diferença entre um programa rápido e um lento, entre um código elegante e um confuso.</p>
+    <div class="badge-row">
+      <span class="badge badge-orange">Módulo 3</span>
+      <span class="badge badge-blue">Arrays & Listas</span>
+      <span class="badge badge-purple">Pilhas & Filas</span>
+      <span class="badge badge-green">Árvores & Grafos</span>
+    </div>
+  </div>
+
+  <!-- ARRAY -->
+  <div class="section" id="array">
+    <div class="section-title">
+      <div class="num-badge num-orange">1</div>
+      <h2>Array (Vetor / Lista)</h2>
+    </div>
+    <p>Coleção ordenada de elementos do mesmo tipo armazenados em <strong>posições contíguas de memória</strong>. A estrutura mais fundamental da computação.</p>
+    <div class="card-grid">
+      <div class="card"><h3>✅ Pontos fortes</h3><p>Acesso por índice O(1) — instantâneo. Iteração sequencial eficiente. Simples de usar.</p></div>
+      <div class="card"><h3>⚠️ Limitações</h3><p>Inserção/remoção no meio O(n) — precisa deslocar elementos. Tamanho fixo em C/Java.</p></div>
+    </div>
+    <div class="code-block"><span class="cmt"># Arrays / Listas em Python</span>
+<span class="var">numeros</span> = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>, <span class="num">50</span>]
+
+<span class="cmt"># Acesso O(1)</span>
+<span class="fn">print</span>(<span class="var">numeros</span>[<span class="num">0</span>])   <span class="cmt"># 10 — primeiro elemento</span>
+<span class="fn">print</span>(<span class="var">numeros</span>[-<span class="num">1</span>])  <span class="cmt"># 50 — último elemento</span>
+<span class="fn">print</span>(<span class="var">numeros</span>[<span class="num">1</span>:<span class="num">3</span>]) <span class="cmt"># [20, 30] — fatiamento (slice)</span>
+
+<span class="cmt"># Operações</span>
+<span class="var">numeros</span>.<span class="fn">append</span>(<span class="num">60</span>)      <span class="cmt"># adiciona no final — O(1)</span>
+<span class="var">numeros</span>.<span class="fn">insert</span>(<span class="num">2</span>, <span class="num">99</span>)   <span class="cmt"># insere na posição 2 — O(n)</span>
+<span class="var">numeros</span>.<span class="fn">remove</span>(<span class="num">99</span>)      <span class="cmt"># remove por valor — O(n)</span>
+<span class="fn">print</span>(<span class="fn">len</span>(<span class="var">numeros</span>))     <span class="cmt"># tamanho da lista</span>
+<span class="fn">print</span>(<span class="fn">sorted</span>(<span class="var">numeros</span>))  <span class="cmt"># retorna nova lista ordenada</span></div>
+  </div>
+
+  <!-- PILHA -->
+  <div class="section" id="pilha">
+    <div class="section-title">
+      <div class="num-badge num-orange">2</div>
+      <h2>Pilha (Stack) — LIFO</h2>
+    </div>
+    <p>Regra <strong>LIFO — Last In, First Out</strong> (último que entra, primeiro que sai). Como uma pilha de pratos — você só pode adicionar ou retirar do topo.</p>
+    <p><strong>Operações:</strong> <code>push</code> (empilhar) — O(1) &nbsp;|&nbsp; <code>pop</code> (desempilhar) — O(1) &nbsp;|&nbsp; <code>peek</code> (ver o topo sem remover) — O(1)</p>
+    <div class="code-block"><span class="kw">class</span> <span class="fn">Pilha</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>):
+        <span class="var">self</span>._dados = []
+
+    <span class="kw">def</span> <span class="fn">push</span>(<span class="var">self</span>, <span class="var">valor</span>):
+        <span class="var">self</span>._dados.<span class="fn">append</span>(<span class="var">valor</span>)
+
+    <span class="kw">def</span> <span class="fn">pop</span>(<span class="var">self</span>):
+        <span class="kw">if</span> <span class="var">self</span>.<span class="fn">vazia</span>(): <span class="kw">raise</span> <span class="fn">IndexError</span>(<span class="str">"Pilha vazia"</span>)
+        <span class="kw">return</span> <span class="var">self</span>._dados.<span class="fn">pop</span>()
+
+    <span class="kw">def</span> <span class="fn">peek</span>(<span class="var">self</span>):
+        <span class="kw">return</span> <span class="var">self</span>._dados[-<span class="num">1</span>] <span class="kw">if</span> <span class="var">self</span>._dados <span class="kw">else</span> <span class="kw">None</span>
+
+    <span class="kw">def</span> <span class="fn">vazia</span>(<span class="var">self</span>):
+        <span class="kw">return</span> <span class="fn">len</span>(<span class="var">self</span>._dados) == <span class="num">0</span>
+
+<span class="var">p</span> = <span class="fn">Pilha</span>()
+<span class="var">p</span>.<span class="fn">push</span>(<span class="str">"A"</span>); <span class="var">p</span>.<span class="fn">push</span>(<span class="str">"B"</span>); <span class="var">p</span>.<span class="fn">push</span>(<span class="str">"C"</span>)
+<span class="fn">print</span>(<span class="var">p</span>.<span class="fn">pop</span>())   <span class="cmt"># "C" — último que entrou, primeiro que sai</span>
+<span class="fn">print</span>(<span class="var">p</span>.<span class="fn">peek</span>())  <span class="cmt"># "B" — vê o topo sem remover</span></div>
+    <div class="info-box">
+      <strong>Usos reais:</strong> Ctrl+Z (desfazer) em editores, call stack de funções, navegação de browsers (botão Voltar), avaliação de expressões matemáticas, parsers de HTML/XML.
+    </div>
+  </div>
+
+  <!-- FILA -->
+  <div class="section" id="fila">
+    <div class="section-title">
+      <div class="num-badge num-orange">3</div>
+      <h2>Fila (Queue) — FIFO</h2>
+    </div>
+    <p>Regra <strong>FIFO — First In, First Out</strong> (primeiro que entra, primeiro que sai). Como uma fila de banco — quem chegou primeiro, sai primeiro.</p>
+    <div class="code-block"><span class="kw">from</span> collections <span class="kw">import</span> deque   <span class="cmt"># deque é otimizado para filas</span>
+
+<span class="var">fila</span> = <span class="fn">deque</span>()
+<span class="var">fila</span>.<span class="fn">append</span>(<span class="str">"Cliente 1"</span>)   <span class="cmt"># enqueue — entra no final</span>
+<span class="var">fila</span>.<span class="fn">append</span>(<span class="str">"Cliente 2"</span>)
+<span class="var">fila</span>.<span class="fn">append</span>(<span class="str">"Cliente 3"</span>)
+
+<span class="fn">print</span>(<span class="var">fila</span>.<span class="fn">popleft</span>())  <span class="cmt"># "Cliente 1" — dequeue — sai do início</span>
+<span class="fn">print</span>(<span class="var">fila</span>.<span class="fn">popleft</span>())  <span class="cmt"># "Cliente 2"</span></div>
+    <div class="info-box">
+      <strong>Usos reais:</strong> Filas de impressão, processamento de mensagens (RabbitMQ, Kafka), sistema de atendimento, BFS em grafos.
+    </div>
+  </div>
+
+  <!-- HASH TABLE -->
+  <div class="section" id="hash">
+    <div class="section-title">
+      <div class="num-badge num-orange">4</div>
+      <h2>Hash Table (Dicionário / Map)</h2>
+    </div>
+    <p>Armazena pares <strong>chave → valor</strong>. Internamente usa uma função hash para converter a chave em um índice de array. Busca, inserção e remoção são <strong>O(1) na média</strong>.</p>
+    <div class="code-block"><span class="cmt"># Dicionário em Python (implementação de Hash Table)</span>
+<span class="var">usuario</span> = {
+    <span class="str">"nome"</span>:   <span class="str">"Ana"</span>,
+    <span class="str">"email"</span>:  <span class="str">"ana@email.com"</span>,
+    <span class="str">"idade"</span>:  <span class="num">28</span>,
+    <span class="str">"ativo"</span>:  <span class="kw">True</span>
+}
+
+<span class="fn">print</span>(<span class="var">usuario</span>[<span class="str">"nome"</span>])          <span class="cmt"># "Ana" — O(1)!</span>
+<span class="var">usuario</span>[<span class="str">"cidade"</span>] = <span class="str">"SP"</span>       <span class="cmt"># adicionar nova chave</span>
+<span class="fn">del</span> <span class="var">usuario</span>[<span class="str">"ativo"</span>]            <span class="cmt"># remover chave</span>
+<span class="fn">print</span>(<span class="str">"email"</span> <span class="kw">in</span> <span class="var">usuario</span>)       <span class="cmt"># True — verificar existência</span>
+
+<span class="cmt"># Contar frequência de palavras</span>
+<span class="var">texto</span> = <span class="str">"ana banana ana laranja banana ana"</span>
+<span class="var">freq</span>  = {}
+<span class="kw">for</span> <span class="var">palavra</span> <span class="kw">in</span> <span class="var">texto</span>.<span class="fn">split</span>():
+    <span class="var">freq</span>[<span class="var">palavra</span>] = <span class="var">freq</span>.<span class="fn">get</span>(<span class="var">palavra</span>, <span class="num">0</span>) + <span class="num">1</span>
+<span class="fn">print</span>(<span class="var">freq</span>)  <span class="cmt"># {'ana': 3, 'banana': 2, 'laranja': 1}</span></div>
+    <div class="info-box">
+      <strong>Usos reais:</strong> Caches, sessões de usuário, contagem de frequência, índices de banco de dados, JSON é um hash table, objetos em JavaScript.
+    </div>
+  </div>
+
+  <!-- ÁRVORE -->
+  <div class="section" id="arvore">
+    <div class="section-title">
+      <div class="num-badge num-orange">5</div>
+      <h2>Árvore (Tree)</h2>
+    </div>
+    <p>Estrutura hierárquica com um nó raiz e filhos. A Árvore Binária de Busca (BST) garante que <em>todos os filhos esquerdos são menores</em> e <em>todos os filhos direitos são maiores</em> que o nó pai.</p>
+    <table>
+      <tr><th>Operação</th><th>BST Balanceada</th><th>BST Pior caso</th></tr>
+      <tr><td>Busca</td><td>O(log n)</td><td>O(n)</td></tr>
+      <tr><td>Inserção</td><td>O(log n)</td><td>O(n)</td></tr>
+      <tr><td>Remoção</td><td>O(log n)</td><td>O(n)</td></tr>
+    </table>
+    <div class="info-box">
+      <strong>Usos reais:</strong> Sistemas de arquivos (pasta dentro de pasta), DOM do HTML, índices B-Tree de bancos de dados, árvores de decisão em IA, compiladores (AST).
+    </div>
+  </div>
+
+  <!-- GRAFO -->
+  <div class="section" id="grafo">
+    <div class="section-title">
+      <div class="num-badge num-orange">6</div>
+      <h2>Grafo (Graph)</h2>
+    </div>
+    <p>Conjunto de <strong>vértices</strong> (nós) conectados por <strong>arestas</strong>. A estrutura mais geral e poderosa. Todo o mundo conectado pode ser modelado como um grafo.</p>
+    <table>
+      <tr><th>Tipo</th><th>Descrição</th><th>Exemplo</th></tr>
+      <tr><td>Não-direcionado</td><td>Arestas sem direção (bidirecionais)</td><td>Amizades no Facebook</td></tr>
+      <tr><td>Direcionado</td><td>Arestas com seta (seguem uma direção)</td><td>Follows no Twitter/X</td></tr>
+      <tr><td>Ponderado</td><td>Arestas com peso/custo</td><td>Distâncias em mapas GPS</td></tr>
+    </table>
+    <div class="code-block"><span class="cmt"># Grafo como lista de adjacência</span>
+<span class="var">grafo</span> = {
+    <span class="str">"A"</span>: [<span class="str">"B"</span>, <span class="str">"C"</span>],
+    <span class="str">"B"</span>: [<span class="str">"A"</span>, <span class="str">"D"</span>],
+    <span class="str">"C"</span>: [<span class="str">"A"</span>, <span class="str">"D"</span>],
+    <span class="str">"D"</span>: [<span class="str">"B"</span>, <span class="str">"C"</span>]
+}
+
+<span class="cmt"># BFS — Busca em Largura (explora vizinhos antes de ir fundo)</span>
+<span class="kw">from</span> collections <span class="kw">import</span> deque
+<span class="kw">def</span> <span class="fn">bfs</span>(<span class="var">grafo</span>, <span class="var">inicio</span>):
+    <span class="var">visitados</span> = <span class="fn">set</span>()
+    <span class="var">fila</span>      = <span class="fn">deque</span>([<span class="var">inicio</span>])
+    <span class="kw">while</span> <span class="var">fila</span>:
+        <span class="var">no</span> = <span class="var">fila</span>.<span class="fn">popleft</span>()
+        <span class="kw">if</span> <span class="var">no</span> <span class="kw">not in</span> <span class="var">visitados</span>:
+            <span class="fn">print</span>(<span class="var">no</span>)
+            <span class="var">visitados</span>.<span class="fn">add</span>(<span class="var">no</span>)
+            <span class="var">fila</span>.<span class="fn">extend</span>(<span class="var">grafo</span>[<span class="var">no</span>])</div>
+    <div class="info-box">
+      <strong>Usos reais:</strong> Redes sociais, GPS e navegação (Dijkstra), internet (roteamento de pacotes), sistemas de recomendação, detecção de fraudes.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>← <a href="algoritmos.html" style="color:var(--blue);">Algoritmos</a> &nbsp;|&nbsp; <a href="linguagens.html" style="color:var(--blue);">Linguagens Globais →</a></p>
+  <br/><p>Aprenda Programação — Made with IBM Bob</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

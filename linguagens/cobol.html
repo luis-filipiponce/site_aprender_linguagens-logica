@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Guia completo de COBOL: história, conceitos fundamentais, divisão de programas, PIC clauses, exemplos práticos bancários, mercado de trabalho e roadmap de aprendizado.">
+<title>🏦 COBOL — Ponce Metodologias &amp; Dev</title>
+<style>
+  :root {
+    --accent: #a855f7;
+    --accent-light: #c084fc;
+    --accent-dark: #9333ea;
+    --accent-soft: rgba(168, 85, 247, 0.12);
+    --accent-border: rgba(168, 85, 247, 0.35);
+    --bg: #0d0f17;
+    --bg-alt: #121520;
+    --surface: #171b29;
+    --surface-2: #1e2436;
+    --border: #283046;
+    --text: #e9ecf5;
+    --muted: #9da6be;
+    --code-bg: #090b12;
+    --header-h: 64px;
+    --radius: 14px;
+    --success: #34d399;
+    --warning: #fbbf24;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.68;
+    padding-top: var(--header-h);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- Header ---------- */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+    background: rgba(13, 15, 23, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--accent);
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1200px; height: 100%; margin: 0 auto; padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .logo { font-weight: 800; font-size: 1.05rem; white-space: nowrap; transition: color .2s; }
+  .logo:hover { color: var(--accent-light); }
+  .header-title { font-weight: 800; font-size: 1.25rem; color: var(--accent-light); }
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 18px; border-radius: 999px; border: 1px solid var(--accent);
+    background: var(--accent-soft); color: var(--accent-light); font-weight: 700; font-size: 0.9rem;
+    white-space: nowrap; transition: all .2s;
+  }
+  .btn-back:hover { background: var(--accent); color: #fff; transform: translateX(-2px); }
+
+  /* ---------- Layout ---------- */
+  main { max-width: 1020px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 64px 0 8px; }
+  .section-title { font-size: 2rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -.5px; }
+  .section-title span { color: var(--accent-light); }
+  .section-sub { color: var(--muted); margin-bottom: 32px; font-size: 1.05rem; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    text-align: center; padding: 76px 0 44px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(168, 85, 247, 0.22), transparent 70%);
+  }
+  .badge {
+    display: inline-block; padding: 6px 18px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent-light);
+    border: 1px solid var(--accent-border); font-size: 0.85rem; font-weight: 700;
+    letter-spacing: .5px; margin-bottom: 22px; text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 900;
+    line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px;
+  }
+  .hero h1 span { color: var(--accent-light); }
+  .hero p {
+    max-width: 760px; margin: 0 auto 30px; color: var(--muted);
+    font-size: 1.12rem; line-height: 1.75;
+  }
+  .hero-stats { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 22px; min-width: 160px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  }
+  .stat strong { display: block; color: var(--accent-light); font-size: 1.45rem; font-weight: 800; }
+  .stat small { color: var(--muted); font-size: 0.88rem; }
+
+  /* ---------- Grace Hopper Bio Callout ---------- */
+  .bio-card {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(30, 36, 54, 0.85));
+    border: 1px solid var(--accent-border);
+    border-radius: var(--radius);
+    padding: 24px 26px;
+    margin-bottom: 32px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .bio-icon { font-size: 2.4rem; line-height: 1; flex-shrink: 0; }
+  .bio-text h3 { font-size: 1.15rem; color: var(--accent-light); margin-bottom: 6px; }
+  .bio-text p { color: var(--text); font-size: 0.96rem; margin-bottom: 0; }
+
+  /* ---------- Timeline ---------- */
+  .timeline { position: relative; padding-left: 36px; margin-top: 20px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 10px; top: 8px; bottom: 8px;
+    width: 3px; background: linear-gradient(var(--accent-light), var(--accent-dark)); border-radius: 3px;
+  }
+  .tl-item { position: relative; margin-bottom: 22px; }
+  .tl-item::before {
+    content: ""; position: absolute; left: -34px; top: 18px;
+    width: 15px; height: 15px; border-radius: 50%;
+    background: var(--bg); border: 3px solid var(--accent);
+  }
+  .tl-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 22px;
+    transition: transform .2s, border-color .2s;
+  }
+  .tl-card:hover { transform: translateX(5px); border-color: var(--accent-light); }
+  .tl-year { color: var(--accent-light); font-weight: 800; font-size: 1.15rem; }
+  .tl-card h3 { font-size: 1.08rem; margin: 3px 0 6px; }
+  .tl-card p { color: var(--muted); font-size: 0.95rem; }
+  .tag-std {
+    display: inline-block; margin-left: 8px; padding: 2px 10px; font-size: .72rem;
+    background: var(--accent); color: #fff; border-radius: 999px; vertical-align: middle; font-weight: 700;
+  }
+
+  /* ---------- Cards Grid ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 26px;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-light);
+    box-shadow: 0 10px 28px rgba(168, 85, 247, .18);
+  }
+  .card .icon { font-size: 2.2rem; margin-bottom: 12px; }
+  .card h3 { margin-bottom: 8px; font-size: 1.15rem; }
+  .card p { color: var(--muted); font-size: .95rem; line-height: 1.6; }
+
+  /* ---------- Code Blocks ---------- */
+  .code-wrap { position: relative; margin: 14px 0 6px; }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 18px 20px; overflow-x: auto; font-size: .87rem; line-height: 1.6;
+    font-family: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+    color: #e2e8f0; tab-size: 4;
+  }
+  code { font-family: inherit; }
+  .copy-btn {
+    position: absolute; top: 10px; right: 10px;
+    background: var(--surface-2); color: var(--muted); border: 1px solid var(--border);
+    border-radius: 6px; padding: 5px 12px; font-size: .76rem; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+  }
+  .copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .copy-btn.copied { background: #16a34a; color: #fff; border-color: #16a34a; }
+
+  /* COBOL Syntax Highlighting */
+  .k { color: #f472b6; font-weight: 700; }  /* Keywords / Divisions / Verbs */
+  .t { color: #38bdf8; font-weight: 600; }  /* Data types / PIC clauses / Levels */
+  .s { color: #a7f3d0; }                     /* Strings / Literals */
+  .c { color: #64748b; font-style: italic; } /* Comments */
+  .n { color: #fcd34d; font-weight: 600; }  /* Numbers / Values */
+  .f { color: #c084fc; font-weight: 600; }  /* Paragraph names / Functions */
+
+  /* ---------- Accordion ---------- */
+  .accordion-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 14px; overflow: hidden;
+    transition: border-color .2s;
+  }
+  .accordion-item.open { border-color: var(--accent-light); }
+  .acc-header {
+    width: 100%; background: none; border: none; color: var(--text);
+    padding: 18px 24px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 1.05rem; font-weight: 700; cursor: pointer; text-align: left; font-family: inherit;
+    transition: color .2s;
+  }
+  .acc-header:hover { color: var(--accent-light); }
+  .acc-header .arrow { transition: transform .25s; color: var(--accent-light); font-size: 0.9rem; }
+  .accordion-item.open .arrow { transform: rotate(180deg); }
+  .acc-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+  .acc-content { padding: 0 24px 22px; }
+  .acc-content p { color: var(--muted); font-size: .97rem; margin-bottom: 10px; }
+  .acc-content code.inline, p code {
+    background: var(--code-bg); padding: 2px 7px; border-radius: 5px;
+    color: var(--accent-light); font-size: .88em; font-family: "JetBrains Mono", Consolas, monospace;
+    border: 1px solid var(--border);
+  }
+
+  /* ---------- Tabs ---------- */
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .tab-btn {
+    background: var(--surface); color: var(--muted); border: 1px solid var(--border);
+    padding: 10px 20px; border-radius: 999px; cursor: pointer; font-weight: 700;
+    font-family: inherit; font-size: .93rem; transition: all .2s;
+  }
+  .tab-btn:hover { color: var(--text); border-color: var(--accent-light); }
+  .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fade .3s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .tab-panel > p { color: var(--muted); margin-bottom: 8px; font-size: 1rem; }
+
+  /* ---------- Market & Salary Table ---------- */
+  .scarcity-banner {
+    background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), rgba(168, 85, 247, 0.15));
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .scarcity-banner .alert-icon { font-size: 2rem; flex-shrink: 0; }
+  .scarcity-banner strong { color: #f87171; font-weight: 800; font-size: 1.05rem; }
+  .scarcity-banner p { margin: 2px 0 0; color: var(--text); font-size: 0.95rem; }
+
+  .table-wrap {
+    overflow-x: auto; border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 30px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 520px; }
+  th, td { padding: 16px 20px; text-align: left; }
+  th {
+    background: var(--surface-2); color: var(--accent-light);
+    font-size: .86rem; text-transform: uppercase; letter-spacing: .6px; font-weight: 800;
+  }
+  td { border-top: 1px solid var(--border); background: var(--surface); font-size: .95rem; }
+  tr:hover td { background: var(--surface-2); }
+  td.salary { font-weight: 800; color: #4ade80; font-size: 1.02rem; }
+  h3.sub { margin: 34px 0 16px; font-size: 1.25rem; font-weight: 800; }
+  .companies { display: flex; flex-wrap: wrap; gap: 12px; }
+  .company {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+    padding: 10px 24px; font-weight: 700; transition: all .2s; font-size: .95rem;
+  }
+  .company:hover { border-color: var(--accent-light); color: var(--accent-light); transform: translateY(-2px); }
+
+  /* ---------- Roadmap ---------- */
+  .roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .phase {
+    position: relative; background: var(--surface); border: 1px solid var(--border);
+    border-top: 4px solid var(--accent); border-radius: var(--radius); padding: 24px;
+    transition: transform .2s, border-color .2s;
+  }
+  .phase:hover { transform: translateY(-4px); border-color: var(--accent-light); }
+  .phase .num {
+    display: inline-block; background: var(--accent); color: #fff; font-weight: 800;
+    padding: 3px 12px; border-radius: 999px; font-size: .8rem; margin-bottom: 12px;
+  }
+  .phase h3 { margin-bottom: 12px; font-size: 1.12rem; }
+  .phase ul { list-style: none; }
+  .phase li { color: var(--muted); padding: 4px 0 4px 20px; position: relative; font-size: .94rem; }
+  .phase li::before { content: "▸"; color: var(--accent-light); position: absolute; left: 0; font-weight: 800; }
+
+  /* ---------- Resources ---------- */
+  .resource {
+    display: flex; align-items: center; gap: 18px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 22px; margin-bottom: 14px;
+    transition: all .2s;
+  }
+  .resource:hover { border-color: var(--accent-light); transform: translateX(6px); }
+  .resource .icon { font-size: 2rem; flex-shrink: 0; }
+  .resource h3 { font-size: 1.05rem; margin-bottom: 3px; color: var(--text); }
+  .resource p { color: var(--muted); font-size: .92rem; margin: 0; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    margin-top: 80px; padding: 32px 20px; text-align: center;
+    border-top: 1px solid var(--border); color: var(--muted); font-size: .92rem;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 680px) {
+    :root { --header-h: 58px; }
+    .header-inner { padding: 0 14px; gap: 10px; }
+    .logo { font-size: .85rem; }
+    .header-title { font-size: 1.05rem; }
+    .btn-back { padding: 6px 14px; font-size: .82rem; }
+    .section-title { font-size: 1.6rem; }
+    .hero { padding-top: 48px; }
+    section { padding-top: 48px; }
+    .bio-card { flex-direction: column; gap: 10px; }
+  }
+  @media (max-width: 440px) {
+    .header-title { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+    <span class="header-title">🏦 COBOL</span>
+    <a class="btn-back" href="../index.html">← Voltar</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. HERO -->
+  <div class="hero" id="hero">
+    <span class="badge">Mainframe / Lógica Contábil &amp; Financeira</span>
+    <h1>🏦 <span>COBOL</span></h1>
+    <p>
+      <strong>Common Business-Oriented Language</strong>: a espinha dorsal invisível da economia global.
+      Mais de <strong>70% das transações financeiras diárias do mundo</strong> continuam rodando em sistemas COBOL.
+      Criado em 1959 pelo comitê CODASYL sob liderança e influência direta da almirante <strong>Grace Hopper</strong>,
+      é sinônimo de precisão decimal exata, confiabilidade inabalável e processamento de arquivos em escala monumental.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><strong>1959</strong><small>Ano de criação</small></div>
+      <div class="stat"><strong>70%+</strong><small>Das transações financeiras</small></div>
+      <div class="stat"><strong>US$ 3 Tri</strong><small>Movimentados / dia</small></div>
+      <div class="stat"><strong>Grace Hopper</strong><small>Pioneira &amp; CODASYL</small></div>
+    </div>
+  </div>
+
+  <!-- 2. HISTÓRIA & EVOLUÇÃO -->
+  <section id="historia">
+    <h2 class="section-title">📜 História &amp; <span>Evolução</span></h2>
+    <p class="section-sub">Mais de 6 décadas mantendo a economia do planeta estável e moderna.</p>
+
+    <div class="bio-card">
+      <div class="bio-icon">👩‍💻</div>
+      <div class="bio-text">
+        <h3>Destaque Histórico: Grace Hopper &amp; o CODASYL</h3>
+        <p>
+          A contra-almirante <strong>Grace Murray Hopper</strong> defendia que programas deveriam ser escritos em uma linguagem próxima ao inglês comum, e não apenas em código de máquina ou assembly. Sua criação, o <em>FLOW-MATIC</em> (1955), serviu de alicerce para o comitê <strong>CODASYL</strong> (Conference on Data Systems Languages) que em 1959 concebeu o COBOL. Grace Hopper também popularizou o termo <em>“bug”</em> e construiu os primeiros compiladores da história.
+        </p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">1959</div>
+        <h3>COBOL 1.0 (CODASYL)</h3>
+        <p>Criação da primeira especificação oficial com foco empresarial, legibilidade em inglês e suporte nativo a registros de dados e cálculos contábeis.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">1968</div>
+        <h3>COBOL-68 <span class="tag-std">ANSI Standard</span></h3>
+        <p>Primeira padronização oficial pelo comitê ANSI, garantindo portabilidade entre diferentes fabricantes de hardware da época.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">1974</div>
+        <h3>COBOL-74</h3>
+        <p>Adição de organização de arquivos sequenciais indexados (ISAM), instrução <code>CALL</code> para subprogramas e manipulação avançada de tabelas.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">1985</div>
+        <h3>COBOL-85 <span class="tag-std">Marco Estruturado</span></h3>
+        <p>Revolução da programação estruturada na linguagem: delimitadores explícitos de escopo (<code>END-IF</code>, <code>END-PERFORM</code>, <code>END-READ</code>), comando <code>EVALUATE</code> (switch/case) e subprogramas aninhados.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">1997</div>
+        <h3>COBOL-97</h3>
+        <p>Adoção de programação orientada a objetos preliminar, ponte com bancos de dados relacionais e preparação dos sistemas para o Bug do Milênio (Y2K).</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">2002</div>
+        <h3>COBOL 2002 <span class="tag-std">ISO/IEC Standard</span></h3>
+        <p>Suporte completo a Orientação a Objetos (classes, métodos, interfaces), suporte a Unicode, formatação livre de colunas (free-format) e tipos de ponto flutuante.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">2014</div>
+        <h3>COBOL 2014</h3>
+        <p>Padronização ISO modernizada com suporte nativo a tabelas dinâmicas, manipulação de strings com capacidade estendida e interoperabilidade nativa com C e Java.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">2023</div>
+        <h3>COBOL 2023 &amp; Enterprise COBOL 6.4+</h3>
+        <p>Integração nativa com Cloud Híbrida, parsing nativo de <strong>JSON e XML</strong>, chamadas a APIs REST via z/OS Connect, aceleração por hardware z16 (IA) e compatibilidade com microsserviços.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 3. POR QUE APRENDER -->
+  <section id="por-que">
+    <h2 class="section-title">🎯 Por Que Aprender <span>COBOL?</span></h2>
+    <p class="section-sub">Uma das carreiras mais estáveis, estratégicas e bem remuneradas da tecnologia.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🏦</div>
+        <h3>Bancos &amp; Finanças</h3>
+        <p>Processa mais de <strong>US$ 3 trilhões</strong> por dia globalmente. Praticamente todos os grandes bancos utilizam COBOL no processamento central de contas correntes, cartões de crédito e TED/PIX.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🏛️</div>
+        <h3>Governo &amp; Previdência</h3>
+        <p>Sistemas governamentais massivos (como a Previdência Social no Brasil, DATAPREV, SERPRO e o IRS americano) dependem do COBOL para calcular benefícios e arrecadação de impostos sem margem para erro.</p>
+      </div>
+      <div class="card">
+        <div class="icon">💎</div>
+        <h3>Manutenção de Legado &amp; Alta Renda</h3>
+        <p>A aposentadoria em massa dos desenvolvedores veteranos aliada a bilhões de linhas de código ativas gerou uma <strong>escassez crítica</strong>, impulsionando salários a patamares recordes.</p>
+      </div>
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>Mainframe IBM z/OS</h3>
+        <p>Confiabilidade de <strong>99.999% de uptime</strong> (5 noves). Capacidade inigualável de I/O em lote (Batch), processamento de milhões de transações simultâneas e criptografia quântica nativa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. CONCEITOS FUNDAMENTAIS -->
+  <section id="conceitos">
+    <h2 class="section-title">🧠 Conceitos <span>Fundamentais</span></h2>
+    <p class="section-sub">Clique em cada conceito para compreender a arquitetura e visualizar exemplos de código.</p>
+
+    <div class="accordion">
+
+      <!-- Divisões -->
+      <div class="accordion-item open">
+        <button class="acc-header" aria-expanded="true">As 4 Divisões de um Programa COBOL <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Todo programa COBOL clássico é rigorosamente organizado em 4 divisões hierárquicas que separam metadados, ambiente operacional, definição de variáveis e a lógica de execução:</p>
+          <ul style="color: var(--muted); margin: 0 0 12px 20px; font-size: .95rem;">
+            <li><strong>IDENTIFICATION DIVISION:</strong> Nome do programa, autor, data e documentação.</li>
+            <li><strong>ENVIRONMENT DIVISION:</strong> Associação de arquivos lógicos a dispositivos físicos (Mainframe/Disco).</li>
+            <li><strong>DATA DIVISION:</strong> Declaração de variáveis de memória de trabalho e layouts de arquivo.</li>
+            <li><strong>PROCEDURE DIVISION:</strong> Onde residem os comandos, laços, regras de negócio e fluxo do programa.</li>
+          </ul>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">IDENTIFICATION DIVISION.</span>
+       <span class="k">PROGRAM-ID.</span> HELLODEV.
+       <span class="k">AUTHOR.</span> PONCE-DEV.
+      <span class="c">*>==============================================================*</span>
+       <span class="k">ENVIRONMENT DIVISION.</span>
+       <span class="k">CONFIGURATION SECTION.</span>
+       <span class="k">SPECIAL-NAMES.</span>
+           <span class="k">DECIMAL-POINT IS COMMA.</span>
+      <span class="c">*>==============================================================*</span>
+       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">WS-MENSAGEM</span>          <span class="t">PIC X(35)</span> <span class="k">VALUE</span> <span class="s">"BEM-VINDO AO COBOL NO MAINFRAME!"</span>.
+      <span class="c">*>==============================================================*</span>
+       <span class="k">PROCEDURE DIVISION.</span>
+       <span class="f">0000-PRINCIPAL.</span>
+           <span class="k">DISPLAY</span> <span class="t">WS-MENSAGEM</span>
+           <span class="k">STOP RUN.</span></code></pre></div>
+        </div></div>
+      </div>
+
+      <!-- DATA DIVISION & PIC -->
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">DATA DIVISION &amp; Picture Clauses (PIC) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Em COBOL não existem tipos genéricos dinâmicos; cada campo tem um formato e tamanho explícito em bytes via cláusula <code>PICTURE</code> (ou <code>PIC</code>). A hierarquia de dados usa números de nível (<code>01</code> a <code>49</code>, <code>77</code> para variáveis soltas):</p>
+          <ul style="color: var(--muted); margin: 0 0 12px 20px; font-size: .95rem;">
+            <li><code>PIC X(n)</code>: Alfanumérico (texto, caracteres gerais).</li>
+            <li><code>PIC 9(n)</code>: Numérico inteiro sem sinal.</li>
+            <li><code>PIC S9(n)V99</code>: Numérico com sinal (<code>S</code>) e ponto decimal implícito (<code>V</code>).</li>
+            <li><code>COMP-3</code>: Formato Decimal Compactado (Packed Decimal), padrão no mundo financeiro para otimizar espaço e precisão de centavos.</li>
+            <li><code>PIC ZZ.ZZ9,99</code>: Máscara de edição para relatórios visuais formatados.</li>
+          </ul>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="c">*> Variavel de grupo (estrutura tipo Struct)</span>
+       <span class="t">01</span>  <span class="t">WS-CLIENTE.</span>
+           <span class="t">05</span>  <span class="t">WS-ID-CLIENTE</span>    <span class="t">PIC 9(06)</span>       <span class="k">VALUE</span> <span class="n">104523</span>.
+           <span class="t">05</span>  <span class="t">WS-NOME-CLIENTE</span>  <span class="t">PIC X(40)</span>       <span class="k">VALUE</span> <span class="s">"MARIA CLARA SILVA"</span>.
+           <span class="t">05</span>  <span class="t">WS-SALDO</span>         <span class="t">PIC S9(09)V99</span>   <span class="k">COMP-3 VALUE</span> <span class="n">15450.75</span>.
+           <span class="t">05</span>  <span class="t">WS-STATUS-CONTA</span>  <span class="t">PIC X(01)</span>       <span class="k">VALUE</span> <span class="s">"A"</span>.
+       
+       <span class="c">*> Campo de edicao para relatorio impresso</span>
+       <span class="t">01</span>  <span class="t">WS-SALDO-FORMATADO</span>   <span class="t">PIC R$*.***.**9,99</span>.
+
+       <span class="k">PROCEDURE DIVISION.</span>
+           <span class="k">MOVE</span> <span class="t">WS-SALDO</span> <span class="k">TO</span> <span class="t">WS-SALDO-FORMATADO</span>
+           <span class="k">DISPLAY</span> <span class="s">"Cliente: "</span> <span class="t">WS-NOME-CLIENTE</span>
+           <span class="k">DISPLAY</span> <span class="s">"Saldo Formatado: "</span> <span class="t">WS-SALDO-FORMATADO</span>.</code></pre></div>
+        </div></div>
+      </div>
+
+      <!-- PERFORM & Parágrafos -->
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">PERFORM &amp; Parágrafos Estruturados <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>O comando <code>PERFORM</code> é o pilar da modularização e repetição em COBOL. Ele pode executar parágrafos isolados (semelhante a funções sem retorno direto), repetir blocos <code>UNTIL</code> (condição) ou variar contadores com <code>VARYING ... FROM ... BY</code>.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">WS-CONTADOR</span>          <span class="t">PIC 9(03)</span> <span class="k">VALUE</span> <span class="n">0</span>.
+       <span class="t">01</span>  <span class="t">WS-TOTAL-ACUMULADO</span>   <span class="t">PIC 9(05)</span> <span class="k">VALUE</span> <span class="n">0</span>.
+
+       <span class="k">PROCEDURE DIVISION.</span>
+       <span class="f">0000-INICIO.</span>
+           <span class="k">DISPLAY</span> <span class="s">"INICIANDO PROCESSAMENTO MODULAR"</span>
+           <span class="k">PERFORM</span> <span class="f">1000-PROCESSAR-LOTE</span>
+               <span class="k">VARYING</span> <span class="t">WS-CONTADOR</span> <span class="k">FROM</span> <span class="n">1</span> <span class="k">BY</span> <span class="n">1</span>
+               <span class="k">UNTIL</span> <span class="t">WS-CONTADOR</span> &gt; <span class="n">5</span>
+           
+           <span class="k">DISPLAY</span> <span class="s">"TOTAL FINAL: "</span> <span class="t">WS-TOTAL-ACUMULADO</span>
+           <span class="k">STOP RUN.</span>
+
+       <span class="f">1000-PROCESSAR-LOTE.</span>
+           <span class="k">ADD</span> <span class="n">100</span> <span class="k">TO</span> <span class="t">WS-TOTAL-ACUMULADO</span>
+           <span class="k">DISPLAY</span> <span class="s">"Iteracao: "</span> <span class="t">WS-CONTADOR</span> 
+                   <span class="s">" | Subtotal: "</span> <span class="t">WS-TOTAL-ACUMULADO</span>.</code></pre></div>
+        </div></div>
+      </div>
+
+      <!-- Processamento de Arquivos Sequenciais -->
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Processamento de Arquivos Sequenciais (Batch) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>O coração do processamento batch no Mainframe. Conecta arquivos físicos por meio de <code>SELECT ... ASSIGN</code> na <code>ENVIRONMENT DIVISION</code>, mapeia registros com <code>FD</code> (File Description) e consome linha a linha usando <code>OPEN</code>, <code>READ ... AT END</code> e <code>CLOSE</code>.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">ENVIRONMENT DIVISION.</span>
+       <span class="k">INPUT-OUTPUT SECTION.</span>
+       <span class="k">FILE-CONTROL.</span>
+           <span class="k">SELECT</span> <span class="t">ARQ-TRANS</span> <span class="k">ASSIGN TO</span> <span class="s">"TRANS.DAT"</span>
+           <span class="k">ORGANIZATION IS LINE SEQUENTIAL</span>
+           <span class="k">FILE STATUS IS</span> <span class="t">WS-FS-TRANS</span>.
+
+       <span class="k">DATA DIVISION.</span>
+       <span class="k">FILE SECTION.</span>
+       <span class="t">FD</span>  <span class="t">ARQ-TRANS.</span>
+       <span class="t">01</span>  <span class="t">REG-TRANS.</span>
+           <span class="t">05</span>  <span class="t">NUM-CONTA</span>        <span class="t">PIC 9(08)</span>.
+           <span class="t">05</span>  <span class="t">VALOR-TRANS</span>      <span class="t">PIC 9(06)V99</span>.
+
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">WS-FS-TRANS</span>          <span class="t">PIC X(02)</span>.
+       <span class="t">01</span>  <span class="t">WS-EOF</span>               <span class="t">PIC X(01)</span> <span class="k">VALUE</span> <span class="s">"N"</span>.
+
+       <span class="k">PROCEDURE DIVISION.</span>
+           <span class="k">OPEN INPUT</span> <span class="t">ARQ-TRANS</span>
+           <span class="k">IF</span> <span class="t">WS-FS-TRANS</span> <span class="k">NOT =</span> <span class="s">"00"</span>
+               <span class="k">DISPLAY</span> <span class="s">"ERRO AO ABRIR ARQUIVO: "</span> <span class="t">WS-FS-TRANS</span>
+               <span class="k">STOP RUN</span>
+           <span class="k">END-IF</span>
+
+           <span class="k">PERFORM UNTIL</span> <span class="t">WS-EOF</span> <span class="k">=</span> <span class="s">"S"</span>
+               <span class="k">READ</span> <span class="t">ARQ-TRANS</span>
+                   <span class="k">AT END</span>
+                       <span class="k">MOVE</span> <span class="s">"S"</span> <span class="k">TO</span> <span class="t">WS-EOF</span>
+                   <span class="k">NOT AT END</span>
+                       <span class="k">DISPLAY</span> <span class="s">"Conta: "</span> <span class="t">NUM-CONTA</span> <span class="s">" | Valor: "</span> <span class="t">VALOR-TRANS</span>
+               <span class="k">END-READ</span>
+           <span class="k">END-PERFORM</span>
+
+           <span class="k">CLOSE</span> <span class="t">ARQ-TRANS</span>.</code></pre></div>
+        </div></div>
+      </div>
+
+      <!-- Nível 88 -->
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Nível 88 (Condições Booleanas / Condition Names) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>O <strong>Nível 88</strong> é uma das características mais elegantes do COBOL: ele associa nomes semânticos (valores booleanos) a estados de uma variável pai. Ao invés de checar códigos misteriosos como <code>IF STATUS = 'A'</code>, você programa em linguagem humana e expressiva.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">WS-STATUS-CLIENTE</span>    <span class="t">PIC X(01)</span>.
+           <span class="t">88</span>  <span class="t">CONTA-ATIVA</span>      <span class="k">VALUE</span> <span class="s">"A"</span>.
+           <span class="t">88</span>  <span class="t">CONTA-BLOQUEADA</span>  <span class="k">VALUE</span> <span class="s">"B"</span>.
+           <span class="t">88</span>  <span class="t">CONTA-ENCERRADA</span>  <span class="k">VALUE</span> <span class="s">"E"</span>.
+           <span class="t">88</span>  <span class="t">CONTA-VALIDA</span>     <span class="k">VALUES ARE</span> <span class="s">"A"</span> <span class="s">"B"</span>.
+
+       <span class="k">PROCEDURE DIVISION.</span>
+           <span class="c">*> Atribuindo diretamente via condicao booleana</span>
+           <span class="k">SET</span> <span class="t">CONTA-ATIVA</span> <span class="k">TO TRUE</span>
+
+           <span class="c">*> Lendo expressivamente</span>
+           <span class="k">IF</span> <span class="t">CONTA-ATIVA</span>
+               <span class="k">DISPLAY</span> <span class="s">"Acesso liberado para operacoes de credito."</span>
+           <span class="k">ELSE</span>
+               <span class="k">DISPLAY</span> <span class="s">"Transacao nao autorizada pelo sistema central."</span>
+           <span class="k">END-IF</span>.</code></pre></div>
+        </div></div>
+      </div>
+
+      <!-- COMPUTE & Aritmética -->
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">COMPUTE &amp; Aritmética Decimal com Precisão Exata <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Diferente de linguagens como C ou Java que usam float binário (sujeito a erros de arredondamento em centavos), o COBOL opera com aritmética decimal de ponto fixo. O comando <code>COMPUTE</code> permite fórmulas algébricas completas com cláusulas essenciais como <code>ROUNDED</code> e <code>ON SIZE ERROR</code> (proteção contra estouro de campo).</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">WS-CAPITAL</span>           <span class="t">PIC 9(07)V99</span> <span class="k">VALUE</span> <span class="n">50000.00</span>.
+       <span class="t">01</span>  <span class="t">WS-TAXA-MENSAL</span>       <span class="t">PIC 9(02)V9999</span> <span class="k">VALUE</span> <span class="n">0.0175</span>. <span class="c">*> 1.75% a.m.</span>
+       <span class="t">01</span>  <span class="t">WS-MESES</span>             <span class="t">PIC 9(03)</span>    <span class="k">VALUE</span> <span class="n">12</span>.
+       <span class="t">01</span>  <span class="t">WS-JUROS</span>             <span class="t">PIC 9(07)V99</span>.
+       <span class="t">01</span>  <span class="t">WS-MONTANTE</span>          <span class="t">PIC 9(08)V99</span>.
+
+       <span class="k">PROCEDURE DIVISION.</span>
+           <span class="c">*> Formula financeira com tratamento de arredondamento e estouro</span>
+           <span class="k">COMPUTE</span> <span class="t">WS-JUROS</span> <span class="k">ROUNDED</span> <span class="k">=</span> 
+                   <span class="t">WS-CAPITAL</span> <span class="k">*</span> <span class="t">WS-TAXA-MENSAL</span> <span class="k">*</span> <span class="t">WS-MESES</span>
+               <span class="k">ON SIZE ERROR</span>
+                   <span class="k">DISPLAY</span> <span class="s">"CRITICO: Estouro de capacidade numerica!"</span>
+               <span class="k">NOT ON SIZE ERROR</span>
+                   <span class="k">ADD</span> <span class="t">WS-CAPITAL</span> <span class="k">TO</span> <span class="t">WS-JUROS</span> <span class="k">GIVING</span> <span class="t">WS-MONTANTE</span>
+                   <span class="k">DISPLAY</span> <span class="s">"Juros: R$ "</span> <span class="t">WS-JUROS</span>
+                   <span class="k">DISPLAY</span> <span class="s">"Montante Final: R$ "</span> <span class="t">WS-MONTANTE</span>
+           <span class="k">END-COMPUTE</span>.</code></pre></div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. EXEMPLOS PRÁTICOS (TABS) -->
+  <section id="exemplos">
+    <h2 class="section-title">💻 Exemplos <span>Práticos</span></h2>
+    <p class="section-sub">Códigos COBOL realistas completos para folha de pagamento, processamento batch e cálculos financeiros.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="tab-folha" role="tab">Folha de Pagamento</button>
+      <button class="tab-btn" data-tab="tab-batch" role="tab">Leitura Batch AT END</button>
+      <button class="tab-btn" data-tab="tab-juros" role="tab">Cálculo de Juros &amp; Amortização</button>
+    </div>
+
+    <!-- TAB 1: Folha de Pagamento -->
+    <div class="tab-panel active" id="tab-folha">
+      <p>Cálculo contábil completo de salário bruto, desconto progressivo de INSS, dedução de IRRF, vale-transporte e emissão de holerite formatado.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">IDENTIFICATION DIVISION.</span>
+       <span class="k">PROGRAM-ID.</span> FOLHA01.
+       <span class="k">AUTHOR.</span> PONCE METODOLOGIAS &amp; DEV.
+      <span class="c">*>==============================================================*</span>
+       <span class="k">ENVIRONMENT DIVISION.</span>
+       <span class="k">CONFIGURATION SECTION.</span>
+       <span class="k">SPECIAL-NAMES.</span>
+           <span class="k">DECIMAL-POINT IS COMMA.</span>
+      <span class="c">*>==============================================================*</span>
+       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+      <span class="c">*> DADOS DE ENTRADA DO FUNCIONARIO</span>
+       <span class="t">01</span>  <span class="t">WS-MATRICULA</span>         <span class="t">PIC 9(06)</span>       <span class="k">VALUE</span> <span class="n">084512</span>.
+       <span class="t">01</span>  <span class="t">WS-NOME</span>              <span class="t">PIC X(30)</span>       <span class="k">VALUE</span> <span class="s">"CARLOS EDUARDO SILVEIRA"</span>.
+       <span class="t">01</span>  <span class="t">WS-CARGO</span>             <span class="t">PIC X(25)</span>       <span class="k">VALUE</span> <span class="s">"ESPECIALISTA MAINFRAME"</span>.
+       <span class="t">01</span>  <span class="t">WS-SALARIO-BRUTO</span>     <span class="t">PIC 9(06)V99</span>    <span class="k">VALUE</span> <span class="n">14500.00</span>.
+       <span class="t">01</span>  <span class="t">WS-NUM-DEPENDENTES</span>   <span class="t">PIC 9(02)</span>       <span class="k">VALUE</span> <span class="n">02</span>.
+
+      <span class="c">*> CAMPOS DE CALCULO E DEDUCOES</span>
+       <span class="t">01</span>  <span class="t">WS-DESC-INSS</span>         <span class="t">PIC 9(05)V99</span>    <span class="k">VALUE</span> <span class="n">0</span>.
+       <span class="t">01</span>  <span class="t">WS-BASE-IRRF</span>         <span class="t">PIC 9(06)V99</span>    <span class="k">VALUE</span> <span class="n">0</span>.
+       <span class="t">01</span>  <span class="t">WS-DESC-IRRF</span>         <span class="t">PIC 9(05)V99</span>    <span class="k">VALUE</span> <span class="n">0</span>.
+       <span class="t">01</span>  <span class="t">WS-DED-DEPENDENTE</span>    <span class="t">PIC 9(04)V99</span>    <span class="k">VALUE</span> <span class="n">189.59</span>.
+       <span class="t">01</span>  <span class="t">WS-TOTAL-DED-DEP</span>     <span class="t">PIC 9(05)V99</span>    <span class="k">VALUE</span> <span class="n">0</span>.
+       <span class="t">01</span>  <span class="t">WS-SALARIO-LIQUIDO</span>   <span class="t">PIC 9(06)V99</span>    <span class="k">VALUE</span> <span class="n">0</span>.
+
+      <span class="c">*> MASCARAS DE EDICAO PARA EXIBICAO FORMATADA</span>
+       <span class="t">01</span>  <span class="t">WS-ED-BRUTO</span>          <span class="t">PIC R$**.**9,99</span>.
+       <span class="t">01</span>  <span class="t">WS-ED-INSS</span>           <span class="t">PIC R$**.**9,99</span>.
+       <span class="t">01</span>  <span class="t">WS-ED-IRRF</span>           <span class="t">PIC R$**.**9,99</span>.
+       <span class="t">01</span>  <span class="t">WS-ED-LIQUIDO</span>        <span class="t">PIC R$**.**9,99</span>.
+
+      <span class="c">*>==============================================================*</span>
+       <span class="k">PROCEDURE DIVISION.</span>
+       <span class="f">0000-PRINCIPAL.</span>
+           <span class="k">PERFORM</span> <span class="f">1000-CALCULAR-INSS</span>
+           <span class="k">PERFORM</span> <span class="f">2000-CALCULAR-IRRF</span>
+           <span class="k">PERFORM</span> <span class="f">3000-CALCULAR-LIQUIDO</span>
+           <span class="k">PERFORM</span> <span class="f">4000-EMITIR-HOLERITE</span>
+           <span class="k">STOP RUN.</span>
+
+       <span class="f">1000-CALCULAR-INSS.</span>
+      <span class="c">*> Teto maximo de contribuicao do INSS</span>
+           <span class="k">IF</span> <span class="t">WS-SALARIO-BRUTO</span> &gt; <span class="n">7786.02</span>
+               <span class="k">MOVE</span> <span class="n">908.85</span> <span class="k">TO</span> <span class="t">WS-DESC-INSS</span>
+           <span class="k">ELSE</span>
+               <span class="k">COMPUTE</span> <span class="t">WS-DESC-INSS</span> <span class="k">ROUNDED =</span> 
+                       <span class="t">WS-SALARIO-BRUTO</span> <span class="k">*</span> <span class="n">0.14</span>
+           <span class="k">END-IF.</span>
+
+       <span class="f">2000-CALCULAR-IRRF.</span>
+           <span class="k">COMPUTE</span> <span class="t">WS-TOTAL-DED-DEP</span> <span class="k">=</span> 
+                   <span class="t">WS-NUM-DEPENDENTES</span> <span class="k">*</span> <span class="t">WS-DED-DEPENDENTE</span>
+           
+           <span class="k">COMPUTE</span> <span class="t">WS-BASE-IRRF</span> <span class="k">=</span> 
+                   <span class="t">WS-SALARIO-BRUTO</span> <span class="k">-</span> <span class="t">WS-DESC-INSS</span> <span class="k">-</span> <span class="t">WS-TOTAL-DED-DEP</span>
+
+           <span class="k">EVALUATE TRUE</span>
+               <span class="k">WHEN</span> <span class="t">WS-BASE-IRRF</span> &lt;= <span class="n">2259.20</span>
+                   <span class="k">MOVE</span> <span class="n">0</span> <span class="k">TO</span> <span class="t">WS-DESC-IRRF</span>
+               <span class="k">WHEN</span> <span class="t">WS-BASE-IRRF</span> &lt;= <span class="n">2826.65</span>
+                   <span class="k">COMPUTE</span> <span class="t">WS-DESC-IRRF</span> <span class="k">ROUNDED =</span> 
+                           (<span class="t">WS-BASE-IRRF</span> <span class="k">*</span> <span class="n">0.075</span>) <span class="k">-</span> <span class="n">169.44</span>
+               <span class="k">WHEN</span> <span class="t">WS-BASE-IRRF</span> &lt;= <span class="n">3751.05</span>
+                   <span class="k">COMPUTE</span> <span class="t">WS-DESC-IRRF</span> <span class="k">ROUNDED =</span> 
+                           (<span class="t">WS-BASE-IRRF</span> <span class="k">*</span> <span class="n">0.15</span>) <span class="k">-</span> <span class="n">381.44</span>
+               <span class="k">WHEN</span> <span class="t">WS-BASE-IRRF</span> &lt;= <span class="n">4664.68</span>
+                   <span class="k">COMPUTE</span> <span class="t">WS-DESC-IRRF</span> <span class="k">ROUNDED =</span> 
+                           (<span class="t">WS-BASE-IRRF</span> <span class="k">*</span> <span class="n">0.225</span>) <span class="k">-</span> <span class="n">662.77</span>
+               <span class="k">WHEN OTHER</span>
+                   <span class="k">COMPUTE</span> <span class="t">WS-DESC-IRRF</span> <span class="k">ROUNDED =</span> 
+                           (<span class="t">WS-BASE-IRRF</span> <span class="k">*</span> <span class="n">0.275</span>) <span class="k">-</span> <span class="n">896.00</span>
+           <span class="k">END-EVALUATE.</span>
+
+       <span class="f">3000-CALCULAR-LIQUIDO.</span>
+           <span class="k">COMPUTE</span> <span class="t">WS-SALARIO-LIQUIDO</span> <span class="k">=</span> 
+                   <span class="t">WS-SALARIO-BRUTO</span> <span class="k">-</span> <span class="t">WS-DESC-INSS</span> <span class="k">-</span> <span class="t">WS-DESC-IRRF</span>.
+
+       <span class="f">4000-EMITIR-HOLERITE.</span>
+           <span class="k">MOVE</span> <span class="t">WS-SALARIO-BRUTO</span>   <span class="k">TO</span> <span class="t">WS-ED-BRUTO</span>
+           <span class="k">MOVE</span> <span class="t">WS-DESC-INSS</span>       <span class="k">TO</span> <span class="t">WS-ED-INSS</span>
+           <span class="k">MOVE</span> <span class="t">WS-DESC-IRRF</span>       <span class="k">TO</span> <span class="t">WS-ED-IRRF</span>
+           <span class="k">MOVE</span> <span class="t">WS-SALARIO-LIQUIDO</span> <span class="k">TO</span> <span class="t">WS-ED-LIQUIDO</span>
+
+           <span class="k">DISPLAY</span> <span class="s">"=================================================="</span>
+           <span class="k">DISPLAY</span> <span class="s">"           DEMONSTRATIVO DE PAGAMENTO             "</span>
+           <span class="k">DISPLAY</span> <span class="s">"=================================================="</span>
+           <span class="k">DISPLAY</span> <span class="s">"Matricula: "</span> <span class="t">WS-MATRICULA</span> <span class="s">" | Funcionario: "</span> <span class="t">WS-NOME</span>
+           <span class="k">DISPLAY</span> <span class="s">"Cargo:     "</span> <span class="t">WS-CARGO</span>
+           <span class="k">DISPLAY</span> <span class="s">"--------------------------------------------------"</span>
+           <span class="k">DISPLAY</span> <span class="s">"(+) Salario Bruto ......: "</span> <span class="t">WS-ED-BRUTO</span>
+           <span class="k">DISPLAY</span> <span class="s">"(-) Desconto INSS ......: "</span> <span class="t">WS-ED-INSS</span>
+           <span class="k">DISPLAY</span> <span class="s">"(-) Desconto IRRF ......: "</span> <span class="t">WS-ED-IRRF</span>
+           <span class="k">DISPLAY</span> <span class="s">"--------------------------------------------------"</span>
+           <span class="k">DISPLAY</span> <span class="s">"(=) SALARIO LIQUIDO ....: "</span> <span class="t">WS-ED-LIQUIDO</span>
+           <span class="k">DISPLAY</span> <span class="s">"=================================================="</span>.</code></pre></div>
+    </div>
+
+    <!-- TAB 2: Batch AT END -->
+    <div class="tab-panel" id="tab-batch">
+      <p>Processamento batch de arquivo de clientes bancários: validação de status de abertura, leitura sequencial até o final (<code>AT END</code>), totalização e emissão de sumário estatístico.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">IDENTIFICATION DIVISION.</span>
+       <span class="k">PROGRAM-ID.</span> BATCHCLI.
+       <span class="k">AUTHOR.</span> PONCE-DEV.
+      <span class="c">*>==============================================================*</span>
+       <span class="k">ENVIRONMENT DIVISION.</span>
+       <span class="k">INPUT-OUTPUT SECTION.</span>
+       <span class="k">FILE-CONTROL.</span>
+           <span class="k">SELECT</span> <span class="t">ARQ-CLIENTES</span> <span class="k">ASSIGN TO</span> <span class="s">"CLIENTES.DAT"</span>
+           <span class="k">ORGANIZATION IS LINE SEQUENTIAL</span>
+           <span class="k">FILE STATUS IS</span> <span class="t">WS-FS-CLI</span>.
+      <span class="c">*>==============================================================*</span>
+       <span class="k">DATA DIVISION.</span>
+       <span class="k">FILE SECTION.</span>
+       <span class="t">FD</span>  <span class="t">ARQ-CLIENTES.</span>
+       <span class="t">01</span>  <span class="t">REG-CLIENTE.</span>
+           <span class="t">05</span>  <span class="t">REG-AGENCIA</span>      <span class="t">PIC 9(04)</span>.
+           <span class="t">05</span>  <span class="t">REG-CONTA</span>        <span class="t">PIC 9(08)</span>.
+           <span class="t">05</span>  <span class="t">REG-NOME</span>         <span class="t">PIC X(30)</span>.
+           <span class="t">05</span>  <span class="t">REG-SALDO</span>        <span class="t">PIC S9(08)V99</span>.
+           <span class="t">05</span>  <span class="t">REG-TIPO-CONTA</span>   <span class="t">PIC X(01)</span>. <span class="c">*> C=Corrente, P=Poupanca</span>
+
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">WS-FS-CLI</span>            <span class="t">PIC X(02)</span>.
+       <span class="t">01</span>  <span class="t">WS-FIM-ARQUIVO</span>       <span class="t">PIC X(01)</span>       <span class="k">VALUE</span> <span class="s">"N"</span>.
+           <span class="t">88</span>  <span class="t">FIM-ARQUIVO-SIM</span>  <span class="k">VALUE</span> <span class="s">"S"</span>.
+           <span class="t">88</span>  <span class="t">FIM-ARQUIVO-NAO</span>  <span class="k">VALUE</span> <span class="s">"N"</span>.
+
+       <span class="t">01</span>  <span class="t">WS-TOTALIZADORES.</span>
+           <span class="t">05</span>  <span class="t">WS-QTD-LIDOS</span>     <span class="t">PIC 9(06)</span>       <span class="k">VALUE</span> <span class="n">0</span>.
+           <span class="t">05</span>  <span class="t">WS-SOMA-SALDOS</span>   <span class="t">PIC S9(11)V99</span>   <span class="k">VALUE</span> <span class="n">0</span>.
+           <span class="t">05</span>  <span class="t">WS-QTD-CORRENTES</span> <span class="t">PIC 9(06)</span>       <span class="k">VALUE</span> <span class="n">0</span>.
+           <span class="t">05</span>  <span class="t">WS-QTD-POUPANCAS</span> <span class="t">PIC 9(06)</span>       <span class="k">VALUE</span> <span class="n">0</span>.
+
+       <span class="t">01</span>  <span class="t">WS-ED-SALDO</span>          <span class="t">PIC -ZZZ.ZZZ.ZZ9,99</span>.
+       <span class="t">01</span>  <span class="t">WS-ED-TOTAL</span>          <span class="t">PIC -ZZZ.ZZZ.ZZ9,99</span>.
+
+      <span class="c">*>==============================================================*</span>
+       <span class="k">PROCEDURE DIVISION.</span>
+       <span class="f">0000-PRINCIPAL.</span>
+           <span class="k">PERFORM</span> <span class="f">1000-ABRIR-ARQUIVO</span>
+           <span class="k">PERFORM</span> <span class="f">2000-LER-PRIMEIRO-REGISTRO</span>
+           
+           <span class="k">PERFORM</span> <span class="f">3000-PROCESSAR-REGISTRO</span>
+               <span class="k">UNTIL</span> <span class="t">FIM-ARQUIVO-SIM</span>
+           
+           <span class="k">PERFORM</span> <span class="f">4000-ENCERRAR-RELATORIO</span>
+           <span class="k">STOP RUN.</span>
+
+       <span class="f">1000-ABRIR-ARQUIVO.</span>
+           <span class="k">OPEN INPUT</span> <span class="t">ARQ-CLIENTES</span>
+           <span class="k">IF</span> <span class="t">WS-FS-CLI</span> <span class="k">NOT =</span> <span class="s">"00"</span>
+               <span class="k">DISPLAY</span> <span class="s">"ERRO FATAL: Nao foi possivel abrir CLIENTES.DAT"</span>
+               <span class="k">DISPLAY</span> <span class="s">"FILE STATUS: "</span> <span class="t">WS-FS-CLI</span>
+               <span class="k">STOP RUN</span>
+           <span class="k">END-IF</span>
+           <span class="k">DISPLAY</span> <span class="s">"------------------------------------------------------------"</span>
+           <span class="k">DISPLAY</span> <span class="s">"AG    CONTA     TIPO  NOME CLIENTE                   SALDO"</span>
+           <span class="k">DISPLAY</span> <span class="s">"------------------------------------------------------------"</span>.
+
+       <span class="f">2000-LER-PRIMEIRO-REGISTRO.</span>
+           <span class="k">READ</span> <span class="t">ARQ-CLIENTES</span>
+               <span class="k">AT END</span>
+                   <span class="k">SET</span> <span class="t">FIM-ARQUIVO-SIM</span> <span class="k">TO TRUE</span>
+           <span class="k">END-READ.</span>
+
+       <span class="f">3000-PROCESSAR-REGISTRO.</span>
+           <span class="k">ADD</span> <span class="n">1</span> <span class="k">TO</span> <span class="t">WS-QTD-LIDOS</span>
+           <span class="k">ADD</span> <span class="t">REG-SALDO</span> <span class="k">TO</span> <span class="t">WS-SOMA-SALDOS</span>
+
+           <span class="k">IF</span> <span class="t">REG-TIPO-CONTA</span> <span class="k">=</span> <span class="s">"C"</span>
+               <span class="k">ADD</span> <span class="n">1</span> <span class="k">TO</span> <span class="t">WS-QTD-CORRENTES</span>
+           <span class="k">ELSE</span>
+               <span class="k">ADD</span> <span class="n">1</span> <span class="k">TO</span> <span class="t">WS-QTD-POUPANCAS</span>
+           <span class="k">END-IF</span>
+
+           <span class="k">MOVE</span> <span class="t">REG-SALDO</span> <span class="k">TO</span> <span class="t">WS-ED-SALDO</span>
+           <span class="k">DISPLAY</span> <span class="t">REG-AGENCIA</span> <span class="s">"  "</span> 
+                   <span class="t">REG-CONTA</span>   <span class="s">"  "</span> 
+                   <span class="t">REG-TIPO-CONTA</span> <span class="s">"     "</span> 
+                   <span class="t">REG-NOME</span>    <span class="s">" "</span> 
+                   <span class="t">WS-ED-SALDO</span>
+
+      <span class="c">*> Leitura do proximo registro</span>
+           <span class="k">READ</span> <span class="t">ARQ-CLIENTES</span>
+               <span class="k">AT END</span>
+                   <span class="k">SET</span> <span class="t">FIM-ARQUIVO-SIM</span> <span class="k">TO TRUE</span>
+           <span class="k">END-READ.</span>
+
+       <span class="f">4000-ENCERRAR-RELATORIO.</span>
+           <span class="k">CLOSE</span> <span class="t">ARQ-CLIENTES</span>
+           <span class="k">MOVE</span> <span class="t">WS-SOMA-SALDOS</span> <span class="k">TO</span> <span class="t">WS-ED-TOTAL</span>
+           <span class="k">DISPLAY</span> <span class="s">"------------------------------------------------------------"</span>
+           <span class="k">DISPLAY</span> <span class="s">"Total de Registros Lidos .: "</span> <span class="t">WS-QTD-LIDOS</span>
+           <span class="k">DISPLAY</span> <span class="s">"Contas Correntes ........: "</span> <span class="t">WS-QTD-CORRENTES</span>
+           <span class="k">DISPLAY</span> <span class="s">"Contas Poupanca .........: "</span> <span class="t">WS-QTD-POUPANCAS</span>
+           <span class="k">DISPLAY</span> <span class="s">"Saldo Consolidado Geral .: "</span> <span class="t">WS-ED-TOTAL</span>
+           <span class="k">DISPLAY</span> <span class="s">"============================================================"</span>.</code></pre></div>
+    </div>
+
+    <!-- TAB 3: Juros & Amortização -->
+    <div class="tab-panel" id="tab-juros">
+      <p>Cálculo financeiro de juros compostos e simulação de parcelas de empréstimo (Tabela Price simplificada) com proteção <code>ON SIZE ERROR</code> e <code>ROUNDED</code>.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">IDENTIFICATION DIVISION.</span>
+       <span class="k">PROGRAM-ID.</span> SIMULFIN.
+       <span class="k">AUTHOR.</span> PONCE-DEV.
+      <span class="c">*>==============================================================*</span>
+       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">WS-PARAMETROS-ENTRADA.</span>
+           <span class="t">05</span>  <span class="t">WS-VALOR-EMPRESTIMO</span>   <span class="t">PIC 9(07)V99</span>    <span class="k">VALUE</span> <span class="n">120000.00</span>.
+           <span class="t">05</span>  <span class="t">WS-TAXA-ANUAL</span>         <span class="t">PIC 9(02)V99</span>    <span class="k">VALUE</span> <span class="n">14.50</span>.
+           <span class="t">05</span>  <span class="t">WS-PRAZO-MESES</span>        <span class="t">PIC 9(03)</span>       <span class="k">VALUE</span> <span class="n">48</span>.
+
+       <span class="t">01</span>  <span class="t">WS-VARIAVEIS-CALCULO.</span>
+           <span class="t">05</span>  <span class="t">WS-TAXA-MENSAL</span>        <span class="t">PIC 9(02)V9999</span>.
+           <span class="t">05</span>  <span class="t">WS-AMORTIZACAO-MES</span>    <span class="t">PIC 9(06)V99</span>.
+           <span class="t">05</span>  <span class="t">WS-JUROS-TOTAL</span>        <span class="t">PIC 9(07)V99</span>.
+           <span class="t">05</span>  <span class="t">WS-VALOR-TOTAL-PAGO</span>   <span class="t">PIC 9(08)V99</span>.
+           <span class="t">05</span>  <span class="t">WS-PARCELA-MEDIA</span>      <span class="t">PIC 9(06)V99</span>.
+
+       <span class="t">01</span>  <span class="t">WS-FORMATACAO.</span>
+           <span class="t">05</span>  <span class="t">WS-FMT-EMPRESTIMO</span>     <span class="t">PIC R$*.***.**9,99</span>.
+           <span class="t">05</span>  <span class="t">WS-FMT-JUROS</span>          <span class="t">PIC R$*.***.**9,99</span>.
+           <span class="t">05</span>  <span class="t">WS-FMT-TOTAL</span>          <span class="t">PIC R$*.***.**9,99</span>.
+           <span class="t">05</span>  <span class="t">WS-FMT-PARCELA</span>        <span class="t">PIC R$*.***.**9,99</span>.
+
+      <span class="c">*>==============================================================*</span>
+       <span class="k">PROCEDURE DIVISION.</span>
+       <span class="f">0000-CALCULAR-FINANCIAMENTO.</span>
+           <span class="k">DISPLAY</span> <span class="s">"SIMULADOR DE FINANCIAMENTO BANCARIO - COBOL 2023"</span>
+           <span class="k">DISPLAY</span> <span class="s">"------------------------------------------------"</span>
+
+      <span class="c">*> 1. Conversao de taxa anual para taxa mensal estimada</span>
+           <span class="k">COMPUTE</span> <span class="t">WS-TAXA-MENSAL</span> <span class="k">ROUNDED =</span> 
+                   <span class="t">WS-TAXA-ANUAL</span> <span class="k">/</span> <span class="n">1200</span>
+               <span class="k">ON SIZE ERROR</span>
+                   <span class="k">DISPLAY</span> <span class="s">"ERRO: Taxa fora dos limites do sistema!"</span>
+                   <span class="k">STOP RUN</span>
+           <span class="k">END-COMPUTE</span>
+
+      <span class="c">*> 2. Calculo de juros estimados pelo periodo</span>
+           <span class="k">COMPUTE</span> <span class="t">WS-JUROS-TOTAL</span> <span class="k">ROUNDED =</span> 
+                   <span class="t">WS-VALOR-EMPRESTIMO</span> <span class="k">*</span> <span class="t">WS-TAXA-MENSAL</span> <span class="k">*</span> <span class="t">WS-PRAZO-MESES</span>
+               <span class="k">ON SIZE ERROR</span>
+                   <span class="k">DISPLAY</span> <span class="s">"ERRO DE OVERFLOW NO CALCULO DE JUROS"</span>
+                   <span class="k">STOP RUN</span>
+           <span class="k">END-COMPUTE</span>
+
+      <span class="c">*> 3. Consolidacao do montante final e parcela media</span>
+           <span class="k">COMPUTE</span> <span class="t">WS-VALOR-TOTAL-PAGO</span> <span class="k">=</span> 
+                   <span class="t">WS-VALOR-EMPRESTIMO</span> <span class="k">+</span> <span class="t">WS-JUROS-TOTAL</span>
+
+           <span class="k">COMPUTE</span> <span class="t">WS-PARCELA-MEDIA</span> <span class="k">ROUNDED =</span> 
+                   <span class="t">WS-VALOR-TOTAL-PAGO</span> <span class="k">/</span> <span class="t">WS-PRAZO-MESES</span>
+
+      <span class="c">*> 4. Exibicao dos resultados formatados</span>
+           <span class="k">MOVE</span> <span class="t">WS-VALOR-EMPRESTIMO</span> <span class="k">TO</span> <span class="t">WS-FMT-EMPRESTIMO</span>
+           <span class="k">MOVE</span> <span class="t">WS-JUROS-TOTAL</span>      <span class="k">TO</span> <span class="t">WS-FMT-JUROS</span>
+           <span class="k">MOVE</span> <span class="t">WS-VALOR-TOTAL-PAGO</span> <span class="k">TO</span> <span class="t">WS-FMT-TOTAL</span>
+           <span class="k">MOVE</span> <span class="t">WS-PARCELA-MEDIA</span>    <span class="k">TO</span> <span class="t">WS-FMT-PARCELA</span>
+
+           <span class="k">DISPLAY</span> <span class="s">"Valor Principal Contratado : "</span> <span class="t">WS-FMT-EMPRESTIMO</span>
+           <span class="k">DISPLAY</span> <span class="s">"Prazo em Meses ...........: "</span> <span class="t">WS-PRAZO-MESES</span> <span class="s">"x"</span>
+           <span class="k">DISPLAY</span> <span class="s">"Total de Juros Cobrados ..: "</span> <span class="t">WS-FMT-JUROS</span>
+           <span class="k">DISPLAY</span> <span class="s">"------------------------------------------------"</span>
+           <span class="k">DISPLAY</span> <span class="s">"VALOR TOTAL A PAGAR ......: "</span> <span class="t">WS-FMT-TOTAL</span>
+           <span class="k">DISPLAY</span> <span class="s">"PARCELA MENSAL ESTIMADA ..: "</span> <span class="t">WS-FMT-PARCELA</span>
+           <span class="k">DISPLAY</span> <span class="s">"================================================"</span>
+           <span class="k">STOP RUN.</span></code></pre></div>
+    </div>
+  </section>
+
+  <!-- 6. MERCADO DE TRABALHO -->
+  <section id="mercado">
+    <h2 class="section-title">💼 Mercado de <span>Trabalho</span></h2>
+    <p class="section-sub">Uma carreira com estabilidade quase vitalícia e altíssima valorização salarial.</p>
+
+    <div class="scarcity-banner">
+      <div class="alert-icon">⚠️</div>
+      <div>
+        <strong>Escassez Crítica de Profissionais no Brasil e no Mundo</strong>
+        <p>Enquanto mais de 220 bilhões de linhas de código COBOL sustentam o sistema financeiro internacional, mais de 60% dos especialistas seniores estão se aposentando. Instituições financeiras e governamentais disputam talentos capacitados oferecendo contratos de alto valor e flexibilidade.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nível</th>
+            <th>Faixa Salarial (Mensal)</th>
+            <th>Perfil / Competências Exigidas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Júnior</strong></td>
+            <td class="salary">R$ 6.000 – 9.000</td>
+            <td>Sintaxe COBOL básica, DATA DIVISION, PIC clauses, PERFORM, depuração em TSO/ISPF e JCL básico.</td>
+          </tr>
+          <tr>
+            <td><strong>Pleno</strong></td>
+            <td class="salary">R$ 10.000 – 16.000</td>
+            <td>Processamento batch complexo, integração CICS para transações online, manipulação de arquivos VSAM, SQL embutido para Db2 e JCL avançado.</td>
+          </tr>
+          <tr>
+            <td><strong>Sênior / Especialista</strong></td>
+            <td class="salary">R$ 18.000 – 30.000+</td>
+            <td>Arquitetura de missão crítica no Mainframe z/OS, tuning de desempenho de lote, modernização com APIs REST/JSON (z/OS Connect), liderança técnica e migração para cloud híbrida.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">🏆 Principais Empregadores &amp; Contratantes</h3>
+    <div class="companies">
+      <span class="company">IBM</span>
+      <span class="company">Banco Bradesco</span>
+      <span class="company">Banco do Brasil</span>
+      <span class="company">Caixa Econômica Federal</span>
+      <span class="company">Itaú Unibanco</span>
+      <span class="company">Santander</span>
+      <span class="company">Governo Federal (Dataprev / Serpro)</span>
+      <span class="company">Kyndryl</span>
+      <span class="company">B3 (Bolsa de Valores)</span>
+    </div>
+  </section>
+
+  <!-- 7. ROADMAP -->
+  <section id="roadmap">
+    <h2 class="section-title">🗺️ <span>Roadmap</span> de Aprendizado</h2>
+    <p class="section-sub">Uma jornada prática em 4 fases para dominar o desenvolvimento Mainframe corporativo.</p>
+    <div class="roadmap">
+      <div class="phase">
+        <span class="num">FASE 1</span>
+        <h3>Fundamentos &amp; Sintaxe</h3>
+        <ul>
+          <li>As 4 Divisões obrigatórias</li>
+          <li>Variáveis e tipos PIC (X, 9, V)</li>
+          <li>DISPLAY e ACCEPT</li>
+          <li>Compilação com GnuCOBOL</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <span class="num">FASE 2</span>
+        <h3>Lógica Estruturada</h3>
+        <ul>
+          <li>Laços com PERFORM e PERFORM UNTIL</li>
+          <li>Condicionais IF/ELSE e EVALUATE</li>
+          <li>Nível 88 (Condition Names)</li>
+          <li>Aritmética com COMPUTE e ROUNDED</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <span class="num">FASE 3</span>
+        <h3>Arquivos &amp; Batch</h3>
+        <ul>
+          <li>FILE SECTION e FILE-CONTROL</li>
+          <li>Leitura e escrita sequencial (FD)</li>
+          <li>Tratamento com AT END e FILE STATUS</li>
+          <li>Relatórios gerenciais formatados</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <span class="num">FASE 4</span>
+        <h3>Mainframe &amp; Modernização</h3>
+        <ul>
+          <li>IBM z/OS, TSO/ISPF e JCL</li>
+          <li>Transações online com CICS</li>
+          <li>Bancos de dados Db2 (EXEC SQL)</li>
+          <li>REST APIs, JSON &amp; Cloud Híbrida</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. RECURSOS RECOMENDADOS -->
+  <section id="recursos">
+    <h2 class="section-title">📚 <span>Recursos</span> Recomendados</h2>
+    <p class="section-sub">Documentações, compiladores e iniciativas para acelerar seus estudos.</p>
+
+    <a class="resource" href="https://www.ibm.com/docs/en/cobol-zos" target="_blank" rel="noopener noreferrer">
+      <span class="icon">📖</span>
+      <div>
+        <h3>IBM COBOL Documentation</h3>
+        <p>Documentação oficial do Enterprise COBOL for z/OS da IBM com manuais de linguagem e programação.</p>
+      </div>
+    </a>
+
+    <a class="resource" href="https://gnucobol.sourceforge.io/" target="_blank" rel="noopener noreferrer">
+      <span class="icon">⚙️</span>
+      <div>
+        <h3>GnuCOBOL (Open Source Compiler)</h3>
+        <p>Compilador COBOL gratuito e moderno para Linux, macOS e Windows. Ideal para praticar localmente.</p>
+      </div>
+    </a>
+
+    <a class="resource" href="https://www.openmainframeproject.org/" target="_blank" rel="noopener noreferrer">
+      <span class="icon">🌐</span>
+      <div>
+        <h3>Open Mainframe Project</h3>
+        <p>Iniciativa da Linux Foundation para educação aberta em Mainframe, incluindo o curso COBOL Programming Course.</p>
+      </div>
+    </a>
+
+    <a class="resource" href="https://www.redbooks.ibm.com/" target="_blank" rel="noopener noreferrer">
+      <span class="icon">📕</span>
+      <div>
+        <h3>IBM Redbooks — Enterprise COBOL</h3>
+        <p>Livros técnicos práticos e gratuitos publicados pelos arquitetos de sistemas e engenheiros da IBM.</p>
+      </div>
+    </a>
+
+    <a class="resource" href="https://www.microfocus.com/en-us/products/visual-cobol/overview" target="_blank" rel="noopener noreferrer">
+      <span class="icon">💼</span>
+      <div>
+        <h3>Micro Focus / Rocket Software Visual COBOL</h3>
+        <p>Ferramenta líder para desenvolvimento e modernização de aplicações COBOL com Visual Studio e Eclipse.</p>
+      </div>
+    </a>
+  </section>
+
+</main>
+
+<footer>
+  © 2025 Ponce Metodologias &amp; Dev
+</footer>
+
+<script>
+  // ----- Accordion -----
+  document.querySelectorAll('.accordion-item').forEach(function (item) {
+    var header = item.querySelector('.acc-header');
+    var body = item.querySelector('.acc-body');
+    if (item.classList.contains('open')) {
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+
+    header.addEventListener('click', function () {
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.accordion-item.open').forEach(function (other) {
+        other.classList.remove('open');
+        other.querySelector('.acc-body').style.maxHeight = null;
+        other.querySelector('.acc-header').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        header.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Recalcula altura do accordion ao redimensionar
+  window.addEventListener('resize', function () {
+    var openBody = document.querySelector('.accordion-item.open .acc-body');
+    if (openBody) openBody.style.maxHeight = openBody.scrollHeight + 'px';
+  });
+
+  // ----- Tabs -----
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) {
+        target.classList.add('active');
+      }
+    });
+  });
+
+  // ----- Copy Buttons -----
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var pre = btn.parentElement.querySelector('pre code') || btn.parentElement.querySelector('pre');
+      var code = pre ? pre.innerText : '';
+      var done = function () {
+        btn.textContent = 'Copiado!';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 2000);
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(done).catch(function () {
+          fallbackCopy(code, done);
+        });
+      } else {
+        fallbackCopy(code, done);
+      }
+    });
+  });
+
+  function fallbackCopy(text, callback) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      callback();
+    } catch (err) {
+      console.error('Falha ao copiar código', err);
+    }
+    document.body.removeChild(ta);
+  }
+</script>
+</body>
+</html>

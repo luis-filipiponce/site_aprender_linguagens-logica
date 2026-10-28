@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Aprenda JavaScript: história, conceitos fundamentais, exemplos práticos, mercado de trabalho e roadmap de estudos. Ponce Metodologias & Dev.">
+<title>🌐 JavaScript — Ponce Metodologias & Dev</title>
+<link rel="stylesheet" href="../linguagens/lang-shared.css">
+<style>
+/* ===== Variáveis ===== */
+:root {
+  --accent: #f59e0b;
+  --accent-light: #fbbf24;
+  --accent-dark: #d97706;
+  --accent-soft: rgba(245, 158, 11, 0.12);
+  --accent-border: rgba(245, 158, 11, 0.35);
+  --bg: #0d1117;
+  --bg-alt: #111823;
+  --surface: #161d29;
+  --surface-2: #1c2535;
+  --border: #263044;
+  --text: #e6edf3;
+  --muted: #9aa7b8;
+  --code-bg: #0a0e14;
+  --success: #34d399;
+  --header-h: 64px;
+  --radius: 14px;
+  --font: -apple-system, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Cascadia Code", "Fira Code", Consolas, "SF Mono", Menlo, monospace;
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent-light); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 0; }
+p { margin: 0 0 1rem; }
+ul { margin: 0; padding: 0; list-style: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ===== Header ===== */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 0 24px;
+  background: rgba(13, 17, 23, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.site-header .logo {
+  font-weight: 700; font-size: 1rem; color: var(--text);
+  white-space: nowrap; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis;
+}
+.site-header .logo:hover { text-decoration: none; color: var(--accent-light); }
+.site-header .page-title {
+  font-weight: 800; font-size: 1.1rem; color: var(--accent);
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.btn-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent-light); font-weight: 600; font-size: .9rem;
+  white-space: nowrap; transition: background .2s, color .2s;
+}
+.btn-back:hover { background: var(--accent); color: #111; text-decoration: none; }
+
+/* ===== Layout ===== */
+main { padding-top: var(--header-h); }
+section { padding: 80px 24px; }
+section:nth-of-type(even) { background: var(--bg-alt); }
+.container { max-width: 1040px; margin: 0 auto; }
+.section-head { text-align: center; margin-bottom: 48px; }
+.section-head h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin-bottom: 12px; }
+.section-head h2 span { color: var(--accent); }
+.section-head p { color: var(--muted); max-width: 640px; margin: 0 auto; }
+.eyebrow {
+  display: inline-block; margin-bottom: 10px;
+  font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative; overflow: hidden;
+  padding: 110px 24px 100px; text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.18), transparent 60%),
+    var(--bg);
+}
+.hero .badge {
+  display: inline-block; padding: 6px 16px; margin-bottom: 24px;
+  border-radius: 999px; font-size: .8rem; font-weight: 700; letter-spacing: .06em;
+  background: var(--accent-soft); color: var(--accent-light);
+  border: 1px solid var(--accent-border);
+}
+.hero h1 {
+  font-size: clamp(2.6rem, 8vw, 5rem); font-weight: 900; margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+.hero p.subtitle {
+  max-width: 720px; margin: 0 auto 36px;
+  font-size: clamp(1rem, 2.2vw, 1.2rem); color: var(--muted);
+}
+.hero p.subtitle strong { color: var(--text); }
+.hero-stats {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 36px;
+}
+.stat {
+  min-width: 140px; padding: 16px 22px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border);
+}
+.stat b { display: block; font-size: 1.6rem; color: var(--accent); line-height: 1.2; }
+.stat span { font-size: .82rem; color: var(--muted); }
+.btn {
+  display: inline-block; padding: 12px 28px; border-radius: 999px;
+  font-weight: 700; border: 1px solid transparent; transition: transform .2s, background .2s;
+}
+.btn-primary { background: var(--accent); color: #111; }
+.btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); text-decoration: none; }
+.btn-ghost { border-color: var(--border); color: var(--text); margin-left: 8px; }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent-light); text-decoration: none; }
+
+/* ===== Mini nav ===== */
+.subnav {
+  position: sticky; top: var(--header-h); z-index: 50;
+  background: rgba(17, 24, 35, 0.95); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto; white-space: nowrap; text-align: center; padding: 0 16px;
+}
+.subnav a {
+  display: inline-block; padding: 12px 14px; font-size: .85rem; font-weight: 600; color: var(--muted);
+  border-bottom: 2px solid transparent;
+}
+.subnav a:hover { color: var(--accent-light); border-bottom-color: var(--accent); text-decoration: none; }
+
+/* ===== Timeline ===== */
+.timeline { position: relative; max-width: 780px; margin: 0 auto; padding-left: 36px; }
+.timeline::before {
+  content: ""; position: absolute; left: 11px; top: 6px; bottom: 6px; width: 2px;
+  background: linear-gradient(var(--accent), var(--border));
+}
+.tl-item { position: relative; margin-bottom: 28px; }
+.tl-item::before {
+  content: ""; position: absolute; left: -33px; top: 22px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--bg-alt); border: 3px solid var(--accent);
+}
+.tl-card {
+  padding: 20px 24px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border);
+  transition: border-color .2s, transform .2s;
+}
+.tl-card:hover { border-color: var(--accent-border); transform: translateX(4px); }
+.tl-year {
+  display: inline-block; margin-bottom: 6px; padding: 2px 12px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent-light); font-weight: 800; font-size: .85rem;
+}
+.tl-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+.tl-card p { margin: 0; color: var(--muted); font-size: .95rem; }
+.tl-tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+.tl-tags span, .tag {
+  padding: 2px 10px; border-radius: 6px; font-size: .78rem; font-family: var(--mono);
+  background: var(--surface-2); color: var(--accent-light); border: 1px solid var(--border);
+}
+
+/* ===== Cards ===== */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.card {
+  padding: 28px 24px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border);
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+}
+.card:hover {
+  transform: translateY(-6px); border-color: var(--accent);
+  box-shadow: 0 12px 30px rgba(245, 158, 11, 0.12);
+}
+.card .icon {
+  width: 52px; height: 52px; display: grid; place-items: center; margin-bottom: 16px;
+  font-size: 1.6rem; border-radius: 12px; background: var(--accent-soft);
+}
+.card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: .92rem; margin-bottom: 14px; }
+.card .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ===== Accordion ===== */
+.accordion { max-width: 860px; margin: 0 auto; display: grid; gap: 12px; }
+.acc-item {
+  border-radius: var(--radius); background: var(--surface);
+  border: 1px solid var(--border); overflow: hidden; transition: border-color .2s;
+}
+.acc-item.open { border-color: var(--accent-border); }
+.acc-btn {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 18px 22px; background: none; border: 0; cursor: pointer;
+  color: var(--text); font: inherit; font-weight: 700; font-size: 1.02rem; text-align: left;
+}
+.acc-btn:hover { background: var(--surface-2); }
+.acc-btn .num {
+  display: inline-grid; place-items: center; width: 30px; height: 30px; margin-right: 12px;
+  border-radius: 8px; background: var(--accent-soft); color: var(--accent-light); font-size: .85rem;
+}
+.acc-btn .chev { color: var(--accent); transition: transform .3s; font-size: 1.2rem; }
+.acc-item.open .chev { transform: rotate(180deg); }
+.acc-panel { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+.acc-inner { padding: 4px 22px 22px; }
+.acc-inner p { color: var(--muted); font-size: .95rem; }
+
+/* ===== Code ===== */
+.code-wrap { position: relative; margin: 14px 0 0; }
+.code-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px; border-radius: 10px 10px 0 0;
+  background: var(--surface-2); border: 1px solid var(--border); border-bottom: 0;
+  font-size: .78rem; color: var(--muted); font-family: var(--mono);
+}
+.copy-btn {
+  padding: 4px 12px; border-radius: 6px; cursor: pointer;
+  background: var(--accent-soft); color: var(--accent-light);
+  border: 1px solid var(--accent-border); font: 600 .75rem var(--font);
+  transition: background .2s, color .2s;
+}
+.copy-btn:hover { background: var(--accent); color: #111; }
+.copy-btn.copied { background: var(--success); border-color: var(--success); color: #062; }
+pre {
+  margin: 0; padding: 18px 20px; overflow-x: auto;
+  background: var(--code-bg); border: 1px solid var(--border);
+  border-radius: 0 0 10px 10px;
+  font-family: var(--mono); font-size: .85rem; line-height: 1.65; color: #d6deeb; tab-size: 2;
+}
+pre code { font-family: inherit; }
+.k { color: #c792ea; } /* keywords */
+.s { color: #ecc48d; } /* strings */
+.c { color: #637777; font-style: italic; } /* comments */
+.f { color: #82aaff; } /* functions */
+.n { color: #f78c6c; } /* numbers */
+
+/* ===== Tabs ===== */
+.tabs { max-width: 920px; margin: 0 auto; }
+.tab-list {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+  padding: 6px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border);
+}
+.tab-btn {
+  flex: 1 1 auto; padding: 10px 18px; border: 0; border-radius: 999px; cursor: pointer;
+  background: transparent; color: var(--muted); font: 600 .92rem var(--font);
+  transition: background .2s, color .2s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn[aria-selected="true"] { background: var(--accent); color: #111; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fade .3s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.tab-panel > p { color: var(--muted); }
+.tab-panel .code-wrap { margin-top: 0; }
+
+/* ===== Mercado ===== */
+.market-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 32px; }
+.panel {
+  padding: 24px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border);
+}
+.panel h3 { font-size: 1.05rem; margin-bottom: 14px; color: var(--accent-light); }
+.panel li { padding: 6px 0; color: var(--muted); font-size: .93rem; }
+.panel li strong { color: var(--text); }
+.panel li::before { content: "▸ "; color: var(--accent); }
+.table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); }
+table { width: 100%; border-collapse: collapse; min-width: 520px; }
+th, td { padding: 16px 20px; text-align: left; }
+thead th {
+  background: var(--accent-soft); color: var(--accent-light);
+  font-size: .8rem; text-transform: uppercase; letter-spacing: .08em;
+}
+tbody tr { border-top: 1px solid var(--border); }
+tbody tr:hover { background: var(--surface-2); }
+td.salary { font-weight: 800; color: var(--accent-light); white-space: nowrap; }
+td.level { font-weight: 700; }
+td.desc { color: var(--muted); font-size: .92rem; }
+.note { margin-top: 12px; font-size: .8rem; color: var(--muted); text-align: center; }
+
+/* ===== Roadmap ===== */
+.roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; counter-reset: phase; position: relative; }
+.phase {
+  position: relative; padding: 28px 22px 24px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+}
+.phase:nth-child(2) { border-top-color: var(--accent-light); }
+.phase:nth-child(3) { border-top-color: #fcd34d; }
+.phase:nth-child(4) { border-top-color: #fde68a; }
+.phase .p-num {
+  display: inline-block; margin-bottom: 8px; font-size: .75rem; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+}
+.phase h3 { font-size: 1.1rem; margin-bottom: 4px; }
+.phase .time { font-size: .8rem; color: var(--muted); margin-bottom: 14px; display: block; }
+.phase li { padding: 4px 0 4px 22px; position: relative; font-size: .92rem; color: var(--muted); }
+.phase li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+.phase:not(:last-child)::after {
+  content: "→"; position: absolute; right: -17px; top: 50%; transform: translateY(-50%);
+  font-size: 1.3rem; color: var(--accent); z-index: 2;
+}
+
+/* ===== Recursos ===== */
+.resources { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.res {
+  display: flex; gap: 16px; align-items: flex-start; padding: 20px;
+  border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); transition: border-color .2s, transform .2s;
+}
+.res:hover { border-color: var(--accent); transform: translateY(-3px); text-decoration: none; }
+.res .r-icon {
+  flex: 0 0 44px; height: 44px; display: grid; place-items: center;
+  border-radius: 10px; background: var(--accent-soft); font-size: 1.3rem;
+}
+.res h3 { font-size: 1rem; margin-bottom: 2px; }
+.res p { margin: 0; font-size: .88rem; color: var(--muted); line-height: 1.5; }
+.res .kind { display: inline-block; margin-top: 6px; font-size: .72rem; font-weight: 700; color: var(--accent-light); text-transform: uppercase; letter-spacing: .06em; }
+
+/* ===== Footer ===== */
+.site-footer {
+  padding: 32px 24px; text-align: center; color: var(--muted); font-size: .88rem;
+  background: var(--bg); border-top: 1px solid var(--border);
+}
+.site-footer a { color: var(--accent-light); }
+
+/* ===== Responsivo ===== */
+@media (max-width: 960px) {
+  .phase:not(:last-child)::after { display: none; }
+}
+@media (max-width: 720px) {
+  :root { --header-h: 58px; }
+  .site-header { padding: 0 14px; }
+  .site-header .page-title { display: none; }
+  .site-header .logo { font-size: .88rem; }
+  section { padding: 56px 16px; }
+  .hero { padding: 80px 16px 70px; }
+  .btn-ghost { margin: 10px 0 0; }
+  .tab-list { border-radius: var(--radius); }
+  .tab-btn { flex: 1 1 100%; }
+  .timeline { padding-left: 30px; }
+  .tl-item::before { left: -27px; }
+  .timeline::before { left: 5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Header fixo ===== -->
+<header class="site-header">
+  <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+  <span class="page-title">🌐 JavaScript</span>
+  <a class="btn-back" href="../index.html">← Voltar</a>
+</header>
+
+<main>
+
+<!-- ===== 1. HERO ===== -->
+<section class="hero" id="hero">
+  <div class="container">
+    <span class="badge">Event-Driven / Web Nativa</span>
+    <h1>🌐 <span style="color:var(--accent)">JavaScript</span></h1>
+    <p class="subtitle">
+      A <strong>linguagem da web</strong>. Criada em <strong>1995 por Brendan Eich em apenas 10 dias</strong>,
+      hoje roda em <strong>todos os navegadores</strong> do planeta — e também em servidores, celulares e desktops.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><b>1995</b><span>Ano de criação</span></div>
+      <div class="stat"><b>10 dias</b><span>Para o primeiro protótipo</span></div>
+      <div class="stat"><b>~98%</b><span>Dos sites usam JS</span></div>
+      <div class="stat"><b>#1</b><span>Mais usada no GitHub</span></div>
+    </div>
+    <a class="btn btn-primary" href="#roadmap">Ver Roadmap</a>
+    <a class="btn btn-ghost" href="#exemplos">Ver Exemplos</a>
+  </div>
+</section>
+
+<nav class="subnav" aria-label="Seções da página">
+  <a href="#historia">História</a>
+  <a href="#porque">Por Que Aprender</a>
+  <a href="#conceitos">Conceitos</a>
+  <a href="#exemplos">Exemplos</a>
+  <a href="#mercado">Mercado</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#recursos">Recursos</a>
+</nav>
+
+<!-- ===== 2. HISTÓRIA ===== -->
+<section id="historia">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Linha do tempo</span>
+      <h2>História &amp; <span>Evolução</span></h2>
+      <p>De um protótipo feito às pressas a uma das plataformas mais influentes da computação.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-card">
+          <span class="tl-year">1995</span>
+          <h3>Criação</h3>
+          <p>Brendan Eich, na Netscape, cria a linguagem em apenas 10 dias. Nasce como "Mocha", depois "LiveScript" e, por fim, "JavaScript".</p>
+          <div class="tl-tags"><span>Netscape Navigator</span><span>10 dias</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-card">
+          <span class="tl-year">1997</span>
+          <h3>ECMAScript 1</h3>
+          <p>A linguagem é padronizada pela ECMA International, garantindo que diferentes navegadores sigam a mesma especificação.</p>
+          <div class="tl-tags"><span>ECMA-262</span><span>Padronização</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-card">
+          <span class="tl-year">2009</span>
+          <h3>ES5 + Node.js nasce</h3>
+          <p>O ES5 traz <code>strict mode</code>, JSON nativo e métodos de array. Ryan Dahl lança o Node.js, levando JS para o servidor.</p>
+          <div class="tl-tags"><span>ES5</span><span>Node.js</span><span>V8</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-card">
+          <span class="tl-year">2015</span>
+          <h3>ES6 / ES2015 — a revolução</h3>
+          <p>A maior atualização da história da linguagem: <em>arrow functions</em>, <em>classes</em>, <em>promises</em>, <em>modules</em>, <code>let</code>/<code>const</code>, template literals e muito mais.</p>
+          <div class="tl-tags"><span>arrow functions</span><span>classes</span><span>promises</span><span>modules</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-card">
+          <span class="tl-year">2017</span>
+          <h3>async / await</h3>
+          <p>O ES2017 introduz <code>async/await</code>, tornando o código assíncrono tão legível quanto o síncrono.</p>
+          <div class="tl-tags"><span>ES2017</span><span>async/await</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-card">
+          <span class="tl-year">2020+</span>
+          <h3>ES2020 – ES2024</h3>
+          <p>Ciclo anual de lançamentos: <em>optional chaining</em> (<code>?.</code>), <em>nullish coalescing</em> (<code>??</code>), <em>top-level await</em> e propostas como <em>Records &amp; Tuples</em>.</p>
+          <div class="tl-tags"><span>?.</span><span>??</span><span>top-level await</span><span>Records &amp; Tuples</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. POR QUE APRENDER ===== -->
+<section id="porque">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Versatilidade</span>
+      <h2>Por Que Aprender <span>JavaScript?</span></h2>
+      <p>Uma única linguagem, quatro grandes frentes de atuação.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="icon">🖥️</div>
+        <h3>Front-End Web</h3>
+        <p>Interfaces ricas e interativas rodando direto no navegador, sem instalar nada.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">Vue</span><span class="tag">Svelte</span></div>
+      </article>
+      <article class="card">
+        <div class="icon">⚙️</div>
+        <h3>Back-End</h3>
+        <p>APIs, microsserviços e aplicações em tempo real com a mesma linguagem do front.</p>
+        <div class="tags"><span class="tag">Node.js</span><span class="tag">Bun</span><span class="tag">Deno</span></div>
+      </article>
+      <article class="card">
+        <div class="icon">📱</div>
+        <h3>Mobile</h3>
+        <p>Apps nativos para iOS e Android compartilhando código e conhecimento web.</p>
+        <div class="tags"><span class="tag">React Native</span><span class="tag">Expo</span></div>
+      </article>
+      <article class="card">
+        <div class="icon">💻</div>
+        <h3>Desktop</h3>
+        <p>Aplicativos multiplataforma usando tecnologias web — VS Code e Slack são exemplos.</p>
+        <div class="tags"><span class="tag">Electron</span><span class="tag">Tauri</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. CONCEITOS ===== -->
+<section id="conceitos">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Fundamentos</span>
+      <h2>Conceitos <span>Fundamentais</span></h2>
+      <p>Clique em cada tópico para expandir a explicação e o exemplo de código.</p>
+    </div>
+
+    <div class="accordion" id="accordion">
+
+      <div class="acc-item open">
+        <button class="acc-btn" aria-expanded="true" aria-controls="acc-1" id="acc-btn-1">
+          <span><span class="num">1</span>Event Loop &amp; Call Stack</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-1" role="region" aria-labelledby="acc-btn-1">
+          <div class="acc-inner">
+            <p>JavaScript é <strong>single-thread</strong>: executa uma coisa por vez na <em>Call Stack</em>. Tarefas assíncronas (timers, rede) são delegadas ao ambiente e voltam por filas. O <em>Event Loop</em> move callbacks para a stack quando ela está vazia — microtasks (Promises) têm prioridade sobre macrotasks (<code>setTimeout</code>).</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>event-loop.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="f">console</span>.log(<span class="s">'1. início'</span>);
+
+<span class="f">setTimeout</span>(() =&gt; <span class="f">console</span>.log(<span class="s">'4. macrotask (setTimeout)'</span>), <span class="n">0</span>);
+
+Promise.resolve().then(() =&gt; <span class="f">console</span>.log(<span class="s">'3. microtask (Promise)'</span>));
+
+<span class="f">console</span>.log(<span class="s">'2. fim do código síncrono'</span>);
+
+<span class="c">// Saída: 1 → 2 → 3 → 4</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-2" id="acc-btn-2">
+          <span><span class="num">2</span>Closures &amp; Scope</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-2" role="region" aria-labelledby="acc-btn-2">
+          <div class="acc-inner">
+            <p>Uma <strong>closure</strong> é uma função que "lembra" das variáveis do escopo onde foi criada, mesmo depois que esse escopo terminou. É a base de encapsulamento, fábricas de funções e hooks.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>closures.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="k">function</span> <span class="f">criarContador</span>(inicial = <span class="n">0</span>) {
+  <span class="k">let</span> contagem = inicial;       <span class="c">// variável "privada"</span>
+
+  <span class="k">return</span> {
+    incrementar: () =&gt; ++contagem,
+    decrementar: () =&gt; --contagem,
+    valor:       () =&gt; contagem,
+  };
+}
+
+<span class="k">const</span> contador = <span class="f">criarContador</span>(<span class="n">10</span>);
+contador.incrementar();
+contador.incrementar();
+<span class="f">console</span>.log(contador.valor()); <span class="c">// 12</span>
+<span class="f">console</span>.log(contador.contagem); <span class="c">// undefined — inacessível de fora</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-3" id="acc-btn-3">
+          <span><span class="num">3</span>Promises &amp; async/await</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-3" role="region" aria-labelledby="acc-btn-3">
+          <div class="acc-inner">
+            <p>Uma <strong>Promise</strong> representa um valor que estará disponível no futuro (<em>pending → fulfilled/rejected</em>). <code>async/await</code> é açúcar sintático que permite escrever fluxos assíncronos com aparência de código síncrono.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>async.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="k">const</span> esperar = (ms) =&gt; <span class="k">new</span> Promise((resolve) =&gt; <span class="f">setTimeout</span>(resolve, ms));
+
+<span class="k">async function</span> <span class="f">processar</span>() {
+  <span class="k">try</span> {
+    <span class="f">console</span>.log(<span class="s">'Iniciando...'</span>);
+    <span class="k">await</span> <span class="f">esperar</span>(<span class="n">1000</span>);
+
+    <span class="c">// Executa em paralelo</span>
+    <span class="k">const</span> [a, b] = <span class="k">await</span> Promise.all([
+      <span class="f">fetch</span>(<span class="s">'/api/a'</span>).then((r) =&gt; r.json()),
+      <span class="f">fetch</span>(<span class="s">'/api/b'</span>).then((r) =&gt; r.json()),
+    ]);
+    <span class="k">return</span> { a, b };
+  } <span class="k">catch</span> (erro) {
+    <span class="f">console</span>.error(<span class="s">'Falhou:'</span>, erro.message);
+  } <span class="k">finally</span> {
+    <span class="f">console</span>.log(<span class="s">'Finalizado'</span>);
+  }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-4" id="acc-btn-4">
+          <span><span class="num">4</span>Prototype Chain</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-4" role="region" aria-labelledby="acc-btn-4">
+          <div class="acc-inner">
+            <p>Em JavaScript, objetos herdam de outros objetos através do <strong>protótipo</strong>. Ao acessar uma propriedade, o motor procura no objeto e sobe pela cadeia (<code>__proto__</code>) até encontrá-la ou chegar a <code>null</code>. A sintaxe <code>class</code> é açúcar sobre esse mecanismo.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>prototype.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="k">class</span> <span class="f">Animal</span> {
+  <span class="k">constructor</span>(nome) { <span class="k">this</span>.nome = nome; }
+  falar() { <span class="k">return</span> <span class="s">`${this.nome} faz um som`</span>; }
+}
+
+<span class="k">class</span> <span class="f">Cachorro</span> <span class="k">extends</span> <span class="f">Animal</span> {
+  falar() { <span class="k">return</span> <span class="s">`${this.nome} late: Au au!`</span>; }
+}
+
+<span class="k">const</span> rex = <span class="k">new</span> <span class="f">Cachorro</span>(<span class="s">'Rex'</span>);
+<span class="f">console</span>.log(rex.falar());                                   <span class="c">// Rex late: Au au!</span>
+<span class="f">console</span>.log(Object.getPrototypeOf(rex) === Cachorro.prototype); <span class="c">// true</span>
+<span class="f">console</span>.log(rex <span class="k">instanceof</span> Animal);                           <span class="c">// true</span>
+<span class="f">console</span>.log(rex.hasOwnProperty(<span class="s">'falar'</span>));                   <span class="c">// false — vem do protótipo</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-5" id="acc-btn-5">
+          <span><span class="num">5</span>Destructuring &amp; Spread</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-5" role="region" aria-labelledby="acc-btn-5">
+          <div class="acc-inner">
+            <p><strong>Destructuring</strong> extrai valores de objetos e arrays em variáveis de forma concisa. <strong>Spread</strong> (<code>...</code>) expande iteráveis; com <em>rest</em>, agrupa o restante. Essenciais para código imutável.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>destructuring.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="k">const</span> usuario = { nome: <span class="s">'Ana'</span>, idade: <span class="n">28</span>, endereco: { cidade: <span class="s">'São Paulo'</span> } };
+
+<span class="c">// Destructuring com renomeação, valor padrão e aninhamento</span>
+<span class="k">const</span> { nome, idade: anos, pais = <span class="s">'Brasil'</span>, endereco: { cidade } } = usuario;
+
+<span class="c">// Arrays</span>
+<span class="k">const</span> [primeiro, , terceiro, ...resto] = [<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>, <span class="n">4</span>, <span class="n">5</span>];
+<span class="f">console</span>.log(primeiro, terceiro, resto); <span class="c">// 1 3 [4, 5]</span>
+
+<span class="c">// Spread: cópia imutável com alteração</span>
+<span class="k">const</span> atualizado = { ...usuario, idade: <span class="n">29</span> };
+<span class="k">const</span> lista = [<span class="n">0</span>, ...resto, <span class="n">99</span>];
+
+<span class="c">// Parâmetros com destructuring</span>
+<span class="k">const</span> saudacao = ({ nome, pais = <span class="s">'Brasil'</span> }) =&gt; <span class="s">`Olá, ${nome} do ${pais}!`</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-6" id="acc-btn-6">
+          <span><span class="num">6</span>Modules ES6</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-6" role="region" aria-labelledby="acc-btn-6">
+          <div class="acc-inner">
+            <p>Os <strong>ES Modules</strong> permitem dividir o código em arquivos com <code>export</code> e <code>import</code>, cada um com seu próprio escopo. Suportam <em>named exports</em>, <em>default export</em> e carregamento dinâmico com <code>import()</code>.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>modules.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c">// utils/matematica.js</span>
+<span class="k">export const</span> PI = <span class="n">3.14159</span>;
+<span class="k">export function</span> <span class="f">somar</span>(a, b) { <span class="k">return</span> a + b; }
+<span class="k">export default class</span> <span class="f">Calculadora</span> {
+  multiplicar(a, b) { <span class="k">return</span> a * b; }
+}
+
+<span class="c">// main.js</span>
+<span class="k">import</span> Calculadora, { PI, somar <span class="k">as</span> soma } <span class="k">from</span> <span class="s">'./utils/matematica.js'</span>;
+<span class="k">import</span> * <span class="k">as</span> Mat <span class="k">from</span> <span class="s">'./utils/matematica.js'</span>;
+
+<span class="c">// Import dinâmico (lazy loading)</span>
+<span class="k">const</span> botao = document.querySelector(<span class="s">'#grafico'</span>);
+botao.addEventListener(<span class="s">'click'</span>, <span class="k">async</span> () =&gt; {
+  <span class="k">const</span> { renderizar } = <span class="k">await</span> <span class="k">import</span>(<span class="s">'./grafico.js'</span>);
+  <span class="f">renderizar</span>();
+});</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. EXEMPLOS ===== -->
+<section id="exemplos">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Mão na massa</span>
+      <h2>Exemplos <span>Práticos</span></h2>
+      <p>Código realista, pronto para copiar e adaptar aos seus projetos.</p>
+    </div>
+
+    <div class="tabs">
+      <div class="tab-list" role="tablist" aria-label="Exemplos de código">
+        <button class="tab-btn" role="tab" id="tab-1" aria-selected="true" aria-controls="panel-1" type="button">Fetch API + async/await</button>
+        <button class="tab-btn" role="tab" id="tab-2" aria-selected="false" aria-controls="panel-2" type="button" tabindex="-1">Componente React</button>
+        <button class="tab-btn" role="tab" id="tab-3" aria-selected="false" aria-controls="panel-3" type="button" tabindex="-1">API REST com Express</button>
+      </div>
+
+      <!-- Tab 1 -->
+      <div class="tab-panel active" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+        <p>Consumo de API com <code>fetch</code>, tratamento de erros HTTP, timeout via <code>AbortController</code> e retentativas.</p>
+        <div class="code-wrap">
+          <div class="code-bar"><span>api-client.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="k">class</span> <span class="f">ApiError</span> <span class="k">extends</span> Error {
+  <span class="k">constructor</span>(mensagem, status) {
+    <span class="k">super</span>(mensagem);
+    <span class="k">this</span>.name = <span class="s">'ApiError'</span>;
+    <span class="k">this</span>.status = status;
+  }
+}
+
+<span class="k">async function</span> <span class="f">requisitar</span>(url, { timeout = <span class="n">8000</span>, tentativas = <span class="n">3</span>, ...opcoes } = {}) {
+  <span class="k">for</span> (<span class="k">let</span> i = <span class="n">1</span>; i &lt;= tentativas; i++) {
+    <span class="k">const</span> controller = <span class="k">new</span> AbortController();
+    <span class="k">const</span> timer = <span class="f">setTimeout</span>(() =&gt; controller.abort(), timeout);
+
+    <span class="k">try</span> {
+      <span class="k">const</span> resposta = <span class="k">await</span> <span class="f">fetch</span>(url, { ...opcoes, signal: controller.signal });
+
+      <span class="k">if</span> (!resposta.ok) {
+        <span class="k">throw new</span> <span class="f">ApiError</span>(<span class="s">`HTTP ${resposta.status}: ${resposta.statusText}`</span>, resposta.status);
+      }
+      <span class="k">return await</span> resposta.json();
+    } <span class="k">catch</span> (erro) {
+      <span class="k">const</span> ehTimeout = erro.name === <span class="s">'AbortError'</span>;
+      <span class="k">const</span> ehClient = erro <span class="k">instanceof</span> ApiError &amp;&amp; erro.status &lt; <span class="n">500</span>;
+
+      <span class="c">// Erros 4xx não adiantam repetir; esgotou tentativas → propaga</span>
+      <span class="k">if</span> (ehClient || i === tentativas) {
+        <span class="k">throw</span> ehTimeout ? <span class="k">new</span> <span class="f">ApiError</span>(<span class="s">'Tempo esgotado'</span>, <span class="n">408</span>) : erro;
+      }
+      <span class="f">console</span>.warn(<span class="s">`Tentativa ${i} falhou, tentando novamente...`</span>);
+      <span class="k">await new</span> Promise((r) =&gt; <span class="f">setTimeout</span>(r, <span class="n">500</span> * <span class="n">2</span> ** i)); <span class="c">// backoff exponencial</span>
+    } <span class="k">finally</span> {
+      <span class="f">clearTimeout</span>(timer);
+    }
+  }
+}
+
+<span class="c">// Uso</span>
+<span class="k">async function</span> <span class="f">carregarUsuarios</span>() {
+  <span class="k">try</span> {
+    <span class="k">const</span> usuarios = <span class="k">await</span> <span class="f">requisitar</span>(<span class="s">'https://jsonplaceholder.typicode.com/users'</span>);
+    usuarios.forEach(({ name, email }) =&gt; <span class="f">console</span>.log(<span class="s">`${name} — ${email}`</span>));
+  } <span class="k">catch</span> (erro) {
+    <span class="f">console</span>.error(<span class="s">`[${erro.name}]`</span>, erro.message);
+  }
+}
+
+<span class="f">carregarUsuarios</span>();</code></pre>
+        </div>
+      </div>
+
+      <!-- Tab 2 -->
+      <div class="tab-panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+        <p>Lista de tarefas com <code>useState</code>, <code>useEffect</code>, <code>useMemo</code> e <code>useCallback</code>, persistindo no <code>localStorage</code>.</p>
+        <div class="code-wrap">
+          <div class="code-bar"><span>TodoList.jsx</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="k">import</span> { useState, useEffect, useMemo, useCallback } <span class="k">from</span> <span class="s">'react'</span>;
+
+<span class="k">export default function</span> <span class="f">TodoList</span>() {
+  <span class="k">const</span> [tarefas, setTarefas] = useState(() =&gt;
+    JSON.parse(localStorage.getItem(<span class="s">'tarefas'</span>) ?? <span class="s">'[]'</span>)
+  );
+  <span class="k">const</span> [texto, setTexto]   = useState(<span class="s">''</span>);
+  <span class="k">const</span> [filtro, setFiltro] = useState(<span class="s">'todas'</span>); <span class="c">// todas | pendentes | feitas</span>
+
+  <span class="c">// Efeito colateral: sincroniza com localStorage</span>
+  useEffect(() =&gt; {
+    localStorage.setItem(<span class="s">'tarefas'</span>, JSON.stringify(tarefas));
+  }, [tarefas]);
+
+  <span class="k">const</span> adicionar = useCallback((e) =&gt; {
+    e.preventDefault();
+    <span class="k">const</span> titulo = texto.trim();
+    <span class="k">if</span> (!titulo) <span class="k">return</span>;
+    setTarefas((atual) =&gt; [...atual, { id: crypto.randomUUID(), titulo, feita: <span class="k">false</span> }]);
+    setTexto(<span class="s">''</span>);
+  }, [texto]);
+
+  <span class="k">const</span> alternar = (id) =&gt;
+    setTarefas((atual) =&gt; atual.map((t) =&gt; (t.id === id ? { ...t, feita: !t.feita } : t)));
+
+  <span class="k">const</span> remover = (id) =&gt;
+    setTarefas((atual) =&gt; atual.filter((t) =&gt; t.id !== id));
+
+  <span class="k">const</span> visiveis = useMemo(() =&gt; {
+    <span class="k">if</span> (filtro === <span class="s">'pendentes'</span>) <span class="k">return</span> tarefas.filter((t) =&gt; !t.feita);
+    <span class="k">if</span> (filtro === <span class="s">'feitas'</span>)    <span class="k">return</span> tarefas.filter((t) =&gt; t.feita);
+    <span class="k">return</span> tarefas;
+  }, [tarefas, filtro]);
+
+  <span class="k">return</span> (
+    &lt;section className=<span class="s">"todo"</span>&gt;
+      &lt;h2&gt;Minhas Tarefas ({tarefas.filter((t) =&gt; !t.feita).length} pendentes)&lt;/h2&gt;
+
+      &lt;form onSubmit={adicionar}&gt;
+        &lt;input
+          value={texto}
+          onChange={(e) =&gt; setTexto(e.target.value)}
+          placeholder=<span class="s">"Nova tarefa..."</span>
+        /&gt;
+        &lt;button type=<span class="s">"submit"</span>&gt;Adicionar&lt;/button&gt;
+      &lt;/form&gt;
+
+      &lt;nav&gt;
+        {[<span class="s">'todas'</span>, <span class="s">'pendentes'</span>, <span class="s">'feitas'</span>].map((f) =&gt; (
+          &lt;button key={f} disabled={filtro === f} onClick={() =&gt; setFiltro(f)}&gt;
+            {f}
+          &lt;/button&gt;
+        ))}
+      &lt;/nav&gt;
+
+      &lt;ul&gt;
+        {visiveis.map(({ id, titulo, feita }) =&gt; (
+          &lt;li key={id} style={{ textDecoration: feita ? <span class="s">'line-through'</span> : <span class="s">'none'</span> }}&gt;
+            &lt;input type=<span class="s">"checkbox"</span> checked={feita} onChange={() =&gt; alternar(id)} /&gt;
+            {titulo}
+            &lt;button onClick={() =&gt; remover(id)} aria-label=<span class="s">"Remover"</span>&gt;✕&lt;/button&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+
+      <!-- Tab 3 -->
+      <div class="tab-panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3">
+        <p>CRUD completo de livros com Express: validação, middleware de erros e códigos HTTP corretos. Dados em memória para fins didáticos.</p>
+        <div class="code-wrap">
+          <div class="code-bar"><span>server.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c">// npm init -y &amp;&amp; npm i express</span>
+<span class="k">import</span> express <span class="k">from</span> <span class="s">'express'</span>;
+
+<span class="k">const</span> app = express();
+<span class="k">const</span> PORTA = process.env.PORT ?? <span class="n">3000</span>;
+
+app.use(express.json());
+
+<span class="c">// Logger simples</span>
+app.use((req, _res, next) =&gt; {
+  <span class="f">console</span>.log(<span class="s">`${new Date().toISOString()} ${req.method} ${req.url}`</span>);
+  next();
+});
+
+<span class="c">// "Banco de dados" em memória</span>
+<span class="k">let</span> livros = [
+  { id: <span class="n">1</span>, titulo: <span class="s">'Eloquent JavaScript'</span>, autor: <span class="s">'Marijn Haverbeke'</span> },
+  { id: <span class="n">2</span>, titulo: <span class="s">'You Don\'t Know JS'</span>,   autor: <span class="s">'Kyle Simpson'</span> },
+];
+<span class="k">let</span> proximoId = <span class="n">3</span>;
+
+<span class="k">const</span> validar = (req, res, next) =&gt; {
+  <span class="k">const</span> { titulo, autor } = req.body ?? {};
+  <span class="k">if</span> (!titulo || !autor) {
+    <span class="k">return</span> res.status(<span class="n">400</span>).json({ erro: <span class="s">'Campos "titulo" e "autor" são obrigatórios'</span> });
+  }
+  next();
+};
+
+<span class="c">// READ — lista com busca opcional (?q=)</span>
+app.get(<span class="s">'/api/livros'</span>, (req, res) =&gt; {
+  <span class="k">const</span> q = req.query.q?.toLowerCase();
+  res.json(q ? livros.filter((l) =&gt; l.titulo.toLowerCase().includes(q)) : livros);
+});
+
+<span class="c">// READ — por id</span>
+app.get(<span class="s">'/api/livros/:id'</span>, (req, res) =&gt; {
+  <span class="k">const</span> livro = livros.find((l) =&gt; l.id === <span class="f">Number</span>(req.params.id));
+  <span class="k">if</span> (!livro) <span class="k">return</span> res.status(<span class="n">404</span>).json({ erro: <span class="s">'Livro não encontrado'</span> });
+  res.json(livro);
+});
+
+<span class="c">// CREATE</span>
+app.post(<span class="s">'/api/livros'</span>, validar, (req, res) =&gt; {
+  <span class="k">const</span> { titulo, autor } = req.body;
+  <span class="k">const</span> novo = { id: proximoId++, titulo, autor };
+  livros.push(novo);
+  res.status(<span class="n">201</span>).location(<span class="s">`/api/livros/${novo.id}`</span>).json(novo);
+});
+
+<span class="c">// UPDATE</span>
+app.put(<span class="s">'/api/livros/:id'</span>, validar, (req, res) =&gt; {
+  <span class="k">const</span> indice = livros.findIndex((l) =&gt; l.id === <span class="f">Number</span>(req.params.id));
+  <span class="k">if</span> (indice === -<span class="n">1</span>) <span class="k">return</span> res.status(<span class="n">404</span>).json({ erro: <span class="s">'Livro não encontrado'</span> });
+  livros[indice] = { ...livros[indice], ...req.body, id: livros[indice].id };
+  res.json(livros[indice]);
+});
+
+<span class="c">// DELETE</span>
+app.delete(<span class="s">'/api/livros/:id'</span>, (req, res) =&gt; {
+  <span class="k">const</span> tamanho = livros.length;
+  livros = livros.filter((l) =&gt; l.id !== <span class="f">Number</span>(req.params.id));
+  <span class="k">if</span> (livros.length === tamanho) <span class="k">return</span> res.status(<span class="n">404</span>).json({ erro: <span class="s">'Livro não encontrado'</span> });
+  res.status(<span class="n">204</span>).end();
+});
+
+<span class="c">// 404 e tratamento global de erros</span>
+app.use((_req, res) =&gt; res.status(<span class="n">404</span>).json({ erro: <span class="s">'Rota não encontrada'</span> }));
+app.use((err, _req, res, _next) =&gt; {
+  <span class="f">console</span>.error(err);
+  res.status(<span class="n">500</span>).json({ erro: <span class="s">'Erro interno do servidor'</span> });
+});
+
+app.listen(PORTA, () =&gt; <span class="f">console</span>.log(<span class="s">`API rodando em http://localhost:${PORTA}`</span>));</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6. MERCADO ===== -->
+<section id="mercado">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Carreira</span>
+      <h2>Mercado de <span>Trabalho</span></h2>
+      <p>JavaScript é uma das habilidades mais demandadas no Brasil e no exterior.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Nível</th><th>Faixa Salarial (mensal)</th><th>Perfil esperado</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="level">Júnior</td>
+            <td class="salary">R$ 3.000 – 4.500</td>
+            <td class="desc">JS/HTML/CSS sólidos, Git, um framework básico, tarefas guiadas.</td>
+          </tr>
+          <tr>
+            <td class="level">Pleno</td>
+            <td class="salary">R$ 6.000 – 9.000</td>
+            <td class="desc">Autonomia, TypeScript, testes, consumo de APIs, boas práticas.</td>
+          </tr>
+          <tr>
+            <td class="level">Sênior</td>
+            <td class="salary">R$ 12.000 – 18.000+</td>
+            <td class="desc">Arquitetura, performance, mentoria, decisões técnicas e liderança.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Valores aproximados para CLT no Brasil; podem variar conforme região, empresa e regime de contratação.</p>
+
+    <div class="market-grid">
+      <div class="panel">
+        <h3>🏢 Principais Empresas</h3>
+        <ul>
+          <li><strong>Big Techs:</strong> Google, Meta, Microsoft, Amazon</li>
+          <li><strong>Fintechs BR:</strong> Nubank, Itaú, Inter, PicPay</li>
+          <li><strong>Marketplaces:</strong> Mercado Livre, Magalu, iFood</li>
+          <li><strong>Consultorias:</strong> ThoughtWorks, Accenture, CI&amp;T</li>
+          <li><strong>Remoto internacional:</strong> Vercel, Netlify, startups globais</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>👤 Cargos Comuns</h3>
+        <ul>
+          <li><strong>Desenvolvedor Front-end:</strong> interfaces com React, Vue ou Angular</li>
+          <li><strong>Desenvolvedor Full-stack:</strong> front + back com Node.js e banco de dados</li>
+          <li><strong>Node Developer:</strong> APIs, microsserviços e sistemas em tempo real</li>
+          <li><strong>Mobile (React Native):</strong> apps para iOS e Android</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7. ROADMAP ===== -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Plano de estudos</span>
+      <h2>Roadmap de <span>Aprendizagem</span></h2>
+      <p>Quatro fases para sair do zero e chegar ao nível profissional.</p>
+    </div>
+    <div class="roadmap">
+      <div class="phase">
+        <span class="p-num">Fase 1</span>
+        <h3>Fundamentos</h3>
+        <span class="time">≈ 1–2 meses</span>
+        <ul>
+          <li>HTML semântico</li>
+          <li>CSS básico e Flexbox/Grid</li>
+          <li>Variáveis, tipos e operadores</li>
+          <li>Condicionais e laços</li>
+          <li>Funções, arrays e objetos</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <span class="p-num">Fase 2</span>
+        <h3>JS no Navegador</h3>
+        <span class="time">≈ 2–3 meses</span>
+        <ul>
+          <li>DOM e seletores</li>
+          <li>Eventos</li>
+          <li>Fetch API e JSON</li>
+          <li>ES6+ (módulos, destructuring)</li>
+          <li>Promises e async/await</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <span class="p-num">Fase 3</span>
+        <h3>Frameworks</h3>
+        <span class="time">≈ 3–4 meses</span>
+        <ul>
+          <li>React ou Vue</li>
+          <li>Componentes, estado e hooks</li>
+          <li>Roteamento</li>
+          <li>TypeScript</li>
+          <li>Gerenciamento de estado</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <span class="p-num">Fase 4</span>
+        <h3>Back-End &amp; Qualidade</h3>
+        <span class="time">≈ 3–4 meses</span>
+        <ul>
+          <li>Node.js e Express</li>
+          <li>Banco de dados (SQL/NoSQL)</li>
+          <li>Testes (Jest, Vitest, Playwright)</li>
+          <li>CI/CD com GitHub Actions</li>
+          <li>Deploy e observabilidade</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 8. RECURSOS ===== -->
+<section id="recursos">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Continue estudando</span>
+      <h2>Recursos <span>Recomendados</span></h2>
+      <p>Materiais gratuitos e de alta qualidade para aprofundar seus conhecimentos.</p>
+    </div>
+    <div class="resources">
+      <a class="res" href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer">
+        <div class="r-icon">📘</div>
+        <div><h3>MDN Web Docs</h3><p>A documentação de referência definitiva para JavaScript e APIs web, em português.</p><span class="kind">Documentação</span></div>
+      </a>
+      <a class="res" href="https://javascript.info/" target="_blank" rel="noopener noreferrer">
+        <div class="r-icon">🎯</div>
+        <div><h3>javascript.info</h3><p>Tutorial moderno e completo, do básico ao avançado, com exercícios.</p><span class="kind">Tutorial</span></div>
+      </a>
+      <a class="res" href="https://nodejs.org/docs/latest/api/" target="_blank" rel="noopener noreferrer">
+        <div class="r-icon">🟢</div>
+        <div><h3>Node.js Docs</h3><p>Documentação oficial da API do Node.js e guias de aprendizado.</p><span class="kind">Documentação</span></div>
+      </a>
+      <a class="res" href="https://www.typescriptlang.org/docs/" target="_blank" rel="noopener noreferrer">
+        <div class="r-icon">🔷</div>
+        <div><h3>TypeScript Docs</h3><p>Handbook oficial para adicionar tipagem estática ao seu JavaScript.</p><span class="kind">Documentação</span></div>
+      </a>
+      <a class="res" href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="noopener noreferrer">
+        <div class="r-icon">📚</div>
+        <div><h3>You Don't Know JS</h3><p>Série de livros de Kyle Simpson que mergulha nas entranhas da linguagem. Gratuita no GitHub.</p><span class="kind">Livro</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer">
+  <p>© 2025 Ponce Metodologias &amp; Dev</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Accordion ---------- */
+  var items = document.querySelectorAll('.acc-item');
+
+  function setPanel(item, open) {
+    var btn = item.querySelector('.acc-btn');
+    var panel = item.querySelector('.acc-panel');
+    item.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+  }
+
+  items.forEach(function (item) {
+    setPanel(item, item.classList.contains('open'));
+    item.querySelector('.acc-btn').addEventListener('click', function () {
+      setPanel(item, !item.classList.contains('open'));
+    });
+  });
+
+  window.addEventListener('resize', function () {
+    items.forEach(function (item) {
+      if (item.classList.contains('open')) {
+        var panel = item.querySelector('.acc-panel');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* ---------- Tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+
+  function activateTab(tab) {
+    tabs.forEach(function (t) {
+      var selected = t === tab;
+      t.setAttribute('aria-selected', String(selected));
+      t.tabIndex = selected ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls'))
+        .classList.toggle('active', selected);
+    });
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { activateTab(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var next;
+      if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+      else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (next) { e.preventDefault(); next.focus(); activateTab(next); }
+    });
+  });
+
+  /* ---------- Copy buttons ---------- */
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.closest('.code-wrap').querySelector('pre code').innerText;
+      var done = function () {
+        btn.textContent = 'Copiado ✓';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(done, function () { fallbackCopy(code); done(); });
+      } else {
+        fallbackCopy(code);
+        done();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

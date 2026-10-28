@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Curso Completo de Lógica de Programação Pura — Ponce Metodologias</title>
+  <meta name="description" content="Curso aprofundado, progressivo e interativo de Lógica de Programação Pura e Ciência da Computação com 22 módulos, Teorema Mestre, Programação Dinâmica, Lógica de Hoare, Máquinas de Turing e Inteligência Artificial que avalia suas próprias palavras."/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/curso-logica.css"/>
+  <link rel="stylesheet" href="css/interfaces.css"/>
+  <link rel="stylesheet" href="css/questoes.css"/>
+</head>
+<body>
+
+  <!-- Barra de Progresso de Leitura Superior -->
+  <div id="scroll-indicator"></div>
+
+  <!-- HEADER PRINCIPAL FIXO -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="index.html" class="brand-logo" title="Lógica Pura — Ponce Metodologias">
+        <div class="brand-icon-wrapper">
+          <div class="brand-icon-glow"></div>
+          <div class="brand-icon">
+            <svg class="brand-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a9 9 0 0 1 9 9c0 3.18-1.64 5.98-4.1 7.57L16 22H8l-.9-3.43A9 9 0 0 1 3 11a9 9 0 0 1 9-9z"/>
+              <path d="M9 10h6"/>
+              <path d="M10 14h4"/>
+            </svg>
+          </div>
+        </div>
+        <div class="brand-text-block">
+          <div class="brand-title">LÓGICA PURA<span class="brand-dot">.</span></div>
+          <div class="brand-sub">PONCE METODOLOGIAS</div>
+        </div>
+      </a>
+      <div class="header-search" onclick="openCursoSpotlight()" style="cursor: pointer;" title="Pressione Ctrl+K para buscar aulas, conceitos e simuladores">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="curso-search-input" placeholder="Buscar aula ou conceito... (Ctrl + K)" autocomplete="off" readonly style="cursor: pointer;"/>
+        <span style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.72rem; font-weight: 800; background: var(--bg-main); border: 1px solid var(--border-color); padding: 0.15rem 0.45rem; border-radius: 4px; color: var(--text-light); pointer-events: none;">Ctrl K</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="nav-scroll-container" id="nav-scroll-container">
+        <button class="nav-scroll-arrow left" id="nav-scroll-left" aria-label="Rolar para esquerda" title="Rolar para esquerda">‹</button>
+        <nav class="nav-links" id="header-nav-links">
+          <a href="index.html" class="nav-link">← Voltar ao Portal</a>
+          <a href="#curso-dashboard" class="nav-link">Meu Progresso</a>
+          <a href="#curso-modules-track" class="nav-link">22 Módulos & Mestria</a>
+          <a href="#curso-module-content" class="nav-link">Aula Atual</a>
+          <a href="#biblioteca-referencias" class="nav-link">Referências</a>
+        </nav>
+        <button class="nav-scroll-arrow right" id="nav-scroll-right" aria-label="Rolar para direita" title="Rolar para direita">›</button>
+      </div>
+
+      <!-- SELETOR DE MÚLTIPLAS INTERFACES -->
+      <div class="interface-switcher-wrap" id="interface-switcher-wrap">
+        <button class="interface-switcher-btn" id="interface-switcher-btn" title="Escolha o visual / layout da página">
+          <span>🎨</span>
+          <span id="interface-current-label">Interface 1 (Clássica)</span>
+          <span style="font-size:0.75rem;">▼</span>
+        </button>
+        <div class="interface-dropdown-menu" id="interface-dropdown-menu">
+          <div class="interface-dropdown-header">Escolha seu Modo de Leitura</div>
+          <button class="interface-opt-item" onclick="setAppInterface('1')">
+            <span class="interface-opt-icon">🏛️</span>
+            <div>
+              <div class="interface-opt-title">Interface 1 — Clássica Glassmorphism</div>
+              <div class="interface-opt-desc">Layout completo, cartões estilizados e visual enciclopédico.</div>
+            </div>
+          </button>
+          <button class="interface-opt-item" onclick="setAppInterface('2')">
+            <span class="interface-opt-icon">📖</span>
+            <div>
+              <div class="interface-opt-title">Interface 2 — Foco Zen & Leitura Limpa</div>
+              <div class="interface-opt-desc">Design editorial arejado, sem bordas pesadas, ideal para estudo longo.</div>
+            </div>
+          </button>
+          <button class="interface-opt-item" onclick="setAppInterface('3')">
+            <span class="interface-opt-icon">📊</span>
+            <div>
+              <div class="interface-opt-title">Interface 3 — Dashboard Modular</div>
+              <div class="interface-opt-desc">Visual compacto em grid analítico, focado em métricas e progresso.</div>
+            </div>
+          </button>
+          <button class="interface-opt-item" onclick="setAppInterface('4')">
+            <span class="interface-opt-icon">💻</span>
+            <div>
+              <div class="interface-opt-title">Interface 4 — Dev IDE / Cyber Dark</div>
+              <div class="interface-opt-desc">Tema técnico de alta imersão com fontes mono e contrastes nítidos.</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-icon" id="theme-toggle-btn" title="Alternar Modo Claro / Escuro">🌙</button>
+    </div>
+  </header>
+
+  <div class="app-container" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem;">
+
+    <!-- ÁREA PRINCIPAL DO CURSO -->
+    <main class="main-content" style="width: 100%; padding: 0;">
+
+      <!-- HERO DO CURSO -->
+      <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+        <span class="section-badge badge-purple">Formação Fundamental</span>
+        <h1 class="section-title" style="font-size: 2.3rem; margin-top: 0.5rem;">
+          ⚙️ Curso Completo de Lógica de Programação Pura
+        </h1>
+        <p class="section-desc" style="max-width: 850px; margin: 0.75rem auto 0;">
+          Aprenda a <strong>pensar, decompor, modelar, testar e justificar raciocínios algorítmicos</strong> independentemente de sintaxe. Sem atalhos, sem memorização vazia: construa a base mental que sustentará toda a sua carreira técnica.
+        </p>
+      </div>
+
+      <!-- ====================================================================
+           CAMPO DE REDIRECIONAMENTO E NAVEGAÇÃO RÁPIDA NA MESMA PÁGINA
+           ==================================================================== -->
+      <div class="curso-quick-nav-bar" id="campo-redirecionamento-rapido">
+        <div class="quick-nav-title">
+          <span style="font-size:1.4rem;">🧭</span>
+          <span>Ir Diretamente Para um Módulo / Conteúdo:</span>
+        </div>
+        <div class="quick-nav-controls">
+          <select id="curso-quick-select" class="quick-nav-select" aria-label="Selecione o módulo para navegar">
+            <option value="">Carregando lista dos 22 módulos (Iniciante ao Especialista)...</option>
+          </select>
+          <button class="quick-nav-btn" onclick="CursoLogicaApp.navegarModuloRapido()">
+            ⚡ Acessar Agora
+          </button>
+        </div>
+      </div>
+
+      <!-- CONTAINER DO APLICATIVO DO CURSO -->
+      <div id="curso-logica-pura-app" class="curso-logica-container">
+
+        <!-- PAINEL / DASHBOARD DE PROGRESSO -->
+        <div class="curso-dashboard-card" id="curso-dashboard">
+          <div class="dashboard-header">
+            <div class="dashboard-title-group">
+              <h3><span>📊</span> Painel de Evolução & Domínio do Aluno</h3>
+              <p>Acompanhamento cognitivo multidimensional baseado nas suas explicações e exercícios.</p>
+            </div>
+          </div>
+
+          <!-- Métricas -->
+          <div class="dashboard-stats-grid" id="curso-dash-stats">
+            <!-- Preenchido dinamicamente via JS -->
+          </div>
+
+          <!-- Alerta de Recomendação Inteligente -->
+          <div class="dash-recommendation-alert" id="curso-dash-recommendation">
+            💡 Carregando recomendações personalizadas da tutora IA...
+          </div>
+        </div>
+
+        <!-- TRILHA HORIZONTAL DOS 22 MÓDULOS -->
+        <div>
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
+            Trilha de Aprendizagem Progressiva (22 Módulos — Fundamentos, Avançado & Mestria em CS):
+          </div>
+          <div class="curso-modules-track" id="curso-modules-track">
+            <!-- Preenchido dinamicamente com botões dos 22 módulos -->
+          </div>
+        </div>
+
+        <!-- ÁREA DE DETALHES DO MÓDULO (AULA + SIMULADOR + EXERCÍCIOS + IA) -->
+        <div id="curso-module-content">
+          <!-- Renderizado dinamicamente -->
+        </div>
+
+        <!-- SHELF DE REFERÊNCIAS BIBLIOGRÁFICAS -->
+        <div class="books-section" id="biblioteca-referencias" style="margin-top: 3rem;">
+          <div class="section-header" style="margin-bottom: 1.5rem;">
+            <span class="section-badge badge-blue">Fundamentos Científicos</span>
+            <h3 class="section-title" style="font-size: 1.4rem;">📚 Referências e Literatura de Apoio Pedagógico</h3>
+            <p class="section-desc">
+              O conteúdo deste curso foi estruturado com base em obras clássicas do pensamento matemático, computacional e metodologias ativas:
+            </p>
+          </div>
+
+          <div class="books-shelf">
+            <div class="book-card">
+              <span class="book-emoji">💡</span>
+              <p class="book-title">How to Solve It</p>
+              <p class="book-author">George Pólya — Princeton University Press</p>
+              <p class="book-desc">A metodologia pioneira de 4 etapas para decomposição e resolução heurística de problemas matemáticos e computacionais.</p>
+              <span class="book-level ini">Iniciante</span>
+            </div>
+
+            <div class="book-card">
+              <span class="book-emoji">🧠</span>
+              <p class="book-title">How to Prove It: A Structured Approach</p>
+              <p class="book-author">Daniel J. Velleman — Cambridge University Press</p>
+              <p class="book-desc">A base definitiva para raciocínio dedutivo, lógica proposicional formal, negações e técnicas de demonstração sem ambiguidades.</p>
+              <span class="book-level ini">Iniciante</span>
+            </div>
+
+            <div class="book-card">
+              <span class="book-emoji">🏛️</span>
+              <p class="book-title">Discrete Mathematics and Its Applications</p>
+              <p class="book-author">Kenneth H. Rosen — McGraw-Hill</p>
+              <p class="book-desc">Referência em lógica proposicional, tabelas-verdade, equivalências de De Morgan e indução para invariantes de repetição.</p>
+              <span class="book-level mid">Intermediário</span>
+            </div>
+
+            <div class="book-card">
+              <span class="book-emoji">⚙️</span>
+              <p class="book-title">Algoritmos: Teoria e Prática (CLRS)</p>
+              <p class="book-author">Cormen, Leiserson, Rivest & Stein — MIT Press</p>
+              <p class="book-desc">A mais respeitada obra para análise de complexidade assintótica (Notação Big-O), provas de invariantes de laço e correção formal.</p>
+              <span class="book-level ref">Referência</span>
+            </div>
+
+            <div class="book-card">
+              <span class="book-emoji">👑</span>
+              <p class="book-title">The Art of Computer Programming (Vol. 1)</p>
+              <p class="book-author">Donald E. Knuth — Addison-Wesley</p>
+              <p class="book-desc">O clássico monumental que formalizou a análise rigorosa de algoritmos, determinismo e estruturas fundamentais.</p>
+              <span class="book-level ref">Avançado</span>
+            </div>
+
+            <div class="book-card">
+              <span class="book-emoji">📘</span>
+              <p class="book-title">Lógica de Programação: A Construção de Algoritmos</p>
+              <p class="book-author">André L. V. Forbellone — Pearson</p>
+              <p class="book-desc">Referência didática brasileira consagrada para modularização, tabelas de trace e representações em pseudocódigo estruturado.</p>
+              <span class="book-level ini">Iniciante</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <footer style="text-align:center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 3rem;">
+    <p>© Ponce Metodologias & Dev — Ensino Rigoroso de Lógica de Programação Pura.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/curso-logica-dados.js"></script>
+  <script src="js/curso-logica-extras.js"></script>
+  <script src="js/curso-logica.js"></script>
+  <script>
+    // Theme toggle
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const doc = document.documentElement;
+        const cur = doc.getAttribute('data-theme') || 'light';
+        const next = cur === 'light' ? 'dark' : 'light';
+        doc.setAttribute('data-theme', next);
+        themeBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+    }
+
+    // Sistema de Múltiplas Interfaces (1 a 4)
+    const interfaceLabels = {
+      '1': 'Interface 1 (Clássica)',
+      '2': 'Interface 2 (Foco Zen)',
+      '3': 'Interface 3 (Dashboard)',
+      '4': 'Interface 4 (Dev IDE)'
+    };
+
+    function setAppInterface(num) {
+      const doc = document.documentElement;
+      doc.setAttribute('data-interface', num);
+      localStorage.setItem('ponce_selected_interface', num);
+      const lbl = document.getElementById('interface-current-label');
+      if (lbl) lbl.textContent = interfaceLabels[num] || `Interface ${num}`;
+      
+      const menu = document.getElementById('interface-dropdown-menu');
+      if (menu) menu.classList.remove('show');
+    }
+
+    // Inicializar interface salva
+    const savedInterface = localStorage.getItem('ponce_selected_interface') || '1';
+    setAppInterface(savedInterface);
+
+    // Toggle menu dropdown de interfaces
+    const switcherBtn = document.getElementById('interface-switcher-btn');
+    const dropdownMenu = document.getElementById('interface-dropdown-menu');
+    if (switcherBtn && dropdownMenu) {
+      switcherBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('show');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!switcherBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+    }
+
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+      const el = document.getElementById('scroll-indicator');
+      if (!el) return;
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      el.style.width = scrolled + '%';
+    });
+
+    // Navegação com Arraste Horizontal no Curso
+    function initCursoNavScroll() {
+      const container = document.getElementById('nav-scroll-container');
+      if (!container) return;
+      const navLinks = container.querySelector('.nav-links');
+      const leftBtn = document.getElementById('nav-scroll-left');
+      const rightBtn = document.getElementById('nav-scroll-right');
+      if (!navLinks) return;
+
+      function updateArrows() {
+        const maxScroll = navLinks.scrollWidth - navLinks.clientWidth;
+        if (maxScroll > 5) {
+          if (leftBtn) leftBtn.classList.toggle('visible', navLinks.scrollLeft > 10);
+          if (rightBtn) rightBtn.classList.toggle('visible', navLinks.scrollLeft < maxScroll - 10);
+        } else {
+          if (leftBtn) leftBtn.classList.remove('visible');
+          if (rightBtn) rightBtn.classList.remove('visible');
+        }
+      }
+
+      if (leftBtn) leftBtn.addEventListener('click', () => navLinks.scrollBy({ left: -200, behavior: 'smooth' }));
+      if (rightBtn) rightBtn.addEventListener('click', () => navLinks.scrollBy({ left: 200, behavior: 'smooth' }));
+
+      let isDown = false, startX = 0, scrollLeft = 0, hasDragged = false;
+      navLinks.addEventListener('mousedown', (e) => {
+        isDown = true;
+        hasDragged = false;
+        navLinks.classList.add('grabbing');
+        startX = e.pageX - navLinks.offsetLeft;
+        scrollLeft = navLinks.scrollLeft;
+      });
+      window.addEventListener('mouseup', () => { isDown = false; navLinks.classList.remove('grabbing'); });
+      navLinks.addEventListener('mouseleave', () => { isDown = false; navLinks.classList.remove('grabbing'); });
+      navLinks.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - navLinks.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        if (Math.abs(walk) > 4) hasDragged = true;
+        navLinks.scrollLeft = scrollLeft - walk;
+        updateArrows();
+      });
+
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          if (hasDragged) {
+            e.preventDefault();
+            hasDragged = false;
+          }
+        });
+      });
+
+      navLinks.addEventListener('scroll', updateArrows, { passive: true });
+      window.addEventListener('resize', updateArrows);
+      setTimeout(updateArrows, 150);
+    }
+    initCursoNavScroll();
+
+    // Spotlight Search dentro do Curso de Lógica
+    function openCursoSpotlight() {
+      const modal = document.getElementById('spotlight-search-modal');
+      const input = document.getElementById('spotlight-input-field');
+      if (!modal) return;
+      modal.classList.add('active');
+      if (input) {
+        input.value = '';
+        setTimeout(() => input.focus(), 50);
+      }
+      filtrarAulasCurso('');
+    }
+
+    function closeCursoSpotlight() {
+      const modal = document.getElementById('spotlight-search-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function filtrarAulasCurso(query) {
+      const q = (query || '').toLowerCase().trim();
+      const resultsContainer = document.getElementById('spotlight-results-list');
+      const countBadge = document.getElementById('spotlight-results-count');
+
+      // Tenta obter os módulos de CursoLogicaApp ou diretamente de CURSO_LOGICA_MODULOS
+      const modulos = (window.CursoLogicaApp && window.CursoLogicaApp._MODULOS)
+        || window.CURSO_LOGICA_MODULOS;
+
+      if (!resultsContainer || !modulos) {
+        if (resultsContainer) {
+          resultsContainer.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-light);">⏳ Carregando módulos...</div>';
+        }
+        return;
+      }
+
+      const filtrados = modulos.filter(m => {
+        if (!q) return true;
+        const texto = [
+          m.id,
+          m.titulo,
+          m.subtitulo,
+          m.objetivo,
+          m.nivel,
+          m.introducaoIntuitiva,
+          m.explicacaoAprofundada
+        ].join(' ').toLowerCase();
+        return texto.includes(q);
+      });
+
+      if (countBadge) countBadge.textContent = `${filtrados.length} módulo(s) encontrado(s)`;
+
+      if (filtrados.length === 0) {
+        resultsContainer.innerHTML = `
+          <div style="text-align:center; padding: 2rem 1rem; color: var(--text-light);">
+            <span style="font-size:2rem; display:block; margin-bottom:0.5rem;">🔍</span>
+            <strong>Nenhum módulo encontrado para "${q}"</strong>
+          </div>
+        `;
+        return;
+      }
+
+      resultsContainer.innerHTML = filtrados.map((m, idx) => `
+        <div class="spotlight-item ${idx === 0 ? 'selected' : ''}" onclick="selecionarModuloSpotlight(${m.id})">
+          <span class="spotlight-item-icon">🧠</span>
+          <div class="spotlight-item-body">
+            <div class="spotlight-item-header">
+              <h4 class="spotlight-item-title">Módulo ${m.id}: ${m.titulo}</h4>
+              <span class="spotlight-item-category">[${m.nivel}]</span>
+            </div>
+            <p class="spotlight-item-desc">${m.subtitulo || m.objetivo || ''}</p>
+          </div>
+          <div class="spotlight-item-action">
+            <span>Acessar Aula ↵</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selecionarModuloSpotlight(id) {
+      closeCursoSpotlight();
+      if (window.CursoLogicaApp) {
+        window.CursoLogicaApp.selecionarModulo(id);
+      }
+    }
+
+    // Atalhos de teclado no Curso
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const modal = document.getElementById('spotlight-search-modal');
+        if (modal && modal.classList.contains('active')) {
+          closeCursoSpotlight();
+        } else {
+          openCursoSpotlight();
+        }
+      } else if (e.key === 'Escape') {
+        closeCursoSpotlight();
+      }
+    });
+
+    const spotlightInput = document.getElementById('spotlight-input-field');
+    if (spotlightInput) {
+      spotlightInput.addEventListener('input', (e) => filtrarAulasCurso(e.target.value));
+    }
+  </script>
+
+  <!-- BOTÃO LATERAL ESQUERDO — IR PARA AS QUESTÕES -->
+  <a href="questoes.html" class="btn-lateral-questoes" title="Ir para o Banco de Questões" aria-label="Ir para o Banco de Questões">
+    <span class="blq-icon">🧩</span>
+    <span class="blq-label">QUESTÕES</span>
+  </a>
+
+  <!-- BOTÃO FLUTUANTE DE BUSCA RÁPIDA -->
+  <button class="btn-floating-quick-search" onclick="openCursoSpotlight()" title="Busca Rápida de Módulos (Ctrl + K)">
+    <span>🔍</span>
+    <span>Buscar Aula / Tópico</span>
+    <kbd>Ctrl K</kbd>
+  </button>
+
+  <!-- MODAL SPOTLIGHT SEARCH DO CURSO -->
+  <div class="spotlight-overlay" id="spotlight-search-modal" onclick="if(event.target===this) closeCursoSpotlight()">
+    <div class="spotlight-modal" role="dialog" aria-modal="true" aria-label="Busca de Módulos">
+      <div class="spotlight-search-header">
+        <span class="spotlight-search-icon">🔍</span>
+        <input type="text" id="spotlight-input-field" class="spotlight-input" placeholder="Digite para encontrar um módulo ou conceito (Ex: Variáveis, Big O, Hoare, Recursão...)" autocomplete="off"/>
+        <span class="spotlight-esc-badge" onclick="closeCursoSpotlight()" title="Fechar Busca">ESC</span>
+      </div>
+      <div class="spotlight-results-wrap" id="spotlight-results-list"></div>
+      <div class="spotlight-footer">
+        <span id="spotlight-results-count" style="font-weight:700; color:var(--primary);">22 Módulos Disponíveis</span>
+        <div class="spotlight-footer-keys">
+          <div class="spotlight-footer-key"><kbd>↵ Enter</kbd> <span>para ir à aula</span></div>
+          <div class="spotlight-footer-key"><kbd>ESC</kbd> <span>para fechar</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

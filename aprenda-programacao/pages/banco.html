@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Banco de Dados | Aprenda Programação</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+</head>
+<body>
+<div id="scroll-bar" style="position:fixed;top:0;left:0;height:3px;width:0;background:var(--dark);z-index:2000;transition:width .1s;"></div>
+
+<nav id="main-nav">
+  <a class="logo" href="../index.html">&#60;<span>code</span>/&#62; Aprenda Prog.</a>
+  <a class="nav-link" href="../index.html">Home</a>
+  <a class="nav-link" href="logica.html">Lógica</a>
+  <a class="nav-link" href="algoritmos.html">Algoritmos</a>
+  <a class="nav-link" href="estruturas.html">Estruturas</a>
+  <a class="nav-link" href="linguagens.html">Linguagens</a>
+  <a class="nav-link" href="paradigmas.html">Paradigmas</a>
+  <a class="nav-link" href="web.html">Web</a>
+  <a class="nav-link" href="banco.html">Banco de Dados</a>
+  <a class="nav-link" href="carreira.html">Carreira</a>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-hero">
+    <h1>🗄️ Banco de Dados</h1>
+    <p>Um banco de dados é um sistema organizado para armazenar, gerenciar e recuperar informações de forma eficiente e persistente. Dados são a alma de qualquer software real.</p>
+    <div class="badge-row">
+      <span class="badge badge-blue">Módulo 7</span>
+      <span class="badge badge-green">SQL Completo</span>
+      <span class="badge badge-orange">NoSQL</span>
+      <span class="badge badge-purple">ACID & Normalização</span>
+    </div>
+  </div>
+
+  <!-- SQL -->
+  <div class="section" id="sql">
+    <div class="section-title"><div class="num-badge num-dark">1</div><h2>SQL — Banco Relacional</h2></div>
+    <p>Dados organizados em <strong>tabelas com linhas e colunas</strong>. Relacionamentos entre tabelas via chaves. O modelo mais usado no mundo corporativo há 50 anos — e continua sendo o padrão.</p>
+
+    <h3>DDL — Definindo a estrutura</h3>
+    <div class="code-block"><span class="cmt">-- CREATE — criar tabelas</span>
+<span class="kw">CREATE TABLE</span> usuarios (
+    id         <span class="kw">SERIAL PRIMARY KEY</span>,        <span class="cmt">-- auto incremento</span>
+    nome       <span class="kw">VARCHAR</span>(<span class="num">100</span>) <span class="kw">NOT NULL</span>,
+    email      <span class="kw">VARCHAR</span>(<span class="num">255</span>) <span class="kw">UNIQUE NOT NULL</span>,
+    senha_hash <span class="kw">TEXT NOT NULL</span>,
+    criado_em  <span class="kw">TIMESTAMP DEFAULT NOW</span>(),
+    ativo      <span class="kw">BOOLEAN DEFAULT TRUE</span>
+);
+
+<span class="kw">CREATE TABLE</span> pedidos (
+    id         <span class="kw">SERIAL PRIMARY KEY</span>,
+    usuario_id <span class="kw">INTEGER REFERENCES</span> usuarios(<span class="var">id</span>), <span class="cmt">-- chave estrangeira</span>
+    total      <span class="kw">NUMERIC</span>(<span class="num">10</span>,<span class="num">2</span>) <span class="kw">NOT NULL</span>,
+    criado_em  <span class="kw">TIMESTAMP DEFAULT NOW</span>()
+);</div>
+
+    <h3>DML — Manipulando dados</h3>
+    <div class="code-block"><span class="cmt">-- INSERT — inserir dados</span>
+<span class="kw">INSERT INTO</span> usuarios (nome, email, senha_hash)
+<span class="kw">VALUES</span> (<span class="str">'Ana Silva'</span>, <span class="str">'ana@email.com'</span>, <span class="str">'$2b$12$hash...'</span>);
+
+<span class="cmt">-- SELECT — consultar</span>
+<span class="kw">SELECT</span> id, nome, email <span class="kw">FROM</span> usuarios <span class="kw">WHERE</span> ativo = <span class="kw">TRUE</span>;
+
+<span class="cmt">-- UPDATE — atualizar</span>
+<span class="kw">UPDATE</span> usuarios <span class="kw">SET</span> ativo = <span class="kw">FALSE</span> <span class="kw">WHERE</span> id = <span class="num">42</span>;
+
+<span class="cmt">-- DELETE — remover</span>
+<span class="kw">DELETE FROM</span> usuarios <span class="kw">WHERE</span> criado_em < NOW() - <span class="kw">INTERVAL</span> <span class="str">'2 years'</span>;</div>
+
+    <h3>JOINs — Combinando tabelas</h3>
+    <div class="code-block"><span class="cmt">-- INNER JOIN — apenas registros que casam nos dois lados</span>
+<span class="kw">SELECT</span>
+    u.nome,
+    u.email,
+    <span class="fn">COUNT</span>(p.id)    <span class="kw">AS</span> total_pedidos,
+    <span class="fn">SUM</span>(p.total)   <span class="kw">AS</span> valor_total
+<span class="kw">FROM</span>       usuarios u
+<span class="kw">INNER JOIN</span> pedidos  p <span class="kw">ON</span> u.id = p.usuario_id
+<span class="kw">WHERE</span>  u.ativo = <span class="kw">TRUE</span>
+<span class="kw">GROUP BY</span>  u.id, u.nome, u.email
+<span class="kw">HAVING</span>    <span class="fn">SUM</span>(p.total) > <span class="num">1000</span>
+<span class="kw">ORDER BY</span>  valor_total <span class="kw">DESC</span>
+<span class="kw">LIMIT</span> <span class="num">10</span>;
+
+<span class="cmt">-- LEFT JOIN — todos da esquerda, mesmo sem correspondência</span>
+<span class="kw">SELECT</span> u.nome, p.total
+<span class="kw">FROM</span>      usuarios u
+<span class="kw">LEFT JOIN</span> pedidos  p <span class="kw">ON</span> u.id = p.usuario_id;
+<span class="cmt">-- usuários sem pedidos aparecerão com p.total = NULL</span></div>
+
+    <h3>Índices — Acelerar buscas</h3>
+    <div class="code-block"><span class="cmt">-- Sem índice: PostgreSQL lê a tabela INTEIRA (seq scan)</span>
+<span class="cmt">-- Com índice: acessa diretamente (index scan) — O(log n)</span>
+
+<span class="kw">CREATE INDEX</span> idx_usuarios_email <span class="kw">ON</span> usuarios(email);
+<span class="kw">CREATE INDEX</span> idx_pedidos_usuario <span class="kw">ON</span> pedidos(usuario_id);
+
+<span class="cmt">-- Índice composto</span>
+<span class="kw">CREATE INDEX</span> idx_pedidos_usuario_data <span class="kw">ON</span> pedidos(usuario_id, criado_em <span class="kw">DESC</span>);</div>
+  </div>
+
+  <!-- NOSQL -->
+  <div class="section" id="nosql">
+    <div class="section-title"><div class="num-badge num-dark">2</div><h2>NoSQL — Bancos Não-Relacionais</h2></div>
+    <p>Surgiram para resolver limitações do modelo relacional em cenários de escala massiva, dados não-estruturados ou que mudam com frequência.</p>
+    <table>
+      <tr><th>Tipo</th><th>Banco</th><th>Modelo de dados</th><th>Ideal para</th></tr>
+      <tr><td>Documentos</td><td>MongoDB, CouchDB</td><td>JSON/BSON flexível</td><td>Catálogos, CMSs, dados variáveis</td></tr>
+      <tr><td>Chave-Valor</td><td>Redis, DynamoDB</td><td>Chave → Valor simples</td><td>Cache, sessões, filas em memória</td></tr>
+      <tr><td>Colunar</td><td>Cassandra, HBase</td><td>Famílias de colunas</td><td>Big Data, logs, séries temporais</td></tr>
+      <tr><td>Grafos</td><td>Neo4j, ArangoDB</td><td>Nós e relacionamentos</td><td>Redes sociais, recomendações</td></tr>
+    </table>
+    <div class="code-block"><span class="cmt">// MongoDB — documento JSON flexível</span>
+<span class="var">db</span>.usuarios.<span class="fn">insertOne</span>({
+    <span class="var">nome</span>:  <span class="str">"Ana"</span>,
+    <span class="var">email</span>: <span class="str">"ana@email.com"</span>,
+    <span class="var">enderecos</span>: [                   <span class="cmt">// arrays aninhados — sem JOIN!</span>
+        { <span class="var">rua</span>: <span class="str">"Av. Paulista"</span>, <span class="var">cidade</span>: <span class="str">"São Paulo"</span> }
+    ],
+    <span class="var">preferencias</span>: { <span class="var">tema</span>: <span class="str">"dark"</span>, <span class="var">idioma</span>: <span class="str">"pt-BR"</span> }
+});
+
+<span class="var">db</span>.usuarios.<span class="fn">find</span>({ <span class="str">"enderecos.cidade"</span>: <span class="str">"São Paulo"</span> });</div>
+
+    <div class="code-block"><span class="cmt"># Redis — cache em memória ultrarrápido</span>
+<span class="kw">import</span> redis
+
+<span class="var">r</span> = redis.<span class="fn">Redis</span>(host=<span class="str">'localhost'</span>, port=<span class="num">6379</span>)
+
+<span class="cmt"># Cache de sessão com expiração</span>
+<span class="var">r</span>.<span class="fn">setex</span>(<span class="str">f"session:{user_id}"</span>, <span class="num">3600</span>, <span class="var">token</span>)  <span class="cmt"># expira em 1 hora</span>
+<span class="var">session</span> = <span class="var">r</span>.<span class="fn">get</span>(<span class="str">f"session:{user_id}"</span>)
+
+<span class="cmt"># Contador atômico</span>
+<span class="var">r</span>.<span class="fn">incr</span>(<span class="str">"visitas:homepage"</span>)</div>
+  </div>
+
+  <!-- ACID -->
+  <div class="section" id="acid">
+    <div class="section-title"><div class="num-badge num-dark">3</div><h2>ACID — Garantias de Transações</h2></div>
+    <p>ACID garante que operações em banco de dados relacionais sejam confiáveis mesmo em caso de falha, concorrência ou erros.</p>
+    <div class="card-grid">
+      <div class="card"><h3>A — Atomicidade</h3><p>A transação é tudo ou nada. Se qualquer parte falhar, tudo é revertido. Nunca fica à metade.</p></div>
+      <div class="card"><h3>C — Consistência</h3><p>O banco vai de um estado válido para outro estado válido. Regras (constraints) nunca são violadas.</p></div>
+      <div class="card"><h3>I — Isolamento</h3><p>Transações paralelas não interferem entre si. Cada uma enxerga um "snapshot" consistente.</p></div>
+      <div class="card"><h3>D — Durabilidade</h3><p>Uma vez confirmada (COMMIT), a transação persiste mesmo que o servidor caia em seguida.</p></div>
+    </div>
+    <div class="code-block"><span class="cmt">-- Transação bancária: transferir R$100 de Ana para Carlos</span>
+<span class="kw">BEGIN</span>;                                <span class="cmt">-- inicia transação</span>
+    <span class="kw">UPDATE</span> contas <span class="kw">SET</span> saldo = saldo - <span class="num">100</span> <span class="kw">WHERE</span> id = <span class="num">1</span>;  <span class="cmt">-- debita Ana</span>
+    <span class="kw">UPDATE</span> contas <span class="kw">SET</span> saldo = saldo + <span class="num">100</span> <span class="kw">WHERE</span> id = <span class="num">2</span>;  <span class="cmt">-- credita Carlos</span>
+<span class="kw">COMMIT</span>;                               <span class="cmt">-- confirma tudo junto</span>
+<span class="cmt">-- Se qualquer UPDATE falhar: ROLLBACK automático</span></div>
+  </div>
+
+</div>
+
+<footer>
+  <p>← <a href="web.html" style="color:var(--blue);">Web & Back-end</a> &nbsp;|&nbsp; <a href="devops.html" style="color:var(--blue);">Git & DevOps →</a></p>
+  <br/><p>Aprenda Programação — Made with IBM Bob</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

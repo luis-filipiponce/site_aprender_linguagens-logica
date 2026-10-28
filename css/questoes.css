@@ -1,0 +1,103 @@
+/* ==========================================================================
+   BANCO DE QUESTÕES — Estilos (usa as variáveis de css/style.css)
+   ========================================================================== */
+.qz-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.qz-head { text-align: center; margin-bottom: 1.5rem; }
+.qz-head h1 { font-size: 2rem; margin: 0.4rem 0; }
+.qz-head p { color: var(--text-muted); max-width: 680px; margin: 0 auto; }
+
+.qz-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.qz-tab {
+  flex: 1 1 140px; display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
+  padding: 0.6rem 0.9rem; border: 2px solid var(--border-color); border-radius: var(--radius-md);
+  background: var(--bg-card); color: var(--text-muted); font-weight: 700; cursor: pointer;
+  transition: var(--transition);
+}
+.qz-tab:hover { border-color: var(--primary); color: var(--primary); }
+.qz-tab.ativa { background: var(--primary); border-color: var(--primary); color: var(--text-inverse); }
+.qz-tab-count { font-size: 0.75rem; font-weight: 600; opacity: 0.85; }
+
+.qz-score {
+  background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  padding: 0.8rem 1rem; margin-bottom: 1rem;
+}
+.qz-score-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; font-size: 0.92rem; }
+.qz-progress { height: 8px; background: var(--border-subtle); border-radius: var(--radius-full); margin-top: 0.6rem; overflow: hidden; }
+.qz-progress > div { height: 100%; width: 0; background: var(--grad-primary); transition: width 0.3s ease; }
+#qz-reiniciar {
+  background: none; border: 1.5px solid var(--text-light); color: var(--text-muted);
+  font-weight: 700; font-size: 0.8rem; padding: 0.3rem 0.8rem; border-radius: var(--radius-sm); cursor: pointer;
+}
+#qz-reiniciar:hover { border-color: var(--primary); color: var(--primary); }
+
+.qz-intro {
+  border-left: 4px solid var(--primary); background: var(--bg-card); padding: 0.7rem 1rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 1.2rem; color: var(--text-muted); font-size: 0.9rem;
+}
+
+.qz-card {
+  background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md);
+  padding: 1.2rem 1.3rem; margin-bottom: 1rem;
+}
+.qz-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
+.qz-tag {
+  font-size: 0.7rem; font-weight: 700; padding: 0.18rem 0.6rem; border-radius: var(--radius-full);
+  text-transform: uppercase; letter-spacing: 0.4px; background: var(--primary-light); color: var(--primary);
+}
+.qz-num { font-size: 0.75rem; font-weight: 800; color: var(--text-light); letter-spacing: 0.5px; }
+.qz-enunciado { font-weight: 600; line-height: 1.55; margin-bottom: 0.7rem; }
+.qz-code {
+  background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem; margin-bottom: 0.8rem; overflow-x: auto;
+  font-family: var(--font-mono); font-size: 0.84rem; line-height: 1.5; white-space: pre;
+}
+.qz-opts { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.9rem; }
+.qz-opt {
+  display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.45rem 0.7rem; cursor: pointer;
+  border: 1px solid transparent; border-radius: var(--radius-sm); font-size: 0.92rem;
+}
+.qz-opt:hover { background: var(--bg-main); border-color: var(--border-color); }
+.qz-opt input { margin-top: 4px; accent-color: var(--primary); flex-shrink: 0; }
+.qz-card.respondida .qz-opt { cursor: default; }
+.qz-opt.opt-correta { background: var(--accent-green-light); border-color: var(--accent-green); font-weight: 700; }
+.qz-opt.opt-errada { background: var(--accent-rose-light); border-color: var(--accent-rose); text-decoration: line-through; }
+
+.qz-verificar {
+  background: var(--primary); color: var(--text-inverse); border: none; font-weight: 700;
+  font-size: 0.85rem; padding: 0.5rem 1.2rem; border-radius: var(--radius-sm); cursor: pointer;
+}
+.qz-verificar:hover:not(:disabled) { background: var(--primary-hover); }
+.qz-verificar:disabled { opacity: 0.4; cursor: not-allowed; }
+.qz-feedback { display: none; margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.88rem; }
+.qz-feedback.fb-ok { display: block; background: var(--accent-green-light); color: var(--accent-green); }
+.qz-feedback.fb-erro { display: block; background: var(--accent-rose-light); color: var(--accent-rose); }
+.qz-feedback.fb-aviso { display: block; background: var(--accent-amber-light); color: var(--accent-orange); }
+.qz-explicacao {
+  display: none; margin-top: 0.6rem; padding: 0.8rem 0.95rem; background: var(--bg-main);
+  border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.88rem; line-height: 1.6;
+}
+
+/* ---------- Botão lateral esquerdo fixo "Questões" ---------- */
+.btn-lateral-questoes {
+  position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 1100;
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  background: var(--grad-primary); color: #fff; text-decoration: none;
+  padding: 0.9rem 0.55rem; border-radius: 0 12px 12px 0;
+  box-shadow: 2px 2px 12px rgba(99, 102, 241, 0.4);
+  transition: padding 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-lateral-questoes:hover, .btn-lateral-questoes:focus-visible {
+  padding-left: 1rem; box-shadow: 3px 3px 18px rgba(99, 102, 241, 0.55);
+}
+.btn-lateral-questoes .blq-icon { font-size: 1.25rem; line-height: 1; }
+.btn-lateral-questoes .blq-label {
+  font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em;
+  writing-mode: vertical-rl; transform: rotate(180deg); line-height: 1;
+}
+@media (max-width: 600px) {
+  .btn-lateral-questoes {
+    top: auto; bottom: 1.5rem; transform: none; flex-direction: row;
+    padding: 0.6rem 0.8rem; border-radius: 0 10px 10px 0;
+  }
+  .btn-lateral-questoes .blq-label { writing-mode: horizontal-tb; transform: none; }
+}

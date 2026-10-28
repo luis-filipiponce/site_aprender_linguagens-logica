@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Algoritmos | Aprenda Programação</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+</head>
+<body>
+<div id="scroll-bar" style="position:fixed;top:0;left:0;height:3px;width:0;background:var(--green);z-index:2000;transition:width .1s;"></div>
+
+<nav id="main-nav">
+  <a class="logo" href="../index.html">&#60;<span>code</span>/&#62; Aprenda Prog.</a>
+  <a class="nav-link" href="../index.html">Home</a>
+  <a class="nav-link" href="logica.html">Lógica</a>
+  <a class="nav-link" href="algoritmos.html">Algoritmos</a>
+  <a class="nav-link" href="estruturas.html">Estruturas</a>
+  <a class="nav-link" href="linguagens.html">Linguagens</a>
+  <a class="nav-link" href="paradigmas.html">Paradigmas</a>
+  <a class="nav-link" href="web.html">Web</a>
+  <a class="nav-link" href="banco.html">Banco de Dados</a>
+  <a class="nav-link" href="carreira.html">Carreira</a>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-hero">
+    <h1>⚙️ Algoritmos</h1>
+    <p>Um algoritmo é uma sequência finita, ordenada e sem ambiguidade de passos que resolve um problema. Pensar algoritmicamente é a habilidade mais valiosa de um programador.</p>
+    <div class="badge-row">
+      <span class="badge badge-green">Módulo 2</span>
+      <span class="badge badge-blue">Big O Notation</span>
+      <span class="badge badge-orange">Ordenação & Busca</span>
+    </div>
+  </div>
+
+  <!-- BIG O -->
+  <div class="section" id="bigo">
+    <div class="section-title">
+      <div class="num-badge num-green">1</div>
+      <h2>Big O Notation — Medir Eficiência</h2>
+    </div>
+    <p>Big O descreve <strong>como o tempo de execução cresce</strong> conforme o tamanho da entrada (n) cresce. É a forma padrão de comparar algoritmos independentemente de hardware.</p>
+    <div class="info-box green">
+      <strong>Pense assim:</strong> Se seu algoritmo leva 1 segundo para 100 itens, quanto levaria para 1 milhão? A resposta depende do Big O.
+    </div>
+    <table>
+      <tr><th>Notação</th><th>Nome</th><th>n=10</th><th>n=1.000</th><th>n=1.000.000</th><th>Exemplo</th></tr>
+      <tr><td><strong>O(1)</strong></td><td>Constante</td><td>1 op</td><td>1 op</td><td>1 op</td><td>Acessar array[5]</td></tr>
+      <tr><td><strong>O(log n)</strong></td><td>Logarítmica</td><td>3 op</td><td>10 op</td><td>20 op</td><td>Busca binária</td></tr>
+      <tr><td><strong>O(n)</strong></td><td>Linear</td><td>10 op</td><td>1K op</td><td>1M op</td><td>Busca linear</td></tr>
+      <tr><td><strong>O(n log n)</strong></td><td>Log-linear</td><td>33 op</td><td>10K op</td><td>20M op</td><td>Merge Sort</td></tr>
+      <tr><td><strong>O(n²)</strong></td><td>Quadrática</td><td>100 op</td><td>1M op</td><td>10¹² op</td><td>Bubble Sort</td></tr>
+      <tr><td><strong>O(2ⁿ)</strong></td><td>Exponencial</td><td>1024 op</td><td>impossível</td><td>impossível</td><td>Força bruta</td></tr>
+    </table>
+  </div>
+
+  <!-- BUSCA -->
+  <div class="section" id="busca">
+    <div class="section-title">
+      <div class="num-badge num-green">2</div>
+      <h2>Algoritmos de Busca</h2>
+    </div>
+
+    <h3>Busca Linear — O(n)</h3>
+    <p>Percorre cada elemento um por um. Funciona em listas não ordenadas. Para grandes datasets, é lento.</p>
+    <div class="code-block"><span class="kw">def</span> <span class="fn">busca_linear</span>(<span class="var">lista</span>, <span class="var">alvo</span>):
+    <span class="cmt">"""Retorna o índice do alvo ou -1 se não encontrado."""</span>
+    <span class="kw">for</span> <span class="var">i</span>, <span class="var">item</span> <span class="kw">in</span> <span class="fn">enumerate</span>(<span class="var">lista</span>):
+        <span class="kw">if</span> <span class="var">item</span> == <span class="var">alvo</span>:
+            <span class="kw">return</span> <span class="var">i</span>   <span class="cmt"># ✅ encontrado na posição i</span>
+    <span class="kw">return</span> -<span class="num">1</span>          <span class="cmt"># ❌ não encontrado</span>
+
+<span class="var">numeros</span> = [<span class="num">64</span>, <span class="num">34</span>, <span class="num">25</span>, <span class="num">12</span>, <span class="num">22</span>, <span class="num">11</span>, <span class="num">90</span>]
+<span class="fn">print</span>(<span class="fn">busca_linear</span>(<span class="var">numeros</span>, <span class="num">22</span>))  <span class="cmt"># 4 (índice 4)</span>
+<span class="fn">print</span>(<span class="fn">busca_linear</span>(<span class="var">numeros</span>, <span class="num">99</span>))  <span class="cmt"># -1 (não existe)</span></div>
+
+    <h3>Busca Binária — O(log n)</h3>
+    <p>Requer lista <strong>ordenada</strong>. Divide pela metade a cada passo. 1 bilhão de elementos = ~30 comparações!</p>
+    <div class="code-block"><span class="kw">def</span> <span class="fn">busca_binaria</span>(<span class="var">lista</span>, <span class="var">alvo</span>):
+    <span class="var">inicio</span>, <span class="var">fim</span> = <span class="num">0</span>, <span class="fn">len</span>(<span class="var">lista</span>) - <span class="num">1</span>
+
+    <span class="kw">while</span> <span class="var">inicio</span> <= <span class="var">fim</span>:
+        <span class="var">meio</span> = (<span class="var">inicio</span> + <span class="var">fim</span>) // <span class="num">2</span>
+        <span class="kw">if</span>   <span class="var">lista</span>[<span class="var">meio</span>] == <span class="var">alvo</span>: <span class="kw">return</span> <span class="var">meio</span>    <span class="cmt"># ✅ achou</span>
+        <span class="kw">elif</span> <span class="var">lista</span>[<span class="var">meio</span>] < <span class="var">alvo</span>:  <span class="var">inicio</span> = <span class="var">meio</span> + <span class="num">1</span>  <span class="cmt"># vai para direita</span>
+        <span class="kw">else</span>:                      <span class="var">fim</span>    = <span class="var">meio</span> - <span class="num">1</span>  <span class="cmt"># vai para esquerda</span>
+    <span class="kw">return</span> -<span class="num">1</span>
+
+<span class="var">ordenada</span> = [<span class="num">2</span>, <span class="num">5</span>, <span class="num">8</span>, <span class="num">12</span>, <span class="num">16</span>, <span class="num">23</span>, <span class="num">38</span>, <span class="num">56</span>, <span class="num">72</span>, <span class="num">91</span>]
+<span class="fn">print</span>(<span class="fn">busca_binaria</span>(<span class="var">ordenada</span>, <span class="num">23</span>))  <span class="cmt"># 5</span></div>
+  </div>
+
+  <!-- ORDENAÇÃO -->
+  <div class="section" id="ordenacao">
+    <div class="section-title">
+      <div class="num-badge num-green">3</div>
+      <h2>Algoritmos de Ordenação</h2>
+    </div>
+
+    <h3>Bubble Sort — O(n²)</h3>
+    <p>Compara pares adjacentes e troca se estiver fora de ordem. Simples de entender, mas ineficiente para grandes volumes.</p>
+    <div class="code-block"><span class="kw">def</span> <span class="fn">bubble_sort</span>(<span class="var">lista</span>):
+    <span class="var">n</span> = <span class="fn">len</span>(<span class="var">lista</span>)
+    <span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="var">n</span>):
+        <span class="kw">for</span> <span class="var">j</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">0</span>, <span class="var">n</span> - <span class="var">i</span> - <span class="num">1</span>):
+            <span class="kw">if</span> <span class="var">lista</span>[<span class="var">j</span>] > <span class="var">lista</span>[<span class="var">j</span> + <span class="num">1</span>]:
+                <span class="var">lista</span>[<span class="var">j</span>], <span class="var">lista</span>[<span class="var">j</span>+<span class="num">1</span>] = <span class="var">lista</span>[<span class="var">j</span>+<span class="num">1</span>], <span class="var">lista</span>[<span class="var">j</span>]  <span class="cmt"># troca</span>
+    <span class="kw">return</span> <span class="var">lista</span>
+
+<span class="fn">print</span>(<span class="fn">bubble_sort</span>([<span class="num">64</span>, <span class="num">34</span>, <span class="num">25</span>, <span class="num">12</span>, <span class="num">22</span>]))  <span class="cmt"># [12, 22, 25, 34, 64]</span></div>
+
+    <h3>Merge Sort — O(n log n)</h3>
+    <p>Divide a lista ao meio recursivamente, ordena cada metade e mescla. Muito mais eficiente para grandes volumes.</p>
+    <div class="code-block"><span class="kw">def</span> <span class="fn">merge_sort</span>(<span class="var">lista</span>):
+    <span class="kw">if</span> <span class="fn">len</span>(<span class="var">lista</span>) <= <span class="num">1</span>:
+        <span class="kw">return</span> <span class="var">lista</span>    <span class="cmt"># caso base: lista de 1 elemento já está ordenada</span>
+
+    <span class="var">meio</span>    = <span class="fn">len</span>(<span class="var">lista</span>) // <span class="num">2</span>
+    <span class="var">esquerda</span> = <span class="fn">merge_sort</span>(<span class="var">lista</span>[:<span class="var">meio</span>])    <span class="cmt"># ordena metade esquerda</span>
+    <span class="var">direita</span>  = <span class="fn">merge_sort</span>(<span class="var">lista</span>[<span class="var">meio</span>:])   <span class="cmt"># ordena metade direita</span>
+    <span class="kw">return</span> <span class="fn">_mesclar</span>(<span class="var">esquerda</span>, <span class="var">direita</span>)    <span class="cmt"># mescla as duas</span>
+
+<span class="kw">def</span> <span class="fn">_mesclar</span>(<span class="var">a</span>, <span class="var">b</span>):
+    <span class="var">resultado</span> = []
+    <span class="var">i</span> = <span class="var">j</span> = <span class="num">0</span>
+    <span class="kw">while</span> <span class="var">i</span> < <span class="fn">len</span>(<span class="var">a</span>) <span class="kw">and</span> <span class="var">j</span> < <span class="fn">len</span>(<span class="var">b</span>):
+        <span class="kw">if</span> <span class="var">a</span>[<span class="var">i</span>] <= <span class="var">b</span>[<span class="var">j</span>]: <span class="var">resultado</span>.<span class="fn">append</span>(<span class="var">a</span>[<span class="var">i</span>]); <span class="var">i</span> += <span class="num">1</span>
+        <span class="kw">else</span>:           <span class="var">resultado</span>.<span class="fn">append</span>(<span class="var">b</span>[<span class="var">j</span>]); <span class="var">j</span> += <span class="num">1</span>
+    <span class="kw">return</span> <span class="var">resultado</span> + <span class="var">a</span>[<span class="var">i</span>:] + <span class="var">b</span>[<span class="var">j</span>:]</div>
+
+    <table>
+      <tr><th>Algoritmo</th><th>Melhor</th><th>Médio</th><th>Pior</th><th>Estável?</th></tr>
+      <tr><td>Bubble Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>Sim</td></tr>
+      <tr><td>Selection Sort</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>Não</td></tr>
+      <tr><td>Insertion Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>Sim</td></tr>
+      <tr><td>Merge Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>Sim</td></tr>
+      <tr><td>Quick Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>Não</td></tr>
+      <tr><td>Heap Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>Não</td></tr>
+    </table>
+  </div>
+
+  <!-- RECURSÃO -->
+  <div class="section" id="recursao">
+    <div class="section-title">
+      <div class="num-badge num-green">4</div>
+      <h2>Recursão</h2>
+    </div>
+    <p>Recursão é quando uma função <strong>chama a si mesma</strong> para resolver versões menores do mesmo problema. Todo algoritmo recursivo precisa de um <strong>caso base</strong> (condição de parada) para não entrar em loop infinito.</p>
+    <div class="code-block"><span class="cmt"># Fatorial: 5! = 5 × 4 × 3 × 2 × 1 = 120</span>
+<span class="kw">def</span> <span class="fn">fatorial</span>(<span class="var">n</span>):
+    <span class="kw">if</span> <span class="var">n</span> == <span class="num">0</span> <span class="kw">or</span> <span class="var">n</span> == <span class="num">1</span>:   <span class="cmt"># caso base</span>
+        <span class="kw">return</span> <span class="num">1</span>
+    <span class="kw">return</span> <span class="var">n</span> * <span class="fn">fatorial</span>(<span class="var">n</span> - <span class="num">1</span>)   <span class="cmt"># chamada recursiva</span>
+
+<span class="fn">print</span>(<span class="fn">fatorial</span>(<span class="num">5</span>))   <span class="cmt"># 120</span>
+<span class="fn">print</span>(<span class="fn">fatorial</span>(<span class="num">10</span>))  <span class="cmt"># 3628800</span>
+
+<span class="cmt"># Fibonacci: 0,1,1,2,3,5,8,13,21...</span>
+<span class="kw">def</span> <span class="fn">fib</span>(<span class="var">n</span>):
+    <span class="kw">if</span> <span class="var">n</span> <= <span class="num">1</span>: <span class="kw">return</span> <span class="var">n</span>
+    <span class="kw">return</span> <span class="fn">fib</span>(<span class="var">n</span>-<span class="num">1</span>) + <span class="fn">fib</span>(<span class="var">n</span>-<span class="num">2</span>)</div>
+  </div>
+
+</div>
+
+<footer>
+  <p>← <a href="logica.html" style="color:var(--blue);">Lógica de Programação</a> &nbsp;|&nbsp; <a href="estruturas.html" style="color:var(--blue);">Estruturas de Dados →</a></p>
+  <br/><p>Aprenda Programação — Made with IBM Bob</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

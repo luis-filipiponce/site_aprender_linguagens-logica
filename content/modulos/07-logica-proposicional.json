@@ -1,0 +1,91 @@
+{
+  "id": 7,
+  "slug": "logica-proposicional",
+  "badge": "Módulo 7 · Lógica Proposicional",
+  "nivel": "Intermediário",
+  "titulo": "Lógica Proposicional e Tabelas-Verdade",
+  "subtitulo": "Proposições, conectivos (E, OU, NÃO, XOR, Implicação), Leis de De Morgan e equivalências.",
+  "objetivo": "Dominar formalmente a lógica proposicional clássica, tabelas-verdade completas e Leis de De Morgan.",
+  "introducaoIntuitiva": "Quando um clube diz: \"Entrada com Ingresso E (Acompanhado OU Maior de 18)\", você está aplicando lógica proposicional.",
+  "explicacaoAprofundada": "Proposições são sentenças declarativas classificadas como V ou F. Conectivos: E (conjunção), OU (disjunção inclusiva), XOR (disjunção exclusiva), Implicação P->Q (falsa somente se V->F). Leis de De Morgan: ~(P ∧ Q) ≡ ~P ∨ ~Q.",
+  "exemplos": {
+    "basico": {
+      "titulo": "OU Inclusivo vs XOR",
+      "descricao": "OU aceita ambas verdadeiras; XOR exige exatamente uma verdadeira."
+    },
+    "intermediario": {
+      "titulo": "Tabela da Implicação",
+      "descricao": "F -> V é Verdadeiro (premissa falsa não invalida a implicação)."
+    },
+    "avancado": {
+      "titulo": "De Morgan na Prática",
+      "descricao": "Negar (idade >= 18 E cnh) vira (idade < 18 OU NÃO cnh)."
+    }
+  },
+  "passoAPasso": [
+    "1. Identificar proposições (P, Q).",
+    "2. Gerar 2^n linhas.",
+    "3. Preencher combinações.",
+    "4. Avaliar colunas intermediárias."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Confundir OU inclusivo com OU exclusivo",
+      "correcao": "No OU lógico padrão, se ambas forem V, o resultado é V."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Construção metódica de tabelas-verdade com 2^n linhas.",
+    "ruim": "Tentar adivinhar expressões lógicas compostas."
+  },
+  "pseudocodigo": "// P | Q | P E Q | P OU Q | P -> Q\n// V | V |   V   |   V    |   V\n// V | F |   F   |   V    |   F  <-- Único caso falso\n// F | V |   F   |   V    |   V\n// F | F |   F   |   F    |   V",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "P=V, Q=V",
+      "estado": "P E Q = V, P OU Q = V",
+      "obs": "Ambas V"
+    },
+    {
+      "passo": 2,
+      "acao": "P=V, Q=F",
+      "estado": "P E Q = F, P OU Q = V",
+      "obs": "Apenas P é V"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex7_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Qual a negação de: \"O aluno estuda E passa no exame\"?",
+      "opcoes": [
+        "O aluno não estuda E não passa no exame.",
+        "O aluno não estuda OU não passa no exame.",
+        "O aluno estuda mas não passa.",
+        "O aluno passa sem estudar."
+      ],
+      "correta": 1,
+      "pista": "De Morgan: ~(P ∧ Q) ≡ ~P ∨ ~Q.",
+      "justificativa": "Pela Lei de De Morgan, a negação da conjunção transforma o E em OU negando ambas as partes."
+    }
+  ],
+  "perguntasVerificacao": "Em qual único caso a implicação lógica P -> Q assume valor Falso?",
+  "keywordsIA": [
+    "proposicao",
+    "tabela-verdade",
+    "conjuncao",
+    "disjuncao",
+    "implicacao",
+    "demorgan",
+    "tautologia",
+    "xor"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "ou",
+      "erro": "Achar que o OU exclui a possibilidade de ambas serem verdadeiras",
+      "explicacao": "O OU clássico é inclusivo."
+    }
+  ],
+  "explicacaoIdealIA": "A lógica proposicional analisa sentenças booleanas através de tabelas-verdade e equivalências como as Leis de De Morgan."
+}

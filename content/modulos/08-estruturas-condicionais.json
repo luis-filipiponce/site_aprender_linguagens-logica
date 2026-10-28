@@ -1,0 +1,90 @@
+{
+  "id": 8,
+  "slug": "estruturas-condicionais",
+  "badge": "Módulo 8 · Condicionais",
+  "nivel": "Intermediário",
+  "titulo": "Estruturas Condicionais e Tomada de Decisão",
+  "subtitulo": "SE/ENTÃO/SENÃO, decisões aninhadas, cobertura exaustiva de casos e condições impossíveis.",
+  "objetivo": "Construir fluxos de decisão robustos sem lacunas lógicas, cobrindo 100% dos cenários possíveis.",
+  "introducaoIntuitiva": "Bifurcação em uma estrada: dependendo da placa (se o destino for Norte ou Sul), você escolhe o caminho.",
+  "explicacaoAprofundada": "Estruturas condicionais avaliam testes booleanos para direcionar o fluxo de controle: Simples (SE), Composta (SE...SENÃO) e Encadeada (SE...SENÃO SE...SENÃO).",
+  "exemplos": {
+    "basico": {
+      "titulo": "Par ou Ímpar",
+      "descricao": "SE num % 2 == 0 \"Par\" SENÃO \"Ímpar\"."
+    },
+    "intermediario": {
+      "titulo": "Faixa Etária sem Redundância",
+      "descricao": "SE idade < 12 \"Criança\" SENÃO SE idade < 18 \"Adolescente\" SENÃO \"Adulto\"."
+    },
+    "avancado": {
+      "titulo": "Detecção de Dead Code",
+      "descricao": "SE x > 10 ... SENÃO SE x > 20 (segundo ramo inalcançável)."
+    }
+  },
+  "passoAPasso": [
+    "1. Mapear variáveis de decisão.",
+    "2. Ordenar checagens das mais específicas para as gerais.",
+    "3. Incluir SENÃO final."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Condições redundantes no SENÃO SE",
+      "correcao": "A negação do bloco anterior já é garantida automaticamente."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Escada condicional mutuamente exclusiva e exaustiva.",
+    "ruim": "Múltiplos SEs soltos retestando condições."
+  },
+  "pseudocodigo": "SE nota >= 7.0 ENTÃO\n    ESCREVER \"Aprovado\"\nSENÃO SE nota >= 5.0 ENTÃO\n    ESCREVER \"Recuperação\"\nSENÃO\n    ESCREVER \"Reprovado\"\nFIM_SE",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "nota = 6.5",
+      "estado": "nota >= 7.0 -> FALSO",
+      "obs": "Passa para o próximo teste"
+    },
+    {
+      "passo": 2,
+      "acao": "nota >= 5.0",
+      "estado": "VERDADEIRO -> Recuperação",
+      "obs": "Ramo executado"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex8_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Se x = 4 e executamos: SE x > 5 ENTÃO r <- 1 SENÃO SE x > 2 ENTÃO r <- 2 SENÃO r <- 3; qual o valor de r?",
+      "opcoes": [
+        "r = 1",
+        "r = 2",
+        "r = 3",
+        "r = 0"
+      ],
+      "correta": 1,
+      "pista": "4 > 5 é Falso. 4 > 2 é Verdadeiro!",
+      "justificativa": "O primeiro teste falha e o segundo teste é satisfeito, gravando r <- 2."
+    }
+  ],
+  "perguntasVerificacao": "O que é código inalcançável (dead code) em estruturas condicionais?",
+  "keywordsIA": [
+    "condicional",
+    "se",
+    "senao",
+    "aninhada",
+    "decisao",
+    "cobertura",
+    "fronteira",
+    "dead_code"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "ses_soltos",
+      "erro": "Achar que vários SEs isolados são iguais a SE/SENÃO",
+      "explicacao": "SEs soltos sempre avaliam todas as linhas."
+    }
+  ],
+  "explicacaoIdealIA": "Estruturas condicionais organizam o desvio do fluxo de execução garantindo cobertura total de casos."
+}

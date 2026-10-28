@@ -1,0 +1,85 @@
+{
+  "id": 17,
+  "slug": "desafios-integradores-avaliacao",
+  "badge": "Módulo 17 · Projeto Integrador",
+  "nivel": "Avançado",
+  "titulo": "Desafios Integradores e Avaliação Global de Domínio",
+  "subtitulo": "Síntese de todos os fundamentos: modelar, estruturar, modularizar, testar e justificar.",
+  "objetivo": "Integrar todos os conhecimentos em desafios globais, demonstrando maestria conceitual e defesa de decisões.",
+  "introducaoIntuitiva": "Você domina todas as ferramentas mentais: agora é hora de construir sistemas completos com autonomia intelectual.",
+  "explicacaoAprofundada": "A mestria em lógica pura é a capacidade de ler um problema do mundo real, modelar entidades, construir algoritmos determinísticos e provar sua correção.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Semáforo Inteligente com Fila",
+      "descricao": "Controlar fluxo com sensores, tempos máximos e pedestres."
+    },
+    "intermediario": {
+      "titulo": "Motor de Liquidação E-commerce",
+      "descricao": "Estoque -> Cupom -> Frete -> Antifraude -> Pagamento."
+    },
+    "avancado": {
+      "titulo": "Interpretador de Regras",
+      "descricao": "Avaliador de regras de produção sem contradições."
+    }
+  },
+  "passoAPasso": [
+    "1. Especificação.",
+    "2. Modelagem de estado.",
+    "3. Modularização.",
+    "4. Laços com invariantes.",
+    "5. Testes."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Achar que lógica pura não é usada na indústria",
+      "correcao": "Toda a arquitetura de software repousa sobre esses pilares."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Solução modular, testada e justificada formalmente.",
+    "ruim": "Código confuso e sem justificativa."
+  },
+  "pseudocodigo": "ALGORITMO ControladorCruzamentoInteligente ... FIM_ALGORITMO",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Integração completa",
+      "estado": "Sistema em execução harmônica",
+      "obs": "Auditado"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex17_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Qual é o princípio orientador definitivo da engenharia de software?",
+      "opcoes": [
+        "A lógica e a modelagem antecedem a sintaxe: compreenda, decomponha e valide antes de codificar.",
+        "A linguagem é mais importante que o algoritmo.",
+        "Basta testar uma vez com sucesso.",
+        "Comentários e justificativas são inúteis."
+      ],
+      "correta": 0,
+      "pista": "A linguagem é apenas o meio de expressar um algoritmo previamente construído pela mente.",
+      "justificativa": "A capacidade de raciocinar logicamente e estruturar o problema é a base universal que transcende tecnologias."
+    }
+  ],
+  "perguntasVerificacao": "Como o domínio de lógica pura acelera o aprendizado de qualquer tecnologia futura?",
+  "keywordsIA": [
+    "sintese",
+    "integrador",
+    "projeto",
+    "avaliacao",
+    "dominio",
+    "maestria",
+    "justificativa"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "sintaxe",
+      "erro": "Focar na sintaxe em vez da lógica",
+      "explicacao": "A lógica é perene; a sintaxe é passageira."
+    }
+  ],
+  "explicacaoIdealIA": "O domínio da lógica pura capacita o desenvolvedor a modelar, modularizar, testar e justificar soluções computacionais completas."
+}

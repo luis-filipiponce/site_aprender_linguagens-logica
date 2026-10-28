@@ -1,0 +1,91 @@
+{
+  "id": 9,
+  "slug": "repeticao-lacos",
+  "badge": "Módulo 9 · Laços de Repetição",
+  "nivel": "Intermediário",
+  "titulo": "Repetição, Iteração e Laços (Loops)",
+  "subtitulo": "ENQUANTO, REPITA/ATÉ, PARA, contadores, acumuladores, invariantes e laços infinitos.",
+  "objetivo": "Compreender a automação de repetições, controle de variáveis de ciclo e condições de parada finitas.",
+  "introducaoIntuitiva": "Carimbar 100 documentos: você aprende a ação uma vez e a repete enquanto o contador for menor que 100.",
+  "explicacaoAprofundada": "Estruturas de repetição executam blocos zero ou mais vezes: Pré-testada (ENQUANTO), Pós-testada (REPITA) e Variável de Controle (PARA).",
+  "exemplos": {
+    "basico": {
+      "titulo": "Somatório de 1 a N",
+      "descricao": "Acumular valores variáveis: soma <- soma + i."
+    },
+    "intermediario": {
+      "titulo": "Erro Off-by-One",
+      "descricao": "Usar < em vez de <= e rodar uma vez a menos do que o necessário."
+    },
+    "avancado": {
+      "titulo": "Prova de Terminação",
+      "descricao": "Garantir que a variável de controle avance em direção à condição de parada."
+    }
+  },
+  "passoAPasso": [
+    "1. Inicializar variáveis antes do laço.",
+    "2. Definir condição de parada.",
+    "3. Atualizar controle dentro do corpo."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Esquecer de incrementar o contador (Loop Infinito)",
+      "correcao": "Sempre atualize o contador dentro do corpo."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Laço com condição de parada clara e progresso estrito.",
+    "ruim": "Laço com múltiplas saídas imprevisíveis."
+  },
+  "pseudocodigo": "soma <- 0\nc <- 1\nENQUANTO c <= 5 FAÇA\n    soma <- soma + c\n    c <- c + 1\nFIM_ENQUANTO",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Início",
+      "estado": "soma = 0, c = 1",
+      "obs": "Inicial"
+    },
+    {
+      "passo": 2,
+      "acao": "Ciclos 1 a 5",
+      "estado": "soma = 15, c = 6",
+      "obs": "Término"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex9_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Se c <- 1 e executamos: ENQUANTO c < 4 FAÇA { c <- c + 1 }; quantas vezes o corpo do laço é executado?",
+      "opcoes": [
+        "3 vezes (c = 1, 2, 3)",
+        "4 vezes",
+        "2 vezes",
+        "Infinitas vezes"
+      ],
+      "correta": 0,
+      "pista": "Para c=1 roda (c vira 2); c=2 roda (c vira 3); c=3 roda (c vira 4); c=4 para!",
+      "justificativa": "O laço executa exatamente 3 iterações (para c = 1, 2 e 3)."
+    }
+  ],
+  "perguntasVerificacao": "Qual a diferença entre a repetição pré-testada (ENQUANTO) e a pós-testada (REPITA)?",
+  "keywordsIA": [
+    "repeticao",
+    "laco",
+    "loop",
+    "enquanto",
+    "para",
+    "contador",
+    "acumulador",
+    "iteracao",
+    "laco_infinito"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "contador",
+      "erro": "Confundir contador com acumulador",
+      "explicacao": "Contador tem passo fixo; acumulador soma valores variáveis."
+    }
+  ],
+  "explicacaoIdealIA": "Estruturas de repetição automatizam instruções através de iterações controladas por contadores e condições de parada finitas."
+}

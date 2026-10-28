@@ -1,0 +1,81 @@
+{
+  "id": 11,
+  "slug": "decomposicao-abstracao",
+  "badge": "Módulo 11 · Pensamento Computacional",
+  "nivel": "Intermediário",
+  "titulo": "Decomposição, Abstração e Padrões",
+  "subtitulo": "Os 4 pilares do pensamento computacional: dividir para conquistar, ignorar detalhes e generalizar.",
+  "objetivo": "Aplicar Decomposição Top-Down e Abstração para isolar o essencial do secundário.",
+  "introducaoIntuitiva": "Engenheiros ao projetar a hidráulica de um prédio ignoram temporariamente a cor das paredes.",
+  "explicacaoAprofundada": "Pilares: Decomposição (quebrar em partes), Padrões (reconhecer similaridades), Abstração (filtrar detalhes) e Algoritmos.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Caixa Eletrônico",
+      "descricao": "Subproblemas: Autenticar -> Validar Saldo -> Dispensar -> Atualizar."
+    },
+    "intermediario": {
+      "titulo": "Abstração em Cadastro",
+      "descricao": "Reter placa e chassi; ignorar aroma do aromatizador."
+    },
+    "avancado": {
+      "titulo": "Padrão de Busca",
+      "descricao": "Dicionário e lista telefônica usam o mesmo padrão de busca binária."
+    }
+  },
+  "passoAPasso": [
+    "1. Isolar grandes blocos.",
+    "2. Refinamento sucessivo.",
+    "3. Eliminar detalhes acessórios (Abstração)."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Abstração insuficiente",
+      "correcao": "Filtre apenas o que afeta diretamente a lógica."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Arquitetura modular em camadas.",
+    "ruim": "Código monolítico misturando todas as tarefas."
+  },
+  "pseudocodigo": "Executar Autenticar(); Executar ValidarSaldo(); Executar Dispensar();",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Módulos independentes",
+      "estado": "Subproblemas resolvidos",
+      "obs": "Modular"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex11_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Ignorar a cor de um veículo para calcular pedágio por número de eixos é um exemplo de:",
+      "opcoes": [
+        "Decomposição",
+        "Abstração",
+        "Recursão",
+        "Ordenação"
+      ],
+      "correta": 1,
+      "pista": "Filtrar detalhes irrelevantes para reter apenas o essencial.",
+      "justificativa": "Abstração é o processo de reter apenas os atributos fundamentais ao modelo."
+    }
+  ],
+  "perguntasVerificacao": "Como a decomposição reduz a complexidade cognitiva no projeto de software?",
+  "keywordsIA": [
+    "decomposicao",
+    "abstracao",
+    "padroes",
+    "pensamento_computacional",
+    "modularizacao"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "abstracao",
+      "erro": "Achar que abstração é deixar incompleto",
+      "explicacao": "Abstração é focar no essencial com precisão."
+    }
+  ],
+  "explicacaoIdealIA": "O pensamento computacional decompõe problemas complexos e abstrai detalhes secundários para produzir soluções reutilizáveis."
+}

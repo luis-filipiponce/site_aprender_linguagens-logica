@@ -1,0 +1,2833 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="rust">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rust &amp; Go (Golang) — Ponce Metodologias &amp; Dev</title>
+  <meta name="description" content="Guia completo de Rust e Go: história, conceitos essenciais, exemplos práticos, mercado de trabalho, roadmap e recursos de aprendizagem." />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Dynamic theme tokens (Rust default) */
+      --lang-rust: #f97316;
+      --lang-rust-dark: #ea580c;
+      --lang-rust-soft: rgba(249, 115, 22, 0.12);
+      --lang-rust-border: rgba(249, 115, 22, 0.35);
+      --lang-rust-glow: rgba(249, 115, 22, 0.25);
+
+      --lang-go: #06b6d4;
+      --lang-go-dark: #0891b2;
+      --lang-go-soft: rgba(6, 182, 212, 0.12);
+      --lang-go-border: rgba(6, 182, 212, 0.35);
+      --lang-go-glow: rgba(6, 182, 212, 0.25);
+
+      /* Active accent variables driven by [data-lang] */
+      --accent: var(--lang-rust);
+      --accent-dark: var(--lang-rust-dark);
+      --accent-soft: var(--lang-rust-soft);
+      --accent-border: var(--lang-rust-border);
+      --accent-glow: var(--lang-rust-glow);
+
+      /* Base layout tokens */
+      --bg: #0b1120;
+      --bg-alt: #0f172a;
+      --surface: #131d33;
+      --surface-hover: #1a2744;
+      --surface-card: #141f38;
+      --border: #223254;
+      --border-light: #2d416d;
+      --text: #f1f5f9;
+      --text-dim: #cbd5e1;
+      --muted: #94a3b8;
+      --success: #10b981;
+      --success-soft: rgba(16, 185, 129, 0.15);
+      --code-bg: #070c18;
+      --header-h: 68px;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 18px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      --mono: "JetBrains Mono", "Fira Code", Consolas, Monaco, "Courier New", monospace;
+    }
+
+    [data-lang="go"] {
+      --accent: var(--lang-go);
+      --accent-dark: var(--lang-go-dark);
+      --accent-soft: var(--lang-go-soft);
+      --accent-border: var(--lang-go-border);
+      --accent-glow: var(--lang-go-glow);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-h) + 20px);
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15.5px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s, text-decoration 0.2s;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── HEADER ── */
+    header.site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-h);
+      background: rgba(11, 17, 32, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      gap: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .header-logo {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .header-logo:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .header-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.3px;
+      transition: color 0.3s ease;
+    }
+
+    .header-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-sm);
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-back:hover {
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 0 14px var(--accent-glow);
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      padding-top: var(--header-h);
+      min-height: calc(100vh - 120px);
+    }
+
+    /* ── LANGUAGE MASTER SWITCHER BAR ── */
+    .lang-switcher-wrap {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(11, 17, 32, 0.95) 100%);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: var(--header-h);
+      z-index: 900;
+      backdrop-filter: blur(10px);
+    }
+
+    .switcher-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .switcher-prompt {
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .switcher-prompt strong {
+      color: var(--text);
+    }
+
+    .lang-toggle-group {
+      display: inline-flex;
+      background: var(--surface);
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .lang-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 22px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.92rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .lang-toggle-btn:hover {
+      color: var(--text);
+    }
+
+    .lang-toggle-btn[data-target="rust"].active {
+      background: var(--lang-rust);
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(249, 115, 22, 0.4);
+    }
+    .lang-toggle-btn[data-target="go"].active {
+      background: var(--lang-go);
+      color: #04242e;
+      box-shadow: 0 2px 12px rgba(6, 182, 212, 0.4);
+    }
+
+    .lang-toggle-btn .badge-counter {
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.25);
+    }
+
+    /* ── SECTIONS & CONTAINERS ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section {
+      padding: 72px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section.alt-bg {
+      background: var(--bg-alt);
+    }
+
+    .section-head {
+      margin-bottom: 40px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: inline-block;
+      transition: color 0.3s ease;
+    }
+
+    .section-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .section-title span {
+      color: var(--accent);
+      transition: color 0.3s ease;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.02rem;
+      max-width: 720px;
+      line-height: 1.6;
+    }
+
+    /* ── HERO BANNER ── */
+    .hero {
+      position: relative;
+      padding: 70px 0 60px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-rust {
+      background: radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.15) 0%, transparent 60%),
+                  linear-gradient(180deg, #0b1120 0%, #0f172a 100%);
+    }
+    .hero-go {
+      background: radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 60%),
+                  linear-gradient(180deg, #0b1120 0%, #0f172a 100%);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .hero-title {
+      font-size: 3.2rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 18px;
+      color: #fff;
+    }
+    .hero-title .lang-gradient-rust {
+      background: linear-gradient(135deg, #ffffff 30%, #f97316 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-title .lang-gradient-go {
+      background: linear-gradient(135deg, #ffffff 30%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      font-size: 1.2rem;
+      color: var(--text-dim);
+      max-width: 840px;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    .hero-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .hero-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .hero-pill:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-border);
+    }
+    .hero-pill .icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .hero-pill h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .hero-pill p {
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ── LANGUAGE VIEW CONTAINERS ── */
+    .lang-view {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .lang-view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      margin: 20px 0 0 10px;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 10px;
+      bottom: 20px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent) 0%, var(--border) 100%);
+      transition: background 0.3s ease;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 30px;
+    }
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -32px;
+      top: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 8px var(--accent-glow);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .timeline-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .timeline-card:hover {
+      transform: translateX(4px);
+      border-color: var(--accent-border);
+    }
+
+    .timeline-year {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      display: inline-block;
+      transition: color 0.3s ease;
+    }
+
+    .timeline-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .timeline-card p {
+      font-size: 0.94rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* ── ACCORDION (CONCEITOS) ── */
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .acc-item {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .acc-item.open {
+      border-color: var(--accent-border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .acc-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 22px;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.08rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      transition: background 0.2s, color 0.2s;
+    }
+    .acc-trigger:hover {
+      background: var(--surface-hover);
+      color: var(--accent);
+    }
+
+    .acc-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .acc-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    .acc-chevron {
+      color: var(--muted);
+      font-size: 1.2rem;
+      transition: transform 0.3s ease, color 0.3s;
+    }
+    .acc-item.open .acc-chevron {
+      transform: rotate(180deg);
+      color: var(--accent);
+    }
+
+    .acc-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .acc-body {
+      padding: 0 22px 22px;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+    .acc-body p {
+      color: var(--text-dim);
+      font-size: 0.96rem;
+      margin-bottom: 12px;
+    }
+    .acc-body ul {
+      color: var(--muted);
+      margin: 8px 0 16px 20px;
+      font-size: 0.94rem;
+    }
+    .acc-body li {
+      margin-bottom: 6px;
+    }
+
+    code.inline {
+      font-family: var(--mono);
+      font-size: 0.88em;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 2px 7px;
+      border-radius: 5px;
+      border: 1px solid var(--accent-border);
+      transition: all 0.3s;
+    }
+
+    /* ── CODE BLOCKS & TABS ── */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin: 14px 0 6px;
+      position: relative;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: #090f1d;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .code-header .lang-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .code-header .lang-badge::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      transition: background 0.3s;
+    }
+
+    .copy-btn {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .copy-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .copy-btn.copied {
+      background: var(--success-soft);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      line-height: 1.55;
+    }
+    pre code {
+      font-family: var(--mono);
+      font-size: 0.86rem;
+      color: #e2e8f0;
+      display: block;
+      white-space: pre;
+    }
+
+    /* Syntax Highlighting Tokens */
+    .k { color: #c084fc; font-weight: 600; } /* keyword (fn, let, mut, struct, impl, func, package) */
+    .t { color: #38bdf8; }                   /* type (i32, String, error, int, struct) */
+    .s { color: #4ade80; }                   /* string */
+    .c { color: #64748b; font-style: italic; } /* comment */
+    .f { color: #facc15; }                   /* function / method */
+    .n { color: #fb923c; }                   /* number / literal */
+    .m { color: #f472b6; }                   /* macro / annotation */
+    .o { color: #94a3b8; }                   /* operator */
+
+    /* ── CODE TABS (EXEMPLOS PRÁTICOS) ── */
+    .practical-tabs {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .tab-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+    }
+
+    .code-tab-btn {
+      padding: 10px 18px;
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .code-tab-btn:hover {
+      color: var(--text);
+      border-color: var(--accent-border);
+    }
+    .code-tab-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 2px 10px var(--accent-glow);
+    }
+    [data-lang="go"] .code-tab-btn.active {
+      color: #04242e;
+    }
+
+    .code-tab-panel {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+    .code-tab-panel.active {
+      display: block;
+    }
+    .code-tab-panel > p {
+      color: var(--text-dim);
+      font-size: 0.96rem;
+      margin-bottom: 14px;
+    }
+
+    /* ── MERCADO DE TRABALHO ── */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface-card);
+      margin-bottom: 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+    }
+    th {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 800;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s, color 0.3s;
+    }
+    td {
+      border-top: 1px solid var(--border);
+      font-size: 0.92rem;
+      color: var(--text-dim);
+    }
+    td.sal {
+      font-weight: 800;
+      color: #34d399;
+      font-family: var(--mono);
+      white-space: nowrap;
+    }
+    td strong {
+      color: var(--text);
+    }
+
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .market-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .market-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chips-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    /* ── ROADMAP COMPARTILHADO ── */
+    .roadmap-side-by-side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .roadmap-col {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .roadmap-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .roadmap-header h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .roadmap-col.rust-col {
+      border-top: 4px solid var(--lang-rust);
+    }
+    .roadmap-col.rust-col .roadmap-header h3 {
+      color: var(--lang-rust);
+    }
+
+    .roadmap-col.go-col {
+      border-top: 4px solid var(--lang-go);
+    }
+    .roadmap-col.go-col .roadmap-header h3 {
+      color: var(--lang-go);
+    }
+
+    .phase-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      position: relative;
+    }
+
+    .phase-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+    .rust-col .phase-badge { color: var(--lang-rust); }
+    .go-col .phase-badge { color: var(--lang-go); }
+
+    .phase-card h4 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .phase-card ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .phase-card li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+      padding-left: 18px;
+      position: relative;
+    }
+    .phase-card li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    .rust-col .phase-card li::before { color: var(--lang-rust); }
+    .go-col .phase-card li::before { color: var(--lang-go); }
+
+    /* ── RECURSOS ── */
+    .res-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .res-card {
+      display: block;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      color: var(--text);
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .res-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+    .res-card .ico {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+    .res-card h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .res-card p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #070c18;
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    footer p {
+      margin: 4px 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .hero-title {
+        font-size: 2.3rem;
+      }
+      .roadmap-side-by-side {
+        grid-template-columns: 1fr;
+      }
+      .switcher-container {
+        justify-content: center;
+      }
+      .header-title-wrap {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .site-header {
+        padding: 0 14px;
+      }
+      .hero {
+        padding: 40px 0;
+      }
+      .hero-title {
+        font-size: 1.9rem;
+      }
+      .hero-lead {
+        font-size: 1rem;
+      }
+      .section {
+        padding: 48px 0;
+      }
+      .section-title {
+        font-size: 1.6rem;
+      }
+      .lang-toggle-btn {
+        padding: 6px 14px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body data-theme="rust">
+
+  <!-- 1. FIXED HEADER -->
+  <header class="site-header">
+    <a href="../index.html" class="header-logo">
+      <span>🎓</span> Ponce Metodologias &amp; Dev
+    </a>
+
+    <div class="header-title-wrap">
+      <span class="header-title" id="headerDynamicTitle">🦀 Rust</span>
+      <span class="header-tag" id="headerDynamicBadge">Memory Safe</span>
+    </div>
+
+    <a href="../index.html" class="btn-back">
+      ← Voltar
+    </a>
+  </header>
+
+  <main>
+    <!-- 2. LANGUAGE MASTER TAB SWITCHER BAR -->
+    <div class="lang-switcher-wrap">
+      <div class="switcher-container">
+        <div class="switcher-prompt">
+          <span>Selecione a linguagem em foco:</span>
+        </div>
+        <div class="lang-toggle-group" role="tablist" aria-label="Seletor de Linguagem">
+          <button type="button" class="lang-toggle-btn active" data-target="rust" role="tab" aria-selected="true" id="tab-btn-rust">
+            <span>🦀 Rust</span>
+            <span class="badge-counter">v1.84+</span>
+          </button>
+          <button type="button" class="lang-toggle-btn" data-target="go" role="tab" aria-selected="false" id="tab-btn-go">
+            <span>🐹 Go (Golang)</span>
+            <span class="badge-counter">v1.23+</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- VIEW: RUST                                                     -->
+    <!-- ============================================================== -->
+    <div id="view-rust" class="lang-view active" role="tabpanel" aria-labelledby="tab-btn-rust">
+
+      <!-- RUST HERO -->
+      <section class="hero hero-rust">
+        <div class="container">
+          <div class="hero-badge">
+            <span>🛡️</span> Sistemas Modernos / Memory Safe
+          </div>
+          <h1 class="hero-title">
+            <span class="lang-gradient-rust">🦀 Rust</span>
+          </h1>
+          <p class="hero-lead">
+            Eleita a linguagem mais amada pelos desenvolvedores por <strong>8 anos consecutivos</strong> no Stack Overflow. Sem Garbage Collector, com segurança de memória garantida em tempo de compilação e adotada oficialmente no <strong>Kernel do Linux</strong>, <strong>Android</strong>, <strong>Windows Kernel</strong> e na infraestrutura da <strong>AWS</strong>. Criada por Graydon Hoare e patrocinada pela Mozilla, com versão 1.0 lançada em 2015.
+          </p>
+
+          <div class="hero-highlights">
+            <div class="hero-pill">
+              <span class="icon">🔒</span>
+              <div>
+                <h4>Zero Data Races</h4>
+                <p>O borrow checker impede condições de corrida e ponteiros soltos antes da execução.</p>
+              </div>
+            </div>
+            <div class="hero-pill">
+              <span class="icon">⚡</span>
+              <div>
+                <h4>Zero-Cost Abstractions</h4>
+                <p>Expressividade de alto nível com a performance máxima do hardware (C/C++ speed).</p>
+              </div>
+            </div>
+            <div class="hero-pill">
+              <span class="icon">📦</span>
+              <div>
+                <h4>Tooling Impecável</h4>
+                <p>Cargo, Clippy, rustfmt e crates.io oferecem o melhor ecossistema de desenvolvimento moderno.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RUST HISTÓRIA & EVOLUÇÃO -->
+      <section class="section" id="rust-historia">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-label">Origem &amp; Marcos</span>
+            <h2 class="section-title">História &amp; <span>Evolução do Rust</span></h2>
+            <p class="section-sub">De um projeto pessoal em busca de segurança contra crashes de memória para a espinha dorsal dos sistemas operacionais e da computação em nuvem moderna.</p>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2006</span>
+                <h3>Projeto Pessoal de Graydon Hoare</h3>
+                <p>Graydon Hoare, engenheiro da Mozilla, inicia o desenvolvimento do Rust após o elevador do seu prédio quebrar repetidamente por falhas de software em C++. O objetivo inicial: criar uma linguagem focada em confiabilidade, concorrência e tipagem forte.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2010</span>
+                <h3>Mozilla Anuncia e Financia o Projeto</h3>
+                <p>A Fundação Mozilla anuncia publicamente o Rust e passa a patrocinar seu desenvolvimento para impulsionar o projeto <em>Servo</em> — uma nova engine de renderização web paralela e imune a vulnerabilidades de memória.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2015</span>
+                <h3>Lançamento do Rust 1.0</h3>
+                <p>O marco zero da estabilidade: a equipe do Rust estabelece a promessa de compatibilidade retroativa (sem quebras de código) e define o modelo maduro de <em>Ownership</em>, <em>Borrowing</em> e gerenciador de pacotes <em>Cargo</em>.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2016 – 2020</span>
+                <h3>Crescimento Exponencial e Edição 2018</h3>
+                <p>A consolidação da sintaxe assíncrona (<code>async/await</code>), estabilização do sistema de <em>Lifetimes</em> (NLL - Non-Lexical Lifetimes) e lançamento da edição <em>Rust 2018</em>. Grandes players globais iniciam a migração de microsserviços críticos.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2021</span>
+                <h3>Criação da Rust Foundation</h3>
+                <p>Fundação independente estabelecida com membros fundadores como AWS, Google, Microsoft, Mozilla e Huawei, garantindo governança neutra e investimento contínuo na sustentabilidade da linguagem.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2022</span>
+                <h3>Rust entra no Kernel do Linux</h3>
+                <p>Pela primeira vez em mais de 30 anos de história do Linux, Linus Torvalds aceita oficialmente uma segunda linguagem de programação no núcleo do sistema operacional (a partir do Linux Kernel 6.1).</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2023</span>
+                <h3>Adoção no Windows Kernel e Android</h3>
+                <p>A Microsoft reescreve componentes críticos do kernel do Windows 11 (como o <code>win32k.sys GDI</code>) em Rust. O Google anuncia que novos códigos nativos de baixo nível do Android AOSP são feitos prioritariamente em Rust, reduzindo vulnerabilidades de memória a zero.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2024</span>
+                <h3>Recomendação da Casa Branca &amp; CISA</h3>
+                <p>O governo dos Estados Unidos (White House ONCD), a CISA e a DARPA emitem diretrizes oficiais urgindo que indústrias críticas e infraestruturas nacionais migrem de C/C++ para linguagens com segurança de memória comprovada, destacando Rust como padrão.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RUST CONCEITOS FUNDAMENTAIS (ACCORDION) -->
+      <section class="section alt-bg" id="rust-conceitos">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-label">Fundamentos da Linguagem</span>
+            <h2 class="section-title">Conceitos <span>Fundamentais de Rust</span></h2>
+            <p class="section-sub">O compilador <code>rustc</code> aplica garantias estritas em tempo de compilação. Clique em cada conceito para explorar a teoria e os exemplos práticos de código.</p>
+          </div>
+
+          <div class="accordion" id="accordion-rust">
+
+            <!-- 1. Ownership & Move -->
+            <div class="acc-item open">
+              <button class="acc-trigger" type="button" aria-expanded="true">
+                <div class="acc-title-group">
+                  <span class="acc-num">1</span>
+                  <span>Ownership &amp; Move Semantics</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel" style="max-height: 1200px;">
+                <div class="acc-body">
+                  <p>O sistema de <strong>Ownership</strong> (posse) é a inovação central do Rust para gerenciar memória sem garbage collector. Ele é regido por três regras universais:</p>
+                  <ul>
+                    <li>Cada valor em Rust tem um único dono (uma variável proprietária).</li>
+                    <li>Só pode haver um dono por vez. Quando o dono é transferido para outra variável ou função, ocorre um <strong>Move</strong>.</li>
+                    <li>Quando o dono sai do escopo (ao fechar o bloco <code>{}</code>), o valor é desalocado imediatamente pela função <code>drop</code> (RAII).</li>
+                  </ul>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">ownership_move.rs</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">fn</span> <span class="f">main</span>() {
+    <span class="c">// String alocada na heap</span>
+    <span class="k">let</span> s1 = <span class="t">String</span>::<span class="f">from</span>(<span class="s">"Ponce Metodologias &amp; Dev"</span>);
+
+    <span class="c">// Move: a posse da heap passa para s2; s1 é invalidada!</span>
+    <span class="k">let</span> s2 = s1;
+
+    <span class="c">// println!("{}", s1); // ERRO DE COMPILAÇÃO! `value borrowed here after move`</span>
+    <span class="f">println!</span>(<span class="s">"Conteúdo em s2: {}"</span>, s2);
+
+    <span class="c">// Se quisermos duplicar os dados na heap explicitamente:</span>
+    <span class="k">let</span> s3 = s2.<span class="f">clone</span>();
+    <span class="f">println!</span>(<span class="s">"Clone explícito: s2='{}', s3='{}'"</span>, s2, s3);
+} <span class="c">// s2 e s3 saem de escopo e têm sua memória liberada automaticamente aqui!</span></code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Borrowing & Lifetimes -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">2</span>
+                  <span>Borrowing &amp; Lifetimes</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Em vez de transferir posse, podemos criar referências emprestadas (<strong>Borrowing</strong>). O <em>Borrow Checker</em> impõe as seguintes regras estáticas:</p>
+                  <ul>
+                    <li>Você pode ter <strong>qualquer número de referências imutáveis</strong> (<code>&amp;T</code>) simultaneamente; OU</li>
+                    <li>Você pode ter <strong>exatamente uma referência mutável</strong> (<code>&amp;mut T</code>) por vez. Nunca ambas ao mesmo tempo!</li>
+                    <li><strong>Lifetimes</strong> (<code>'a</code>) garantem que referências nunca apontem para dados destruídos (prevenindo ponteiros soltos / <em>dangling pointers</em>).</li>
+                  </ul>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">borrowing_lifetimes.rs</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="c">// Função com anotação explícita de lifetime 'a</span>
+<span class="k">fn</span> <span class="f">maior_texto</span>&lt;<span class="t">'a</span>&gt;(x: &amp;<span class="t">'a</span> <span class="t">str</span>, y: &amp;<span class="t">'a</span> <span class="t">str</span>) -&gt; &amp;<span class="t">'a</span> <span class="t">str</span> {
+    <span class="k">if</span> x.<span class="f">len</span>() &gt; y.<span class="f">len</span>() { x } <span class="k">else</span> { y }
+}
+
+<span class="k">fn</span> <span class="f">main</span>() {
+    <span class="k">let</span> <span class="k">mut</span> frase = <span class="t">String</span>::<span class="f">from</span>(<span class="s">"Rust"</span>);
+
+    <span class="c">// Referência mutável exclusiva</span>
+    <span class="k">let</span> ref_mut = &amp;<span class="k">mut</span> frase;
+    ref_mut.<span class="f">push_str</span>(<span class="s">" &amp; Go no Ponce Dev"</span>);
+    <span class="f">println!</span>(<span class="s">"Texto modificado: {}"</span>, ref_mut);
+
+    <span class="c">// Uso de lifetimes validados em tempo de compilação</span>
+    <span class="k">let</span> texto1 = <span class="s">"Linguagem Rust"</span>;
+    <span class="k">let</span> texto2 = <span class="s">"Golang"</span>;
+    <span class="k">let</span> resultado = <span class="f">maior_texto</span>(texto1, texto2);
+    <span class="f">println!</span>(<span class="s">"Maior string: {}"</span>, resultado);
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Result & Option (sem null) -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">3</span>
+                  <span>Result&lt;T, E&gt; &amp; Option&lt;T&gt; (Sem Null)</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Rust não possui o conceito de valor nulo (<code>NULL</code> ou <code>nil</code>), eliminando o clássico <em>"bilion dollar mistake"</em> de ponteiros nulos. Em seu lugar, usamos enums robustos da biblioteca padrão:</p>
+                  <ul>
+                    <li><code class="inline">Option&lt;T&gt;</code>: Representa presença (<code>Some(valor)</code>) ou ausência intencional (<code>None</code>).</li>
+                    <li><code class="inline">Result&lt;T, E&gt;</code>: Representa sucesso (<code>Ok(T)</code>) ou erro recuperável (<code>Err(E)</code>).</li>
+                    <li>O operador <code>?</code> propaga erros de forma limpa e idiomática.</li>
+                  </ul>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">result_option.rs</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">fn</span> <span class="f">dividir</span>(numerador: <span class="t">f64</span>, denominador: <span class="t">f64</span>) -&gt; <span class="t">Result</span>&lt;<span class="t">f64</span>, <span class="t">String</span>&gt; {
+    <span class="k">if</span> denominador == <span class="n">0.0</span> {
+        <span class="t">Err</span>(<span class="t">String</span>::<span class="f">from</span>(<span class="s">"Divisão por zero não é permitida!"</span>))
+    } <span class="k">else</span> {
+        <span class="t">Ok</span>(numerador / denominador)
+    }
+}
+
+<span class="k">fn</span> <span class="f">buscar_usuario</span>(id: <span class="t">u32</span>) -&gt; <span class="t">Option</span>&lt;&amp;<span class="k">'static</span> <span class="t">str</span>&gt; {
+    <span class="k">match</span> id {
+        <span class="n">1</span> =&gt; <span class="t">Some</span>(<span class="s">"Luis Ponce"</span>),
+        <span class="n">2</span> =&gt; <span class="t">Some</span>(<span class="s">"Ana Dev"</span>),
+        _ =&gt; <span class="t">None</span>,
+    }
+}
+
+<span class="k">fn</span> <span class="f">main</span>() {
+    <span class="k">match</span> <span class="f">dividir</span>(<span class="n">100.0</span>, <span class="n">4.0</span>) {
+        <span class="t">Ok</span>(res) =&gt; <span class="f">println!</span>(<span class="s">"Resultado: {:.2}"</span>, res),
+        <span class="t">Err</span>(e)  =&gt; <span class="f">eprintln!</span>(<span class="s">"Erro: {}"</span>, e),
+    }
+
+    <span class="k">if</span> <span class="k">let</span> <span class="t">Some</span>(nome) = <span class="f">buscar_usuario</span>(<span class="n">1</span>) {
+        <span class="f">println!</span>(<span class="s">"Usuário encontrado: {}"</span>, nome);
+    }
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Pattern Matching -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">4</span>
+                  <span>Pattern Matching (match, if let)</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>O <code>match</code> em Rust é uma ferramenta de controle de fluxo exaustiva: o compilador garante que <strong>todos os cenários possíveis</strong> sejam tratados, prevenindo bugs silenciosos.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">pattern_matching.rs</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">enum</span> <span class="t">ComandoWeb</span> {
+    <span class="f">Carregar</span>,
+    <span class="f">Clique</span> { x: <span class="t">i64</span>, y: <span class="t">i64</span> },
+    <span class="f">Digitar</span>(<span class="t">String</span>),
+    <span class="f">MudarCor</span>(<span class="t">u8</span>, <span class="t">u8</span>, <span class="t">u8</span>),
+}
+
+<span class="k">fn</span> <span class="f">processar_evento</span>(cmd: <span class="t">ComandoWeb</span>) {
+    <span class="k">match</span> cmd {
+        <span class="t">ComandoWeb</span>::<span class="f">Carregar</span> =&gt; <span class="f">println!</span>(<span class="s">"Página carregando..."</span>),
+        <span class="t">ComandoWeb</span>::<span class="f">Clique</span> { x, y } =&gt; <span class="f">println!</span>(<span class="s">"Clique nas coordenadas ({}, {})"</span>, x, y),
+        <span class="t">ComandoWeb</span>::<span class="f">Digitar</span>(texto) =&gt; <span class="f">println!</span>(<span class="s">"Usuário digitou: {}"</span>, texto),
+        <span class="t">ComandoWeb</span>::<span class="f">MudarCor</span>(r, g, b) =&gt; <span class="f">println!</span>(<span class="s">"RGB ajustado para ({}, {}, {})"</span>, r, g, b),
+    }
+}
+
+<span class="k">fn</span> <span class="f">main</span>() {
+    <span class="k">let</span> evento = <span class="t">ComandoWeb</span>::<span class="f">Clique</span> { x: <span class="n">120</span>, y: <span class="n">340</span> };
+    <span class="f">processar_evento</span>(evento);
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Traits (Interfaces em Rust) -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">5</span>
+                  <span>Traits (Interfaces &amp; Polimorfismo)</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p><strong>Traits</strong> definem contratos de comportamento compartilhados entre tipos (equivalente a interfaces com esteroides). Permitem polimorfismo estático com <em>Monomorfização</em> (sem sobrecarga de ponteiros virtuais em tempo de execução) ou dinâmico via <code>dyn Trait</code>.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">traits_polymorphism.rs</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="c">// Definição do Trait</span>
+<span class="k">pub trait</span> <span class="t">FormatadorLog</span> {
+    <span class="k">fn</span> <span class="f">formatar</span>(&amp;<span class="k">self</span>) -&gt; <span class="t">String</span>;
+}
+
+<span class="k">pub struct</span> <span class="t">RequisicaoHttp</span> {
+    <span class="k">pub</span> rota: <span class="t">String</span>,
+    <span class="k">pub</span> status: <span class="t">u16</span>,
+}
+
+<span class="c">// Implementando o Trait para a struct</span>
+<span class="k">impl</span> <span class="t">FormatadorLog</span> <span class="k">for</span> <span class="t">RequisicaoHttp</span> {
+    <span class="k">fn</span> <span class="f">formatar</span>(&amp;<span class="k">self</span>) -&gt; <span class="t">String</span> {
+        <span class="f">format!</span>(<span class="s">"[HTTP {}] Rota acessada: {}"</span>, <span class="k">self</span>.status, <span class="k">self</span>.rota)
+    }
+}
+
+<span class="c">// Polimorfismo estático (Zero-cost abstraction via generics)</span>
+<span class="k">fn</span> <span class="f">emitir_log</span>&lt;<span class="t">T</span>: <span class="t">FormatadorLog</span>&gt;(item: &amp;<span class="t">T</span>) {
+    <span class="f">println!</span>(<span class="s">"LOG: {}"</span>, item.<span class="f">formatar</span>());
+}
+
+<span class="k">fn</span> <span class="f">main</span>() {
+    <span class="k">let</span> req = <span class="t">RequisicaoHttp</span> {
+        rota: <span class="t">String</span>::<span class="f">from</span>(<span class="s">"/api/v1/cursos"</span>),
+        status: <span class="n">200</span>,
+    };
+    <span class="f">emitir_log</span>(&amp;req);
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Async/Await com Tokio -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">6</span>
+                  <span>Async/Await com Tokio Runtime</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>O modelo assíncrono de Rust é <em>zero-cost</em>: uma <code>Future</code> em Rust não aloca memória nem executa até que seja chamada explicitamente via <code>.await</code> (modelo pull/polling). O ecossistema usa runtimes multithread de alta performance como o <strong>Tokio</strong>.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">async_tokio.rs</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="m">#[tokio::main]</span>
+<span class="k">async fn</span> <span class="f">main</span>() -&gt; <span class="t">Result</span>&lt;(), <span class="t">Box</span>&lt;<span class="k">dyn</span> <span class="t">std</span>::<span class="t">error</span>::<span class="t">Error</span>&gt;&gt; {
+    <span class="f">println!</span>(<span class="s">"Iniciando requisições paralelas com Tokio..."</span>);
+
+    <span class="c">// Spawn de tarefas assíncronas concorrentes</span>
+    <span class="k">let</span> handle1 = tokio::<span class="f">spawn</span>(<span class="k">async</span> {
+        tokio::time::<span class="f">sleep</span>(tokio::time::<span class="t">Duration</span>::<span class="f">from_millis</span>(<span class="n">100</span>)).<span class="k">await</span>;
+        <span class="s">"Dados do Microsserviço de Usuários"</span>
+    });
+
+    <span class="k">let</span> handle2 = tokio::<span class="f">spawn</span>(<span class="k">async</span> {
+        tokio::time::<span class="f">sleep</span>(tokio::time::<span class="t">Duration</span>::<span class="f">from_millis</span>(<span class="n">150</span>)).<span class="k">await</span>;
+        <span class="s">"Dados do Microsserviço de Faturamento"</span>
+    });
+
+    <span class="k">let</span> (res1, res2) = tokio::<span class="f">try_join!</span>(handle1, handle2)?;
+    <span class="f">println!</span>(<span class="s">"Resultado 1: {}"</span>, res1);
+    <span class="f">println!</span>(<span class="s">"Resultado 2: {}"</span>, res2);
+
+    <span class="t">Ok</span>(())
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- RUST EXEMPLOS PRÁTICOS (TABS) -->
+      <section class="section" id="rust-exemplos">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-label">Aplicações do Mundo Real</span>
+            <h2 class="section-title">Exemplos <span>Práticos em Rust</span></h2>
+            <p class="section-sub">Códigos completos, funcionais e realistas para CLI moderna, API Web de alta vazão e paralelismo de dados com Rayon.</p>
+          </div>
+
+          <div class="practical-tabs">
+            <div class="tab-nav" role="tablist">
+              <button class="code-tab-btn active" type="button" data-group="rust-p" data-target="rust-ex-cli" role="tab" aria-selected="true">
+                💻 CLI Tool com Clap
+              </button>
+              <button class="code-tab-btn" type="button" data-group="rust-p" data-target="rust-ex-axum" role="tab" aria-selected="false">
+                🌐 API Web com Axum
+              </button>
+              <button class="code-tab-btn" type="button" data-group="rust-p" data-target="rust-ex-rayon" role="tab" aria-selected="false">
+                ⚡ Paralelismo com Rayon
+              </button>
+            </div>
+
+            <!-- Tab 1: CLI Clap -->
+            <div id="rust-ex-cli" class="code-tab-panel active" role="tabpanel">
+              <p>Ferramenta de linha de comando profissional utilizando derive macros do <code>clap</code> com validação de argumentos, flags opcionais e tratamento robusto de erros com <code>Result</code>.</p>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="lang-badge">src/main.rs (Cargo: clap = { version = "4.4", features = ["derive"] })</span>
+                  <button class="copy-btn" type="button">Copiar</button>
+                </div>
+<pre><code><span class="k">use</span> clap::{<span class="t">Parser</span>, <span class="t">Subcommand</span>};
+<span class="k">use</span> std::fs;
+<span class="k">use</span> std::path::<span class="t">PathBuf</span>;
+
+<span class="m">#[derive(Parser, Debug)]</span>
+<span class="m">#[command(name = "ponce-cli", author = "Ponce Dev", version = "1.0.0", about = "Analisador de Arquivos")]</span>
+<span class="k">struct</span> <span class="t">Cli</span> {
+    <span class="m">#[command(subcommand)]</span>
+    comando: <span class="t">Comandos</span>,
+}
+
+<span class="m">#[derive(Subcommand, Debug)]</span>
+<span class="k">enum</span> <span class="t">Comandos</span> {
+    <span class="c">/// Conta linhas e caracteres de um arquivo de texto</span>
+    <span class="f">Contar</span> {
+        <span class="m">#[arg(short, long)]</span>
+        arquivo: <span class="t">PathBuf</span>,
+        <span class="m">#[arg(short, long)]</span>
+        verbose: <span class="t">bool</span>,
+    },
+}
+
+<span class="k">fn</span> <span class="f">executar_contagem</span>(caminho: &amp;<span class="t">PathBuf</span>, verbose: <span class="t">bool</span>) -&gt; <span class="t">Result</span>&lt;(), <span class="t">Box</span>&lt;<span class="k">dyn</span> std::error::<span class="t">Error</span>&gt;&gt; {
+    <span class="k">let</span> conteudo = fs::<span class="f">read_to_string</span>(caminho)?;
+    <span class="k">let</span> total_linhas = conteudo.<span class="f">lines</span>().<span class="f">count</span>();
+    <span class="k">let</span> total_chars = conteudo.<span class="f">chars</span>().<span class="f">count</span>();
+
+    <span class="f">println!</span>(<span class="s">"📊 Estatísticas para: {:?}"</span>, caminho);
+    <span class="f">println!</span>(<span class="s">"   Linhas:     {}"</span>, total_linhas);
+    <span class="f">println!</span>(<span class="s">"   Caracteres: {}"</span>, total_chars);
+
+    <span class="k">if</span> verbose {
+        <span class="f">println!</span>(<span class="s">"   Tamanho em bytes: {} bytes"</span>, fs::<span class="f">metadata</span>(caminho)?.<span class="f">len</span>());
+    }
+    <span class="t">Ok</span>(())
+}
+
+<span class="k">fn</span> <span class="f">main</span>() {
+    <span class="k">let</span> args = <span class="t">Cli</span>::<span class="f">parse</span>();
+
+    <span class="k">let</span> res = <span class="k">match</span> &amp;args.comando {
+        <span class="t">Comandos</span>::<span class="f">Contar</span> { arquivo, verbose } =&gt; <span class="f">executar_contagem</span>(arquivo, *verbose),
+    };
+
+    <span class="k">if let</span> <span class="t">Err</span>(err) = res {
+        <span class="f">eprintln!</span>(<span class="s">"❌ Erro fatal: {}"</span>, err);
+        std::process::<span class="f">exit</span>(<span class="n">1</span>);
+    }
+}</code></pre>
+              </div>
+            </div>
+
+            <!-- Tab 2: Axum Web API -->
+            <div id="rust-ex-axum" class="code-tab-panel" role="tabpanel">
+              <p>Servidor HTTP REST assíncrono construído com o framework oficial da equipe Tokio: <strong>Axum</strong>, apresentando rotas, extração de JSON e injeção de estado.</p>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="lang-badge">src/main.rs (Cargo: axum, tokio, serde)</span>
+                  <button class="copy-btn" type="button">Copiar</button>
+                </div>
+<pre><code><span class="k">use</span> axum::{
+    extract::{<span class="t">Path</span>, <span class="t">State</span>},
+    http::<span class="t">StatusCode</span>,
+    response::<span class="t">IntoResponse</span>,
+    routing::{<span class="f">get</span>, <span class="f">post</span>},
+    <span class="t">Json</span>, <span class="t">Router</span>,
+};
+<span class="k">use</span> serde::{<span class="t">Deserialize</span>, <span class="t">Serialize</span>};
+<span class="k">use</span> std::sync::{<span class="t">Arc</span>, <span class="t">RwLock</span>};
+
+<span class="m">#[derive(Serialize, Deserialize, Clone)]</span>
+<span class="k">pub struct</span> <span class="t">Curso</span> {
+    <span class="k">pub</span> id: <span class="t">u32</span>,
+    <span class="k">pub</span> titulo: <span class="t">String</span>,
+    <span class="k">pub</span> instrutor: <span class="t">String</span>,
+}
+
+<span class="k">type</span> <span class="t">DbEstado</span> = <span class="t">Arc</span>&lt;<span class="t">RwLock</span>&lt;<span class="t">Vec</span>&lt;<span class="t">Curso</span>&gt;&gt;&gt;;
+
+<span class="k">async fn</span> <span class="f">listar_cursos</span>(<span class="t">State</span>(db): <span class="t">State</span>&lt;<span class="t">DbEstado</span>&gt;) -&gt; <span class="t">Json</span>&lt;<span class="t">Vec</span>&lt;<span class="t">Curso</span>&gt;&gt; {
+    <span class="k">let</span> cursos = db.<span class="f">read</span>().<span class="f">unwrap</span>().<span class="f">clone</span>();
+    <span class="t">Json</span>(cursos)
+}
+
+<span class="k">async fn</span> <span class="f">criar_curso</span>(
+    <span class="t">State</span>(db): <span class="t">State</span>&lt;<span class="t">DbEstado</span>&gt;,
+    <span class="t">Json</span>(novo_curso): <span class="t">Json</span>&lt;<span class="t">Curso</span>&gt;,
+) -&gt; <span class="k">impl</span> <span class="t">IntoResponse</span> {
+    db.<span class="f">write</span>().<span class="f">unwrap</span>().<span class="f">push</span>(novo_curso.<span class="f">clone</span>());
+    (<span class="t">StatusCode</span>::<span class="t">CREATED</span>, <span class="t">Json</span>(novo_curso))
+}
+
+<span class="m">#[tokio::main]</span>
+<span class="k">async fn</span> <span class="f">main</span>() {
+    <span class="k">let</span> banco: <span class="t">DbEstado</span> = <span class="t">Arc</span>::<span class="f">new</span>(<span class="t">RwLock</span>::<span class="f">new</span>(<span class="f">vec!</span>[<span class="t">Curso</span> {
+        id: <span class="n">1</span>,
+        titulo: <span class="t">String</span>::<span class="f">from</span>(<span class="s">"Dominando Rust &amp; Go"</span>),
+        instrutor: <span class="t">String</span>::<span class="f">from</span>(<span class="s">"Ponce Metodologias"</span>),
+    }]));
+
+    <span class="k">let</span> app = <span class="t">Router</span>::<span class="f">new</span>()
+        .<span class="f">route</span>(<span class="s">"/api/cursos"</span>, <span class="f">get</span>(listar_cursos).<span class="f">post</span>(criar_curso))
+        .<span class="f">with_state</span>(banco);
+
+    <span class="k">let</span> listener = tokio::net::<span class="t">TcpListener</span>::<span class="f">bind</span>(<span class="s">"127.0.0.1:3000"</span>).<span class="k">await</span>.<span class="f">unwrap</span>();
+    <span class="f">println!</span>(<span class="s">"🚀 Servidor Axum online em http://127.0.0.1:3000"</span>);
+    axum::<span class="f">serve</span>(listener, app).<span class="k">await</span>.<span class="f">unwrap</span>();
+}</code></pre>
+              </div>
+            </div>
+
+            <!-- Tab 3: Rayon Parallelism -->
+            <div id="rust-ex-rayon" class="code-tab-panel" role="tabpanel">
+              <p>Processamento paralelo de alta performance sem receio de data races com a biblioteca <strong>Rayon</strong>. Converte iteradores sequenciais em paralelos com <code>par_iter()</code>.</p>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="lang-badge">src/main.rs (Cargo: rayon = "1.10")</span>
+                  <button class="copy-btn" type="button">Copiar</button>
+                </div>
+<pre><code><span class="k">use</span> rayon::prelude::*;
+<span class="k">use</span> std::time::<span class="t">Instant</span>;
+
+<span class="k">fn</span> <span class="f">e_primo</span>(n: <span class="t">u64</span>) -&gt; <span class="t">bool</span> {
+    <span class="k">if</span> n &lt;= <span class="n">1</span> { <span class="k">return</span> <span class="n">false</span>; }
+    <span class="k">if</span> n &lt;= <span class="n">3</span> { <span class="k">return</span> <span class="n">true</span>; }
+    <span class="k">if</span> n % <span class="n">2</span> == <span class="n">0</span> || n % <span class="n">3</span> == <span class="n">0</span> { <span class="k">return</span> <span class="n">false</span>; }
+    <span class="k">let</span> <span class="k">mut</span> i = <span class="n">5</span>;
+    <span class="k">while</span> i * i &lt;= n {
+        <span class="k">if</span> n % i == <span class="n">0</span> || n % (i + <span class="n">2</span>) == <span class="n">0</span> { <span class="k">return</span> <span class="n">false</span>; }
+        i += <span class="n">6</span>;
+    }
+    <span class="n">true</span>
+}
+
+<span class="k">fn</span> <span class="f">main</span>() {
+    <span class="k">let</span> limite = <span class="n">2_000_000u64</span>;
+    <span class="k">let</span> numeros: <span class="t">Vec</span>&lt;<span class="t">u64</span>&gt; = (<span class="n">1</span>..=limite).<span class="f">collect</span>();
+
+    <span class="f">println!</span>(<span class="s">"Calculando números primos até {} usando Rayon..."</span>, limite);
+    <span class="k">let</span> inicio = <span class="t">Instant</span>::<span class="f">now</span>();
+
+    <span class="c">// .into_par_iter() distribui o trabalho entre todos os núcleos de CPU disponíveis</span>
+    <span class="k">let</span> total_primos = numeros
+        .<span class="f">into_par_iter</span>()
+        .<span class="f">filter</span>(|&amp;n| <span class="f">e_primo</span>(n))
+        .<span class="f">count</span>();
+
+    <span class="k">let</span> duracao = inicio.<span class="f">elapsed</span>();
+    <span class="f">println!</span>(<span class="s">"✨ Primos encontrados: {}"</span>, total_primos);
+    <span class="f">println!</span>(<span class="s">"⏱️ Tempo paralelo: {:?}"</span>, duracao);
+}</code></pre>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- RUST MERCADO DE TRABALHO -->
+      <section class="section alt-bg" id="rust-mercado">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-label">Oportunidades &amp; Salários</span>
+            <h2 class="section-title">Mercado de Trabalho: <span>Rust</span></h2>
+            <p class="section-sub">Devido à alta complexidade e demanda em infraestrutura crítica, os salários de engenheiros Rust estão entre os mais altos da indústria de tecnologia mundial.</p>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nível de Carreira</th>
+                  <th>Faixa Salarial Mensal (Brasil)</th>
+                  <th>Perfil de Atuação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Júnior</strong></td>
+                  <td class="sal">R$ 7.000 – R$ 11.000</td>
+                  <td>Desenvolvimento de ferramentas CLI, microsserviços simples e testes de integração.</td>
+                </tr>
+                <tr>
+                  <td><strong>Pleno</strong></td>
+                  <td class="sal">R$ 12.000 – R$ 20.000</td>
+                  <td>Sistemas de mensageria, migração de C++ para Rust, otimização de I/O assíncrono com Tokio.</td>
+                </tr>
+                <tr>
+                  <td><strong>Sênior / Specialist</strong></td>
+                  <td class="sal">R$ 22.000 – R$ 35.000+</td>
+                  <td>Kernels, drivers de rede, WebAssembly, compiladores, infraestrutura em nuvem e contratos inteligentes seguros.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="market-grid">
+            <div class="market-card">
+              <h3>🏢 Gigantes que Usam Rust</h3>
+              <div class="chips-wrap">
+                <span class="chip">☁️ AWS (Firecracker/Bottlerocket)</span>
+                <span class="chip">🪟 Microsoft (Windows Kernel)</span>
+                <span class="chip">🦊 Mozilla (Firefox/Servo)</span>
+                <span class="chip">⚡ Cloudflare (Workers &amp; Pingora)</span>
+                <span class="chip">🎨 Figma (Multiplayer Engine)</span>
+                <span class="chip">💬 Discord (Read States Engine)</span>
+                <span class="chip">🔍 Google (Android/Chromium)</span>
+                <span class="chip">📦 Dropbox (Storage Core)</span>
+              </div>
+            </div>
+
+            <div class="market-card">
+              <h3>🎯 Setores em Alta Demanda</h3>
+              <div class="chips-wrap">
+                <span class="chip">🌐 Cloud &amp; Edge Computing</span>
+                <span class="chip">🛡️ Cibersegurança &amp; Criptografia</span>
+                <span class="chip">🐧 Sistemas Operacionais &amp; Drivers</span>
+                <span class="chip">🕸️ WebAssembly (Wasm)</span>
+                <span class="chip">💹 FinTech &amp; High-Frequency Trading</span>
+                <span class="chip">🚗 Automotivo &amp; Aeroespacial</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- VIEW: GO (GOLANG)                                             -->
+    <!-- ============================================================== -->
+    <div id="view-go" class="lang-view" role="tabpanel" aria-labelledby="tab-btn-go">
+
+      <!-- GO HERO -->
+      <section class="hero hero-go">
+        <div class="container">
+          <div class="hero-badge">
+            <span>⚡</span> Concorrente / Cloud Native
+          </div>
+          <h1 class="hero-title">
+            <span class="lang-gradient-go">🐹 Go (Golang)</span>
+          </h1>
+          <p class="hero-lead">
+            A espinha dorsal da nuvem e a linguagem responsável por <strong>Docker</strong>, <strong>Kubernetes</strong> e <strong>Terraform</strong>. Famosa por sua sintaxe limpa, compilação ultrarrápida para binário único estático e modelo nativo de concorrência com <strong>Goroutines</strong>. Criada no Google por lendas da computação: Robert Griesemer, Rob Pike e Ken Thompson em 2009.
+          </p>
+
+          <div class="hero-highlights">
+            <div class="hero-pill">
+              <span class="icon">🚀</span>
+              <div>
+                <h4>Goroutines Ultra-leves</h4>
+                <p>Iniciam com apenas ~2KB de stack, permitindo milhões de tarefas simultâneas por nó.</p>
+              </div>
+            </div>
+            <div class="hero-pill">
+              <span class="icon">📦</span>
+              <div>
+                <h4>Binário Estático Único</h4>
+                <p>Compilação instantânea sem dependências externas de runtime, perfeito para contêineres Docker.</p>
+              </div>
+            </div>
+            <div class="hero-pill">
+              <span class="icon">🧹</span>
+              <div>
+                <h4>Standard Library Rica</h4>
+                <p>Pacotes nativos maduros para HTTP, JSON, criptografia e concorrência sem dependências de terceiros.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GO HISTÓRIA & EVOLUÇÃO -->
+      <section class="section" id="go-historia">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-label">Origem &amp; Marcos</span>
+            <h2 class="section-title">História &amp; <span>Evolução do Go</span></h2>
+            <p class="section-sub">Projetada no Google para resolver os desafios reais de compilação lenta e sistemas distribuídos gigantescos em escala global.</p>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2007</span>
+                <h3>Início do Design no Google</h3>
+                <p>Frustrados com o tempo absurdo de compilação do C++ no Google e a complexidade desnecessária de linguagens modernas, Rob Pike, Ken Thompson (co-criador do Unix/C/UTF-8) e Robert Griesemer desenham os fundamentos de Go em um quadro branco.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2009</span>
+                <h3>Anúncio Open Source</h3>
+                <p>Go é lançado publicamente como projeto de código aberto. A comunidade rapidamente abraça o mascote <em>Gopher</em> e a proposta de simplicidade, tipagem estática e concorrência baseada em canais CSP (Communicating Sequential Processes).</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2012</span>
+                <h3>Go 1.0 e Promessa de Compatibilidade</h3>
+                <p>A versão Go 1.0 é oficializada acompanhada da rigorosa <em>Go 1 Compatibility Promise</em>: qualquer código escrito para Go 1 continuará compilando sem alterações em todas as versões 1.x futuras.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2015</span>
+                <h3>A Revolução Cloud Native (Docker &amp; K8s)</h3>
+                <p>O surgimento do Docker e o lançamento do Kubernetes consolidam o ecossistema Go como o padrão absoluto para contêineres, orquestração e infraestrutura de nuvem global.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2018</span>
+                <h3>Go Modules (go.mod)</h3>
+                <p>Lançamento do suporte oficial a módulos de dependências com versionamento semântico, eliminando a dependência histórica da variável de ambiente <code>GOPATH</code>.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2022</span>
+                <h3>Go 1.18 — A Chegada dos Generics</h3>
+                <p>Após mais de uma década de debates meticulosos, Go 1.18 introduz parâmetros de tipo genéricos (<em>Generics</em>) e Fuzzing nativo, mantendo a simplicidade e a velocidade lendária de compilação.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2023</span>
+                <h3>Go 1.21 — Funções Embutidas &amp; log/slog</h3>
+                <p>Adição de funções nativas <code>min</code>, <code>max</code> e <code>clear</code>, pacotes padrão de alta performance <code>slices</code> e <code>maps</code>, e o pacote de logging estruturado <code>log/slog</code>.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-year">2024</span>
+                <h3>Go 1.22 &amp; Go 1.23 — Range-Over-Func</h3>
+                <p>Adoção de iteradores formais com funções de range (<code>range-over-func</code>), semântica segura de variáveis em laços <code>for</code> e otimizações automáticas orientadas a perfil (PGO).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GO CONCEITOS FUNDAMENTAIS (ACCORDION) -->
+      <section class="section alt-bg" id="go-conceitos">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-label">Fundamentos da Linguagem</span>
+            <h2 class="section-title">Conceitos <span>Fundamentais de Go</span></h2>
+            <p class="section-sub">A beleza de Go reside na sua simplicidade proposital: poucos conceitos ortogonais que resolvem problemas de escalabilidade extrema.</p>
+          </div>
+
+          <div class="accordion" id="accordion-go">
+
+            <!-- 1. Goroutines & Channels -->
+            <div class="acc-item open">
+              <button class="acc-trigger" type="button" aria-expanded="true">
+                <div class="acc-title-group">
+                  <span class="acc-num">1</span>
+                  <span>Goroutines &amp; Channels</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel" style="max-height: 1200px;">
+                <div class="acc-body">
+                  <p>O modelo de concorrência de Go segue o lema: <em>"Não se comunique compartilhando memória; compartilhe memória se comunicando."</em></p>
+                  <ul>
+                    <li><strong>Goroutines</strong>: Threads virtuais gerenciadas pelo runtime Go com a palavra-chave <code>go</code>.</li>
+                    <li><strong>Channels</strong>: Tubulações tipadas (<code>chan T</code>) para envio e recebimento síncrono ou com buffer entre goroutines.</li>
+                    <li>O bloco <code>select</code> permite multiplexar múltiplos canais sem bloqueio ativo.</li>
+                  </ul>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">goroutines_channels.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> (
+    <span class="s">"fmt"</span>
+    <span class="s">"time"</span>
+)
+
+<span class="k">func</span> <span class="f">produtor</span>(canal <span class="k">chan</span>&lt;- <span class="t">string</span>) {
+    cursos := []<span class="t">string</span>{<span class="s">"Rust"</span>, <span class="s">"Go"</span>, <span class="s">"Kubernetes"</span>, <span class="s">"Docker"</span>}
+    <span class="k">for</span> _, c := <span class="k">range</span> cursos {
+        time.<span class="f">Sleep</span>(<span class="n">50</span> * time.Millisecond)
+        canal &lt;- fmt.<span class="f">Sprintf</span>(<span class="s">"Curso liberado: %s"</span>, c)
+    }
+    <span class="f">close</span>(canal) <span class="c">// Fecha o canal ao concluir</span>
+}
+
+<span class="k">func</span> <span class="f">main</span>() {
+    <span class="c">// Canal de comunicação seguro</span>
+    mensagens := <span class="f">make</span>(<span class="k">chan</span> <span class="t">string</span>, <span class="n">2</span>)
+
+    <span class="c">// Dispara goroutine leve</span>
+    <span class="k">go</span> <span class="f">produtor</span>(mensagens)
+
+    <span class="c">// Consome do canal até seu fechamento</span>
+    <span class="k">for</span> msg := <span class="k">range</span> mensagens {
+        fmt.<span class="f">Println</span>(<span class="s">"📥 Recebido:"</span>, msg)
+    }
+    fmt.<span class="f">Println</span>(<span class="s">"✅ Todas as tarefas concluídas!"</span>)
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Interfaces Implícitas -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">2</span>
+                  <span>Interfaces Implícitas (Duck Typing Estático)</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Em Go, não existe a palavra-chave <code>implements</code>. Se uma struct possui todos os métodos exigidos por uma interface, ela <strong>implementa a interface automaticamente</strong> em tempo de compilação.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">interfaces.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="c">// Interface desacoplada</span>
+<span class="k">type</span> <span class="t">Notificador</span> <span class="k">interface</span> {
+    <span class="f">EnviarNotificacao</span>(mensagem <span class="t">string</span>) <span class="t">error</span>
+}
+
+<span class="k">type</span> <span class="t">EmailService</span> <span class="k">struct</span> {
+    EmailDestino <span class="t">string</span>
+}
+
+<span class="c">// Implementação implícita do método</span>
+<span class="k">func</span> (e <span class="t">EmailService</span>) <span class="f">EnviarNotificacao</span>(msg <span class="t">string</span>) <span class="t">error</span> {
+    fmt.<span class="f">Printf</span>(<span class="s">"📧 Enviando e-mail para [%s]: %s\n"</span>, e.EmailDestino, msg)
+    <span class="k">return</span> <span class="n">nil</span>
+}
+
+<span class="k">func</span> <span class="f">ProcessarAlerta</span>(n <span class="t">Notificador</span>, alerta <span class="t">string</span>) {
+    _ = n.<span class="f">EnviarNotificacao</span>(alerta)
+}
+
+<span class="k">func</span> <span class="f">main</span>() {
+    servico := <span class="t">EmailService</span>{EmailDestino: <span class="s">"dev@ponce.com.br"</span>}
+    <span class="f">ProcessarAlerta</span>(servico, <span class="s">"Deploy realizado com sucesso em Go!"</span>)
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Error Handling -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">3</span>
+                  <span>Tratamento de Erros Explícito</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Go não utiliza exceções mágicas (<code>try/catch</code>). Funções retornam erros como valores regulares em retornos múltiplos (<code>(T, error)</code>), incentivando o tratamento no ponto exato da ocorrência com <code>if err != nil</code>.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">error_handling.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> (
+    <span class="s">"errors"</span>
+    <span class="s">"fmt"</span>
+)
+
+<span class="k">var</span> <span class="t">ErrSaldoInsuficiente</span> = errors.<span class="f">New</span>(<span class="s">"saldo insuficiente para a transação"</span>)
+
+<span class="k">type</span> <span class="t">Conta</span> <span class="k">struct</span> {
+    Titular <span class="t">string</span>
+    Saldo   <span class="t">float64</span>
+}
+
+<span class="k">func</span> (c *<span class="t">Conta</span>) <span class="f">Sacar</span>(valor <span class="t">float64</span>) (<span class="t">float64</span>, <span class="t">error</span>) {
+    <span class="k">if</span> valor &gt; c.Saldo {
+        <span class="k">return</span> c.Saldo, fmt.<span class="f">Errorf</span>(<span class="s">"%w: tentou sacar %.2f mas tem %.2f"</span>, <span class="t">ErrSaldoInsuficiente</span>, valor, c.Saldo)
+    }
+    c.Saldo -= valor
+    <span class="k">return</span> c.Saldo, <span class="n">nil</span>
+}
+
+<span class="k">func</span> <span class="f">main</span>() {
+    conta := &amp;<span class="t">Conta</span>{Titular: <span class="s">"Ponce Dev"</span>, Saldo: <span class="n">500.0</span>}
+
+    saldoRestante, err := conta.<span class="f">Sacar</span>(<span class="n">750.0</span>)
+    <span class="k">if</span> err != <span class="n">nil</span> {
+        <span class="k">if</span> errors.<span class="f">Is</span>(err, <span class="t">ErrSaldoInsuficiente</span>) {
+            fmt.<span class="f">Println</span>(<span class="s">"⚠️ Falha de saldo detectada:"</span>, err)
+        }
+        <span class="k">return</span>
+    }
+    fmt.<span class="f">Printf</span>(<span class="s">"Saque aprovado. Saldo restante: R$ %.2f\n"</span>, saldoRestante)
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Defer / Panic / Recover -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">4</span>
+                  <span>Defer, Panic &amp; Recover</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>O <code>defer</code> adia a execução de uma função para o momento imediato em que a função pai retorna (ideal para fechar conexões, desbloquear mutexes e fechar arquivos). <code>panic</code> e <code>recover</code> controlam falhas críticas não recuperáveis.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">defer_recover.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="f">operacaoSegura</span>() {
+    <span class="c">// defer executado garantidamente antes da saída da função</span>
+    <span class="k">defer</span> <span class="k">func</span>() {
+        <span class="k">if</span> r := <span class="f">recover</span>(); r != <span class="n">nil</span> {
+            fmt.<span class="f">Println</span>(<span class="s">"🛡️ Recuperado de um pânico crítico com sucesso:"</span>, r)
+        }
+    }()
+
+    fmt.<span class="f">Println</span>(<span class="s">"1. Executando operação de banco..."</span>)
+    <span class="f">panic</span>(<span class="s">"conexão com o cluster foi interrompida!"</span>)
+    <span class="c">// fmt.Println("Este código não será alcançado")</span>
+}
+
+<span class="k">func</span> <span class="f">main</span>() {
+    fmt.<span class="f">Println</span>(<span class="s">"Início do programa"</span>)
+    <span class="f">operacaoSegura</span>()
+    fmt.<span class="f">Println</span>(<span class="s">"Programa continuou executando normalmente após a recuperação!"</span>)
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Generics -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">5</span>
+                  <span>Generics (Go 1.18+)</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>A introdução de parâmetros de tipo (<code>[T any]</code> ou <code>[K comparable, V any]</code>) permitiu a criação de funções e estruturas reutilizáveis e com segurança de tipos, sem abrir mão de performance.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">generics.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="c">// Restrição de tipos numéricos usando interface union</span>
+<span class="k">type</span> <span class="t">Numerico</span> <span class="k">interface</span> {
+    ~<span class="t">int</span> | ~<span class="t">int64</span> | ~<span class="t">float32</span> | ~<span class="t">float64</span>
+}
+
+<span class="c">// Função genérica com type constraint</span>
+<span class="k">func</span> <span class="f">SomarValores</span>[<span class="t">T</span> <span class="t">Numerico</span>](itens []<span class="t">T</span>) <span class="t">T</span> {
+    <span class="k">var</span> total <span class="t">T</span>
+    <span class="k">for</span> _, v := <span class="k">range</span> itens {
+        total += v
+    }
+    <span class="k">return</span> total
+}
+
+<span class="k">func</span> <span class="f">main</span>() {
+    inteiros := []<span class="t">int</span>{<span class="n">10</span>, <span class="n">20</span>, <span class="n">30</span>, <span class="n">40</span>}
+    decimais := []<span class="t">float64</span>{<span class="n">1.5</span>, <span class="n">2.5</span>, <span class="n">3.5</span>}
+
+    fmt.<span class="f">Println</span>(<span class="s">"Soma de inteiros:"</span>, <span class="f">SomarValores</span>(inteiros))
+    fmt.<span class="f">Println</span>(<span class="s">"Soma de floats:  "</span>, <span class="f">SomarValores</span>(decimais))
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Packages & Modules -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">6</span>
+                  <span>Packages &amp; Modules (go.mod)</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Organização de projetos com Go Modules: visibilidade controlada pela primeira letra (<strong>Maiúscula = Exportado/Público</strong>, <strong>Minúscula = Privado ao pacote</strong>).</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">go.mod &amp; estrutura</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="c">// go.mod</span>
+<span class="k">module</span> github.com/ponce/meu-servico-go
+
+<span class="k">go</span> <span class="n">1.23</span>
+
+<span class="k">require</span> (
+    github.com/google/uuid <span class="s">v1.6.0</span>
+    github.com/spf13/cobra <span class="s">v1.8.1</span>
+)</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- GO EXEMPLOS PRÁTICOS (TABS) -->
+      <section class="section" id="go-exemplos">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-label">Aplicações do Mundo Real</span>
+            <h2 class="section-title">Exemplos <span>Práticos em Go</span></h2>
+            <p class="section-sub">Códigos prontos para produção: servidor HTTP nativo com graceful shutdown, padrão de Worker Pool concorrente e CLI com Cobra.</p>
+          </div>
+
+          <div class="practical-tabs">
+            <div class="tab-nav" role="tablist">
+              <button class="code-tab-btn active" type="button" data-group="go-p" data-target="go-ex-http" role="tab" aria-selected="true">
+                🌐 HTTP Server com Graceful Shutdown
+              </button>
+              <button class="code-tab-btn" type="button" data-group="go-p" data-target="go-ex-worker" role="tab" aria-selected="false">
+                ⚙️ Worker Pool Pattern
+              </button>
+              <button class="code-tab-btn" type="button" data-group="go-p" data-target="go-ex-cobra" role="tab" aria-selected="false">
+                💻 CLI Tool com Cobra
+              </button>
+            </div>
+
+            <!-- Tab 1: HTTP Server -->
+            <div id="go-ex-http" class="code-tab-panel active" role="tabpanel">
+              <p>Servidor HTTP REST nativo usando apenas a biblioteca padrão (<code>net/http</code>), com roteador Go 1.22+, manipulação JSON, middleware de log e encerramento gracioso (<em>graceful shutdown</em>).</p>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="lang-badge">server.go</span>
+                  <button class="copy-btn" type="button">Copiar</button>
+                </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> (
+    <span class="s">"context"</span>
+    <span class="s">"encoding/json"</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"log/slog"</span>
+    <span class="s">"net/http"</span>
+    <span class="s">"os"</span>
+    <span class="s">"os/signal"</span>
+    <span class="s">"syscall"</span>
+    <span class="s">"time"</span>
+)
+
+<span class="k">type</span> <span class="t">RespostaStatus</span> <span class="k">struct</span> {
+    Status    <span class="t">string</span>    `json:"status"`
+    Timestamp time.<span class="t">Time</span> `json:"timestamp"`
+    Versao    <span class="t">string</span>    `json:"versao"`
+}
+
+<span class="k">func</span> <span class="f">healthHandler</span>(w http.<span class="t">ResponseWriter</span>, r *http.<span class="t">Request</span>) {
+    resp := <span class="t">RespostaStatus</span>{
+        Status:    <span class="s">"online"</span>,
+        Timestamp: time.<span class="f">Now</span>(),
+        Versao:    <span class="s">"1.0.0"</span>,
+    }
+    w.<span class="f">Header</span>().<span class="f">Set</span>(<span class="s">"Content-Type"</span>, <span class="s">"application/json"</span>)
+    _ = json.<span class="f">NewEncoder</span>(w).<span class="f">Encode</span>(resp)
+}
+
+<span class="k">func</span> <span class="f">main</span>() {
+    mux := http.<span class="f">NewServeMux</span>()
+    mux.<span class="f">HandleFunc</span>(<span class="s">"GET /api/v1/health"</span>, healthHandler)
+
+    srv := &amp;http.<span class="t">Server</span>{
+        Addr:         <span class="s">":8080"</span>,
+        Handler:      mux,
+        ReadTimeout:  <span class="n">5</span> * time.Second,
+        WriteTimeout: <span class="n">10</span> * time.Second,
+    }
+
+    <span class="c">// Canal para interceptar sinal de interrupção (Ctrl+C, SIGTERM)</span>
+    stop := <span class="f">make</span>(<span class="k">chan</span> os.<span class="t">Signal</span>, <span class="n">1</span>)
+    signal.<span class="f">Notify</span>(stop, os.Interrupt, syscall.SIGTERM)
+
+    <span class="k">go</span> <span class="k">func</span>() {
+        slog.<span class="f">Info</span>(<span class="s">"🐹 Servidor HTTP Go escutando na porta :8080"</span>)
+        <span class="k">if</span> err := srv.<span class="f">ListenAndServe</span>(); err != <span class="n">nil</span> &amp;&amp; err != http.ErrServerClosed {
+            slog.<span class="f">Error</span>(<span class="s">"Erro no servidor"</span>, <span class="s">"erro"</span>, err)
+        }
+    }()
+
+    &lt;-stop
+    slog.<span class="f">Info</span>(<span class="s">"Iniciando encerramento gracioso..."</span>)
+
+    ctx, cancel := context.<span class="f">WithTimeout</span>(context.<span class="f">Background</span>(), <span class="n">5</span>*time.Second)
+    <span class="k">defer</span> cancel()
+
+    <span class="k">if</span> err := srv.<span class="f">Shutdown</span>(ctx); err != <span class="n">nil</span> {
+        slog.<span class="f">Error</span>(<span class="s">"Erro ao finalizar servidor"</span>, <span class="s">"erro"</span>, err)
+    }
+    slog.<span class="f">Info</span>(<span class="s">"Servidor Go finalizado com sucesso."</span>)
+}</code></pre>
+              </div>
+            </div>
+
+            <!-- Tab 2: Worker Pool -->
+            <div id="go-ex-worker" class="code-tab-panel" role="tabpanel">
+              <p>Padrão clássico de <strong>Worker Pool</strong>: distribui centenas de trabalhos entre um número fixo de goroutines trabalhadoras usando channels e <code>sync.WaitGroup</code> para controle de concorrência e evitar esgotamento de recursos.</p>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="lang-badge">worker_pool.go</span>
+                  <button class="copy-btn" type="button">Copiar</button>
+                </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> (
+    <span class="s">"fmt"</span>
+    <span class="s">"sync"</span>
+    <span class="s">"time"</span>
+)
+
+<span class="k">type</span> <span class="t">Trabalho</span> <span class="k">struct</span> {
+    ID    <span class="t">int</span>
+    Dados <span class="t">string</span>
+}
+
+<span class="k">type</span> <span class="t">Resultado</span> <span class="k">struct</span> {
+    TrabalhoID <span class="t">int</span>
+    Status     <span class="t">string</span>
+    Duracao    time.<span class="t">Duration</span>
+}
+
+<span class="k">func</span> <span class="f">worker</span>(id <span class="t">int</span>, jobs &lt;-<span class="k">chan</span> <span class="t">Trabalho</span>, results <span class="k">chan</span>&lt;- <span class="t">Resultado</span>, wg *sync.<span class="t">WaitGroup</span>) {
+    <span class="k">defer</span> wg.<span class="f">Done</span>()
+    <span class="k">for</span> job := <span class="k">range</span> jobs {
+        inicio := time.<span class="f">Now</span>()
+        time.<span class="f">Sleep</span>(<span class="n">40</span> * time.Millisecond) <span class="c">// Simula processamento I/O ou CPU</span>
+        results &lt;- <span class="t">Resultado</span>{
+            TrabalhoID: job.ID,
+            Status:     fmt.<span class="f">Sprintf</span>(<span class="s">"Processado pelo Worker %d"</span>, id),
+            Duracao:    time.<span class="f">Since</span>(inicio),
+        }
+    }
+}
+
+<span class="k">func</span> <span class="f">main</span>() {
+    <span class="k">const</span> numJobs = <span class="n">10</span>
+    <span class="k">const</span> numWorkers = <span class="n">3</span>
+
+    jobs := <span class="f">make</span>(<span class="k">chan</span> <span class="t">Trabalho</span>, numJobs)
+    results := <span class="f">make</span>(<span class="k">chan</span> <span class="t">Resultado</span>, numJobs)
+    <span class="k">var</span> wg sync.<span class="t">WaitGroup</span>
+
+    <span class="c">// Inicia o pool de workers fixo</span>
+    <span class="k">for</span> w := <span class="n">1</span>; w &lt;= numWorkers; w++ {
+        wg.<span class="f">Add</span>(<span class="n">1</span>)
+        <span class="k">go</span> <span class="f">worker</span>(w, jobs, results, &amp;wg)
+    }
+
+    <span class="c">// Envia os trabalhos para o canal</span>
+    <span class="k">for</span> j := <span class="n">1</span>; j &lt;= numJobs; j++ {
+        jobs &lt;- <span class="t">Trabalho</span>{ID: j, Dados: fmt.<span class="f">Sprintf</span>(<span class="s">"Payload #%d"</span>, j)}
+    }
+    <span class="f">close</span>(jobs)
+
+    <span class="c">// Goroutine para fechar o canal de resultados após todos os workers concluírem</span>
+    <span class="k">go</span> <span class="k">func</span>() {
+        wg.<span class="f">Wait</span>()
+        <span class="f">close</span>(results)
+    }()
+
+    <span class="c">// Coleta e exibe os resultados</span>
+    <span class="k">for</span> res := <span class="k">range</span> results {
+        fmt.<span class="f">Printf</span>(<span class="s">"⚡ Job #%d -&gt; %s (tempo: %v)\n"</span>, res.TrabalhoID, res.Status, res.Duracao)
+    }
+}</code></pre>
+              </div>
+            </div>
+
+            <!-- Tab 3: Cobra CLI -->
+            <div id="go-ex-cobra" class="code-tab-panel" role="tabpanel">
+              <p>Construção de utilitários de terminal e DevOps com a mesma biblioteca utilizada pelo <strong>Kubernetes (kubectl)</strong>, <strong>GitHub CLI (gh)</strong> e <strong>Hugo</strong>: o <code>Cobra</code>.</p>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="lang-badge">main.go (go get github.com/spf13/cobra)</span>
+                  <button class="copy-btn" type="button">Copiar</button>
+                </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> (
+    <span class="s">"fmt"</span>
+    <span class="s">"os"</span>
+
+    <span class="s">"github.com/spf13/cobra"</span>
+)
+
+<span class="k">var</span> formatoSaida <span class="t">string</span>
+
+<span class="k">var</span> rootCmd = &amp;cobra.<span class="t">Command</span>{
+    Use:   <span class="s">"poncectl"</span>,
+    Short: <span class="s">"poncectl - Ferramenta CLI de infraestrutura"</span>,
+    Long:  <span class="s">"Utilitário moderno construído em Go para gerenciamento de microsserviços."</span>,
+}
+
+<span class="k">var</span> versaoCmd = &amp;cobra.<span class="t">Command</span>{
+    Use:   <span class="s">"version"</span>,
+    Short: <span class="s">"Exibe a versão atual do binário"</span>,
+    Run: <span class="k">func</span>(cmd *cobra.<span class="t">Command</span>, args []<span class="t">string</span>) {
+        <span class="k">if</span> formatoSaida == <span class="s">"json"</span> {
+            fmt.<span class="f">Println</span>(<span class="s">`{"versao": "2.1.0", "compilador": "go1.23"}`</span>)
+        } <span class="k">else</span> {
+            fmt.<span class="f">Println</span>(<span class="s">"poncectl v2.1.0 (compilado com go1.23)"</span>)
+        }
+    },
+}
+
+<span class="k">func</span> <span class="f">init</span>() {
+    rootCmd.<span class="f">PersistentFlags</span>().<span class="f">StringVarP</span>(&amp;formatoSaida, <span class="s">"output"</span>, <span class="s">"o"</span>, <span class="s">"text"</span>, <span class="s">"Formato de saída (text|json)"</span>)
+    rootCmd.<span class="f">AddCommand</span>(versaoCmd)
+}
+
+<span class="k">func</span> <span class="f">main</span>() {
+    <span class="k">if</span> err := rootCmd.<span class="f">Execute</span>(); err != <span class="n">nil</span> {
+        fmt.<span class="f">Fprintf</span>(os.Stderr, <span class="s">"Erro ao executar CLI: %v\n"</span>, err)
+        os.<span class="f">Exit</span>(<span class="n">1</span>)
+    }
+}</code></pre>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- GO MERCADO DE TRABALHO -->
+      <section class="section alt-bg" id="go-mercado">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-label">Oportunidades &amp; Salários</span>
+            <h2 class="section-title">Mercado de Trabalho: <span>Go</span></h2>
+            <p class="section-sub">A ampla adoção em microsserviços, Cloud Native e FinTechs torna Go uma das linguagens com maior volume de vagas internacionais e nacionais bem remuneradas.</p>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nível de Carreira</th>
+                  <th>Faixa Salarial Mensal (Brasil)</th>
+                  <th>Perfil de Atuação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Júnior</strong></td>
+                  <td class="sal">R$ 5.000 – R$ 8.000</td>
+                  <td>Desenvolvimento de endpoints REST, testes unitários, automação de scripts e consumo de APIs.</td>
+                </tr>
+                <tr>
+                  <td><strong>Pleno</strong></td>
+                  <td class="sal">R$ 9.000 – R$ 15.000</td>
+                  <td>Arquitetura de microsserviços, integração com Kafka/RabbitMQ, pipelines gRPC e otimização de concorrência.</td>
+                </tr>
+                <tr>
+                  <td><strong>Sênior / Tech Lead</strong></td>
+                  <td class="sal">R$ 16.000 – R$ 26.000+</td>
+                  <td>Design de sistemas distribuídos de alta escala, operadores Kubernetes customizados e plataformas de pagamento.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="market-grid">
+            <div class="market-card">
+              <h3>🏢 Gigantes que Usam Go</h3>
+              <div class="chips-wrap">
+                <span class="chip">🔍 Google (Criadora &amp; Core)</span>
+                <span class="chip">🐳 Docker (Moby Project)</span>
+                <span class="chip">🏗️ HashiCorp (Terraform/Vault)</span>
+                <span class="chip">⚡ Cloudflare (CDN Edge)</span>
+                <span class="chip">💛 Mercado Livre (Backend Principal)</span>
+                <span class="chip">📱 PicPay (FinTech Services)</span>
+                <span class="chip">🚗 Uber (Geo Dispatch)</span>
+                <span class="chip">🍿 Netflix (Data Pipelines)</span>
+                <span class="chip">💜 Nubank (Infraestrutura)</span>
+                <span class="chip">🎮 Twitch (Chat System)</span>
+              </div>
+            </div>
+
+            <div class="market-card">
+              <h3>🎯 Setores em Alta Demanda</h3>
+              <div class="chips-wrap">
+                <span class="chip">☁️ Cloud Native &amp; Kubernetes</span>
+                <span class="chip">🔄 Microsserviços &amp; Alta Concorrência</span>
+                <span class="chip">💳 FinTechs &amp; Gateways de Pagamento</span>
+                <span class="chip">🛠️ Ferramentas DevOps &amp; CI/CD</span>
+                <span class="chip">📊 Pipelines de Dados &amp; Streaming</span>
+                <span class="chip">📡 Redes &amp; Proxies de Alta Performance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- ROADMAP DE APRENDIZAGEM (LADO A LADO: RUST & GO)              -->
+    <!-- ============================================================== -->
+    <section class="section" id="roadmap">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label">Guias de Estudo Passo a Passo</span>
+          <h2 class="section-title">Roadmap: <span>Rust vs Go</span></h2>
+          <p class="section-sub">Compare as trilhas recomendadas de aprendizado para se tornar um desenvolvedor de excelência em cada uma das linguagens.</p>
+        </div>
+
+        <div class="roadmap-side-by-side">
+
+          <!-- RUST PATH -->
+          <div class="roadmap-col rust-col">
+            <div class="roadmap-header">
+              <span style="font-size: 1.8rem;">🦀</span>
+              <div>
+                <h3>Trilha de Rust</h3>
+                <p style="font-size: 0.84rem; color: var(--muted); margin: 0;">Foco em sistemas, segurança de memória e alta performance</p>
+              </div>
+            </div>
+
+            <div class="phase-card">
+              <span class="phase-badge">Fase 1 • Fundamentos do Compilador</span>
+              <h4>Sintaxe, Ownership &amp; Borrowing</h4>
+              <ul>
+                <li>Variáveis imutáveis por padrão, tipos primitivos e funções</li>
+                <li>Regras de Ownership, Semântica de Move e Clonagem</li>
+                <li>Borrowing com referências <code>&amp;T</code> e <code>&amp;mut T</code></li>
+                <li>Instalação via <code>rustup</code> e primeiros passos com <code>cargo</code></li>
+              </ul>
+            </div>
+
+            <div class="phase-card">
+              <span class="phase-badge">Fase 2 • Modelagem de Dados</span>
+              <h4>Structs, Enums, Erros &amp; Traits</h4>
+              <ul>
+                <li>Estruturas de dados, métodos em blocos <code>impl</code></li>
+                <li>Enums ricos com dados e Pattern Matching com <code>match</code></li>
+                <li>Tratamento seguro com <code>Result&lt;T, E&gt;</code> e operador <code>?</code></li>
+                <li>Traits fundamentais: <code>Clone</code>, <code>Debug</code>, <code>Display</code> e <code>Iterator</code></li>
+              </ul>
+            </div>
+
+            <div class="phase-card">
+              <span class="phase-badge">Fase 3 • Concorrência &amp; Ecossistema</span>
+              <h4>Generics, Tokio &amp; Rayon</h4>
+              <ul>
+                <li>Parâmetros de tipo genéricos e anotações de Lifetimes (<code>'a</code>)</li>
+                <li>Programação assíncrona com <code>async/await</code> e runtime <strong>Tokio</strong></li>
+                <li>Paralelismo de dados sem data races com <strong>Rayon</strong></li>
+                <li>Criação e publicação de pacotes no <code>crates.io</code></li>
+              </ul>
+            </div>
+
+            <div class="phase-card">
+              <span class="phase-badge">Fase 4 • Especialização &amp; Sistemas</span>
+              <h4>Sistemas, WebAssembly &amp; Arquitetura</h4>
+              <ul>
+                <li>Desenvolvimento web de alta performance com <strong>Axum</strong> ou <strong>Actix-Web</strong></li>
+                <li>Compilação para o navegador com <strong>WebAssembly (wasm-bindgen)</strong></li>
+                <li>Entendimento de <code>unsafe Rust</code> e chamadas FFI para bibliotecas C</li>
+                <li>Engenharia de kernels, drivers e microsserviços de missão crítica</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- GO PATH -->
+          <div class="roadmap-col go-col">
+            <div class="roadmap-header">
+              <span style="font-size: 1.8rem;">🐹</span>
+              <div>
+                <h3>Trilha de Go</h3>
+                <p style="font-size: 0.84rem; color: var(--muted); margin: 0;">Foco em microsserviços, cloud native e produtividade rápida</p>
+              </div>
+            </div>
+
+            <div class="phase-card">
+              <span class="phase-badge">Fase 1 • Sintaxe e Simplicidade</span>
+              <h4>Fundamentos, Tipos &amp; Ponteiros</h4>
+              <ul>
+                <li>Estruturas de controle (<code>for</code> unificado, <code>if</code> com inicializador)</li>
+                <li>Ponteiros simples, structs e slices/arrays dinâmicos</li>
+                <li>Múltiplos retornos de funções e tratamento com <code>if err != nil</code></li>
+                <li>Inicialização de projetos com <code>go mod init</code></li>
+              </ul>
+            </div>
+
+            <div class="phase-card">
+              <span class="phase-badge">Fase 2 • Abstrações Idiomáticas</span>
+              <h4>Interfaces, Pacotes &amp; Defer</h4>
+              <ul>
+                <li>Interfaces implícitas e composição no lugar de herança</li>
+                <li>Gerenciamento de recursos com <code>defer</code> e controle de falhas</li>
+                <li>Organização em pacotes e visibilidade por inicial maiúscula</li>
+                <li>Uso da standard library para JSON, HTTP e manipulação de arquivos</li>
+              </ul>
+            </div>
+
+            <div class="phase-card">
+              <span class="phase-badge">Fase 3 • Concorrência de Nuvem</span>
+              <h4>Goroutines, Channels &amp; Generics</h4>
+              <ul>
+                <li>Lançamento de tarefas simultâneas com a palavra-chave <code>go</code></li>
+                <li>Canais síncronos e com buffer, multiplexação com <code>select</code></li>
+                <li>Sincronização com <code>sync.WaitGroup</code>, <code>sync.Mutex</code> e <code>context.Context</code></li>
+                <li>Criação de algoritmos reutilizáveis com <strong>Generics</strong> (Go 1.18+)</li>
+              </ul>
+            </div>
+
+            <div class="phase-card">
+              <span class="phase-badge">Fase 4 • Cloud Native &amp; Escala</span>
+              <h4>Microsserviços, Kubernetes &amp; Profiling</h4>
+              <ul>
+                <li>Arquitetura de microsserviços REST e <strong>gRPC/Protocol Buffers</strong></li>
+                <li>Criação de ferramentas de linha de comando com <strong>Cobra</strong></li>
+                <li>Contêineres Docker ultra-leves e operadores customizados para Kubernetes</li>
+                <li>Análise de gargalos de CPU/memória com ferramentas de profiling (<code>pprof</code>)</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- RECURSOS DE ESTUDO (AMBAS AS LINGUAGENS)                      -->
+    <!-- ============================================================== -->
+    <section class="section alt-bg" id="recursos">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label">Onde Continuar Estudando</span>
+          <h2 class="section-title">Recursos <span>Oficiais &amp; Recomendados</span></h2>
+          <p class="section-sub">Materiais de alta qualidade, gratuitos e indispensáveis para aprofundar seu domínio técnico.</p>
+        </div>
+
+        <h3 style="font-size: 1.15rem; margin-bottom: 14px; color: var(--lang-rust); display: flex; align-items: center; gap: 8px;">
+          <span>🦀</span> Recursos para Rust
+        </h3>
+        <div class="res-grid" style="margin-bottom: 32px;">
+          <a class="res-card" href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">
+            <div class="ico">🌐</div>
+            <h4>rust-lang.org</h4>
+            <p>Portal oficial da linguagem, instalador <code>rustup</code> e comunicados de lançamentos.</p>
+          </a>
+          <a class="res-card" href="https://doc.rust-lang.org/book/" target="_blank" rel="noopener noreferrer">
+            <div class="ico">📖</div>
+            <h4>The Rust Book</h4>
+            <p>O livro oficial "The Rust Programming Language", a melhor referência de estudo do iniciante ao avançado.</p>
+          </a>
+          <a class="res-card" href="https://github.com/rust-lang/rustlings" target="_blank" rel="noopener noreferrer">
+            <div class="ico">🧪</div>
+            <h4>Rustlings</h4>
+            <p>Série de pequenos exercícios práticos guiados no terminal para exercitar a resolução de erros do compilador.</p>
+          </a>
+          <a class="res-card" href="https://crates.io/" target="_blank" rel="noopener noreferrer">
+            <div class="ico">📦</div>
+            <h4>crates.io</h4>
+            <p>O repositório oficial de pacotes da comunidade Rust (bibliotecas, frameworks e drivers).</p>
+          </a>
+          <a class="res-card" href="https://doc.rust-lang.org/rust-by-example/" target="_blank" rel="noopener noreferrer">
+            <div class="ico">💡</div>
+            <h4>Rust by Example</h4>
+            <p>Coleção abrangente de exemplos de código comentados cobrindo todos os módulos da biblioteca padrão.</p>
+          </a>
+        </div>
+
+        <h3 style="font-size: 1.15rem; margin-bottom: 14px; color: var(--lang-go); display: flex; align-items: center; gap: 8px;">
+          <span>🐹</span> Recursos para Go
+        </h3>
+        <div class="res-grid">
+          <a class="res-card" href="https://go.dev/" target="_blank" rel="noopener noreferrer">
+            <div class="ico">🌐</div>
+            <h4>go.dev</h4>
+            <p>O hub oficial do desenvolvedor Go com downloads, tutoriais de introdução e documentação.</p>
+          </a>
+          <a class="res-card" href="https://go.dev/tour/" target="_blank" rel="noopener noreferrer">
+            <div class="ico">🎓</div>
+            <h4>A Tour of Go</h4>
+            <p>Tour interativo oficial no navegador ensinando todos os conceitos de Go com execução em tempo real.</p>
+          </a>
+          <a class="res-card" href="https://gobyexample.com/" target="_blank" rel="noopener noreferrer">
+            <div class="ico">💡</div>
+            <h4>Go by Example</h4>
+            <p>Introdução prática e direta à sintaxe e aos padrões idiomáticos da linguagem através de exemplos comentados.</p>
+          </a>
+          <a class="res-card" href="https://pkg.go.dev/" target="_blank" rel="noopener noreferrer">
+            <div class="ico">📦</div>
+            <h4>pkg.go.dev</h4>
+            <p>Documentação e catálogo completo de todos os pacotes e módulos open source do ecossistema Go.</p>
+          </a>
+          <a class="res-card" href="https://go.dev/doc/effective_go" target="_blank" rel="noopener noreferrer">
+            <div class="ico">📘</div>
+            <h4>Effective Go</h4>
+            <p>O guia de boas práticas oficial para escrever código Go limpo, performático e idiomático.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>Ponce Metodologias &amp; Dev</strong> — Formando a próxima geração de engenheiros de software.</p>
+    <p>© 2025 Ponce Metodologias &amp; Dev. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    (function () {
+      'use strict';
+
+      // 1. Language Master Tab Switcher (Rust / Go)
+      var tabRust = document.getElementById('tab-btn-rust');
+      var tabGo = document.getElementById('tab-btn-go');
+      var viewRust = document.getElementById('view-rust');
+      var viewGo = document.getElementById('view-go');
+      var htmlEl = document.documentElement;
+      var bodyEl = document.body;
+      var headerTitle = document.getElementById('headerDynamicTitle');
+      var headerBadge = document.getElementById('headerDynamicBadge');
+
+      function switchLanguage(lang) {
+        if (lang === 'rust') {
+          tabRust.classList.add('active');
+          tabRust.setAttribute('aria-selected', 'true');
+          tabGo.classList.remove('active');
+          tabGo.setAttribute('aria-selected', 'false');
+
+          viewRust.classList.add('active');
+          viewGo.classList.remove('active');
+
+          htmlEl.setAttribute('data-lang', 'rust');
+          bodyEl.setAttribute('data-theme', 'rust');
+
+          if (headerTitle) headerTitle.textContent = '🦀 Rust';
+          if (headerBadge) headerBadge.textContent = 'Memory Safe';
+        } else if (lang === 'go') {
+          tabGo.classList.add('active');
+          tabGo.setAttribute('aria-selected', 'true');
+          tabRust.classList.remove('active');
+          tabRust.setAttribute('aria-selected', 'false');
+
+          viewGo.classList.add('active');
+          viewRust.classList.remove('active');
+
+          htmlEl.setAttribute('data-lang', 'go');
+          bodyEl.setAttribute('data-theme', 'go');
+
+          if (headerTitle) headerTitle.textContent = '🐹 Go';
+          if (headerBadge) headerBadge.textContent = 'Cloud Native';
+        }
+
+        // Recalculate open accordions in the active view
+        refreshAccordions();
+      }
+
+      tabRust.addEventListener('click', function () { switchLanguage('rust'); });
+      tabGo.addEventListener('click', function () { switchLanguage('go'); });
+
+      // 2. Accordions
+      function refreshAccordions() {
+        document.querySelectorAll('.acc-item.open .acc-panel').forEach(function (panel) {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        });
+      }
+
+      document.querySelectorAll('.acc-item').forEach(function (item) {
+        var trigger = item.querySelector('.acc-trigger');
+        var panel = item.querySelector('.acc-panel');
+        if (item.classList.contains('open') && panel) {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+
+        trigger.addEventListener('click', function () {
+          var isOpen = item.classList.toggle('open');
+          trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          if (isOpen) {
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+          } else {
+            panel.style.maxHeight = '0px';
+          }
+        });
+      });
+
+      window.addEventListener('resize', refreshAccordions);
+
+      // 3. Inner Code Tabs
+      document.querySelectorAll('.code-tab-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var group = btn.dataset.group;
+          var targetId = btn.dataset.target;
+          var container = btn.closest('.practical-tabs');
+
+          if (container) {
+            container.querySelectorAll('.code-tab-btn[data-group="' + group + '"]').forEach(function (b) {
+              b.classList.remove('active');
+              b.setAttribute('aria-selected', 'false');
+            });
+            container.querySelectorAll('.code-tab-panel').forEach(function (p) {
+              p.classList.remove('active');
+            });
+
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+            var targetPanel = document.getElementById(targetId);
+            if (targetPanel) {
+              targetPanel.classList.add('active');
+            }
+          }
+        });
+      });
+
+      // 4. Copy Code Buttons
+      function fallbackCopyText(text) {
+        var textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        textArea.style.top = '0';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+          console.error('Fallback copy error:', err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      document.querySelectorAll('.copy-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var codeBlock = btn.closest('.code-block');
+          if (!codeBlock) return;
+          var codeEl = codeBlock.querySelector('pre code');
+          if (!codeEl) return;
+
+          var textToCopy = codeEl.innerText || codeEl.textContent;
+
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(textToCopy).then(onCopied).catch(function () {
+              fallbackCopyText(textToCopy);
+              onCopied();
+            });
+          } else {
+            fallbackCopyText(textToCopy);
+            onCopied();
+          }
+
+          function onCopied() {
+            var originalText = btn.innerHTML;
+            btn.classList.add('copied');
+            btn.innerHTML = '✓ Copiado!';
+            setTimeout(function () {
+              btn.classList.remove('copied');
+              btn.innerHTML = originalText;
+            }, 2000);
+          }
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>

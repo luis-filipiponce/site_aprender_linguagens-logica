@@ -1,0 +1,21 @@
+{
+  "name": "ponce-logica-pura",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Curso de Logica de Programacao Pura - Ponce Metodologias",
+  "scripts": {
+    "build:conteudo": "node scripts/build-conteudo.mjs",
+    "validate:conteudo": "node scripts/build-conteudo.mjs --check",
+    "build": "npm run build:conteudo && tsc -p tsconfig.json",
+    "typecheck": "npm run validate:conteudo && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.check.json",
+    "test": "npm run build && node tests/test_suite.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "ajv": "^8.20.0",
+    "typescript": "^7.0.2"
+  }
+}

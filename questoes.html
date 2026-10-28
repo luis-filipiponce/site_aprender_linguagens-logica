@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Banco de Questões — Lógica de Programação — Ponce Metodologias</title>
+  <meta name="description" content="Banco de questões de lógica de programação com 4 níveis: Iniciante, Intermediário, Avançado e Expert, com correção e explicação imediata."/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/questoes.css"/>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-left">
+      <a href="index.html" class="brand-logo" title="Ponce Metodologias & Dev — Início">
+        <div class="brand-text-block">
+          <div class="brand-title">LÓGICA PURA<span class="brand-dot">.</span></div>
+          <div class="brand-sub">PONCE METODOLOGIAS</div>
+        </div>
+      </a>
+    </div>
+    <div class="header-right">
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">← Portal</a>
+        <a href="curso-logica.html" class="nav-link">Curso de Lógica</a>
+      </nav>
+      <button class="btn-icon" id="theme-toggle-btn" type="button" title="Alternar Modo Claro / Escuro">🌙</button>
+    </div>
+  </header>
+
+  <main class="qz-wrap">
+    <div class="qz-head">
+      <span class="section-badge badge-purple">Prática</span>
+      <h1>🧩 Banco de Questões de Lógica</h1>
+      <p>Escolha um nível, responda e clique em <strong>Verificar</strong> para ver a correção e a explicação. Seu progresso fica salvo neste navegador.</p>
+    </div>
+
+    <div class="qz-tabs" id="qz-abas" role="tablist" aria-label="Níveis de dificuldade"></div>
+
+    <div class="qz-score">
+      <div class="qz-score-row">
+        <span>Acertos: <strong id="qz-acertos">0</strong> &nbsp;|&nbsp; Respondidas: <strong id="qz-respondidas">0</strong> de <strong id="qz-total">0</strong></span>
+        <button type="button" id="qz-reiniciar">↺ Reiniciar nível</button>
+      </div>
+      <div class="qz-progress"><div id="qz-barra"></div></div>
+    </div>
+
+    <p class="qz-intro" id="qz-intro"></p>
+    <div id="qz-lista"></div>
+  </main>
+
+  <footer style="text-align:center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color);">
+    <p>© Ponce Metodologias & Dev — Ensino Rigoroso de Lógica de Programação Pura.</p>
+  </footer>
+
+  <script src="js/questoes-dados.js"></script>
+  <script src="js/questoes.js"></script>
+  <script>
+    (function () {
+      var btn = document.getElementById('theme-toggle-btn');
+      btn.addEventListener('click', function () {
+        var doc = document.documentElement;
+        var next = doc.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        doc.setAttribute('data-theme', next);
+        btn.textContent = next === 'dark' ? '☀️' : '🌙';
+      });
+    })();
+  </script>
+</body>
+</html>

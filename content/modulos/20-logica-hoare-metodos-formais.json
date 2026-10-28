@@ -1,0 +1,103 @@
+{
+  "id": 20,
+  "slug": "logica-hoare-metodos-formais",
+  "badge": "Módulo 20 · Especialização Avançada",
+  "nivel": "Especialista",
+  "titulo": "Lógica de Hoare, Métodos Formais e Verificação Axiomática",
+  "subtitulo": "Triplas de Hoare {P} C {Q}, Pré-condição mais fraca (wp), regras de inferência e prova de correção de software.",
+  "objetivo": "Dominar o sistema formal de Sir Tony Hoare para provar matematicamente que um programa cumpre sua especificação sem depender de testes amostrais.",
+  "introducaoIntuitiva": "Na aviação ou em reatores nucleares, você não pode \"testar 10 vezes e torcer para não cair\". Você precisa de uma prova matemática irrefutável de que o sistema de controle NUNCA entrará em um estado catastrófico. A Lógica de Hoare é a linguagem matemática dessa prova.",
+  "explicacaoAprofundada": "A Lógica de Hoare (1969) é um sistema axiomático para raciocinar rigorosamente sobre a correção de programas. Sua unidade fundamental é a TRIPLA DE HOARE:\n    {P} C {Q}\nOnde P é a Pré-condição (o que deve ser verdade antes da execução), C é o Comando/Algoritmo, e Q é a Pós-condição (o que é garantidamente verdade após a execução se C terminar).\n\nREGRAS DE INFERÊNCIA FORMAIS:\n1. Axioma da Atribuição: {Q[x / E]} x := E {Q} (A pré-condição é a pós-condição com todas as ocorrências de x substituídas pela expressão E).\n2. Regra da Composição: Se {P} C1 {R} e {R} C2 {Q}, então {P} C1; C2 {Q}.\n3. Regra do Condicional: Se {P ∧ B} C1 {Q} e {P ∧ ¬B} C2 {Q}, então {P} SE B ENTÃO C1 SENÃO C2 {Q}.\n4. Regra do Laço (Invariante de Hoare): Se {I ∧ B} C {I}, então {I} ENQUANTO B FAÇA C {I ∧ ¬B}.\n5. Pré-condição Mais Fraca (Weakest Precondition - Edsger Dijkstra): wp(C, Q) calcula a condição mínima necessária para que o comando C produza a pós-condição Q com segurança.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Aplicação do Axioma da Atribuição",
+      "descricao": "Queremos a pós-condição Q: {x > 10}. O comando é C: x := x + 1. Pelo axioma, substituímos x por (x+1) em Q: Pré-condição P necessária é {x + 1 > 10}, ou seja, {x > 9}. Logo: {x > 9} x := x + 1 {x > 10}."
+    },
+    "intermediario": {
+      "titulo": "Prova Formal de Estrutura Condicional",
+      "descricao": "Provar {Verdadeiro} SE a > b ENTÃO max := a SENÃO max := b {max >= a ∧ max >= b}. Ramo 1: {a > b} max := a {max >= a ∧ max >= b} (Válido). Ramo 2: {a <= b} max := b {max >= a ∧ max >= b} (Válido). A regra do condicional prova a tripla!"
+    },
+    "avancado": {
+      "titulo": "Verificação Formal do Laço com Invariante de Hoare",
+      "descricao": "Provar {n >= 0} fat := 1; i := 1; ENQUANTO i <= n FAÇA (fat := fat * i; i := i + 1) {fat == n!}. A invariante I é {fat == (i-1)! ∧ i <= n+1}. Na parada (i > n), temos I ∧ ¬(i <= n) -> i == n+1, logo fat == (n+1-1)! = n! (Q.E.D.)."
+    }
+  },
+  "passoAPasso": [
+    "1. Formular a Pós-condição Q desejada em lógica de predicados formal.",
+    "2. Aplicar o cálculo da Pré-condição Mais Fraca (wp) retrocedendo instrução por instrução.",
+    "3. Para laços de repetição, derivar a Invariante de Laço I que satisfaz {I ∧ B} C {I}.",
+    "4. Provar que a Pré-condição inicial implica a Invariante: P => I.",
+    "5. Provar que na terminação a Invariante combinada com a negação da guarda implica a Pós-condição: (I ∧ ¬B) => Q.",
+    "6. Demonstrar a Terminação finita usando uma Função Variante (Ranking Function)."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Formular uma Invariante de Laço fraca demais que não implica a Pós-condição no término",
+      "correcao": "A invariante deve capturar tanto a evolução do cálculo quanto os limites da variável de controle."
+    },
+    {
+      "erro": "Esquecer de provar a terminação (confundir Correção Parcial com Correção Total)",
+      "correcao": "A Tripla de Hoare clássica garante correção parcial; para correção total deve-se provar que a função variante decresce estritamente até zero."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Demonstração matemática formal com Triplas de Hoare e cálculo de weakest precondition.",
+    "ruim": "Testar com 10 entradas aleatórias e assumir que o sistema está matematicamente livre de bugs."
+  },
+  "pseudocodigo": "// Especificação Formal em Lógica de Hoare:\n// {P: x == X ∧ y == Y}\ntemp := x;\nx := y;\ny := temp;\n// {Q: x == Y ∧ y == X}\n// Prova: wp(\"y := temp\", x == Y ∧ y == X) = (x == Y ∧ temp == X)\n// wp(\"x := y\", x == Y ∧ temp == X) = (y == Y ∧ temp == X)\n// wp(\"temp := x\", y == Y ∧ temp == X) = (y == Y ∧ x == X) ≡ P (Provado!)",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Pós-condição Q",
+      "estado": "{x == Y ∧ y == X}",
+      "obs": "Meta formal"
+    },
+    {
+      "passo": 2,
+      "acao": "Retropropagação wp",
+      "estado": "Axioma da atribuição aplicado 3x",
+      "obs": "Cálculo simbólico"
+    },
+    {
+      "passo": 3,
+      "acao": "Pré-condição derivada",
+      "estado": "{x == X ∧ y == Y}",
+      "obs": "Coincide com P -> Teorema Provado"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex20_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Dada a pós-condição Q: {x == 15} e o comando C: x := y + 5; qual é a pré-condição mais fraca P necessária obtida pelo Axioma da Atribuição de Hoare?",
+      "opcoes": [
+        "{y == 10}, pois substituímos x por (y + 5) em Q resultando em y + 5 == 15 -> y == 10",
+        "{x == 10}",
+        "{y == 15}",
+        "{x == 20}"
+      ],
+      "correta": 0,
+      "pista": "Substitua todas as ocorrências de x em {x == 15} pela expressão atribuída (y + 5).",
+      "justificativa": "Pelo Axioma da Atribuição {Q[x / E]} x := E {Q}, substituímos x por y+5 em {x == 15}, obtendo {y + 5 == 15}, que simplifica para {y == 10}."
+    }
+  ],
+  "perguntasVerificacao": "Como a regra do laço de Hoare utiliza a invariante I para provar a pós-condição quando a repetição é encerrada?",
+  "keywordsIA": [
+    "hoare",
+    "triplas_hoare",
+    "metodos_formais",
+    "verificacao_software",
+    "invariante",
+    "weakest_precondition",
+    "dijkstra",
+    "axiomatico"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "teste_vs_prova",
+      "erro": "Achar que testes de software substituem métodos formais em sistemas críticos",
+      "explicacao": "Edsger Dijkstra: \"Testes mostram a presença de erros, nunca sua ausência\". Métodos formais provam matematicamente a ausência de falhas."
+    }
+  ],
+  "explicacaoIdealIA": "A Lógica de Hoare fundamenta a verificação formal de programas através de triplas {P} C {Q}, provando axiomaticamente que pré-condições bem definidas transformam o estado garantindo a pós-condição sem ambiguidade."
+}

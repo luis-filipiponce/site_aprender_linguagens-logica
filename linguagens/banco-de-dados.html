@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco de Dados — Ponce Metodologias &amp; Dev</title>
+<meta name="description" content="Guia completo sobre Banco de Dados Relacionais, MySQL e PostgreSQL: história, arquitetura, modelagem, normalização, ACID, índices, consultas avançadas e roadmap de aprendizagem.">
+<style>
+:root {
+  --accent: #10b981;
+  --accent-dark: #059669;
+  --accent-light: #34d399;
+  --accent-soft: rgba(16, 185, 129, 0.12);
+  --accent-border: rgba(16, 185, 129, 0.35);
+  --mysql-color: #38bdf8;
+  --mysql-soft: rgba(56, 189, 248, 0.12);
+  --mysql-border: rgba(56, 189, 248, 0.35);
+  --pg-color: #818cf8;
+  --pg-soft: rgba(129, 140, 248, 0.12);
+  --pg-border: rgba(129, 140, 248, 0.35);
+  --bg: #0b1120;
+  --bg-2: #0f172a;
+  --surface: #131c31;
+  --surface-2: #1a2540;
+  --border: #243252;
+  --text: #e6ebf5;
+  --muted: #9aa8c4;
+  --code-bg: #0a0f1d;
+  --header-h: 64px;
+  --radius: 14px;
+  --font: -apple-system, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img, svg { max-width: 100%; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 .5em; }
+p { margin: 0 0 1em; }
+code.inline {
+  font-family: var(--mono);
+  font-size: .88em;
+  background: var(--accent-soft);
+  color: var(--accent-light);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+  background: rgba(11, 17, 32, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+.logo:hover { text-decoration: none; color: var(--accent); }
+.header-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--accent);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: .9rem;
+  white-space: nowrap;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.btn-back:hover { background: var(--accent); color: #0b1120; font-weight: 700; text-decoration: none; }
+
+/* ---------- Sub navigation ---------- */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 50;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  margin-top: var(--header-h);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.subnav ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 1100px;
+  display: flex;
+  gap: 4px;
+}
+.subnav a {
+  display: block;
+  padding: 12px 14px;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-bottom-color .2s;
+}
+.subnav a:hover { color: var(--text); text-decoration: none; border-bottom-color: var(--accent); }
+
+/* ---------- Layout ---------- */
+main { display: block; }
+section { padding: 72px 24px; }
+section:nth-of-type(even) { background: var(--bg-2); }
+.container { max-width: 1040px; margin: 0 auto; }
+.section-head { text-align: center; margin-bottom: 48px; }
+.section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.section-head h2::after {
+  content: "";
+  display: block;
+  width: 56px; height: 4px;
+  margin: 14px auto 0;
+  border-radius: 4px;
+  background: var(--accent);
+}
+.section-head p { color: var(--muted); max-width: 680px; margin: 14px auto 0; font-size: 1.02rem; }
+
+/* ---------- Hero ---------- */
+.hero {
+  text-align: center;
+  padding: 96px 24px 88px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(16,185,129,.22), transparent 60%),
+    var(--bg);
+}
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-light);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 4.5rem);
+  margin: 22px 0 16px;
+  letter-spacing: -.02em;
+}
+.hero .subtitle {
+  max-width: 760px;
+  margin: 0 auto 36px;
+  color: var(--muted);
+  font-size: 1.15rem;
+  line-height: 1.75;
+}
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+.stat {
+  padding: 14px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-width: 180px;
+  transition: transform .2s, border-color .2s;
+}
+.stat:hover { transform: translateY(-2px); border-color: var(--accent-border); }
+.stat strong { display: block; color: var(--accent); font-size: 1.2rem; }
+.stat span { color: var(--muted); font-size: .85rem; }
+
+/* ---------- Timeline ---------- */
+.timeline { position: relative; max-width: 820px; margin: 0 auto; padding-left: 8px; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 49px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(var(--accent), var(--border));
+}
+.tl-item { position: relative; display: flex; gap: 24px; margin-bottom: 28px; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-year {
+  flex: 0 0 82px;
+  height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent);
+  color: #0b1120;
+  font-weight: 800;
+  font-size: .88rem;
+  border-radius: 999px;
+  z-index: 1;
+  box-shadow: 0 0 0 5px var(--bg-2);
+}
+.tl-body {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+}
+.tl-body h3 { font-size: 1.08rem; margin-bottom: 6px; }
+.tl-body p { margin: 0; color: var(--muted); font-size: .94rem; line-height: 1.6; }
+
+/* ---------- Comparison Cards ---------- */
+.comp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 36px;
+}
+.comp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  position: relative;
+  transition: transform .2s, border-color .2s;
+}
+.comp-card.mysql { border-top: 4px solid var(--mysql-color); }
+.comp-card.postgres { border-top: 4px solid var(--pg-color); }
+.comp-card:hover { transform: translateY(-4px); }
+.comp-card.mysql:hover { border-color: var(--mysql-color); }
+.comp-card.postgres:hover { border-color: var(--pg-color); }
+
+.comp-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.comp-header .icon {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem;
+  border-radius: 12px;
+}
+.comp-card.mysql .icon { background: var(--mysql-soft); }
+.comp-card.postgres .icon { background: var(--pg-soft); }
+
+.comp-header h3 { margin: 0; font-size: 1.35rem; }
+.comp-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 999px;
+  margin-top: 4px;
+}
+.comp-card.mysql .comp-badge { background: var(--mysql-soft); color: var(--mysql-color); border: 1px solid var(--mysql-border); }
+.comp-card.postgres .comp-badge { background: var(--pg-soft); color: var(--pg-color); border: 1px solid var(--pg-border); }
+
+.comp-desc { color: var(--muted); font-size: .94rem; margin-bottom: 20px; }
+.comp-list { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 10px; }
+.comp-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: .92rem;
+  color: var(--text);
+}
+.comp-list li span.bullet {
+  flex: 0 0 auto;
+  font-weight: 800;
+  font-size: .85rem;
+  margin-top: 2px;
+}
+.comp-card.mysql .comp-list li span.bullet { color: var(--mysql-color); }
+.comp-card.postgres .comp-list li span.bullet { color: var(--pg-color); }
+
+.comp-usecases {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.comp-usecases strong { display: block; font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 6px; }
+.comp-usecases p { margin: 0; font-size: .9rem; color: var(--text); }
+
+/* Decision Guide */
+.decision-guide {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-top: 28px;
+}
+.decision-guide h3 { font-size: 1.25rem; margin-bottom: 8px; text-align: center; }
+.decision-guide .subtitle { text-align: center; color: var(--muted); margin-bottom: 24px; font-size: .95rem; }
+.decision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.decision-box {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.decision-box.mysql-box { border-left: 4px solid var(--mysql-color); }
+.decision-box.postgres-box { border-left: 4px solid var(--pg-color); }
+.decision-box h4 { font-size: 1.05rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.decision-box ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.decision-box li { display: flex; align-items: flex-start; gap: 8px; color: var(--muted); font-size: .92rem; }
+.decision-box li strong { color: var(--text); }
+.decision-box.mysql-box li::before { content: "🐬"; font-size: .9rem; flex-shrink: 0; }
+.decision-box.postgres-box li::before { content: "🐘"; font-size: .9rem; flex-shrink: 0; }
+
+/* ---------- Cards Grid ---------- */
+.grid { display: grid; gap: 20px; }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 22px;
+  transition: transform .2s, border-color .2s;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.card .icon {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  background: var(--accent-soft);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.card h3 { font-size: 1.12rem; margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: .92rem; margin-bottom: 14px; line-height: 1.6; }
+
+/* ---------- Code blocks ---------- */
+.code-block {
+  position: relative;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 14px 0 4px;
+}
+.code-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 8px 16px;
+  background: #0e1628;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: .78rem;
+  color: var(--muted);
+}
+.code-bar .dots { display: flex; gap: 6px; margin-right: 12px; }
+.code-bar .dots i { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; display: block; }
+.code-bar .dots i:nth-child(2) { background: #f59e0b; }
+.code-bar .dots i:nth-child(3) { background: #22c55e; }
+.code-bar .left { display: flex; align-items: center; }
+.copy-btn {
+  font-family: var(--font);
+  font-size: .78rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.copy-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+.copy-btn.copied { background: #16a34a; border-color: #16a34a; color: #fff; }
+.code-block pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: .86rem;
+  line-height: 1.65;
+  tab-size: 4;
+  color: #d6deeb;
+}
+.code-block code { font-family: inherit; }
+.kw  { color: #c792ea; font-weight: 600; }
+.fn  { color: #82aaff; font-weight: 600; }
+.str { color: #ecc48d; }
+.cmt { color: #637777; font-style: italic; }
+.var { color: #7fdbca; }
+.num { color: #f78c6c; }
+.typ { color: #ffcb6b; }
+
+/* ---------- Accordion ---------- */
+.accordion { max-width: 880px; margin: 0 auto; display: grid; gap: 14px; }
+.acc-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.acc-item.open { border-color: var(--accent); }
+.acc-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background .2s;
+}
+.acc-btn:hover { background: var(--surface-2); }
+.acc-btn:focus-visible, .tab-btn:focus-visible, .copy-btn:focus-visible, .btn-back:focus-visible, .logo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.acc-btn .chev {
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  transition: transform .3s;
+}
+.acc-item.open .chev { transform: rotate(180deg); }
+.acc-panel { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+.acc-inner { padding: 0 22px 22px; }
+.acc-inner p { color: var(--muted); font-size: .94rem; margin-bottom: 8px; line-height: 1.65; }
+
+/* ---------- Tabs ---------- */
+.tabs { max-width: 940px; margin: 0 auto; }
+.tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+.tab-btn {
+  font-family: var(--font);
+  font-size: .92rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.tab-btn:hover { color: var(--text); border-color: var(--accent); }
+.tab-btn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #0b1120; font-weight: 700; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.tab-panel > p { color: var(--muted); font-size: .95rem; margin-bottom: 14px; }
+
+/* ---------- Roadmap ---------- */
+.roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; position: relative; }
+.step {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 24px 20px 22px;
+  transition: transform .2s;
+}
+.step:hover { transform: translateY(-3px); }
+.step .num-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #0b1120;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.step h3 { font-size: 1.05rem; margin-bottom: 2px; }
+.step .phase { color: var(--accent); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.step ul { margin: 12px 0 0; padding-left: 18px; color: var(--muted); font-size: .92rem; }
+.step ul li { margin-bottom: 4px; }
+.step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -18px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  text-align: center;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 1.1rem;
+  z-index: 2;
+}
+
+/* ---------- Resources ---------- */
+.resource {
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+}
+.resource:hover { text-decoration: none; }
+.resource .link { margin-top: auto; color: var(--accent); font-weight: 600; font-size: .88rem; word-break: break-all; }
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--code-bg);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .step:not(:last-child)::after { display: none; }
+}
+@media (max-width: 720px) {
+  :root { --header-h: 56px; }
+  .site-header { padding: 0 12px; }
+  .logo { font-size: .85rem; }
+  .header-title { display: none; }
+  section { padding: 52px 16px; }
+  .hero { padding: 64px 16px 56px; }
+  .timeline::before { left: 41px; }
+  .tl-item { gap: 14px; }
+  .tl-year { flex-basis: 68px; font-size: .8rem; }
+  .code-block pre { font-size: .78rem; padding: 14px; }
+  .decision-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .logo { font-size: .76rem; }
+  .btn-back { padding: 7px 12px; font-size: .82rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+  <div class="header-title">🏛️ Banco de Dados</div>
+  <a class="btn-back" href="../index.html">← Voltar</a>
+</header>
+
+<nav class="subnav" aria-label="Navegação da página">
+  <ul>
+    <li><a href="#hero">Início</a></li>
+    <li><a href="#historia">História &amp; Evolução</a></li>
+    <li><a href="#comparativo">MySQL vs PostgreSQL</a></li>
+    <li><a href="#conceitos">Conceitos Fundamentais</a></li>
+    <li><a href="#exemplos">Exemplos Práticos</a></li>
+    <li><a href="#ferramentas">Ferramentas &amp; Clientes</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#recursos">Recursos</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- 1. HERO -->
+<section id="hero" class="hero">
+  <div class="container">
+    <span class="badge">SGBD / Persistência de Dados</span>
+    <h1>🏛️ Banco de Dados</h1>
+    <p class="subtitle">Os bancos de dados relacionais são o alicerce fundamental de toda aplicação digital moderna. Desde a revolução teórica de Edgar F. Codd na IBM em 1970 até o nascimento de gigantes de código aberto como o MySQL (1995) e o PostgreSQL (1996), descubra como estruturar, proteger e escalar o ativo mais valioso de qualquer sistema: os dados.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <strong>1970</strong>
+        <span>Teoria Relacional (Codd / IBM)</span>
+      </div>
+      <div class="stat">
+        <strong>ACID</strong>
+        <span>Garantia de Integridade</span>
+      </div>
+      <div class="stat">
+        <strong>MySQL &amp; Postgres</strong>
+        <span>Pilares Open-Source</span>
+      </div>
+      <div class="stat">
+        <strong>85%+</strong>
+        <span>Aplicações Mundiais</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. HISTÓRIA & EVOLUÇÃO -->
+<section id="historia">
+  <div class="container">
+    <div class="section-head">
+      <h2>História &amp; Evolução dos SGBDs</h2>
+      <p>Cinco décadas de engenharia de dados: de teorias matemáticas à nuvem global e bancos serverless.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1970</div>
+        <div class="tl-body">
+          <h3>Modelo Relacional (Edgar F. Codd, IBM)</h3>
+          <p>O cientista britânico Edgar F. Codd publica o lendário artigo <em>"A Relational Model of Data for Large Shared Data Banks"</em> no laboratório da IBM. Ele introduziu a álgebra relacional, separando a estrutura lógica dos dados do seu armazenamento físico em disco.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1974</div>
+        <div class="tl-body">
+          <h3>SEQUEL / System R (IBM San Jose)</h3>
+          <p>Donald Chamberlin e Raymond Boyce criam a linguagem SEQUEL (posteriormente renomeada para SQL) como interface declarativa para o projeto System R da IBM, provando a viabilidade de transações e otimização de consultas relacionais.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1979</div>
+        <div class="tl-body">
+          <h3>Oracle V2 — Primeiro SGBD Comercial</h3>
+          <p>Larry Ellison, Bob Miner e Ed Oates fundam a Relational Software Inc. (atual Oracle) e lançam a versão 2 do Oracle Database, o primeiro SGBD relacional comercial a implementar a linguagem SQL no mercado corporativo.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1983</div>
+        <div class="tl-body">
+          <h3>IBM DB2 &amp; Padronização Corporativa</h3>
+          <p>A IBM lança oficialmente o DB2 para mainframes MVS. O banco estabelece padrões industriais para transações ACID pesadas, catalogação e auditoria em bancos e seguradoras globais.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1989</div>
+        <div class="tl-body">
+          <h3>PostgreSQL / POSTGRES (Michael Stonebraker, UC Berkeley)</h3>
+          <p>O professor Michael Stonebraker inicia o projeto POSTGRES na Universidade de Berkeley como sucessor do Ingres, priorizando extensibilidade de tipos, herança de tabelas e rigor matemático. Em 1996, ganha suporte a SQL nativo e torna-se open-source.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1995</div>
+        <div class="tl-body">
+          <h3>MySQL (Michael "Monty" Widenius, MySQL AB)</h3>
+          <p>Criado na Suécia pela MySQL AB, o MySQL foi projetado com foco em leveza, facilidade de uso e velocidade extrema de leitura. Tornou-se o coração da pilha LAMP (Linux, Apache, MySQL, PHP) e impulsionou a expansão da Web comercial.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2010</div>
+        <div class="tl-body">
+          <h3>Era NoSQL (MongoDB, Redis, Cassandra)</h3>
+          <p>Com a explosão de Big Data, redes sociais e streaming, surgem bancos não-relacionais focados em esquemas flexíveis (documentos), chave-valor em memória e alta vazão de escrita distribuída em clusters massivos.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2012</div>
+        <div class="tl-body">
+          <h3>Era NewSQL (CockroachDB, Google Spanner)</h3>
+          <p>Combinação do melhor dos dois mundos: bancos de dados distribuídos globalmente com escalabilidade horizontal infinita (estilo NoSQL), mas mantendo a semântica SQL tradicional e garantias estritas de transação ACID.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">Hoje</div>
+        <div class="tl-body">
+          <h3>Cloud Databases &amp; Serverless (PlanetScale, Neon, Supabase)</h3>
+          <p>A arquitetura moderna desacopla computação de armazenamento. Bancos como Neon (Postgres Serverless), PlanetScale (Vitess/MySQL) e Supabase oferecem autoscaling instantâneo, branching de banco como no Git e integração nativa com IA (pgvector).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. MYSQL VS POSTGRESQL -->
+<section id="comparativo">
+  <div class="container">
+    <div class="section-head">
+      <h2>MySQL vs PostgreSQL</h2>
+      <p>Dois gigantes de código aberto com arquiteturas e propostas complementares para a engenharia de software.</p>
+    </div>
+
+    <div class="comp-grid">
+      <!-- MySQL Card -->
+      <div class="comp-card mysql">
+        <div class="comp-header">
+          <div class="icon">🐬</div>
+          <div>
+            <h3>MySQL</h3>
+            <span class="comp-badge">Velocidade &amp; Web Clássica</span>
+          </div>
+        </div>
+        <p class="comp-desc">O SGBD relacional mais popular da web. Focado em simplicidade, throughput altíssimo em operações de leitura e facilidade de operação em escala.</p>
+        
+        <ul class="comp-list">
+          <li><span class="bullet">✓</span> <strong>Motor de Armazenamento Pluggable:</strong> InnoDB (padrão transacional ACID com row-level locking) e MyISAM.</li>
+          <li><span class="bullet">✓</span> <strong>Replicação Primário-Réplica Madura:</strong> Replicação binária assíncrona/semissíncrona simples de configurar e operar.</li>
+          <li><span class="bullet">✓</span> <strong>Ecossistema Web Consolidado:</strong> Padrão oficial de CMSs como WordPress, Drupal, Magento e plataformas como Shopify, Uber e Meta.</li>
+          <li><span class="bullet">✓</span> <strong>Desempenho Otimizado:</strong> Baixo consumo de memória por conexão e cache de buffers extremamente eficiente para leituras concorrentes.</li>
+        </ul>
+
+        <div class="comp-usecases">
+          <strong>Melhor aplicabilidade:</strong>
+          <p>Aplicações web tradicionais, blogs, lojas de e-commerce padrão, microserviços orientados a leitura e arquiteturas com replicação horizontal.</p>
+        </div>
+      </div>
+
+      <!-- PostgreSQL Card -->
+      <div class="comp-card postgres">
+        <div class="comp-header">
+          <div class="icon">🐘</div>
+          <div>
+            <h3>PostgreSQL</h3>
+            <span class="comp-badge">ACID Avançado &amp; Extensibilidade</span>
+          </div>
+        </div>
+        <p class="comp-desc">O banco de dados relacional de código aberto mais avançado do mundo. Focado em conformidade estrita com padrões SQL, integridade e poder computacional interno.</p>
+        
+        <ul class="comp-list">
+          <li><span class="bullet">✓</span> <strong>ACID &amp; Concorrência MVCC:</strong> Isolamento transacional rigoroso sem lock em leituras, com suporte a Serializable Snapshot Isolation (SSI).</li>
+          <li><span class="bullet">✓</span> <strong>JSONB &amp; NoSQL Nativo:</strong> Indexação de atributos JSON com operadores de consulta ultra-rápidos via índices GIN e GiST.</li>
+          <li><span class="bullet">✓</span> <strong>Ecossistema de Extensões:</strong> PostGIS (dados geoespaciais), TimescaleDB (séries temporais), Citus (sharding distribuído) e pgvector (IA/vetores).</li>
+          <li><span class="bullet">✓</span> <strong>Consultas Complexas &amp; Paralelismo:</strong> Suporte nativo completo a CTEs recursivas, Window Functions avançadas e particionamento declarativo.</li>
+        </ul>
+
+        <div class="comp-usecases">
+          <strong>Melhor aplicabilidade:</strong>
+          <p>Sistemas financeiros/FinTechs, ERPs/CRMs corporativos, análises espaciais (GIS), inteligência artificial com embeddings vetoriais e dados mistos (SQL + JSON).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guia de Decisão -->
+    <div class="decision-guide">
+      <h3>🎯 Guia de Decisão: Quando usar qual?</h3>
+      <p class="subtitle">Escolha o SGBD certo com base nos requisitos arquiteturais do seu projeto</p>
+
+      <div class="decision-grid">
+        <div class="decision-box mysql-box">
+          <h4>🐬 Escolha MySQL quando:</h4>
+          <ul>
+            <li><strong>Pilha LAMP/LEMP:</strong> Seu ecossistema é baseado em PHP, WordPress, Laravel ou CMSs padrão de mercado.</li>
+            <li><strong>Cargas Read-Heavy:</strong> Sua aplicação faz dezenas de milhares de leituras simples por segundo com pouca complexidade analítica.</li>
+            <li><strong>Simplicidade Operacional:</strong> A equipe de operações já possui ampla experiência em replicação MySQL/MariaDB.</li>
+            <li><strong>Infraestrutura Leve:</strong> Recursos de memória e CPU são limitados e você precisa de inicialização e footprint enxutos.</li>
+          </ul>
+        </div>
+
+        <div class="decision-box postgres-box">
+          <h4>🐘 Escolha PostgreSQL quando:</h4>
+          <ul>
+            <li><strong>Rigor Transacional &amp; FinTech:</strong> Você lida com transações financeiras, concorrência crítica e auditoria estrita.</li>
+            <li><strong>Dados Híbridos &amp; JSONB:</strong> Precisa armazenar documentos JSON e indexar campos individuais com alta performance.</li>
+            <li><strong>Inteligência Artificial &amp; Vetores:</strong> Quer usar busca vetorial (RAG) com a extensão <code class="inline">pgvector</code> sem precisar de outro banco.</li>
+            <li><strong>Análise Geoespacial:</strong> Precisa calcular rotas, polígonos e distâncias geográficas com a extensão <code class="inline">PostGIS</code>.</li>
+            <li><strong>Consultas Analíticas Pesadas:</strong> Utiliza CTEs avançadas, Window Functions complexas e processamento paralelo de queries.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. CONCEITOS FUNDAMENTAIS -->
+<section id="conceitos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Conceitos Fundamentais de Banco de Dados</h2>
+      <p>Entenda os pilares matemáticos, lógicos e arquiteturais que garantem a segurança e a velocidade dos dados.</p>
+    </div>
+
+    <div class="accordion">
+      <!-- Item 1 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-1" id="acc-btn-1">
+          <span>1. Modelagem Entidade-Relacionamento (DER &amp; Cardinalidade)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-1" role="region" aria-labelledby="acc-btn-1">
+          <div class="acc-inner">
+            <p>O Diagrama Entidade-Relacionamento (DER) mapeia o mundo real em estruturas de tabelas (Entidades), colunas (Atributos) e vínculos (Relacionamentos: <strong>1:1</strong>, <strong>1:N</strong> e <strong>N:N</strong>). No caso de relacionamentos N:N (Muitos para Muitos), utiliza-se uma tabela associativa intermediária com chaves compostas.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>01_modelagem_n_para_n.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- Exemplo de Relacionamento N:N entre Alunos e Cursos através da tabela associativa 'matriculas'</span>
+<span class="kw">CREATE TABLE</span> <span class="var">alunos</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">150</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">email</span> <span class="typ">VARCHAR</span>(<span class="num">255</span>) <span class="kw">NOT NULL UNIQUE</span>
+);
+
+<span class="kw">CREATE TABLE</span> <span class="var">cursos</span> (
+    <span class="var">id</span> <span class="typ">SERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">titulo</span> <span class="typ">VARCHAR</span>(<span class="num">200</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">carga_horaria</span> <span class="typ">INT</span> <span class="kw">NOT NULL CHECK</span> (<span class="var">carga_horaria</span> &gt; <span class="num">0</span>)
+);
+
+<span class="cmt">-- Tabela Associativa (Pivô) com Chave Primária Composta</span>
+<span class="kw">CREATE TABLE</span> <span class="var">matriculas</span> (
+    <span class="var">aluno_id</span> <span class="typ">BIGINT</span> <span class="kw">REFERENCES</span> <span class="var">alunos</span>(<span class="var">id</span>) <span class="kw">ON DELETE CASCADE</span>,
+    <span class="var">curso_id</span> <span class="typ">INT</span> <span class="kw">REFERENCES</span> <span class="var">cursos</span>(<span class="var">id</span>) <span class="kw">ON DELETE RESTRICT</span>,
+    <span class="var">data_matricula</span> <span class="typ">TIMESTAMP</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>,
+    <span class="var">status</span> <span class="typ">VARCHAR</span>(<span class="num">20</span>) <span class="kw">DEFAULT</span> <span class="str">'ATIVA'</span> <span class="kw">CHECK</span> (<span class="var">status</span> <span class="kw">IN</span> (<span class="str">'ATIVA'</span>, <span class="str">'CONCLUIDA'</span>, <span class="str">'CANCELADA'</span>)),
+    <span class="kw">PRIMARY KEY</span> (<span class="var">aluno_id</span>, <span class="var">curso_id</span>)
+);</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-2" id="acc-btn-2">
+          <span>2. Normalização de Dados (1FN, 2FN e 3FN)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-2" role="region" aria-labelledby="acc-btn-2">
+          <div class="acc-inner">
+            <p>A Normalização é o processo formal de decompor tabelas complexas para eliminar redundâncias e evitar anomalias de inserção, atualização e exclusão:</p>
+            <p>• <strong>1FN (Primeira Forma Normal):</strong> Valores atômicos em cada coluna (sem listas ou vetores de dados em um único campo) e existência de uma Chave Primária.<br>
+            • <strong>2FN (Segunda Forma Normal):</strong> Estar na 1FN e todos os atributos não-chave dependerem integralmente de toda a Chave Primária (não apenas de parte de uma chave composta).<br>
+            • <strong>3FN (Terceira Forma Normal):</strong> Estar na 2FN e nenhum atributo não-chave depender de outro atributo não-chave (eliminação de dependências transitivas).</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>02_normalizacao_3fn.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">/* ANTES (Não normalizado - anomalias de redundância e atualização):
+   pedidos_desnormalizados(pedido_id, cliente_nome, cliente_cidade, cliente_estado, produto_nome, preco)
+*/</span>
+
+<span class="cmt">-- DEPOIS (Normalizado em 3FN): Cada fato é armazenado em exatamente um lugar</span>
+<span class="kw">CREATE TABLE</span> <span class="var">cidades</span> (
+    <span class="var">id</span> <span class="typ">SERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">100</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">uf</span> <span class="typ">CHAR</span>(<span class="num">2</span>) <span class="kw">NOT NULL</span>
+);
+
+<span class="kw">CREATE TABLE</span> <span class="var">clientes</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">150</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">cidade_id</span> <span class="typ">INT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">cidades</span>(<span class="var">id</span>)
+);
+
+<span class="kw">CREATE TABLE</span> <span class="var">pedidos</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">cliente_id</span> <span class="typ">BIGINT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">clientes</span>(<span class="var">id</span>),
+    <span class="var">criado_em</span> <span class="typ">TIMESTAMP</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>
+);</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-3" id="acc-btn-3">
+          <span>3. Chaves PK/FK e Integridade Referencial</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-3" role="region" aria-labelledby="acc-btn-3">
+          <div class="acc-inner">
+            <p>A integridade referencial garante que relacionamentos entre tabelas permaneçam válidos e consistentes em todo o ciclo de vida da aplicação. Ações como <code class="inline">ON DELETE CASCADE</code> propagam a exclusão e <code class="inline">ON DELETE RESTRICT</code> protegem registros pais contra exclusão acidental quando existem registros filhos associados.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>03_chaves_e_constraints.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="kw">CREATE TABLE</span> <span class="var">departamentos</span> (
+    <span class="var">id</span> <span class="typ">SERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">codigo</span> <span class="typ">VARCHAR</span>(<span class="num">10</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">100</span>) <span class="kw">NOT NULL</span>
+);
+
+<span class="kw">CREATE TABLE</span> <span class="var">colaboradores</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">cpf</span> <span class="typ">VARCHAR</span>(<span class="num">14</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">150</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">salario</span> <span class="typ">NUMERIC</span>(<span class="num">10</span>, <span class="num">2</span>) <span class="kw">NOT NULL CHECK</span> (<span class="var">salario</span> &gt;= <span class="num">1412.00</span>),
+    <span class="cmt">-- FK que proíbe excluir um departamento se houver funcionários nele vinculados</span>
+    <span class="var">departamento_id</span> <span class="typ">INT</span> <span class="kw">NOT NULL</span>,
+    <span class="kw">CONSTRAINT</span> <span class="var">fk_colab_depto</span> 
+        <span class="kw">FOREIGN KEY</span> (<span class="var">departamento_id</span>) 
+        <span class="kw">REFERENCES</span> <span class="var">departamentos</span>(<span class="var">id</span>) 
+        <span class="kw">ON DELETE RESTRICT</span> 
+        <span class="kw">ON UPDATE CASCADE</span>
+);</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-4" id="acc-btn-4">
+          <span>4. Transações ACID (BEGIN, COMMIT e ROLLBACK)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-4" role="region" aria-labelledby="acc-btn-4">
+          <div class="acc-inner">
+            <p>O acrônimo <strong>ACID</strong> define as garantias transacionais de um SGBD:</p>
+            <p>• <strong>Atomicidade (Atomicity):</strong> A transação é "tudo ou nada". Se qualquer operação falhar, tudo é desfeito via <code class="inline">ROLLBACK</code>.<br>
+            • <strong>Consistência (Consistency):</strong> Transições entre estados válidos preservando todas as constraints e regras de integridade.<br>
+            • <strong>Isolamento (Isolation):</strong> Transações concorrentes não interferem entre si (controlado por níveis como <em>Read Committed</em> e <em>Serializable</em>).<br>
+            • <strong>Durabilidade (Durability):</strong> Uma vez confirmado com <code class="inline">COMMIT</code>, os dados persistem em disco mesmo em caso de queda de energia (via Write-Ahead Logging / WAL).</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>04_transacao_bancaria_acid.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- Transferência bancária atômica entre duas contas</span>
+<span class="kw">BEGIN TRANSACTION</span>;
+
+<span class="cmt">-- 1. Debita R$ 500,00 da conta de origem (bloqueia linha com FOR UPDATE)</span>
+<span class="kw">UPDATE</span> <span class="var">contas</span>
+<span class="kw">SET</span> <span class="var">saldo</span> = <span class="var">saldo</span> - <span class="num">500.00</span>
+<span class="kw">WHERE</span> <span class="var">id</span> = <span class="num">101</span> <span class="kw">AND</span> <span class="var">saldo</span> &gt;= <span class="num">500.00</span>;
+
+<span class="cmt">-- 2. Credita R$ 500,00 na conta de destino</span>
+<span class="kw">UPDATE</span> <span class="var">contas</span>
+<span class="kw">SET</span> <span class="var">saldo</span> = <span class="var">saldo</span> + <span class="num">500.00</span>
+<span class="kw">WHERE</span> <span class="var">id</span> = <span class="num">202</span>;
+
+<span class="cmt">-- 3. Registra o log no extrato contábil</span>
+<span class="kw">INSERT INTO</span> <span class="var">extratos</span> (<span class="var">conta_origem_id</span>, <span class="var">conta_destino_id</span>, <span class="var">valor</span>, <span class="var">tipo</span>)
+<span class="kw">VALUES</span> (<span class="num">101</span>, <span class="num">202</span>, <span class="num">500.00</span>, <span class="str">'PIX_TRANSFERENCIA'</span>);
+
+<span class="cmt">-- Se tudo ocorreu perfeitamente, confirma as alterações permanentemente:</span>
+<span class="kw">COMMIT</span>;
+
+<span class="cmt">-- Caso ocorra qualquer erro de saldo insuficiente ou timeout:</span>
+<span class="cmt">-- ROLLBACK;</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-5" id="acc-btn-5">
+          <span>5. Índices B-Tree, Otimização &amp; EXPLAIN ANALYZE</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-5" role="region" aria-labelledby="acc-btn-5">
+          <div class="acc-inner">
+            <p>O índice <strong>B-Tree (Balanced Tree)</strong> é a estrutura de dados padrão para aceleração de buscas em tempo logarítmico <em>O(log N)</em>. Ele substitui um custoso <em>Seq Scan</em> (varredura completa de tabela) por um veloz <em>Index Scan</em>. O comando <code class="inline">EXPLAIN ANALYZE</code> exibe o plano de execução real do otimizador de consultas.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>05_indices_e_explain.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- 1. Criação de índice composto para busca frequente por cliente e data</span>
+<span class="kw">CREATE INDEX</span> <span class="var">idx_pedidos_cliente_data</span> 
+<span class="kw">ON</span> <span class="var">pedidos</span> (<span class="var">cliente_id</span>, <span class="var">data_pedido</span> <span class="kw">DESC</span>);
+
+<span class="cmt">-- 2. Criação de índice parcial (filtra apenas pedidos pendentes, economizando espaço em disco)</span>
+<span class="kw">CREATE INDEX</span> <span class="var">idx_pedidos_pendentes</span> 
+<span class="kw">ON</span> <span class="var">pedidos</span> (<span class="var">id</span>) 
+<span class="kw">WHERE</span> <span class="var">status</span> = <span class="str">'PENDENTE'</span>;
+
+<span class="cmt">-- 3. Inspecionando o plano de execução real da query</span>
+<span class="kw">EXPLAIN ANALYZE</span>
+<span class="kw">SELECT</span> <span class="var">id</span>, <span class="var">valor_total</span>
+<span class="kw">FROM</span> <span class="var">pedidos</span>
+<span class="kw">WHERE</span> <span class="var">cliente_id</span> = <span class="num">4821</span>
+  <span class="kw">AND</span> <span class="var">data_pedido</span> &gt;= <span class="str">'2024-01-01'</span>
+<span class="kw">ORDER BY</span> <span class="var">data_pedido</span> <span class="kw">DESC</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 6 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-6" id="acc-btn-6">
+          <span>6. Replicação, Connection Pooling &amp; Alta Disponibilidade</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-6" role="region" aria-labelledby="acc-btn-6">
+          <div class="acc-inner">
+            <p>Para suportar milhões de requisições sem indisponibilidade, sistemas corporativos utilizam <strong>Replicação Primário-Réplica</strong> (onde escritas vão para o nó Primário e leituras são distribuídas entre Réplicas de Leitura) aliadas a <strong>Connection Poolers</strong> (como PgBouncer ou ProxySQL) que reaproveitam conexões TCP e evitam exaustão de threads.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>06_monitor_replicacao.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- [PostgreSQL] Consulta de status de replicação streaming e cálculo de atraso (Lag)</span>
+<span class="kw">SELECT</span> 
+    <span class="var">client_addr</span> <span class="kw">AS</span> <span class="var">replica_ip</span>,
+    <span class="var">application_name</span>,
+    <span class="var">state</span>,
+    <span class="var">sync_state</span>,
+    <span class="fn">pg_wal_lsn_diff</span>(<span class="fn">pg_current_wal_lsn</span>(), <span class="var">replay_lsn</span>) <span class="kw">AS</span> <span class="var">bytes_lag</span>,
+    <span class="var">reply_time</span> - <span class="var">write_time</span> <span class="kw">AS</span> <span class="var">tempo_latencia</span>
+<span class="kw">FROM</span> <span class="var">pg_stat_replication</span>;
+
+<span class="cmt">-- [MySQL] Consulta equivalente de status de réplica</span>
+<span class="cmt">-- SHOW REPLICA STATUS\G;</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. EXEMPLOS PRÁTICOS -->
+<section id="exemplos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Exemplos Práticos de Produção</h2>
+      <p>Código SQL realista e pronto para arquiteturas empresariais de alto desempenho.</p>
+    </div>
+
+    <div class="tabs">
+      <div class="tab-list" role="tablist" aria-label="Abas de código de banco de dados">
+        <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-1" id="tab-btn-1" type="button">1. Schema E-Commerce Completo</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-2" id="tab-btn-2" tabindex="-1" type="button">2. Consultas Analíticas (CTEs &amp; Window)</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-3" id="tab-btn-3" tabindex="-1" type="button">3. Procedure &amp; Trigger de Auditoria</button>
+      </div>
+
+      <!-- Tab 1 -->
+      <div class="tab-panel active" id="tab-1" role="tabpanel" aria-labelledby="tab-btn-1">
+        <p>Modelagem relacional completa (DDL) para um e-commerce moderno: chaves primárias, estrangeiras com integridade referencial, constraints de checagem, tipos otimizados e índices estratégicos.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>01_schema_ecommerce_producao.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- ====================================================================</span>
+<span class="cmt">-- SCHEMA DE E-COMMERCE DE ALTA PERFORMANCE (POSTGRESQL / MYSQL INNODB)</span>
+<span class="cmt">-- ====================================================================</span>
+
+<span class="cmt">-- 1. TABELA DE CATEGORIAS</span>
+<span class="kw">CREATE TABLE</span> <span class="var">categorias</span> (
+    <span class="var">id</span> <span class="typ">SERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">100</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">slug</span> <span class="typ">VARCHAR</span>(<span class="num">120</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">ativo</span> <span class="typ">BOOLEAN</span> <span class="kw">NOT NULL DEFAULT TRUE</span>,
+    <span class="var">criado_em</span> <span class="typ">TIMESTAMP WITH TIME ZONE</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="cmt">-- 2. TABELA DE PRODUTOS</span>
+<span class="kw">CREATE TABLE</span> <span class="var">produtos</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">categoria_id</span> <span class="typ">INT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">categorias</span>(<span class="var">id</span>) <span class="kw">ON DELETE RESTRICT</span>,
+    <span class="var">sku</span> <span class="typ">VARCHAR</span>(<span class="num">50</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">255</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">descricao</span> <span class="typ">TEXT</span>,
+    <span class="var">preco</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL CHECK</span> (<span class="var">preco</span> &gt;= <span class="num">0.00</span>),
+    <span class="var">custo</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL CHECK</span> (<span class="var">custo</span> &gt;= <span class="num">0.00</span>),
+    <span class="var">estoque</span> <span class="typ">INT</span> <span class="kw">NOT NULL DEFAULT</span> <span class="num">0</span> <span class="kw">CHECK</span> (<span class="var">estoque</span> &gt;= <span class="num">0</span>),
+    <span class="var">ativo</span> <span class="typ">BOOLEAN</span> <span class="kw">NOT NULL DEFAULT TRUE</span>,
+    <span class="var">metadados</span> <span class="typ">JSONB</span> <span class="kw">DEFAULT</span> <span class="str">'{}'</span>,
+    <span class="var">atualizado_em</span> <span class="typ">TIMESTAMP WITH TIME ZONE</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="cmt">-- 3. TABELA DE CLIENTES</span>
+<span class="kw">CREATE TABLE</span> <span class="var">clientes</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">cpf_cnpj</span> <span class="typ">VARCHAR</span>(<span class="num">18</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">150</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">email</span> <span class="typ">VARCHAR</span>(<span class="num">255</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">telefone</span> <span class="typ">VARCHAR</span>(<span class="num">20</span>),
+    <span class="var">cidade</span> <span class="typ">VARCHAR</span>(<span class="num">100</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">uf</span> <span class="typ">CHAR</span>(<span class="num">2</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">ativo</span> <span class="typ">BOOLEAN</span> <span class="kw">NOT NULL DEFAULT TRUE</span>,
+    <span class="var">criado_em</span> <span class="typ">TIMESTAMP WITH TIME ZONE</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="cmt">-- 4. TABELA DE PEDIDOS</span>
+<span class="kw">CREATE TABLE</span> <span class="var">pedidos</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">cliente_id</span> <span class="typ">BIGINT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">clientes</span>(<span class="var">id</span>) <span class="kw">ON DELETE RESTRICT</span>,
+    <span class="var">data_pedido</span> <span class="typ">TIMESTAMP WITH TIME ZONE</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>,
+    <span class="var">status</span> <span class="typ">VARCHAR</span>(<span class="num">30</span>) <span class="kw">NOT NULL DEFAULT</span> <span class="str">'PENDENTE'</span>
+        <span class="kw">CHECK</span> (<span class="var">status</span> <span class="kw">IN</span> (<span class="str">'PENDENTE'</span>, <span class="str">'APROVADO'</span>, <span class="str">'ENVIADO'</span>, <span class="str">'ENTREGUE'</span>, <span class="str">'CANCELADO'</span>)),
+    <span class="var">subtotal</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL DEFAULT</span> <span class="num">0.00</span>,
+    <span class="var">desconto</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL DEFAULT</span> <span class="num">0.00</span>,
+    <span class="var">valor_total</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL DEFAULT</span> <span class="num">0.00</span>
+);
+
+<span class="cmt">-- 5. ITENS DO PEDIDO (TABELA ASSOCIATIVA N:N)</span>
+<span class="kw">CREATE TABLE</span> <span class="var">itens_pedido</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">pedido_id</span> <span class="typ">BIGINT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">pedidos</span>(<span class="var">id</span>) <span class="kw">ON DELETE CASCADE</span>,
+    <span class="var">produto_id</span> <span class="typ">BIGINT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">produtos</span>(<span class="var">id</span>) <span class="kw">ON DELETE RESTRICT</span>,
+    <span class="var">quantidade</span> <span class="typ">INT</span> <span class="kw">NOT NULL CHECK</span> (<span class="var">quantidade</span> &gt; <span class="num">0</span>),
+    <span class="var">preco_unitario</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL CHECK</span> (<span class="var">preco_unitario</span> &gt;= <span class="num">0.00</span>),
+    <span class="kw">CONSTRAINT</span> <span class="var">uk_pedido_produto</span> <span class="kw">UNIQUE</span> (<span class="var">pedido_id</span>, <span class="var">produto_id</span>)
+);
+
+<span class="cmt">-- 6. ÍNDICES DE ALTA PERFORMANCE</span>
+<span class="kw">CREATE INDEX</span> <span class="var">idx_produtos_categoria</span> <span class="kw">ON</span> <span class="var">produtos</span> (<span class="var">categoria_id</span>);
+<span class="kw">CREATE INDEX</span> <span class="var">idx_pedidos_cliente_data</span> <span class="kw">ON</span> <span class="var">pedidos</span> (<span class="var">cliente_id</span>, <span class="var">data_pedido</span> <span class="kw">DESC</span>);
+<span class="kw">CREATE INDEX</span> <span class="var">idx_pedidos_status</span> <span class="kw">ON</span> <span class="var">pedidos</span> (<span class="var">status</span>);
+<span class="kw">CREATE INDEX</span> <span class="var">idx_itens_pedido_produto</span> <span class="kw">ON</span> <span class="var">itens_pedido</span> (<span class="var">produto_id</span>);</code></pre>
+        </div>
+      </div>
+
+      <!-- Tab 2 -->
+      <div class="tab-panel" id="tab-2" role="tabpanel" aria-labelledby="tab-btn-2">
+        <p>Consultas analíticas avançadas: faturamento acumulado (<em>Running Total</em>), ranking por categoria via <code class="inline">DENSE_RANK()</code>, ticket médio e comparação de períodos com <code class="inline">LAG()</code>.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>02_analytics_cte_window_functions.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">/*
+   RELATÓRIO ANALÍTICO AVANÇADO DE VENDAS
+   Calcula faturamento diário, acumulado anual e variação percentual vs dia anterior
+*/</span>
+
+<span class="kw">WITH</span> <span class="var">VendasDiarias</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        <span class="fn">DATE_TRUNC</span>(<span class="str">'day'</span>, <span class="var">p</span>.<span class="var">data_pedido</span>)::<span class="typ">DATE</span> <span class="kw">AS</span> <span class="var">data_venda</span>,
+        <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="var">p</span>.<span class="var">id</span>) <span class="kw">AS</span> <span class="var">total_pedidos</span>,
+        <span class="fn">SUM</span>(<span class="var">p</span>.<span class="var">valor_total</span>) <span class="kw">AS</span> <span class="var">faturamento_dia</span>
+    <span class="kw">FROM</span>
+        <span class="var">pedidos</span> <span class="var">p</span>
+    <span class="kw">WHERE</span>
+        <span class="var">p</span>.<span class="var">status</span> <span class="kw">IN</span> (<span class="str">'APROVADO'</span>, <span class="str">'ENTREGUE'</span>)
+        <span class="kw">AND</span> <span class="var">p</span>.<span class="var">data_pedido</span> &gt;= <span class="str">'2024-01-01'</span>
+    <span class="kw">GROUP BY</span>
+        <span class="fn">DATE_TRUNC</span>(<span class="str">'day'</span>, <span class="var">p</span>.<span class="var">data_pedido</span>)
+),
+<span class="var">MetricasComJanela</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        <span class="var">data_venda</span>,
+        <span class="var">total_pedidos</span>,
+        <span class="var">faturamento_dia</span>,
+        <span class="cmt">-- Faturamento Acumulado (Running Total)</span>
+        <span class="fn">SUM</span>(<span class="var">faturamento_dia</span>) <span class="kw">OVER</span> (
+            <span class="kw">ORDER BY</span> <span class="var">data_venda</span> <span class="kw">ASC</span>
+            <span class="kw">ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</span>
+        ) <span class="kw">AS</span> <span class="var">faturamento_acumulado_ano</span>,
+        <span class="cmt">-- Faturamento do dia anterior para comparação</span>
+        <span class="fn">LAG</span>(<span class="var">faturamento_dia</span>, <span class="num">1</span>) <span class="kw">OVER</span> (
+            <span class="kw">ORDER BY</span> <span class="var">data_venda</span> <span class="kw">ASC</span>
+        ) <span class="kw">AS</span> <span class="var">faturamento_dia_anterior</span>,
+        <span class="cmt">-- Média móvel de 7 dias</span>
+        <span class="fn">AVG</span>(<span class="var">faturamento_dia</span>) <span class="kw">OVER</span> (
+            <span class="kw">ORDER BY</span> <span class="var">data_venda</span> <span class="kw">ASC</span>
+            <span class="kw">ROWS BETWEEN 6 PRECEDING AND CURRENT ROW</span>
+        ) <span class="kw">AS</span> <span class="var">media_movel_7d</span>
+    <span class="kw">FROM</span>
+        <span class="var">VendasDiarias</span>
+)
+<span class="kw">SELECT</span>
+    <span class="var">data_venda</span>,
+    <span class="var">total_pedidos</span>,
+    <span class="fn">ROUND</span>(<span class="var">faturamento_dia</span>, <span class="num">2</span>) <span class="kw">AS</span> <span class="var">faturamento_dia</span>,
+    <span class="fn">ROUND</span>(<span class="var">faturamento_acumulado_ano</span>, <span class="num">2</span>) <span class="kw">AS</span> <span class="var">faturamento_acumulado</span>,
+    <span class="fn">ROUND</span>(<span class="var">media_movel_7d</span>, <span class="num">2</span>) <span class="kw">AS</span> <span class="var">media_movel_7d</span>,
+    <span class="fn">ROUND</span>(
+        ((<span class="var">faturamento_dia</span> - <span class="var">faturamento_dia_anterior</span>) / <span class="fn">NULLIF</span>(<span class="var">faturamento_dia_anterior</span>, <span class="num">0</span>)) * <span class="num">100.0</span>,
+        <span class="num">2</span>
+    ) <span class="kw">AS</span> <span class="var">variacao_percentual_dia</span>
+<span class="kw">FROM</span>
+    <span class="var">MetricasComJanela</span>
+<span class="kw">ORDER BY</span>
+    <span class="var">data_venda</span> <span class="kw">DESC</span>;</code></pre>
+        </div>
+      </div>
+
+      <!-- Tab 3 -->
+      <div class="tab-panel" id="tab-3" role="tabpanel" aria-labelledby="tab-btn-3">
+        <p>Automação e segurança interna no SGBD: Stored Procedure transacional de checkout de estoque e Trigger automático de auditoria para alteração de preços.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>03_procedure_e_trigger_auditoria.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- 1. TABELA DE LOG DE AUDITORIA DE PREÇOS</span>
+<span class="kw">CREATE TABLE</span> <span class="var">auditoria_precos</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">produto_id</span> <span class="typ">BIGINT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">produtos</span>(<span class="var">id</span>),
+    <span class="var">preco_antigo</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">preco_novo</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">usuario_bd</span> <span class="typ">VARCHAR</span>(<span class="num">100</span>) <span class="kw">DEFAULT CURRENT_USER</span>,
+    <span class="var">alterado_em</span> <span class="typ">TIMESTAMP WITH TIME ZONE</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="cmt">-- 2. FUNÇÃO DA TRIGGER (PL/PGSQL)</span>
+<span class="kw">CREATE OR REPLACE FUNCTION</span> <span class="fn">trg_fn_auditar_preco_produto</span>()
+<span class="kw">RETURNS TRIGGER AS</span> $$
+<span class="kw">BEGIN</span>
+    <span class="cmt">-- Dispara auditoria apenas quando o preço for efetivamente alterado</span>
+    <span class="kw">IF</span> <span class="var">OLD</span>.<span class="var">preco</span> &lt;&gt; <span class="var">NEW</span>.<span class="var">preco</span> <span class="kw">THEN</span>
+        <span class="kw">INSERT INTO</span> <span class="var">auditoria_precos</span> (<span class="var">produto_id</span>, <span class="var">preco_antigo</span>, <span class="var">preco_novo</span>)
+        <span class="kw">VALUES</span> (<span class="var">OLD</span>.<span class="var">id</span>, <span class="var">OLD</span>.<span class="var">preco</span>, <span class="var">NEW</span>.<span class="var">preco</span>);
+        
+        <span class="var">NEW</span>.<span class="var">atualizado_em</span> = <span class="kw">CURRENT_TIMESTAMP</span>;
+    <span class="kw">END IF</span>;
+    <span class="kw">RETURN</span> <span class="var">NEW</span>;
+<span class="kw">END</span>;
+$$ <span class="kw">LANGUAGE</span> <span class="var">plpgsql</span>;
+
+<span class="cmt">-- 3. ASSOCIAÇÃO DA TRIGGER NA TABELA PRODUTOS</span>
+<span class="kw">CREATE TRIGGER</span> <span class="var">trg_produtos_auditoria_preco</span>
+<span class="kw">BEFORE UPDATE ON</span> <span class="var">produtos</span>
+<span class="kw">FOR EACH ROW</span>
+<span class="kw">EXECUTE FUNCTION</span> <span class="fn">trg_fn_auditar_preco_produto</span>();
+
+<span class="cmt">-- 4. STORED PROCEDURE PARA BAIXA CONTROLADA DE ESTOQUE</span>
+<span class="kw">CREATE OR REPLACE PROCEDURE</span> <span class="fn">sp_baixar_estoque_pedido</span>(
+    <span class="var">p_pedido_id</span> <span class="typ">BIGINT</span>
+)
+<span class="kw">LANGUAGE</span> <span class="var">plpgsql</span>
+<span class="kw">AS</span> $$
+<span class="kw">DECLARE</span>
+    <span class="var">item</span> <span class="typ">RECORD</span>;
+<span class="kw">BEGIN</span>
+    <span class="cmt">-- Itera sobre os itens do pedido com trava FOR UPDATE</span>
+    <span class="kw">FOR</span> <span class="var">item</span> <span class="kw">IN</span> 
+        <span class="kw">SELECT</span> <span class="var">produto_id</span>, <span class="var">quantidade</span> 
+        <span class="kw">FROM</span> <span class="var">itens_pedido</span> 
+        <span class="kw">WHERE</span> <span class="var">pedido_id</span> = <span class="var">p_pedido_id</span>
+    <span class="kw">LOOP</span>
+        <span class="cmt">-- Atualiza estoque checando disponibilidade</span>
+        <span class="kw">UPDATE</span> <span class="var">produtos</span>
+        <span class="kw">SET</span> <span class="var">estoque</span> = <span class="var">estoque</span> - <span class="var">item</span>.<span class="var">quantidade</span>
+        <span class="kw">WHERE</span> <span class="var">id</span> = <span class="var">item</span>.<span class="var">produto_id</span> <span class="kw">AND</span> <span class="var">estoque</span> &gt;= <span class="var">item</span>.<span class="var">quantidade</span>;
+
+        <span class="kw">IF NOT FOUND THEN</span>
+            <span class="kw">RAISE EXCEPTION</span> <span class="str">'Estoque insuficiente para o produto ID %'</span>, <span class="var">item</span>.<span class="var">produto_id</span>;
+        <span class="kw">END IF</span>;
+    <span class="kw">END LOOP</span>;
+
+    <span class="cmt">-- Atualiza status do pedido para APROVADO</span>
+    <span class="kw">UPDATE</span> <span class="var">pedidos</span> <span class="kw">SET</span> <span class="var">status</span> = <span class="str">'APROVADO'</span> <span class="kw">WHERE</span> <span class="var">id</span> = <span class="var">p_pedido_id</span>;
+<span class="kw">END</span>;
+$$;</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FERRAMENTAS & CLIENTES -->
+<section id="ferramentas">
+  <div class="container">
+    <div class="section-head">
+      <h2>Ferramentas &amp; Clientes SQL</h2>
+      <p>Os principais softwares utilizados por desenvolvedores e DBAs para gerenciar, consultar e otimizar bancos de dados.</p>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="icon">🐘</div>
+        <h3>pgAdmin</h3>
+        <p>A ferramenta gráfica oficial e mais completa para administração do PostgreSQL. Inclui visualizador gráfico de planos de execução, monitoramento de sessões, editor de queries e gerenciamento de backup.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🦫</div>
+        <h3>DBeaver</h3>
+        <p>Cliente SQL universal de código aberto baseado em Java. Suporta mais de 100 bancos relacionais e NoSQL (PostgreSQL, MySQL, Oracle, SQL Server, SQLite), com gerador de diagramas ER integrado.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>TablePlus</h3>
+        <p>Aplicativo nativo moderno, ultra-rápido e leve para macOS, Windows e Linux. Possui interface minimalista, suporte a múltiplos tabs, edição inline de dados e atalhos de teclado ágeis.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🐬</div>
+        <h3>MySQL Workbench</h3>
+        <p>A IDE oficial desenvolvida pela Oracle para o MySQL. Destaca-se pela capacidade avançada de modelagem visual ER, engenharia reversa de bancos e painéis de administração de instâncias.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🚀</div>
+        <h3>DataGrip (JetBrains)</h3>
+        <p>A IDE profissional mais poderosa do mercado para desenvolvedores e DBAs. Oferece autocompletion com reconhecimento de esquema, refatoração de código SQL, inspeções e controle de versão.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🐝</div>
+        <h3>Beekeeper Studio</h3>
+        <p>Cliente SQL moderno, elegante e de código aberto com forte compromisso com a privacidade. Interface limpa, suporte a túnel SSH e visualização simplificada de tabelas e consultas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-head">
+      <h2>Roadmap de Aprendizagem</h2>
+      <p>Do design relacional básico à administração avançada e bancos de dados em nuvem.</p>
+    </div>
+
+    <div class="roadmap">
+      <div class="step">
+        <span class="num-badge">1</span>
+        <div class="phase">Fase 1</div>
+        <h3>Fundamentos &amp; DDL/DML</h3>
+        <ul>
+          <li>Modelagem relacional inicial</li>
+          <li>CREATE TABLE &amp; tipos de dados</li>
+          <li>INSERT, UPDATE, DELETE</li>
+          <li>SELECT, WHERE, ORDER BY</li>
+          <li>Chaves Primárias (PK)</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">2</span>
+        <div class="phase">Fase 2</div>
+        <h3>Relacionamentos &amp; JOINs</h3>
+        <ul>
+          <li>Chaves Estrangeiras (FK)</li>
+          <li>INNER, LEFT, RIGHT JOINs</li>
+          <li>GROUP BY &amp; HAVING</li>
+          <li>Funções agregadas (SUM, AVG)</li>
+          <li>Normalização (1FN, 2FN, 3FN)</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">3</span>
+        <div class="phase">Fase 3</div>
+        <h3>Consultas Avançadas &amp; Tuning</h3>
+        <ul>
+          <li>Window Functions (OVER, RANK)</li>
+          <li>CTEs (cláusula WITH)</li>
+          <li>Índices B-Tree &amp; Compostos</li>
+          <li>Análise com EXPLAIN ANALYZE</li>
+          <li>Views, Triggers &amp; Procedures</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">4</span>
+        <div class="phase">Fase 4</div>
+        <h3>Alta Disponibilidade &amp; Nuvem</h3>
+        <ul>
+          <li>Replicação Primário-Réplica</li>
+          <li>Connection Pooling (PgBouncer)</li>
+          <li>Particionamento de Tabelas</li>
+          <li>Sharding &amp; Bancos Distribuídos</li>
+          <li>Cloud SGBD (Neon, Supabase)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. RECURSOS -->
+<section id="recursos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Recursos Recomendados</h2>
+      <p>Documentações oficiais, plataformas práticas e literatura recomendada para dominar bancos de dados.</p>
+    </div>
+
+    <div class="grid grid-3">
+      <a class="card resource" href="https://www.postgresql.org/docs/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🐘</div>
+        <h3>Documentação PostgreSQL</h3>
+        <p>A referência definitiva do banco relacional de código aberto mais avançado do mundo.</p>
+        <span class="link">postgresql.org/docs →</span>
+      </a>
+
+      <a class="card resource" href="https://dev.mysql.com/doc/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🐬</div>
+        <h3>Documentação MySQL</h3>
+        <p>Manual oficial do MySQL cobrindo arquitetura do InnoDB, replicação e tuning de variáveis.</p>
+        <span class="link">dev.mysql.com/doc →</span>
+      </a>
+
+      <a class="card resource" href="https://use-the-index-luke.com/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🎯</div>
+        <h3>Use The Index, Luke!</h3>
+        <p>O guia definitivo e gratuito sobre indexação, algoritmos de busca e performance para programadores.</p>
+        <span class="link">use-the-index-luke.com →</span>
+      </a>
+
+      <a class="card resource" href="https://pgexercises.com/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🏋️</div>
+        <h3>PGExercises</h3>
+        <p>Plataforma prática com dezenas de exercícios progressivos para treinar consultas e análises no PostgreSQL.</p>
+        <span class="link">pgexercises.com →</span>
+      </a>
+
+      <a class="card resource" href="https://www.oreilly.com/library/view/database-design-for/9780136788164/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">📖</div>
+        <h3>Livro "Database Design for Mere Mortals"</h3>
+        <p>De Michael J. Hernandez. Considerado a bíblia clássica e acessível da modelagem relacional limpa.</p>
+        <span class="link">oreilly.com →</span>
+      </a>
+
+      <a class="card resource" href="https://www.db-fiddle.com/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🧪</div>
+        <h3>DB Fiddle</h3>
+        <p>Ambiente online interativo para testar, validar schemas e compartilhar queries em PostgreSQL, MySQL e SQLite.</p>
+        <span class="link">db-fiddle.com →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p style="margin:0">© 2025 Ponce Metodologias &amp; Dev</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Accordion ---------- */
+  document.querySelectorAll('.acc-item').forEach(function (item) {
+    var btn = item.querySelector('.acc-btn');
+    var panel = item.querySelector('.acc-panel');
+    btn.addEventListener('click', function () {
+      var open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+    });
+  });
+
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.acc-item.open .acc-panel').forEach(function (p) {
+      p.style.maxHeight = p.scrollHeight + 'px';
+    });
+  });
+
+  /* ---------- Tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+  function activate(tab) {
+    tabs.forEach(function (t) {
+      var selected = t === tab;
+      t.setAttribute('aria-selected', selected ? 'true' : 'false');
+      t.tabIndex = selected ? 0 : -1;
+      var panelId = t.getAttribute('aria-controls');
+      var panel = document.getElementById(panelId);
+      if (panel) {
+        panel.classList.toggle('active', selected);
+      }
+    });
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { activate(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (next) { e.preventDefault(); activate(next); next.focus(); }
+    });
+  });
+
+  /* ---------- Copy button ---------- */
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.closest('.code-block').querySelector('code').textContent;
+      var done = function (ok) {
+        btn.textContent = ok ? 'Copiado!' : 'Falhou';
+        btn.classList.toggle('copied', ok);
+        setTimeout(function () {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 1800);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(
+          function () { done(true); },
+          function () { done(fallbackCopy(code)); }
+        );
+      } else {
+        done(fallbackCopy(code));
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

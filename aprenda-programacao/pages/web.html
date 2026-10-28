@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web, Back-end & Mobile | Aprenda Programação</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+</head>
+<body>
+<div id="scroll-bar" style="position:fixed;top:0;left:0;height:3px;width:0;background:var(--blue);z-index:2000;transition:width .1s;"></div>
+
+<nav id="main-nav">
+  <a class="logo" href="../index.html">&#60;<span>code</span>/&#62; Aprenda Prog.</a>
+  <a class="nav-link" href="../index.html">Home</a>
+  <a class="nav-link" href="logica.html">Lógica</a>
+  <a class="nav-link" href="algoritmos.html">Algoritmos</a>
+  <a class="nav-link" href="estruturas.html">Estruturas</a>
+  <a class="nav-link" href="linguagens.html">Linguagens</a>
+  <a class="nav-link" href="paradigmas.html">Paradigmas</a>
+  <a class="nav-link" href="web.html">Web</a>
+  <a class="nav-link" href="banco.html">Banco de Dados</a>
+  <a class="nav-link" href="carreira.html">Carreira</a>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-hero">
+    <h1>🌐 Web, Back-end & Mobile</h1>
+    <p>Como a internet funciona por baixo dos panos, as tecnologias do front-end ao servidor, APIs REST, e o mundo do desenvolvimento mobile nativo e híbrido.</p>
+    <div class="badge-row">
+      <span class="badge badge-blue">Módulo 6</span>
+      <span class="badge badge-orange">HTML CSS JS</span>
+      <span class="badge badge-green">APIs REST</span>
+      <span class="badge badge-purple">Mobile</span>
+    </div>
+  </div>
+
+  <!-- COMO A WEB FUNCIONA -->
+  <div class="section" id="como-web">
+    <div class="section-title"><div class="num-badge num-blue">1</div><h2>Como a Web Funciona</h2></div>
+    <p>Quando você digita uma URL no browser e aperta Enter, uma cadeia precisa de eventos acontece em milissegundos:</p>
+    <div class="code-block"><span class="cmt">1. Você digita: https://www.google.com</span>
+
+<span class="cmt">2. DNS Lookup — Quem é google.com?</span>
+   Browser → DNS Server → responde: 142.250.80.46
+
+<span class="cmt">3. TCP Handshake — Conectar ao servidor</span>
+   Browser → Servidor: SYN
+   Servidor → Browser: SYN-ACK
+   Browser → Servidor: ACK  ✅ Conectado!
+
+<span class="cmt">4. TLS Handshake (HTTPS) — Criptografar tudo</span>
+   Troca de certificados e chave de sessão
+
+<span class="cmt">5. Requisição HTTP</span>
+   GET / HTTP/2
+   Host: www.google.com
+   Accept: text/html
+
+<span class="cmt">6. Resposta HTTP</span>
+   HTTP/2 200 OK
+   Content-Type: text/html
+   [corpo HTML da página]
+
+<span class="cmt">7. Browser renderiza HTML + CSS + executa JavaScript</span></div>
+
+    <h3>Códigos de Status HTTP</h3>
+    <table>
+      <tr><th>Código</th><th>Categoria</th><th>Significado</th></tr>
+      <tr><td>200</td><td>✅ Sucesso</td><td>OK — requisição bem-sucedida</td></tr>
+      <tr><td>201</td><td>✅ Sucesso</td><td>Created — recurso criado com sucesso</td></tr>
+      <tr><td>301/302</td><td>↩️ Redirecionamento</td><td>Movido permanente/temporariamente</td></tr>
+      <tr><td>400</td><td>❌ Erro do cliente</td><td>Bad Request — requisição inválida</td></tr>
+      <tr><td>401</td><td>❌ Erro do cliente</td><td>Unauthorized — não autenticado</td></tr>
+      <tr><td>403</td><td>❌ Erro do cliente</td><td>Forbidden — sem permissão</td></tr>
+      <tr><td>404</td><td>❌ Erro do cliente</td><td>Not Found — recurso não existe</td></tr>
+      <tr><td>500</td><td>🔥 Erro do servidor</td><td>Internal Server Error — bug no servidor</td></tr>
+    </table>
+  </div>
+
+  <!-- FRONT-END -->
+  <div class="section" id="frontend">
+    <div class="section-title"><div class="num-badge num-blue">2</div><h2>Front-end — O Que o Usuário Vê</h2></div>
+
+    <h3>HTML — Estrutura</h3>
+    <p>HyperText Markup Language. Define o <em>conteúdo e estrutura</em> da página usando elementos (tags). O esqueleto da web.</p>
+    <div class="code-block"><span class="cmt">&lt;!-- HTML5 básico --&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;<span class="kw">html</span> lang=<span class="str">"pt-BR"</span>&gt;
+  &lt;<span class="kw">head</span>&gt;
+    &lt;<span class="kw">meta</span> charset=<span class="str">"UTF-8"</span>/&gt;
+    &lt;<span class="kw">title</span>&gt;Minha Página&lt;/<span class="kw">title</span>&gt;
+  &lt;/<span class="kw">head</span>&gt;
+  &lt;<span class="kw">body</span>&gt;
+    &lt;<span class="kw">header</span>&gt;&lt;<span class="kw">h1</span>&gt;Bem-vindo!&lt;/<span class="kw">h1</span>&gt;&lt;/<span class="kw">header</span>&gt;
+    &lt;<span class="kw">main</span>&gt;
+      &lt;<span class="kw">article</span>&gt;
+        &lt;<span class="kw">p</span>&gt;Este é um parágrafo de texto.&lt;/<span class="kw">p</span>&gt;
+        &lt;<span class="kw">a</span> href=<span class="str">"https://google.com"</span>&gt;Link externo&lt;/<span class="kw">a</span>&gt;
+      &lt;/<span class="kw">article</span>&gt;
+    &lt;/<span class="kw">main</span>&gt;
+    &lt;<span class="kw">footer</span>&gt;Rodapé&lt;/<span class="kw">footer</span>&gt;
+  &lt;/<span class="kw">body</span>&gt;
+&lt;/<span class="kw">html</span>&gt;</div>
+
+    <h3>CSS — Estilo</h3>
+    <p>Cascading Style Sheets. Define a aparência visual: cores, fontes, espaçamentos, layouts e animações.</p>
+    <div class="code-block"><span class="cmt">/* CSS moderno — Flexbox e Grid */</span>
+<span class="var">.container</span> {
+    display: <span class="fn">flex</span>;
+    justify-content: space-between;
+    align-items: center;
+    gap: <span class="num">16px</span>;
+}
+
+<span class="var">.grid-layout</span> {
+    display: <span class="fn">grid</span>;
+    grid-template-columns: <span class="fn">repeat</span>(3, 1fr);
+    gap: <span class="num">20px</span>;
+}
+
+<span class="cmt">/* Responsividade com media queries */</span>
+@<span class="kw">media</span> (max-width: <span class="num">768px</span>) {
+    <span class="var">.grid-layout</span> { grid-template-columns: <span class="num">1fr</span>; }
+}
+
+<span class="cmt">/* Variáveis CSS */</span>
+:<span class="var">root</span> { --cor-primaria: #3b82d4; --fonte: "Segoe UI", sans-serif; }
+<span class="var">body</span>  { color: var(--cor-primaria); font-family: var(--fonte); }</div>
+
+    <h3>JavaScript no DOM</h3>
+    <div class="code-block"><span class="cmt">// Manipular HTML com JavaScript</span>
+<span class="kw">const</span> <span class="var">btn</span>   = document.<span class="fn">getElementById</span>(<span class="str">"meu-btn"</span>);
+<span class="kw">const</span> <span class="var">lista</span> = document.<span class="fn">querySelector</span>(<span class="str">".minha-lista"</span>);
+
+<span class="var">btn</span>.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, () => {
+    <span class="kw">const</span> <span class="var">item</span> = document.<span class="fn">createElement</span>(<span class="str">"li"</span>);
+    <span class="var">item</span>.textContent = <span class="str">`Item adicionado às ${<span class="kw">new</span> Date().<span class="fn">toLocaleTimeString</span>()}`</span>;
+    <span class="var">lista</span>.<span class="fn">appendChild</span>(<span class="var">item</span>);
+});
+
+<span class="cmt">// Fetch API — comunicar com back-end</span>
+<span class="fn">fetch</span>(<span class="str">"/api/produtos"</span>)
+    .then(<span class="var">r</span> => <span class="var">r</span>.json())
+    .then(<span class="var">dados</span> => <span class="fn">renderizarProdutos</span>(<span class="var">dados</span>))
+    .catch(<span class="var">err</span> => <span class="fn">console</span>.error(<span class="str">"Erro:"</span>, <span class="var">err</span>));</div>
+  </div>
+
+  <!-- BACK-END -->
+  <div class="section" id="backend">
+    <div class="section-title"><div class="num-badge num-blue">3</div><h2>Back-end — O Que Roda no Servidor</h2></div>
+    <p>O back-end processa a lógica de negócio, acessa bancos de dados, autentica usuários e serve dados ao front-end. O usuário nunca vê o back-end diretamente.</p>
+
+    <h3>API REST com Python (FastAPI)</h3>
+    <div class="code-block"><span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI, HTTPException
+<span class="kw">from</span> pydantic <span class="kw">import</span> BaseModel
+
+<span class="var">app</span> = <span class="fn">FastAPI</span>()
+
+<span class="kw">class</span> <span class="fn">Produto</span>(BaseModel):
+    <span class="var">nome</span>:  str
+    <span class="var">preco</span>: float
+
+<span class="var">banco_fake</span> = [
+    {<span class="str">"id"</span>: <span class="num">1</span>, <span class="str">"nome"</span>: <span class="str">"Notebook"</span>, <span class="str">"preco"</span>: <span class="num">3500.0</span>},
+    {<span class="str">"id"</span>: <span class="num">2</span>, <span class="str">"nome"</span>: <span class="str">"Mouse"</span>,    <span class="str">"preco"</span>: <span class="num">89.90</span>},
+]
+
+@<span class="var">app</span>.<span class="fn">get</span>(<span class="str">"/produtos"</span>)
+<span class="kw">def</span> <span class="fn">listar_produtos</span>():
+    <span class="kw">return</span> <span class="var">banco_fake</span>
+
+@<span class="var">app</span>.<span class="fn">get</span>(<span class="str">"/produtos/{id}"</span>)
+<span class="kw">def</span> <span class="fn">buscar_produto</span>(<span class="var">id</span>: int):
+    <span class="var">p</span> = <span class="fn">next</span>((<span class="var">x</span> <span class="kw">for</span> <span class="var">x</span> <span class="kw">in</span> <span class="var">banco_fake</span> <span class="kw">if</span> <span class="var">x</span>[<span class="str">"id"</span>] == <span class="var">id</span>), <span class="kw">None</span>)
+    <span class="kw">if not</span> <span class="var">p</span>: <span class="kw">raise</span> <span class="fn">HTTPException</span>(<span class="num">404</span>, <span class="str">"Produto não encontrado"</span>)
+    <span class="kw">return</span> <span class="var">p</span>
+
+@<span class="var">app</span>.<span class="fn">post</span>(<span class="str">"/produtos"</span>, status_code=<span class="num">201</span>)
+<span class="kw">def</span> <span class="fn">criar_produto</span>(<span class="var">produto</span>: <span class="fn">Produto</span>):
+    <span class="var">novo</span> = {<span class="str">"id"</span>: <span class="fn">len</span>(<span class="var">banco_fake</span>)+<span class="num">1</span>, **<span class="var">produto</span>.<span class="fn">dict</span>()}
+    <span class="var">banco_fake</span>.<span class="fn">append</span>(<span class="var">novo</span>)
+    <span class="kw">return</span> <span class="var">novo</span></div>
+
+    <table>
+      <tr><th>Linguagem</th><th>Framework</th><th>Característica</th></tr>
+      <tr><td>Python</td><td>FastAPI, Django</td><td>Rápido de desenvolver, ótimo para dados</td></tr>
+      <tr><td>JavaScript</td><td>Express, NestJS</td><td>Mesmo idioma do front-end</td></tr>
+      <tr><td>Java</td><td>Spring Boot</td><td>Robusto, corporativo, escalável</td></tr>
+      <tr><td>Go</td><td>Gin, Fiber</td><td>Alta performance, microsserviços</td></tr>
+      <tr><td>PHP</td><td>Laravel</td><td>Amplamente difundido, CMSs</td></tr>
+      <tr><td>Ruby</td><td>Ruby on Rails</td><td>Produtividade altíssima</td></tr>
+    </table>
+  </div>
+
+  <!-- MOBILE -->
+  <div class="section" id="mobile">
+    <div class="section-title"><div class="num-badge num-blue">4</div><h2>Desenvolvimento Mobile</h2></div>
+    <div class="card-grid">
+      <div class="card"><h3>📱 Android Nativo (Kotlin)</h3><p>Linguagem oficial do Android desde 2017. Acesso total a todos os recursos do dispositivo. Deploy na Play Store.</p></div>
+      <div class="card"><h3>🍎 iOS Nativo (Swift)</h3><p>Linguagem da Apple desde 2014. Obrigatório para publicar na App Store. Melhor performance no ecossistema Apple.</p></div>
+      <div class="card"><h3>⚛️ React Native</h3><p>Um código JavaScript/TypeScript para Android e iOS. Desenvolvido pelo Meta. Base grande de devs JS no mercado.</p></div>
+      <div class="card"><h3>🐦 Flutter (Dart)</h3><p>Framework do Google. Linguagem Dart. Performance próxima ao nativo. UI consistente em todas as plataformas.</p></div>
+    </div>
+    <div class="info-box">
+      <strong>Cross-platform vs Nativo:</strong> Apps nativos têm melhor performance e integração com o dispositivo. Apps cross-platform (React Native, Flutter) economizam tempo — um time, dois sistemas operacionais.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>← <a href="paradigmas.html" style="color:var(--blue);">Paradigmas</a> &nbsp;|&nbsp; <a href="banco.html" style="color:var(--blue);">Banco de Dados →</a></p>
+  <br/><p>Aprenda Programação — Made with IBM Bob</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

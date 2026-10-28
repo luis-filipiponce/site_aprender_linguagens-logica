@@ -1,0 +1,196 @@
+  <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paradigmas | Aprenda Programação</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+</head>
+<body>
+<div id="scroll-bar" style="position:fixed;top:0;left:0;height:3px;width:0;background:var(--teal);z-index:2000;transition:width .1s;"></div>
+
+<nav id="main-nav">
+  <a class="logo" href="../index.html">&#60;<span>code</span>/&#62; Aprenda Prog.</a>
+  <a class="nav-link" href="../index.html">Home</a>
+  <a class="nav-link" href="logica.html">Lógica</a>
+  <a class="nav-link" href="algoritmos.html">Algoritmos</a>
+  <a class="nav-link" href="estruturas.html">Estruturas</a>
+  <a class="nav-link" href="linguagens.html">Linguagens</a>
+  <a class="nav-link" href="paradigmas.html">Paradigmas</a>
+  <a class="nav-link" href="web.html">Web</a>
+  <a class="nav-link" href="banco.html">Banco de Dados</a>
+  <a class="nav-link" href="carreira.html">Carreira</a>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-hero">
+    <h1>🎯 Paradigmas de Programação</h1>
+    <p>Um paradigma é um estilo ou forma de pensar e estruturar o código. A mesma linguagem pode suportar múltiplos paradigmas. Entender paradigmas te faz um programador muito mais versátil e adaptável.</p>
+    <div class="badge-row">
+      <span class="badge badge-teal">Módulo 5</span>
+      <span class="badge badge-purple">OOP</span>
+      <span class="badge badge-green">Funcional</span>
+      <span class="badge badge-blue">Declarativo</span>
+    </div>
+  </div>
+
+  <!-- IMPERATIVO -->
+  <div class="section" id="imperativo">
+    <div class="section-title"><div class="num-badge num-teal">1</div><h2>Programação Imperativa</h2></div>
+    <p>O estilo mais básico e natural. Você diz ao computador <em>como</em> fazer algo, passo a passo. Usa variáveis, loops e condicionais diretamente. É a forma como nosso cérebro naturalmente pensa em resolver problemas.</p>
+    <div class="code-block"><span class="cmt"># Imperativo: calcular soma de pares de 1 a 100</span>
+<span class="var">soma</span> = <span class="num">0</span>
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">101</span>):
+    <span class="kw">if</span> <span class="var">i</span> % <span class="num">2</span> == <span class="num">0</span>:
+        <span class="var">soma</span> += <span class="var">i</span>
+<span class="fn">print</span>(<span class="var">soma</span>)  <span class="cmt"># 2550</span></div>
+  </div>
+
+  <!-- OOP -->
+  <div class="section" id="oop">
+    <div class="section-title"><div class="num-badge num-teal">2</div><h2>Orientação a Objetos (OOP)</h2></div>
+    <p>O paradigma mais usado no mercado. Organiza o código em <strong>objetos</strong> que combinam dados (atributos) e comportamentos (métodos). O mundo real é modelado como coisas que interagem entre si.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>1. Encapsulamento</h3>
+        <p>Esconder os detalhes internos do objeto. Expor apenas o necessário via métodos públicos. Protege o estado interno de modificações externas acidentais.</p>
+      </div>
+      <div class="card">
+        <h3>2. Herança</h3>
+        <p>Uma classe filha herda todos os atributos e métodos da classe pai, podendo estendê-los ou sobrescrevê-los. Promove reutilização de código.</p>
+      </div>
+      <div class="card">
+        <h3>3. Polimorfismo</h3>
+        <p>O mesmo método se comporta de forma diferente em objetos diferentes. Um método <code>falar()</code> age diferente em Cachorro e em Gato, mesmo chamado da mesma forma.</p>
+      </div>
+      <div class="card">
+        <h3>4. Abstração</h3>
+        <p>Simplificar a realidade, expondo apenas o essencial e escondendo a complexidade interna. Você usa um carro sem saber como o motor funciona internamente.</p>
+      </div>
+    </div>
+
+    <div class="code-block"><span class="cmt"># OOP completo — sistema bancário</span>
+<span class="kw">class</span> <span class="fn">Conta</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">titular</span>: str, <span class="var">saldo</span>: float = <span class="num">0.0</span>):
+        <span class="var">self</span>.titular  = <span class="var">titular</span>
+        <span class="var">self</span>.__saldo  = <span class="var">saldo</span>   <span class="cmt"># __ = privado (encapsulamento)</span>
+
+    <span class="kw">def</span> <span class="fn">depositar</span>(<span class="var">self</span>, <span class="var">valor</span>: float):
+        <span class="kw">if</span> <span class="var">valor</span> <= <span class="num">0</span>: <span class="kw">raise</span> <span class="fn">ValueError</span>(<span class="str">"Valor deve ser positivo"</span>)
+        <span class="var">self</span>.__saldo += <span class="var">valor</span>
+
+    <span class="kw">def</span> <span class="fn">sacar</span>(<span class="var">self</span>, <span class="var">valor</span>: float):
+        <span class="kw">if</span> <span class="var">valor</span> > <span class="var">self</span>.__saldo: <span class="kw">raise</span> <span class="fn">ValueError</span>(<span class="str">"Saldo insuficiente"</span>)
+        <span class="var">self</span>.__saldo -= <span class="var">valor</span>
+
+    @property
+    <span class="kw">def</span> <span class="fn">saldo</span>(<span class="var">self</span>): <span class="kw">return</span> <span class="var">self</span>.__saldo  <span class="cmt"># leitura controlada</span>
+
+    <span class="kw">def</span> <span class="fn">__repr__</span>(<span class="var">self</span>):
+        <span class="kw">return</span> <span class="str">f"Conta({self.titular!r}, saldo=R${self.__saldo:.2f})"</span>
+
+
+<span class="kw">class</span> <span class="fn">ContaPoupanca</span>(<span class="fn">Conta</span>):          <span class="cmt"># herança</span>
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">titular</span>, <span class="var">taxa</span>=<span class="num">0.005</span>):
+        <span class="fn">super</span>().<span class="fn">__init__</span>(<span class="var">titular</span>)
+        <span class="var">self</span>.taxa = <span class="var">taxa</span>
+
+    <span class="kw">def</span> <span class="fn">render_juros</span>(<span class="var">self</span>):            <span class="cmt"># método específico da subclasse</span>
+        <span class="var">juros</span> = <span class="var">self</span>.saldo * <span class="var">self</span>.taxa
+        <span class="var">self</span>.<span class="fn">depositar</span>(<span class="var">juros</span>)
+        <span class="kw">return</span> <span class="var">juros</span>
+
+<span class="var">cc</span> = <span class="fn">Conta</span>(<span class="str">"Ana"</span>)
+<span class="var">cc</span>.<span class="fn">depositar</span>(<span class="num">1000</span>)
+<span class="var">cc</span>.<span class="fn">sacar</span>(<span class="num">200</span>)
+<span class="fn">print</span>(<span class="var">cc</span>)     <span class="cmt"># Conta('Ana', saldo=R$800.00)</span>
+
+<span class="var">cp</span> = <span class="fn">ContaPoupanca</span>(<span class="str">"Carlos"</span>)
+<span class="var">cp</span>.<span class="fn">depositar</span>(<span class="num">5000</span>)
+<span class="fn">print</span>(<span class="var">cp</span>.<span class="fn">render_juros</span>())  <span class="cmt"># 25.0</span></div>
+  </div>
+
+  <!-- FUNCIONAL -->
+  <div class="section" id="funcional">
+    <div class="section-title"><div class="num-badge num-teal">3</div><h2>Programação Funcional</h2></div>
+    <p>Trata a computação como avaliação de <strong>funções matemáticas puras</strong>. Evita estado mutável e efeitos colaterais. Funções são "cidadãs de primeira classe" — podem ser passadas como argumentos e retornadas como valores.</p>
+    <div class="info-box green">
+      <strong>Função pura:</strong> Dado o mesmo input, sempre retorna o mesmo output. Não modifica estado externo. É previsível, testável e paralelizável.
+    </div>
+    <div class="code-block"><span class="cmt"># Funcional em Python</span>
+
+<span class="cmt"># map — aplica função a cada elemento</span>
+<span class="var">nomes</span>    = [<span class="str">"ana"</span>, <span class="str">"carlos"</span>, <span class="str">"beatriz"</span>]
+<span class="var">maiusculos</span> = <span class="fn">list</span>(<span class="fn">map</span>(str.upper, <span class="var">nomes</span>))
+<span class="fn">print</span>(<span class="var">maiusculos</span>)   <span class="cmt"># ['ANA', 'CARLOS', 'BEATRIZ']</span>
+
+<span class="cmt"># filter — filtra elementos</span>
+<span class="var">numeros</span> = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>, <span class="num">6</span>, <span class="num">7</span>, <span class="num">8</span>]
+<span class="var">pares</span>   = <span class="fn">list</span>(<span class="fn">filter</span>(<span class="kw">lambda</span> <span class="var">x</span>: <span class="var">x</span> % <span class="num">2</span> == <span class="num">0</span>, <span class="var">numeros</span>))
+<span class="fn">print</span>(<span class="var">pares</span>)         <span class="cmt"># [2, 4, 6, 8]</span>
+
+<span class="cmt"># reduce — agrega em um único valor</span>
+<span class="kw">from</span> functools <span class="kw">import</span> reduce
+<span class="var">produto</span> = <span class="fn">reduce</span>(<span class="kw">lambda</span> <span class="var">acc</span>, <span class="var">x</span>: <span class="var">acc</span> * <span class="var">x</span>, [<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>])
+<span class="fn">print</span>(<span class="var">produto</span>)        <span class="cmt"># 120</span>
+
+<span class="cmt"># Composição de funções</span>
+<span class="kw">def</span> <span class="fn">compor</span>(*<span class="var">fns</span>):
+    <span class="kw">def</span> <span class="fn">composta</span>(<span class="var">x</span>):
+        <span class="kw">for</span> <span class="var">fn</span> <span class="kw">in</span> <span class="kw">reversed</span>(<span class="var">fns</span>): <span class="var">x</span> = <span class="fn">fn</span>(<span class="var">x</span>)
+        <span class="kw">return</span> <span class="var">x</span>
+    <span class="kw">return</span> <span class="var">composta</span>
+
+<span class="var">processar</span> = <span class="fn">compor</span>(str.upper, str.strip)
+<span class="fn">print</span>(<span class="fn">processar</span>(<span class="str">"  python  "</span>))  <span class="cmt"># "PYTHON"</span></div>
+  </div>
+
+  <!-- DECLARATIVO -->
+  <div class="section" id="declarativo">
+    <div class="section-title"><div class="num-badge num-teal">4</div><h2>Programação Declarativa</h2></div>
+    <p>Você diz <em>o que</em> quer, não <em>como</em> fazer. O sistema descobre a melhor forma de executar. SQL é o exemplo clássico — você descreve o resultado desejado e o banco faz o trabalho duro.</p>
+    <div class="code-block"><span class="cmt">-- SQL — puramente declarativo</span>
+<span class="cmt">-- Você diz O QUÊ quer, não COMO buscar</span>
+<span class="kw">SELECT</span>
+    <span class="var">departamento</span>,
+    <span class="fn">AVG</span>(<span class="var">salario</span>) <span class="kw">AS</span> media_salarial,
+    <span class="fn">COUNT</span>(*) <span class="kw">AS</span> total_funcionarios
+<span class="kw">FROM</span> funcionarios
+<span class="kw">WHERE</span> ativo = <span class="kw">TRUE</span>
+<span class="kw">GROUP BY</span> departamento
+<span class="kw">HAVING</span> <span class="fn">AVG</span>(<span class="var">salario</span>) > <span class="num">5000</span>
+<span class="kw">ORDER BY</span> media_salarial <span class="kw">DESC</span>;</div>
+  </div>
+
+  <!-- COMPARATIVO -->
+  <div class="section" id="comparativo">
+    <div class="section-title"><div class="num-badge num-teal">5</div><h2>Mesmo problema, paradigmas diferentes</h2></div>
+    <p>Para ilustrar, vamos resolver o mesmo problema (somar números pares de 1 a 10) nos três paradigmas:</p>
+    <div class="code-block"><span class="cmt"># 1. IMPERATIVO — diz como fazer</span>
+<span class="var">soma</span> = <span class="num">0</span>
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>):
+    <span class="kw">if</span> <span class="var">i</span> % <span class="num">2</span> == <span class="num">0</span>: <span class="var">soma</span> += <span class="var">i</span>
+
+<span class="cmt"># 2. FUNCIONAL — diz o que transformar</span>
+<span class="kw">from</span> functools <span class="kw">import</span> reduce
+<span class="var">soma</span> = <span class="fn">reduce</span>(<span class="kw">lambda</span> <span class="var">a</span>,<span class="var">b</span>: <span class="var">a</span>+<span class="var">b</span>, <span class="fn">filter</span>(<span class="kw">lambda</span> <span class="var">x</span>: <span class="var">x</span>%<span class="num">2</span>==<span class="num">0</span>, <span class="fn">range</span>(<span class="num">1</span>,<span class="num">11</span>)))
+
+<span class="cmt"># 3. DECLARATIVO (Python moderno)</span>
+<span class="var">soma</span> = <span class="fn">sum</span>(<span class="var">x</span> <span class="kw">for</span> <span class="var">x</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>) <span class="kw">if</span> <span class="var">x</span> % <span class="num">2</span> == <span class="num">0</span>)
+
+<span class="fn">print</span>(<span class="var">soma</span>)  <span class="cmt"># 30 nos três casos</span></div>
+  </div>
+
+</div>
+
+<footer>
+  <p>← <a href="linguagens.html" style="color:var(--blue);">Linguagens</a> &nbsp;|&nbsp; <a href="web.html" style="color:var(--blue);">Web, Back-end & Mobile →</a></p>
+  <br/><p>Aprenda Programação — Made with IBM Bob</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

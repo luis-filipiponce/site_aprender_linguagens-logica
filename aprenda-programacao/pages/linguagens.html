@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Linguagens Globais | Aprenda Programação</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+  <style>
+    .lang-card { border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:22px; }
+    .lang-header { background:var(--surface); padding:14px 20px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); }
+    .lang-name { font-weight:800; font-size:17px; }
+    .lang-tag { font-size:11px; font-weight:600; color:var(--muted); background:#e5e7eb; border-radius:4px; padding:2px 8px; }
+    .lang-body { padding:16px 20px; }
+    .lang-meta { display:flex; flex-wrap:wrap; gap:18px; margin-top:12px; font-size:12.5px; }
+    .lang-meta span strong { color:var(--dark); }
+    .lang-meta span { color:var(--muted); }
+  </style>
+</head>
+<body>
+<div id="scroll-bar" style="position:fixed;top:0;left:0;height:3px;width:0;background:var(--red);z-index:2000;transition:width .1s;"></div>
+
+<nav id="main-nav">
+  <a class="logo" href="../index.html">&#60;<span>code</span>/&#62; Aprenda Prog.</a>
+  <a class="nav-link" href="../index.html">Home</a>
+  <a class="nav-link" href="logica.html">Lógica</a>
+  <a class="nav-link" href="algoritmos.html">Algoritmos</a>
+  <a class="nav-link" href="estruturas.html">Estruturas</a>
+  <a class="nav-link" href="linguagens.html">Linguagens</a>
+  <a class="nav-link" href="paradigmas.html">Paradigmas</a>
+  <a class="nav-link" href="web.html">Web</a>
+  <a class="nav-link" href="banco.html">Banco de Dados</a>
+  <a class="nav-link" href="carreira.html">Carreira</a>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-hero">
+    <h1>💬 Linguagens de Programação Globais</h1>
+    <p>Existem mais de 700 linguagens catalogadas. Cada uma foi criada com um propósito específico. Você não precisa saber todas — mas conhecer as principais te dá visão ampla do mercado e das possibilidades.</p>
+    <div class="badge-row">
+      <span class="badge badge-red">Módulo 4</span>
+      <span class="badge badge-blue">Python</span>
+      <span class="badge badge-orange">JavaScript</span>
+      <span class="badge badge-green">Java</span>
+      <span class="badge badge-purple">C / C++ / Rust</span>
+    </div>
+  </div>
+
+  <!-- PYTHON -->
+  <div class="section" id="python">
+    <div class="section-title"><div class="num-badge num-red">1</div><h2>Python</h2></div>
+    <div class="lang-card">
+      <div class="lang-header">
+        <span class="lang-name">Python</span>
+        <span class="lang-tag">Alto Nível</span><span class="lang-tag">Interpretada</span><span class="lang-tag">Multiparadigma</span><span class="lang-tag">⭐ Melhor para iniciar</span>
+      </div>
+      <div class="lang-body">
+        <p>A linguagem mais popular do mundo atualmente (índice TIOBE, 2024). Criada por Guido van Rossum em 1991. Filosofia: código deve ser legível como inglês. Foco em produtividade e clareza.</p>
+        <div class="code-block"><span class="cmt"># Python — sintaxe limpa e expressiva</span>
+<span class="cmt"># Olá Mundo</span>
+<span class="fn">print</span>(<span class="str">"Olá, Mundo!"</span>)
+
+<span class="cmt"># List comprehension — poderoso e conciso</span>
+<span class="var">quadrados</span> = [<span class="var">x</span>**<span class="num">2</span> <span class="kw">for</span> <span class="var">x</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>) <span class="kw">if</span> <span class="var">x</span> % <span class="num">2</span> == <span class="num">0</span>]
+<span class="fn">print</span>(<span class="var">quadrados</span>)  <span class="cmt"># [0, 4, 16, 36, 64]</span>
+
+<span class="cmt"># Classe moderna com type hints</span>
+<span class="kw">class</span> <span class="fn">Produto</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">nome</span>: str, <span class="var">preco</span>: float):
+        <span class="var">self</span>.nome  = <span class="var">nome</span>
+        <span class="var">self</span>.preco = <span class="var">preco</span>
+
+    <span class="kw">def</span> <span class="fn">com_desconto</span>(<span class="var">self</span>, <span class="var">pct</span>: float) -> float:
+        <span class="kw">return</span> <span class="var">self</span>.preco * (<span class="num">1</span> - <span class="var">pct</span> / <span class="num">100</span>)
+
+<span class="var">p</span> = <span class="fn">Produto</span>(<span class="str">"Notebook"</span>, <span class="num">3500.0</span>)
+<span class="fn">print</span>(<span class="str">f"Com 10% off: R${<span class="var">p</span>.<span class="fn">com_desconto</span>(<span class="num">10</span>):.2f}"</span>)</div>
+        <div class="lang-meta">
+          <span><strong>Paradigmas:</strong> OOP, Funcional, Imperativo</span>
+          <span><strong>Usos:</strong> IA/ML, Data Science, Web (Django/FastAPI), Automação, Scripts, DevOps</span>
+          <span><strong>Frameworks:</strong> Django, FastAPI, Flask, TensorFlow, PyTorch, Pandas, NumPy</span>
+          <span><strong>Criada em:</strong> 1991 — Guido van Rossum</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <div class="section" id="javascript">
+    <div class="section-title"><div class="num-badge num-red">2</div><h2>JavaScript</h2></div>
+    <div class="lang-card">
+      <div class="lang-header">
+        <span class="lang-name">JavaScript</span>
+        <span class="lang-tag">Alto Nível</span><span class="lang-tag">Interpretada/JIT</span><span class="lang-tag">Multiparadigma</span><span class="lang-tag">⭐ Única no browser</span>
+      </div>
+      <div class="lang-body">
+        <p>A única linguagem nativa dos navegadores web — corre em todo browser do planeta. Criada em apenas 10 dias por Brendan Eich em 1995. Com Node.js (2009), também roda no servidor. Onipresente na web moderna.</p>
+        <div class="code-block"><span class="cmt">// JavaScript moderno (ES2023)</span>
+<span class="kw">const</span> <span class="fn">saudar</span> = (<span class="var">nome</span>) => <span class="str">`Olá, ${<span class="var">nome</span>}!`</span>;
+<span class="fn">console</span>.log(<span class="fn">saudar</span>(<span class="str">"Mundo"</span>));
+
+<span class="cmt">// Promises e Async/Await</span>
+<span class="kw">async function</span> <span class="fn">buscarUsuario</span>(<span class="var">id</span>) {
+    <span class="kw">const</span> <span class="var">resp</span> = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">`/api/usuarios/${<span class="var">id</span>}`</span>);
+    <span class="kw">const</span> <span class="var">dados</span> = <span class="kw">await</span> <span class="var">resp</span>.json();
+    <span class="kw">return</span> <span class="var">dados</span>;
+}
+
+<span class="cmt">// Destructuring + Spread</span>
+<span class="kw">const</span> { <span class="var">nome</span>, <span class="var">idade</span>, ...<span class="var">resto</span> } = { <span class="var">nome</span>:<span class="str">"Ana"</span>, <span class="var">idade</span>:<span class="num">28</span>, <span class="var">cidade</span>:<span class="str">"SP"</span> };
+<span class="kw">const</span> <span class="var">numeros</span> = [<span class="num">1</span>, <span class="num">2</span>, ...[<span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>]];  <span class="cmt">// [1,2,3,4,5]</span></div>
+        <div class="lang-meta">
+          <span><strong>Paradigmas:</strong> OOP, Funcional, Orientado a Eventos, Reativo</span>
+          <span><strong>Usos:</strong> Front-end web, Back-end (Node.js), Mobile (React Native), Desktop (Electron)</span>
+          <span><strong>Frameworks:</strong> React, Vue, Angular, Next.js, Express, NestJS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPESCRIPT -->
+  <div class="section" id="typescript">
+    <div class="section-title"><div class="num-badge num-red">3</div><h2>TypeScript</h2></div>
+    <div class="lang-card">
+      <div class="lang-header">
+        <span class="lang-name">TypeScript</span>
+        <span class="lang-tag">Superset JS</span><span class="lang-tag">Tipagem Estática</span><span class="lang-tag">Microsoft</span>
+      </div>
+      <div class="lang-body">
+        <p>JavaScript com tipagem estática opcional. Criado pela Microsoft em 2012. Compila para JavaScript puro. Detecta erros em tempo de desenvolvimento, não em produção. Adotado massivamente em projetos grandes e equipes.</p>
+        <div class="code-block"><span class="cmt">// TypeScript — tipagem explícita e segura</span>
+<span class="kw">interface</span> <span class="fn">Usuario</span> {
+    <span class="var">id</span>:    number;
+    <span class="var">nome</span>:  string;
+    <span class="var">email</span>: string;
+    <span class="var">ativo</span>?: boolean;  <span class="cmt">// ? = opcional</span>
+}
+
+<span class="kw">type</span> <span class="fn">Resultado</span>&lt;T&gt; = { <span class="var">dados</span>: T; <span class="var">erro</span>: <span class="kw">null</span> } | { <span class="var">dados</span>: <span class="kw">null</span>; <span class="var">erro</span>: string };
+
+<span class="kw">function</span> <span class="fn">buscarUsuario</span>(<span class="var">id</span>: number): <span class="fn">Resultado</span>&lt;<span class="fn">Usuario</span>&gt; {
+    <span class="cmt">// o compilador garante que você só acessa campos existentes</span>
+    <span class="kw">return</span> { <span class="var">dados</span>: { <span class="var">id</span>, <span class="var">nome</span>: <span class="str">"Ana"</span>, <span class="var">email</span>: <span class="str">"ana@x.com"</span> }, <span class="var">erro</span>: <span class="kw">null</span> };
+}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVA -->
+  <div class="section" id="java">
+    <div class="section-title"><div class="num-badge num-red">4</div><h2>Java</h2></div>
+    <div class="lang-card">
+      <div class="lang-header">
+        <span class="lang-name">Java</span>
+        <span class="lang-tag">Alto Nível</span><span class="lang-tag">Compilada/JVM</span><span class="lang-tag">OOP</span><span class="lang-tag">Enterprise</span>
+      </div>
+      <div class="lang-body">
+        <p>"Write Once, Run Anywhere" — compila para bytecode que roda na JVM (Java Virtual Machine) em qualquer sistema operacional. Criada pela Sun Microsystems em 1995. Base do Android e sistemas bancários/corporativos.</p>
+        <div class="code-block"><span class="cmt">// Java — tipagem forte e verboso, mas robusto</span>
+<span class="kw">public class</span> <span class="fn">ContaBancaria</span> {
+    <span class="kw">private</span> String  <span class="var">titular</span>;
+    <span class="kw">private</span> <span class="kw">double</span>  <span class="var">saldo</span>;
+
+    <span class="kw">public</span> <span class="fn">ContaBancaria</span>(String <span class="var">titular</span>, <span class="kw">double</span> <span class="var">saldoInicial</span>) {
+        <span class="var">this</span>.titular = <span class="var">titular</span>;
+        <span class="var">this</span>.saldo   = <span class="var">saldoInicial</span>;
+    }
+
+    <span class="kw">public void</span> <span class="fn">depositar</span>(<span class="kw">double</span> <span class="var">valor</span>) {
+        <span class="kw">if</span> (<span class="var">valor</span> > <span class="num">0</span>) <span class="var">this</span>.saldo += <span class="var">valor</span>;
+    }
+
+    <span class="kw">public</span> String <span class="fn">toString</span>() {
+        <span class="kw">return</span> <span class="str">String.format("Titular: %s | Saldo: R$ %.2f"</span>, <span class="var">titular</span>, <span class="var">saldo</span>);
+    }
+}</div>
+        <div class="lang-meta">
+          <span><strong>Usos:</strong> Enterprise, Android, Back-end, Big Data (Hadoop/Spark)</span>
+          <span><strong>Frameworks:</strong> Spring Boot, Hibernate, Quarkus, Micronaut</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C / C++ -->
+  <div class="section" id="c">
+    <div class="section-title"><div class="num-badge num-red">5</div><h2>C e C++</h2></div>
+    <div class="lang-card">
+      <div class="lang-header">
+        <span class="lang-name">C / C++</span>
+        <span class="lang-tag">Baixo Nível</span><span class="lang-tag">Compilada</span><span class="lang-tag">Alto Desempenho</span>
+      </div>
+      <div class="lang-body">
+        <p>C (1972, Dennis Ritchie) é a mãe de quase todas as linguagens modernas. Dá controle total sobre a memória. C++ (1985, Bjarne Stroustrup) adiciona OOP ao C. São as linguagens dos sistemas operacionais, drivers e jogos AAA.</p>
+        <div class="code-block"><span class="cmt">// C — controle total de memória</span>
+#<span class="kw">include</span> <span class="str">&lt;stdio.h&gt;</span>
+#<span class="kw">include</span> <span class="str">&lt;stdlib.h&gt;</span>
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="kw">int</span>* <span class="var">arr</span> = (<span class="kw">int</span>*)<span class="fn">malloc</span>(<span class="num">5</span> * <span class="kw">sizeof</span>(<span class="kw">int</span>));  <span class="cmt">// aloca memória manualmente</span>
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="var">i</span> = <span class="num">0</span>; <span class="var">i</span> < <span class="num">5</span>; <span class="var">i</span>++) <span class="var">arr</span>[<span class="var">i</span>] = <span class="var">i</span> * <span class="num">10</span>;
+    <span class="fn">free</span>(<span class="var">arr</span>);  <span class="cmt">// libera memória manualmente — OBRIGATÓRIO</span>
+    <span class="kw">return</span> <span class="num">0</span>;
+}</div>
+        <div class="lang-meta">
+          <span><strong>Usos:</strong> Sistemas operacionais (Linux, Windows), drivers, jogos (Unreal Engine), compiladores, sistemas embarcados</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GO E RUST -->
+  <div class="section" id="go-rust">
+    <div class="section-title"><div class="num-badge num-red">6</div><h2>Go e Rust — As Modernas de Alto Desempenho</h2></div>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Go (Golang)</h3>
+        <p>Criada pelo Google em 2009. Simples como Python, rápida como C. Goroutines tornam concorrência trivial. Base do Docker e Kubernetes. Ideal para microsserviços e CLIs.</p>
+      </div>
+      <div class="card">
+        <h3>Rust</h3>
+        <p>A linguagem mais amada (Stack Overflow, 8 anos seguidos). Velocidade de C com segurança de memória garantida pelo compilador. Zero garbage collector. Usada no kernel Linux.</p>
+      </div>
+    </div>
+    <div class="code-block"><span class="cmt">// Go — concorrência nativa com goroutines</span>
+<span class="kw">package</span> main
+<span class="kw">import</span> (<span class="str">"fmt"</span>; <span class="str">"sync"</span>)
+
+<span class="kw">func</span> <span class="fn">tarefa</span>(<span class="var">id</span> <span class="kw">int</span>, <span class="var">wg</span> *sync.WaitGroup) {
+    <span class="kw">defer</span> <span class="var">wg</span>.<span class="fn">Done</span>()
+    fmt.<span class="fn">Printf</span>(<span class="str">"Tarefa %d concluída\n"</span>, <span class="var">id</span>)
+}
+
+<span class="kw">func</span> <span class="fn">main</span>() {
+    <span class="kw">var</span> <span class="var">wg</span> sync.WaitGroup
+    <span class="kw">for</span> <span class="var">i</span> := <span class="num">1</span>; <span class="var">i</span> <= <span class="num">5</span>; <span class="var">i</span>++ {
+        <span class="var">wg</span>.<span class="fn">Add</span>(<span class="num">1</span>)
+        <span class="kw">go</span> <span class="fn">tarefa</span>(<span class="var">i</span>, &<span class="var">wg</span>)  <span class="cmt">// "go" lança goroutine (thread leve)</span>
+    }
+    <span class="var">wg</span>.<span class="fn">Wait</span>()
+}</div>
+  </div>
+
+  <!-- TABELA COMPARATIVA -->
+  <div class="section" id="comparativo">
+    <div class="section-title"><div class="num-badge num-red">7</div><h2>Tabela Comparativa</h2></div>
+    <table>
+      <tr><th>Linguagem</th><th>Dificuldade</th><th>Velocidade</th><th>Melhor para</th><th>Mercado</th></tr>
+      <tr><td>Python</td><td>⭐ Fácil</td><td>Média</td><td>IA, Data, Scripts, Web</td><td>🔥 Altíssimo</td></tr>
+      <tr><td>JavaScript</td><td>⭐ Fácil/Médio</td><td>Alta (JIT)</td><td>Web completa, Mobile</td><td>🔥 Altíssimo</td></tr>
+      <tr><td>TypeScript</td><td>⭐⭐ Médio</td><td>Alta (JIT)</td><td>Projetos grandes</td><td>🔥 Alto</td></tr>
+      <tr><td>Java</td><td>⭐⭐ Médio</td><td>Alta (JVM)</td><td>Enterprise, Android</td><td>🔥 Alto</td></tr>
+      <tr><td>C#</td><td>⭐⭐ Médio</td><td>Alta (.NET)</td><td>Windows, Unity, Enterprise</td><td>🔥 Alto</td></tr>
+      <tr><td>Go</td><td>⭐⭐ Médio</td><td>Muito alta</td><td>Cloud, Microsserviços</td><td>📈 Crescendo</td></tr>
+      <tr><td>Rust</td><td>⭐⭐⭐ Difícil</td><td>Máxima</td><td>Sistemas, Segurança</td><td>📈 Crescendo</td></tr>
+      <tr><td>C/C++</td><td>⭐⭐⭐ Difícil</td><td>Máxima</td><td>Sistemas, Jogos, Hardware</td><td>Estável</td></tr>
+      <tr><td>Kotlin</td><td>⭐⭐ Médio</td><td>Alta (JVM)</td><td>Android, Back-end</td><td>🔥 Alto</td></tr>
+      <tr><td>Swift</td><td>⭐⭐ Médio</td><td>Muito alta</td><td>iOS, macOS</td><td>Estável (Apple)</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  <p>← <a href="estruturas.html" style="color:var(--blue);">Estruturas de Dados</a> &nbsp;|&nbsp; <a href="paradigmas.html" style="color:var(--blue);">Paradigmas →</a></p>
+  <br/><p>Aprenda Programação — Made with IBM Bob</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

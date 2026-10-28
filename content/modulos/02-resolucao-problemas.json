@@ -1,0 +1,110 @@
+{
+  "id": 2,
+  "slug": "resolucao-problemas",
+  "badge": "Módulo 2 · Método",
+  "nivel": "Iniciante",
+  "titulo": "Metodologia de Resolução de Problemas",
+  "subtitulo": "O método de George Pólya adaptado ao pensamento computacional: decompor, modelar e testar.",
+  "objetivo": "Aprender a pegar qualquer enunciado em linguagem natural e decompô-lo metodicamente em Entradas, Restrições, Regras de Transformação e Saídas esperadas.",
+  "introducaoIntuitiva": "Se você precisa organizar uma festa para 50 pessoas com orçamento restrito, você não sai comprando coisas aleatoriamente. Você calcula o consumo por pessoa, orça fornecedores e define restrições. Programar é exatamente resolver problemas estruturados.",
+  "explicacaoAprofundada": "A metodologia clássica de Pólya divide a resolução de problemas em 4 estágios fundamentais: (1) Compreender o problema (identificar incógnitas, dados e condicionantes); (2) Estabelecer um plano (encontrar conexões, decompor em subproblemas); (3) Executar o plano (seguir os passos da solução); (4) Fazer o retrospecto (testar com casos normais e limites, verificar se é possível simplificar).",
+  "exemplos": {
+    "basico": {
+      "titulo": "Cálculo de Desconto em Compra",
+      "descricao": "Problema: Aplicar 10% de desconto se a compra for superior a R$ 100. Entradas: valor_compra. Regra: SE valor > 100 -> pagar = valor * 0.90. Saída: valor_final."
+    },
+    "intermediario": {
+      "titulo": "Identificação de Casos Limítrofes (Boundary Cases)",
+      "descricao": "E se a compra for exatamente R$ 100,00? O enunciado diz \"superior a 100\", logo 100 não recebe desconto. Definir o operador (> vs >=) é crucial."
+    },
+    "avancado": {
+      "titulo": "Problema de Escalonamento com Dependências",
+      "descricao": "Organizar 4 tarefas A, B, C, D onde C depende de A, e D depende de B e C. Metodologia: traçar o grafo de dependências e ordenar sequencialmente."
+    }
+  },
+  "passoAPasso": [
+    "1. Ler o problema e sublinhar dados, regras e resultado desejado.",
+    "2. Isolar o que é ENTRADA e o que é SAÍDA esperada.",
+    "3. Escrever as REGRAS e RESTRIÇÕES que ligam a entrada à saída.",
+    "4. Fazer uma simulação manual com lápis e papel usando valores de teste.",
+    "5. Testar casos extremos (zero, valores negativos, valores exatamente no limite)."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Começar a escrever código antes de entender o problema",
+      "correcao": "Nunca escreva uma linha de instrução sem conseguir explicar a solução em português claro."
+    },
+    {
+      "erro": "Ignorar casos limites",
+      "correcao": "Sempre teste o valor imediatamente antes, exatamente no ponto e logo após o limite."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Decomposição em 4 etapas estruturadas com casos de teste pré-definidos.",
+    "ruim": "Tentativa e erro sem saber quais entradas falham."
+  },
+  "pseudocodigo": "// Metodologia de Resolução:\nENTRADA: valor_bruto, tipo_cliente\nSE valor_bruto > 100.00 E tipo_cliente == \"VIP\" ENTÃO\n    desconto <- valor_bruto * 0.15\nSENÃO SE valor_bruto > 100.00 ENTÃO\n    desconto <- valor_bruto * 0.10\nSENÃO\n    desconto <- 0.00\nFIM_SE\nvalor_liquido <- valor_bruto - desconto\nSAÍDA: valor_liquido",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Leitura de Entradas",
+      "estado": "bruto = 120.00, tipo = \"COMUM\"",
+      "obs": "Entradas recebidas"
+    },
+    {
+      "passo": 2,
+      "acao": "Teste Condição 1 (VIP?)",
+      "estado": "tipo == \"VIP\" -> FALSO",
+      "obs": "Passa para próximo ramo"
+    },
+    {
+      "passo": 3,
+      "acao": "Teste Condição 2 (> 100?)",
+      "estado": "120 > 100 -> VERDADEIRO",
+      "obs": "Desconto de 10% selecionado"
+    },
+    {
+      "passo": 4,
+      "acao": "Cálculo",
+      "estado": "desconto = 12.00, liquido = 108.00",
+      "obs": "Saída calculada com sucesso"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex2_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Ao analisar um problema onde uma catraca libera passageiros com gratuidade (idade >= 65 anos OU estudantes com carteirinha válida), qual é o caso limite crítico a testar?",
+      "opcoes": [
+        "Apenas pessoas com 20 anos.",
+        "Pessoas com 64 anos, exatamente 65 anos e 66 anos.",
+        "Apenas pessoas com 100 anos.",
+        "Qualquer valor serve igualmente."
+      ],
+      "correta": 1,
+      "pista": "Casos limites ficam exatamente nas fronteiras da condição matemática (n-1, n, n+1).",
+      "justificativa": "Testar 64, 65 e 66 anos garante que o operador >= foi aplicado corretamente e não > ou <=."
+    }
+  ],
+  "perguntasVerificacao": "Por que simular um problema manualmente antes de programar reduz drasticamente os erros de lógica?",
+  "keywordsIA": [
+    "compreender",
+    "decompor",
+    "entradas",
+    "saidas",
+    "restricoes",
+    "polya",
+    "limites",
+    "teste",
+    "planejamento",
+    "estrategia"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "codificar direto",
+      "erro": "Achar que bom programador resolve problema digitando logo a sintaxe",
+      "explicacao": "A solução nasce no modelo mental e na decomposição lógica, a codificação é apenas a última etapa de tradução."
+    }
+  ],
+  "explicacaoIdealIA": "A resolução de problemas envolve compreender o objetivo, mapear entradas e saídas, identificar restrições, decompor em passos menores e validar com casos limites antes de qualquer implementação."
+}

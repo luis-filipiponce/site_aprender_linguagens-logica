@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML5 &amp; CSS3 — Ponce Metodologias &amp; Dev</title>
+<meta name="description" content="Aprenda HTML5 e CSS3: história, conceitos fundamentais, exemplos práticos, mercado de trabalho e roadmap de aprendizagem.">
+<style>
+:root {
+  --accent: #f97316;
+  --accent-dark: #ea580c;
+  --accent-soft: rgba(249, 115, 22, 0.12);
+  --accent-border: rgba(249, 115, 22, 0.4);
+  --bg: #0f0b08;
+  --bg-2: #17110c;
+  --surface: #1e1610;
+  --surface-2: #2a1e15;
+  --border: #3a2a1d;
+  --text: #f5ede6;
+  --muted: #b9a898;
+  --code-bg: #0a0705;
+  --blue: #38bdf8;
+  --header-h: 64px;
+  --radius: 14px;
+  --font: -apple-system, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 64px); }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 .5em; }
+p { margin: 0 0 1em; }
+code.inline {
+  font-family: var(--mono);
+  font-size: .88em;
+  background: var(--accent-soft);
+  color: #fdba74;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+  background: rgba(15, 11, 8, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.logo { color: var(--text); font-weight: 700; font-size: 1rem; white-space: nowrap; }
+.logo:hover { text-decoration: none; color: var(--accent); }
+.header-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--accent);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: .9rem;
+  white-space: nowrap;
+  transition: background .2s, color .2s;
+}
+.btn-back:hover { background: var(--accent); color: #fff; text-decoration: none; }
+
+/* ---------- Sub navigation ---------- */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 50;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  margin-top: var(--header-h);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.subnav ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 1100px;
+  display: flex;
+  gap: 4px;
+}
+.subnav a {
+  display: block;
+  padding: 12px 14px;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.subnav a:hover, .subnav a.active { color: var(--accent); border-bottom-color: var(--accent); text-decoration: none; }
+
+/* ---------- Layout ---------- */
+main { display: block; }
+section { padding: 72px 24px; }
+section:nth-of-type(even) { background: var(--bg-2); }
+.container { max-width: 1100px; margin: 0 auto; }
+.section-label {
+  display: inline-block;
+  color: var(--accent);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: .4em; }
+.section-intro { color: var(--muted); max-width: 720px; margin-bottom: 40px; }
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: 96px 24px 88px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(249,115,22,.22), transparent 60%),
+    var(--bg);
+}
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  font-size: .85rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); margin-bottom: .3em; }
+.hero h1 span { color: var(--accent); }
+.hero p.lead { max-width: 720px; margin: 0 auto 32px; color: var(--muted); font-size: 1.1rem; }
+.hero-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.fact {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 22px;
+  min-width: 190px;
+}
+.fact strong { display: block; color: var(--accent); font-size: 1.4rem; }
+.fact small { color: var(--muted); }
+
+/* ---------- Timeline ---------- */
+.timeline-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+.tl-col h3 { font-size: 1.2rem; display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.tl-col h3 .tag {
+  font-family: var(--mono);
+  font-size: .8rem;
+  padding: 2px 10px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.timeline { position: relative; padding-left: 28px; border-left: 2px solid var(--border); }
+.tl-item { position: relative; margin-bottom: 22px; }
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: -36px; top: 6px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--accent-border);
+}
+section:nth-of-type(even) .tl-item::before { border-color: var(--bg-2); }
+.tl-year { font-weight: 800; color: var(--accent); font-size: 1.05rem; }
+.tl-body {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+.tl-body strong { display: block; }
+.tl-body p { margin: 4px 0 0; color: var(--muted); font-size: .92rem; }
+
+/* ---------- Cards ---------- */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 22px;
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+}
+.card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 12px 30px rgba(249,115,22,.15); }
+.card .icon { font-size: 2rem; margin-bottom: 10px; }
+.card h3 { font-size: 1.1rem; color: var(--text); }
+.card p { color: var(--muted); font-size: .94rem; margin: 0; }
+
+/* ---------- Accordion ---------- */
+.accordion { display: flex; flex-direction: column; gap: 12px; }
+.acc-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.acc-item.open { border-color: var(--accent-border); }
+.acc-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-align: left;
+  cursor: pointer;
+}
+.acc-btn:hover { color: var(--accent); }
+.acc-btn:focus-visible, .tab-btn:focus-visible, .copy-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.acc-arrow { transition: transform .25s; color: var(--accent); flex-shrink: 0; }
+.acc-item.open .acc-arrow { transform: rotate(180deg); }
+.acc-panel { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+.acc-inner { padding: 0 22px 22px; }
+.acc-inner p { color: var(--muted); }
+
+/* ---------- Code ---------- */
+.code-block { position: relative; margin: 14px 0; }
+.code-block .lang {
+  position: absolute;
+  top: 8px; left: 14px;
+  font-family: var(--mono);
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  opacity: .8;
+}
+.code-block pre {
+  margin: 0;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 34px 18px 16px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: .85rem;
+  line-height: 1.6;
+  color: #fde7d3;
+  tab-size: 2;
+}
+.copy-btn {
+  position: absolute;
+  top: 6px; right: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font: inherit;
+  font-size: .75rem;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.copy-btn:hover { background: var(--accent); color: #fff; }
+.copy-btn.copied { background: #16a34a; color: #fff; border-color: #16a34a; }
+
+/* ---------- Tabs ---------- */
+.tab-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.tab-btn {
+  padding: 10px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 600;
+  font-size: .92rem;
+  cursor: pointer;
+  transition: all .2s;
+}
+.tab-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+.tab-btn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.tab-panel > h3 { font-size: 1.2rem; }
+.tab-panel > p { color: var(--muted); }
+.tab-panel h4 { font-size: .95rem; color: var(--accent); margin: 18px 0 0; }
+
+/* ---------- Table ---------- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 36px; }
+table { width: 100%; border-collapse: collapse; min-width: 480px; }
+th, td { padding: 14px 20px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--surface-2); color: var(--accent); font-size: .85rem; text-transform: uppercase; letter-spacing: .06em; }
+td { background: var(--surface); }
+tr:last-child td { border-bottom: 0; }
+td.salary { font-weight: 700; color: #fdba74; white-space: nowrap; }
+
+.market-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+.panel h3 { font-size: 1.1rem; }
+.pill-list { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.pill-list li {
+  padding: 6px 14px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: #fdba74;
+  border-radius: 999px;
+  font-size: .88rem;
+  font-weight: 600;
+}
+
+/* ---------- Roadmap ---------- */
+.roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; counter-reset: phase; }
+.phase {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 24px 22px;
+}
+.phase .num {
+  display: inline-block;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.phase h3 { font-size: 1.1rem; }
+.phase ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: .93rem; }
+.phase ul li { margin-bottom: 4px; }
+.phase:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -17px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  font-weight: 800;
+  z-index: 2;
+  background: var(--bg-2);
+  width: 14px;
+  text-align: center;
+}
+
+/* ---------- Resources ---------- */
+.resource {
+  display: block;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  transition: transform .25s, border-color .25s;
+}
+.resource:hover { transform: translateY(-4px); border-color: var(--accent); text-decoration: none; }
+.resource h3 { color: var(--accent); font-size: 1.05rem; }
+.resource p { color: var(--muted); font-size: .92rem; margin: 0 0 8px; }
+.resource span { font-family: var(--mono); font-size: .8rem; color: #fdba74; }
+
+/* ---------- Footer ---------- */
+footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; background: var(--bg); }
+
+/* ---------- Demo styles used by the real-time examples (none) ---------- */
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .timeline-grid, .market-grid { grid-template-columns: 1fr; }
+  .phase:not(:last-child)::after { display: none; }
+}
+@media (max-width: 640px) {
+  .site-header { padding: 0 12px; }
+  .header-title { display: none; }
+  .logo { font-size: .85rem; }
+  section { padding: 52px 16px; }
+  .hero { padding: 64px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+  <div class="header-title">📄 HTML5 &amp; CSS3</div>
+  <a class="btn-back" href="../index.html">← Voltar</a>
+</header>
+
+<nav class="subnav" aria-label="Seções da página">
+  <ul>
+    <li><a href="#hero">Início</a></li>
+    <li><a href="#historia">História</a></li>
+    <li><a href="#por-que-aprender">Por que aprender</a></li>
+    <li><a href="#conceitos">Conceitos</a></li>
+    <li><a href="#exemplos">Exemplos</a></li>
+    <li><a href="#mercado">Mercado</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#recursos">Recursos</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- 1. HERO -->
+<section id="hero" class="hero">
+  <div class="container">
+    <span class="badge">Linguagem de Marcação &amp; Estilo</span>
+    <h1>📄 <span>HTML5 &amp; CSS3</span></h1>
+    <p class="lead">O <strong>esqueleto</strong> e a <strong>pele</strong> de toda página web. O HTML estrutura o conteúdo e o CSS dá forma, cor e movimento — juntos, são a base de tudo o que você vê no navegador.</p>
+    <div class="hero-facts">
+      <div class="fact"><strong>1991</strong><small>HTML — Tim Berners-Lee</small></div>
+      <div class="fact"><strong>1994</strong><small>CSS — Håkon Wium Lie</small></div>
+      <div class="fact"><strong>100%</strong><small>dos sites usam HTML</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. HISTÓRIA -->
+<section id="historia">
+  <div class="container">
+    <span class="section-label">Linha do tempo</span>
+    <h2 class="section-title">História &amp; Evolução</h2>
+    <p class="section-intro">De um simples formato de documentos científicos no CERN até as plataformas ricas e responsivas de hoje: veja como HTML e CSS evoluíram em paralelo.</p>
+    <div class="timeline-grid">
+      <div class="tl-col">
+        <h3>🧱 HTML <span class="tag">&lt;html&gt;</span></h3>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-year">1991</div><div class="tl-body"><strong>HTML 1.0</strong><p>Criado por Tim Berners-Lee no CERN, com cerca de 18 tags para compartilhar documentos.</p></div></div>
+          <div class="tl-item"><div class="tl-year">1995</div><div class="tl-body"><strong>HTML 2.0</strong><p>Primeira especificação padronizada (IETF), incluindo formulários.</p></div></div>
+          <div class="tl-item"><div class="tl-year">1997</div><div class="tl-body"><strong>HTML 4.0</strong><p>Folhas de estilo, scripts, frames e melhor suporte à acessibilidade e internacionalização.</p></div></div>
+          <div class="tl-item"><div class="tl-year">2000</div><div class="tl-body"><strong>XHTML</strong><p>HTML reformulado como XML: sintaxe mais rígida e bem formada.</p></div></div>
+          <div class="tl-item"><div class="tl-year">2014</div><div class="tl-body"><strong>HTML5 — a revolução</strong><p>Semântica (<code class="inline">header</code>, <code class="inline">article</code>), <code class="inline">video</code>/<code class="inline">audio</code>, <code class="inline">canvas</code> e dezenas de APIs (Storage, Geolocation, Drag &amp; Drop).</p></div></div>
+        </div>
+      </div>
+      <div class="tl-col">
+        <h3>🎨 CSS <span class="tag">{ }</span></h3>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-year">1994</div><div class="tl-body"><strong>CSS proposto</strong><p>Håkon Wium Lie propõe as Cascading Style Sheets para separar conteúdo de apresentação.</p></div></div>
+          <div class="tl-item"><div class="tl-year">1996</div><div class="tl-body"><strong>CSS1</strong><p>Recomendação oficial do W3C: fontes, cores, margens e texto.</p></div></div>
+          <div class="tl-item"><div class="tl-year">1998</div><div class="tl-body"><strong>CSS2</strong><p>Posicionamento absoluto/relativo, z-index, mídia e seletores avançados.</p></div></div>
+          <div class="tl-item"><div class="tl-year">2011</div><div class="tl-body"><strong>CSS3</strong><p>Dividido em <em>módulos independentes</em>: bordas arredondadas, sombras, transições, Flexbox, Media Queries.</p></div></div>
+          <div class="tl-item"><div class="tl-year">2020+</div><div class="tl-body"><strong>CSS moderno</strong><p>CSS Grid, Custom Properties, Container Queries, <code class="inline">:has()</code> e Cascade Layers.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. POR QUE APRENDER -->
+<section id="por-que-aprender">
+  <div class="container">
+    <span class="section-label">Motivação</span>
+    <h2 class="section-title">Por Que Aprender HTML/CSS?</h2>
+    <p class="section-intro">Não importa qual stack você escolha depois: o navegador sempre fala HTML e CSS.</p>
+    <div class="cards">
+      <div class="card"><div class="icon">🌐</div><h3>Fundamento de Toda a Web</h3><p>Pré-requisito universal: React, Vue, Angular, WordPress ou qualquer framework, tudo termina em HTML e CSS renderizados.</p></div>
+      <div class="card"><div class="icon">📱</div><h3>Design Responsivo</h3><p>Abordagem mobile-first para criar interfaces que se adaptam a todas as telas, de smartwatches a monitores ultrawide.</p></div>
+      <div class="card"><div class="icon">♿</div><h3>Acessibilidade</h3><p>Com HTML semântico e as diretrizes WCAG, você cria sites utilizáveis por todos, inclusive por usuários de leitores de tela.</p></div>
+      <div class="card"><div class="icon">✨</div><h3>Animações &amp; Interatividade</h3><p>Transições, keyframes e estados como <code class="inline">:hover</code> e <code class="inline">:focus</code> criam experiências ricas sem uma linha de JavaScript.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. CONCEITOS -->
+<section id="conceitos">
+  <div class="container">
+    <span class="section-label">Fundamentos</span>
+    <h2 class="section-title">Conceitos Fundamentais</h2>
+    <p class="section-intro">Clique em cada tópico para ver a explicação e um exemplo de código.</p>
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-1" id="acc-btn-1"><span>📦 Box Model</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel" id="acc-1" role="region" aria-labelledby="acc-btn-1"><div class="acc-inner">
+          <p>Todo elemento é uma caixa composta por quatro camadas: <strong>content</strong> (conteúdo), <strong>padding</strong> (espaço interno), <strong>border</strong> (borda) e <strong>margin</strong> (espaço externo). Use <code class="inline">box-sizing: border-box</code> para que largura e altura incluam padding e borda.</p>
+          <div class="code-block"><span class="lang">css</span><pre><code>*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.caixa {
+  width: 300px;          /* content + padding + border */
+  padding: 20px;         /* espaço interno */
+  border: 2px solid #f97316;
+  margin: 16px auto;     /* espaço externo, centralizado */
+}</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-2" id="acc-btn-2"><span>↔️ Flexbox</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel" id="acc-2" role="region" aria-labelledby="acc-btn-2"><div class="acc-inner">
+          <p>Layout unidimensional baseado em dois eixos: o <strong>eixo principal</strong> (<code class="inline">justify-content</code>) e o <strong>eixo cruzado</strong> (<code class="inline">align-items</code>). Ideal para barras de navegação, alinhamentos e distribuição de espaço.</p>
+          <div class="code-block"><span class="lang">css</span><pre><code>.navbar {
+  display: flex;
+  flex-direction: row;            /* define o eixo principal */
+  justify-content: space-between; /* alinha no eixo principal */
+  align-items: center;            /* alinha no eixo cruzado */
+  gap: 16px;
+}
+
+.navbar .busca { flex: 1; }       /* ocupa o espaço restante */</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-3" id="acc-btn-3"><span>🔲 CSS Grid</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel" id="acc-3" role="region" aria-labelledby="acc-btn-3"><div class="acc-inner">
+          <p>Sistema de layout bidimensional: você define <strong>linhas e colunas</strong> e posiciona os itens nelas. Com <code class="inline">repeat()</code>, <code class="inline">minmax()</code> e <code class="inline">fr</code>, criar grades responsivas fica simples.</p>
+          <div class="code-block"><span class="lang">css</span><pre><code>.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-rows: auto;
+  gap: 20px;
+}
+
+.destaque {
+  grid-column: span 2;   /* ocupa 2 colunas */
+}</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-4" id="acc-btn-4"><span>🎯 Seletores &amp; Especificidade</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel" id="acc-4" role="region" aria-labelledby="acc-btn-4"><div class="acc-inner">
+          <p>Seletores escolhem quais elementos receberão estilo. Quando há conflito, vence a regra de maior <strong>especificidade</strong>: inline (1000) &gt; ID (100) &gt; classe/atributo/pseudo-classe (10) &gt; elemento (1). Em empate, vale a última declarada.</p>
+          <div class="code-block"><span class="lang">css</span><pre><code>p                { color: black; }   /* 0-0-1 */
+.destaque        { color: blue;  }   /* 0-1-0 */
+p.destaque       { color: green; }   /* 0-1-1 */
+#principal       { color: red;   }   /* 1-0-0 */
+
+a[target="_blank"]::after { content: " ↗"; }
+li:nth-child(odd)         { background: #f3f3f3; }
+.card:has(img)            { padding: 0; }</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-5" id="acc-btn-5"><span>🎛️ Variáveis CSS (Custom Properties)</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel" id="acc-5" role="region" aria-labelledby="acc-btn-5"><div class="acc-inner">
+          <p>Variáveis nativas declaradas com <code class="inline">--nome</code> e lidas com <code class="inline">var()</code>. Diferente de variáveis de pré-processadores, elas existem em tempo de execução e podem ser alteradas via JavaScript ou em media queries — perfeitas para temas.</p>
+          <div class="code-block"><span class="lang">css</span><pre><code>:root {
+  --cor-primaria: #f97316;
+  --espaco: 1rem;
+}
+
+[data-tema="escuro"] {
+  --cor-fundo: #111;
+  --cor-texto: #eee;
+}
+
+.botao {
+  background: var(--cor-primaria);
+  padding: var(--espaco, 8px); /* valor de fallback */
+}</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-6" id="acc-btn-6"><span>📱 Responsividade &amp; Media Queries</span><span class="acc-arrow">▼</span></button>
+        <div class="acc-panel" id="acc-6" role="region" aria-labelledby="acc-btn-6"><div class="acc-inner">
+          <p>Com a abordagem <strong>mobile-first</strong>, você escreve o estilo base para telas pequenas e usa <code class="inline">@media (min-width)</code> para melhorar em telas maiores. Não esqueça a meta tag <code class="inline">viewport</code>.</p>
+          <div class="code-block"><span class="lang">html + css</span><pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+
+/* Mobile first */
+.container { padding: 16px; }
+.colunas   { display: grid; grid-template-columns: 1fr; }
+
+@media (min-width: 768px) {
+  .colunas { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1100px) {
+  .colunas { grid-template-columns: repeat(3, 1fr); }
+}
+@media (prefers-color-scheme: dark) {
+  body { background: #111; color: #eee; }
+}</code></pre></div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 5. EXEMPLOS -->
+<section id="exemplos">
+  <div class="container">
+    <span class="section-label">Mão na massa</span>
+    <h2 class="section-title">Exemplos Práticos</h2>
+    <p class="section-intro">Três exemplos completos para copiar, colar em um arquivo <code class="inline">.html</code> e experimentar no navegador.</p>
+
+    <div class="tab-list" role="tablist" aria-label="Exemplos de código">
+      <button class="tab-btn" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true" type="button">📊 Layout Responsivo com Grid</button>
+      <button class="tab-btn" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1" type="button">🃏 Card Animado</button>
+      <button class="tab-btn" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1" type="button">📝 Formulário Acessível</button>
+    </div>
+
+    <!-- Tab 1 -->
+    <div class="tab-panel active" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+      <h3>Dashboard responsivo com CSS Grid</h3>
+      <p>Usamos <code class="inline">grid-template-areas</code> para nomear regiões do layout. No celular tudo empilha; no desktop surge a barra lateral.</p>
+      <div class="code-block"><span class="lang">html</span><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Dashboard&lt;/title&gt;
+  &lt;style&gt;
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, sans-serif; background: #f4f4f5; }
+
+    .dashboard {
+      display: grid;
+      min-height: 100vh;
+      gap: 16px;
+      padding: 16px;
+      grid-template-areas:
+        "header"
+        "stats"
+        "chart"
+        "sidebar"
+        "footer";
+    }
+    .dashboard &gt; * {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    .header  { grid-area: header; }
+    .stats   { grid-area: stats; display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+    .chart   { grid-area: chart; min-height: 220px; }
+    .sidebar { grid-area: sidebar; }
+    .footer  { grid-area: footer; text-align: center; }
+
+    .stat strong { display: block; font-size: 1.8rem; color: #f97316; }
+
+    @media (min-width: 900px) {
+      .dashboard {
+        grid-template-columns: 240px 1fr 1fr;
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-areas:
+          "header  header header"
+          "sidebar stats  stats"
+          "sidebar chart  chart"
+          "footer  footer footer";
+      }
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="dashboard"&gt;
+    &lt;header class="header"&gt;&lt;h1&gt;Painel de Vendas&lt;/h1&gt;&lt;/header&gt;
+    &lt;section class="stats" aria-label="Indicadores"&gt;
+      &lt;div class="stat"&gt;&lt;strong&gt;1.248&lt;/strong&gt;Pedidos&lt;/div&gt;
+      &lt;div class="stat"&gt;&lt;strong&gt;R$ 48k&lt;/strong&gt;Receita&lt;/div&gt;
+      &lt;div class="stat"&gt;&lt;strong&gt;96%&lt;/strong&gt;Satisfação&lt;/div&gt;
+    &lt;/section&gt;
+    &lt;section class="chart"&gt;&lt;h2&gt;Vendas por mês&lt;/h2&gt;&lt;/section&gt;
+    &lt;aside class="sidebar"&gt;
+      &lt;nav aria-label="Menu"&gt;
+        &lt;ul&gt;&lt;li&gt;Início&lt;/li&gt;&lt;li&gt;Relatórios&lt;/li&gt;&lt;li&gt;Configurações&lt;/li&gt;&lt;/ul&gt;
+      &lt;/nav&gt;
+    &lt;/aside&gt;
+    &lt;footer class="footer"&gt;© 2025 Minha Empresa&lt;/footer&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+    </div>
+
+    <!-- Tab 2 -->
+    <div class="tab-panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+      <h3>Componente Card animado com :hover e transitions</h3>
+      <p>Elevação, zoom suave na imagem e revelação do botão — tudo apenas com CSS. O bloco <code class="inline">prefers-reduced-motion</code> respeita usuários sensíveis a movimento.</p>
+      <div class="code-block"><span class="lang">html + css</span><pre><code>&lt;article class="card"&gt;
+  &lt;div class="card__media"&gt;
+    &lt;img src="https://picsum.photos/600/400" alt="Paisagem de montanhas ao amanhecer"&gt;
+  &lt;/div&gt;
+  &lt;div class="card__body"&gt;
+    &lt;span class="card__tag"&gt;Tutorial&lt;/span&gt;
+    &lt;h3 class="card__title"&gt;Dominando CSS Grid&lt;/h3&gt;
+    &lt;p&gt;Aprenda a criar layouts complexos com poucas linhas de código.&lt;/p&gt;
+    &lt;a class="card__btn" href="#"&gt;Ler mais →&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/article&gt;
+
+&lt;style&gt;
+  .card {
+    --raio: 16px;
+    max-width: 340px;
+    background: #fff;
+    border-radius: var(--raio);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .card:hover,
+  .card:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 32px rgba(249,115,22,.25);
+  }
+
+  .card__media { overflow: hidden; aspect-ratio: 3 / 2; }
+  .card__media img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .5s ease;
+  }
+  .card:hover .card__media img { transform: scale(1.08); }
+
+  .card__body { padding: 20px; }
+  .card__tag {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    background: #fff1e6; color: #c2410c; font-size: .75rem; font-weight: 700;
+  }
+  .card__title { margin: 10px 0 6px; }
+
+  .card__btn {
+    display: inline-block; margin-top: 8px;
+    color: #f97316; font-weight: 700; text-decoration: none;
+    opacity: .6; transform: translateX(-6px);
+    transition: opacity .3s, transform .3s;
+  }
+  .card:hover .card__btn,
+  .card__btn:focus-visible { opacity: 1; transform: translateX(0); }
+
+  /* Animação com keyframes: entrada do card */
+  @keyframes surgir {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card { animation: surgir .6s ease both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card, .card * { animation: none; transition: none; }
+  }
+&lt;/style&gt;</code></pre></div>
+    </div>
+
+    <!-- Tab 3 -->
+    <div class="tab-panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3">
+      <h3>Formulário acessível com validação nativa HTML5</h3>
+      <p>Sem JavaScript: <code class="inline">required</code>, <code class="inline">type="email"</code>, <code class="inline">pattern</code> e <code class="inline">minlength</code> fazem a validação. Rótulos associados, <code class="inline">aria-describedby</code> e as pseudo-classes <code class="inline">:user-invalid</code>/<code class="inline">:focus-visible</code> melhoram a experiência.</p>
+      <div class="code-block"><span class="lang">html + css</span><pre><code>&lt;form class="form" action="/inscricao" method="post"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Inscrição no curso&lt;/legend&gt;
+
+    &lt;div class="campo"&gt;
+      &lt;label for="nome"&gt;Nome completo *&lt;/label&gt;
+      &lt;input id="nome" name="nome" type="text" required minlength="3"
+             autocomplete="name" aria-describedby="nome-ajuda"&gt;
+      &lt;small id="nome-ajuda"&gt;Mínimo de 3 caracteres.&lt;/small&gt;
+    &lt;/div&gt;
+
+    &lt;div class="campo"&gt;
+      &lt;label for="email"&gt;E-mail *&lt;/label&gt;
+      &lt;input id="email" name="email" type="email" required
+             autocomplete="email" placeholder="voce@exemplo.com"&gt;
+    &lt;/div&gt;
+
+    &lt;div class="campo"&gt;
+      &lt;label for="tel"&gt;Telefone&lt;/label&gt;
+      &lt;input id="tel" name="tel" type="tel" autocomplete="tel"
+             pattern="\(\d{2}\) \d{4,5}-\d{4}" placeholder="(11) 91234-5678"
+             aria-describedby="tel-ajuda"&gt;
+      &lt;small id="tel-ajuda"&gt;Formato: (11) 91234-5678&lt;/small&gt;
+    &lt;/div&gt;
+
+    &lt;div class="campo"&gt;
+      &lt;label for="nivel"&gt;Nível de experiência&lt;/label&gt;
+      &lt;select id="nivel" name="nivel" required&gt;
+        &lt;option value=""&gt;Selecione…&lt;/option&gt;
+        &lt;option value="iniciante"&gt;Iniciante&lt;/option&gt;
+        &lt;option value="intermediario"&gt;Intermediário&lt;/option&gt;
+        &lt;option value="avancado"&gt;Avançado&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;div class="campo campo--check"&gt;
+      &lt;input id="termos" name="termos" type="checkbox" required&gt;
+      &lt;label for="termos"&gt;Li e aceito os termos de uso *&lt;/label&gt;
+    &lt;/div&gt;
+
+    &lt;button type="submit"&gt;Enviar inscrição&lt;/button&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;
+
+&lt;style&gt;
+  .form { max-width: 460px; font-family: system-ui, sans-serif; }
+  fieldset { border: 1px solid #d4d4d8; border-radius: 12px; padding: 20px; }
+  legend { font-weight: 700; padding: 0 8px; }
+  .campo { display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px; }
+  .campo--check { flex-direction: row; align-items: center; gap: 8px; }
+  label { font-weight: 600; }
+  small { color: #52525b; }
+
+  input:not([type="checkbox"]), select {
+    padding: 10px 12px;
+    border: 2px solid #d4d4d8;
+    border-radius: 8px;
+    font: inherit;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  input:focus-visible, select:focus-visible, button:focus-visible {
+    outline: 3px solid #fdba74;
+    outline-offset: 2px;
+    border-color: #f97316;
+  }
+  input:user-invalid, select:user-invalid { border-color: #dc2626; }
+  input:user-valid { border-color: #16a34a; }
+
+  button[type="submit"] {
+    width: 100%; padding: 12px; border: 0; border-radius: 8px;
+    background: #f97316; color: #fff; font: inherit; font-weight: 700; cursor: pointer;
+    transition: background .2s;
+  }
+  button[type="submit"]:hover { background: #ea580c; }
+&lt;/style&gt;</code></pre></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. MERCADO -->
+<section id="mercado">
+  <div class="container">
+    <span class="section-label">Carreira</span>
+    <h2 class="section-title">Mercado de Trabalho</h2>
+    <p class="section-intro">Faixas salariais aproximadas no Brasil (CLT, mensais). Os valores variam conforme cidade, empresa e domínio de ferramentas complementares como JavaScript e frameworks.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nível</th><th>Faixa salarial</th><th>Perfil</th></tr></thead>
+        <tbody>
+          <tr><td>Júnior</td><td class="salary">R$ 2.500 – R$ 4.000</td><td>HTML/CSS sólidos, Flexbox/Grid, responsividade, Git</td></tr>
+          <tr><td>Pleno</td><td class="salary">R$ 5.000 – R$ 8.000</td><td>Arquitetura CSS, Sass, acessibilidade, performance, frameworks</td></tr>
+          <tr><td>Sênior</td><td class="salary">R$ 9.000 – R$ 15.000+</td><td>Design systems, liderança técnica, WCAG avançado, mentoria</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="market-grid">
+      <div class="panel">
+        <h3>💼 Cargos</h3>
+        <ul class="pill-list">
+          <li>UI Developer</li>
+          <li>Desenvolvedor Front-end</li>
+          <li>UX Engineer</li>
+          <li>Desenvolvedor Web</li>
+          <li>Especialista em Acessibilidade</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>🏢 Empresas que contratam</h3>
+        <ul class="pill-list">
+          <li>Hotmart</li>
+          <li>TOTVS</li>
+          <li>Locaweb</li>
+          <li>Startups</li>
+          <li>Agências digitais</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <span class="section-label">Plano de estudos</span>
+    <h2 class="section-title">Roadmap</h2>
+    <p class="section-intro">Um caminho em quatro fases, do primeiro &lt;h1&gt; até arquiteturas CSS profissionais.</p>
+    <div class="roadmap">
+      <div class="phase">
+        <span class="num">Fase 1</span>
+        <h3>Fundamentos HTML</h3>
+        <ul><li>Tags semânticas</li><li>Estrutura básica de um documento</li><li>Formulários</li><li>Links, imagens e listas</li></ul>
+      </div>
+      <div class="phase">
+        <span class="num">Fase 2</span>
+        <h3>CSS Essencial</h3>
+        <ul><li>Seletores CSS</li><li>Box Model</li><li>Flexbox</li><li>Tipografia e cores</li></ul>
+      </div>
+      <div class="phase">
+        <span class="num">Fase 3</span>
+        <h3>CSS Avançado</h3>
+        <ul><li>CSS Grid</li><li>Animações e transições</li><li>Variáveis CSS</li><li>Responsividade</li></ul>
+      </div>
+      <div class="phase">
+        <span class="num">Fase 4</span>
+        <h3>Profissionalização</h3>
+        <ul><li>Arquitetura CSS: BEM / ITCSS</li><li>Pré-processadores: Sass</li><li>Frameworks: Tailwind CSS</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. RECURSOS -->
+<section id="recursos">
+  <div class="container">
+    <span class="section-label">Continue estudando</span>
+    <h2 class="section-title">Recursos</h2>
+    <p class="section-intro">Referências confiáveis e jogos divertidos para praticar.</p>
+    <div class="cards">
+      <a class="resource" href="https://developer.mozilla.org" target="_blank" rel="noopener noreferrer"><h3>📚 MDN Web Docs</h3><p>A documentação de referência definitiva para HTML, CSS e APIs da web.</p><span>developer.mozilla.org</span></a>
+      <a class="resource" href="https://css-tricks.com" target="_blank" rel="noopener noreferrer"><h3>🎨 CSS-Tricks</h3><p>Guias completos (Flexbox, Grid) e artigos com truques e boas práticas.</p><span>css-tricks.com</span></a>
+      <a class="resource" href="https://web.dev" target="_blank" rel="noopener noreferrer"><h3>🚀 web.dev</h3><p>Cursos e guias do Google sobre performance, acessibilidade e web moderna.</p><span>web.dev</span></a>
+      <a class="resource" href="https://caniuse.com" target="_blank" rel="noopener noreferrer"><h3>🔍 Can I Use</h3><p>Consulte o suporte de cada recurso HTML/CSS nos navegadores.</p><span>caniuse.com</span></a>
+      <a class="resource" href="https://flexboxfroggy.com" target="_blank" rel="noopener noreferrer"><h3>🐸 Flexbox Froggy</h3><p>Jogo interativo para aprender Flexbox ajudando um sapo a chegar ao lírio.</p><span>flexboxfroggy.com</span></a>
+      <a class="resource" href="https://cssgridgarden.com" target="_blank" rel="noopener noreferrer"><h3>🥕 Grid Garden</h3><p>Jogo interativo para dominar CSS Grid cultivando uma horta de cenouras.</p><span>cssgridgarden.com</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>© 2025 Ponce Metodologias &amp; Dev</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Accordion ---------- */
+  var items = document.querySelectorAll('.acc-item');
+  items.forEach(function (item) {
+    var btn = item.querySelector('.acc-btn');
+    var panel = item.querySelector('.acc-panel');
+    btn.addEventListener('click', function () {
+      var open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+    });
+  });
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.acc-item.open .acc-panel').forEach(function (p) {
+      p.style.maxHeight = p.scrollHeight + 'px';
+    });
+  });
+
+  /* ---------- Tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+  function activate(tab) {
+    tabs.forEach(function (t) {
+      var sel = t === tab;
+      t.setAttribute('aria-selected', sel ? 'true' : 'false');
+      t.tabIndex = sel ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).classList.toggle('active', sel);
+    });
+  }
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { activate(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (next) { e.preventDefault(); activate(next); next.focus(); }
+    });
+  });
+
+  /* ---------- Copy buttons ---------- */
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  document.querySelectorAll('.code-block').forEach(function (block) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-btn';
+    btn.textContent = 'Copiar';
+    btn.setAttribute('aria-label', 'Copiar código');
+    btn.addEventListener('click', function () {
+      var text = block.querySelector('pre').innerText;
+      var done = function () {
+        btn.textContent = 'Copiado!';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+      } else {
+        fallbackCopy(text);
+        done();
+      }
+    });
+    block.appendChild(btn);
+  });
+
+  /* ---------- Sub-nav active link ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.subnav a'));
+  var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function onScroll() {
+    var y = window.scrollY + 140;
+    var current = 0;
+    sections.forEach(function (s, i) { if (s && s.offsetTop <= y) current = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === current); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
