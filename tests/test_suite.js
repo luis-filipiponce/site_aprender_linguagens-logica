@@ -172,6 +172,28 @@ assert(progAtualizado[1].ultimaNota !== null, "Nota registrada com sucesso no pr
 const hist = storage.carregarHistorico();
 assert(hist.length === 1 && hist[0].moduloId === 1, "Histórico de explicações registrado com sucesso");
 
+// ────────────────────────────────────────────────────────────────────────────
+// 6. TESTES DO BANCO DE QUESTÕES E ANÁLISE DE RACIOCÍNIO
+// ────────────────────────────────────────────────────────────────────────────
+console.log("\n📌 BLOCO 6: Testes do Banco de Questões, Ideia Principal & Linha de Raciocínio");
+
+eval(fs.readFileSync(path.join(__dirname, '../js/questoes-dados.js'), 'utf-8'));
+const questoesBanco = global.QUESTOES_BANCO;
+
+assert(questoesBanco && typeof questoesBanco === 'object', "Banco de questões carregado com sucesso");
+const niveisEsperados = ["iniciante", "intermediario", "avancado", "expert"];
+
+niveisEsperados.forEach(nivel => {
+  const objNivel = questoesBanco[nivel];
+  assert(objNivel && objNivel.rotulo && Array.isArray(objNivel.questoes), `Nível '${nivel}' existe e possui array de questões`);
+  assert(objNivel.questoes.length >= 20, `Nível '${nivel}' possui ao menos 20 questões robustas (total: ${objNivel.questoes.length})`);
+
+  objNivel.questoes.forEach((q, i) => {
+    assert(q.tag && q.q && Array.isArray(q.o) && typeof q.c === 'number' && q.e, `Questão ${i+1} do nível '${nivel}' tem estrutura íntegra`);
+    assert(q.c >= 0 && q.c < q.o.length, `Índice de resposta correta da Q${i+1} (${nivel}) é válido dentro do array de opções`);
+  });
+});
+
 // RELATÓRIO FINAL
 console.log("\n========================================================");
 console.log(`📊 RESULTADO FINAL DOS TESTES: ${passedTests} de ${totalTests} aprovados (${Math.round((passedTests/totalTests)*100)}%)`);

@@ -1,0 +1,83 @@
+{
+  "id": 14,
+  "slug": "correcao-invariantes-provas",
+  "badge": "Módulo 14 · Provas Formais",
+  "nivel": "Avançado",
+  "titulo": "Correção de Algoritmos e Invariantes de Laço",
+  "subtitulo": "Pré-condições, pós-condições, invariantes de repetição e prova de terminação.",
+  "objetivo": "Demonstrar formalmente que um algoritmo é correto para TODAS as entradas possíveis através de invariantes e indução.",
+  "introducaoIntuitiva": "Provar que a engrenagem de um relógio mantém uma propriedade constante a cada segundo (invariante).",
+  "explicacaoAprofundada": "Correção Total = Correção Parcial + Terminação. Invariante de Laço é provada em 3 fases: Inicialização (base), Manutenção (passo) e Terminação.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Invariante do Máximo",
+      "descricao": "\"maior\" contém o valor máximo de lista[0 .. i-1] no início do ciclo i."
+    },
+    "intermediario": {
+      "titulo": "Função Variante de Terminação",
+      "descricao": "Quantidade restante (n - i) decresce estritamente até zero."
+    },
+    "avancado": {
+      "titulo": "Correção Parcial da Multiplicação",
+      "descricao": "Invariante: produto == A * contador_atual."
+    }
+  },
+  "passoAPasso": [
+    "1. Especificar pré e pós-condições.",
+    "2. Formular a Invariante de Laço.",
+    "3. Provar Inicialização, Manutenção e Terminação."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Confundir invariante com a condição de parada",
+      "correcao": "A invariante é a propriedade que permanece verdadeira em todo ciclo."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Prova formal indutiva de preservação de estado.",
+    "ruim": "Afirmar correção baseado apenas em intuição."
+  },
+  "pseudocodigo": "// Invariante: maior == max(lista[0 .. i-1])\nENQUANTO i < tamanho FAÇA\n    SE lista[i] > maior ENTÃO maior <- lista[i] FIM_SE\n    i <- i + 1\nFIM_ENQUANTO",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Indução",
+      "estado": "Invariante mantida a cada ciclo",
+      "obs": "Provado"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex14_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Quais são as três etapas para provar a correção de um laço com Invariante?",
+      "opcoes": [
+        "Inicialização, Manutenção e Terminação",
+        "Entrada, Processamento e Saída",
+        "Compilação, Execução e Teste",
+        "Declaração, Atribuição e Destruição"
+      ],
+      "correta": 0,
+      "pista": "Equivalente à Indução Matemática: base, passo indutivo e término.",
+      "justificativa": "A prova exige demonstrar a verdade antes do laço, a cada iteração e na parada."
+    }
+  ],
+  "perguntasVerificacao": "Qual a diferença entre Correção Parcial e Correção Total?",
+  "keywordsIA": [
+    "invariante",
+    "correcao",
+    "terminacao",
+    "pos-condicao",
+    "pre-condicao",
+    "prova",
+    "inducao"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "invariante",
+      "erro": "Achar que invariante é a condição do enquanto",
+      "explicacao": "Invariante é a propriedade lógica preservada."
+    }
+  ],
+  "explicacaoIdealIA": "A correção formal prova por indução matemática que as invariantes garantem a pós-condição ao atingir a terminação finita."
+}

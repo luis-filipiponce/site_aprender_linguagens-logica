@@ -1,0 +1,110 @@
+{
+  "id": 3,
+  "slug": "algoritmos-sequencia",
+  "badge": "Módulo 3 · Algoritmos",
+  "nivel": "Iniciante",
+  "titulo": "Algoritmos e Sequência Lógica",
+  "subtitulo": "Instruções determinísticas, ordem de execução, ambiguidade e pré/pós-condições.",
+  "objetivo": "Dominar o conceito formal de algoritmo como sequência finita, determinística e não-ambígua de instruções, compreendendo por que a ordem de execução altera o resultado.",
+  "introducaoIntuitiva": "Se você trocar a ordem de \"calçar as meias\" e \"calçar os sapatos\", você terminará com as meias por cima do sapato. A ordem das instruções altera fundamentalmente o estado final do sistema.",
+  "explicacaoAprofundada": "Um algoritmo é uma sequência finita de passos bem definidos que transforma um estado inicial (pré-condição) em um estado final desejado (pós-condição). As 3 propriedades essenciais são: Finitude (deve terminar após um número finito de passos), Determinismo (dada a mesma entrada, produzirá exatamente a mesma saída a cada passo) e Efetividade (cada operação deve ser realizável e precisa).",
+  "exemplos": {
+    "basico": {
+      "titulo": "Algoritmo para Troca de Lâmpada",
+      "descricao": "1. Desligar o interruptor (segurança). 2. Aguardar esfriar. 3. Desrosquear lâmpada velha. 4. Rosquear lâmpada nova. 5. Ligar interruptor."
+    },
+    "intermediario": {
+      "titulo": "Troca de Valores entre Duas Variáveis (Swap)",
+      "descricao": "Problema: Trocar valor de A e B. Incorreto: A = B; B = A (perde o valor original de A). Correto: aux = A; A = B; B = aux."
+    },
+    "avancado": {
+      "titulo": "Pré-condições e Pós-condições em Divisão Segura",
+      "descricao": "Pré-condição: divisor != 0. Se divisor == 0, o algoritmo não pode prosseguir. Pós-condição: quociente * divisor + resto == dividendo."
+    }
+  },
+  "passoAPasso": [
+    "1. Definir o estado inicial esperado (Pré-condição).",
+    "2. Executar a primeira instrução atômica.",
+    "3. Atualizar o estado do sistema na memória.",
+    "4. Seguir rigorosamente a ordem sequencial linha após linha.",
+    "5. Validar se o estado final cumpre a Pós-condição."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Instruções ambíguas ou vagas (ex: \"adicione tempero a gosto\")",
+      "correcao": "Em computação, instruções devem ter quantidades e ações exatas (ex: \"adicione 5 gramas de sal\")."
+    },
+    {
+      "erro": "Inverter a ordem de dependência",
+      "correcao": "Você não pode usar o resultado de um cálculo antes de calculá-lo."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Instruções atômicas, sequenciais e com pré-condições verificadas.",
+    "ruim": "Passos implícitos que presumem capacidade de adivinhação do computador."
+  },
+  "pseudocodigo": "// Algoritmo de Troca de Variáveis Seguro\nINÍCIO\n    LER A, B\n    auxiliar <- A\n    A <- B\n    B <- auxiliar\n    ESCREVER \"A agora vale:\", A\n    ESCREVER \"B agora vale:\", B\nFIM",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Estado Inicial",
+      "estado": "A = 5, B = 9, aux = nulo",
+      "obs": "Valores iniciais lidos"
+    },
+    {
+      "passo": 2,
+      "acao": "aux <- A",
+      "estado": "A = 5, B = 9, aux = 5",
+      "obs": "Valor de A preservado em aux"
+    },
+    {
+      "passo": 3,
+      "acao": "A <- B",
+      "estado": "A = 9, B = 9, aux = 5",
+      "obs": "A recebe valor de B"
+    },
+    {
+      "passo": 4,
+      "acao": "B <- aux",
+      "estado": "A = 9, B = 5, aux = 5",
+      "obs": "B recebe valor original de A"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex3_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Se executarmos: 1. X <- 10; 2. Y <- 20; 3. X <- Y; 4. Y <- X; quais serão os valores finais de X e Y?",
+      "opcoes": [
+        "X = 20 e Y = 10 (trocados com sucesso)",
+        "X = 20 e Y = 20 (o valor 10 original de X foi perdido no passo 3)",
+        "X = 10 e Y = 20 (nada mudou)",
+        "X = 10 e Y = 10"
+      ],
+      "correta": 1,
+      "pista": "Acompanhe passo a passo: no passo 3, X recebe 20. Quando o passo 4 roda (Y <- X), X já vale 20!",
+      "justificativa": "Como não foi usada uma variável auxiliar para guardar o valor 10 original, ao sobrescrever X com 20, o valor anterior foi destruído da memória."
+    }
+  ],
+  "perguntasVerificacao": "Por que um algoritmo precisa de determinismo e finitude para ser considerado correto?",
+  "keywordsIA": [
+    "algoritmo",
+    "sequencia",
+    "ordem",
+    "instrucao",
+    "pre-condicao",
+    "pos-condicao",
+    "determinismo",
+    "finitude",
+    "ambiguidade",
+    "passos"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "linguagem",
+      "erro": "Confundir algoritmo com código Python/C",
+      "explicacao": "Algoritmo é o raciocínio independente de qualquer sintaxe ou computador."
+    }
+  ],
+  "explicacaoIdealIA": "Um algoritmo é uma sequência finita, ordenada e não ambígua de instruções que transforma entradas em saídas predeterminadas, onde a ordem dos passos determina o estado final da memória."
+}

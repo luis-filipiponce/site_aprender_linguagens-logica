@@ -964,6 +964,19 @@ body {
   font-size: inherit;
 }
 
+/* Grid responsivo para blocos de código lado a lado (ex: Rust & Go) */
+.code-pair-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .code-pair-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Syntax highlighting */
 .kw  { color: #c084fc; font-weight: 700; }
 .fn  { color: #67e8f9; }
@@ -2256,6 +2269,76 @@ body.sidebar-opened {
 [data-theme="dark"] .book-level.mid  { background: rgba(234,179,8,0.15);   color: #fde047; }
 [data-theme="dark"] .book-level.adv  { background: rgba(139,92,246,0.15);  color: #c4b5fd; }
 [data-theme="dark"] .book-level.ref  { background: rgba(6,182,212,0.12);   color: #67e8f9; }
+
+.book-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: auto;
+  padding-top: 0.6rem;
+  border-top: 1px dashed rgba(168, 85, 247, 0.25);
+}
+.book-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--radius-sm, 6px);
+  text-decoration: none;
+  transition: all 0.18s ease;
+  line-height: 1.2;
+  text-align: center;
+}
+.book-link-btn.free {
+  background: #10b981;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+}
+.book-link-btn.free:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+}
+.book-link-btn.store {
+  background: #f59e0b;
+  color: #1e1b4b !important;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.25);
+}
+.book-link-btn.store:hover {
+  background: #d97706;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(217, 119, 6, 0.35);
+}
+.book-link-btn.publisher {
+  background: rgba(168, 85, 247, 0.1);
+  color: #7c3aed !important;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+.book-link-btn.publisher:hover {
+  background: rgba(168, 85, 247, 0.2);
+  color: #6d28d9 !important;
+  transform: translateY(-1px);
+}
+[data-theme="dark"] .book-link-btn.publisher {
+  background: rgba(168, 85, 247, 0.18);
+  color: #d8b4fe !important;
+  border-color: rgba(168, 85, 247, 0.4);
+}
+[data-theme="dark"] .book-link-btn.publisher:hover {
+  background: rgba(168, 85, 247, 0.3);
+  color: #f3e8ff !important;
+}
+[data-theme="dark"] .book-link-btn.store {
+  background: #d97706;
+  color: #ffffff !important;
+}
+[data-theme="dark"] .book-link-btn.store:hover {
+  background: #b45309;
+}
 
 /* --------------------------------------------------------------------------
    32. HISTORICAL TIMELINE — Linha do Tempo
@@ -3812,5 +3895,203 @@ body.sidebar-opened {
   }
   .btn-floating-quick-search kbd {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   SEPARAÇÃO VISUAL DE TÓPICOS (mantém a rolagem contínua)
+   ========================================================================== */
+
+/* --- Seções principais: cabeçalho em painel + divisor entre seções --- */
+.content-section {
+  position: relative;
+  margin-bottom: 7rem;
+}
+.content-section:not(:last-of-type)::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -3.5rem;
+  transform: translateX(-50%);
+  width: min(320px, 60%);
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, transparent, var(--primary) 50%, transparent);
+  opacity: 0.55;
+}
+
+.content-section > .section-header {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 6px solid var(--primary);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.content-section > .section-header::after { display: none; }
+
+/* --- Cartões de linguagem: mais respiro entre um e outro --- */
+.language-section-card { margin-bottom: 4rem; }
+
+/* --- Divisor com rótulo entre os sub-tópicos de cada linguagem --- */
+.topic-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 3rem 0 1.1rem;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.topic-divider::before,
+.topic-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+.topic-divider span {
+  padding: 0.3rem 0.9rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  background: var(--bg-main);
+}
+.language-section-card > .topic-divider + * { margin-top: 0; }
+
+@media (max-width: 768px) {
+  .content-section { margin-bottom: 5rem; }
+  .content-section:not(:last-of-type)::after { bottom: -2.5rem; }
+  .content-section > .section-header { padding: 1.1rem 1.15rem; }
+  .topic-divider { margin: 2.25rem 0 0.9rem; }
+}
+
+/* Interface 3 já usa cada seção como cartão: sem divisor extra */
+[data-interface="3"] .content-section:not(:last-of-type)::after { display: none; }
+[data-interface="3"] .content-section > .section-header {
+  background: transparent;
+  border: none;
+  border-left: none;
+  box-shadow: none;
+  padding: 0 0 1.25rem;
+}
+
+/* ==========================================================================
+   36. NOVOS COMPONENTES — TypeScript, IA/ML, DevOps (v3.0)
+   ========================================================================== */
+
+/* --- Novos glossário itens adicionados --- */
+.glossary-card {
+  position: relative;
+  overflow: hidden;
+}
+.glossary-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--grad-primary);
+  border-radius: var(--radius-full);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.glossary-card:hover::before { opacity: 1; }
+
+/* --- Animação de entrada suave para novas seções --- */
+@keyframes fadeInSlide {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#lang-typescript,
+#ia-machine-learning,
+#devops-engenharia {
+  animation: fadeInSlide 0.5s ease both;
+}
+
+/* --- Badges de status para novos itens sidebar --- */
+.sidebar-badge[style*="grad-primary"] {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* --- Melhorias visuais no dark mode para novos blocos --- */
+[data-theme="dark"] .best-practice-box code,
+[data-theme="dark"] .pitfall-box code {
+  font-weight: 600;
+}
+
+/* --- Code block melhorado com linha de números simulada --- */
+.code-block pre {
+  position: relative;
+}
+
+/* --- Highlight especial para Dockerfile syntax --- */
+.code-lang-label[data-lang="dockerfile"]::before { content: "●"; color: #2496ed; }
+
+/* --- Melhoria de contraste para leitura longa --- */
+.language-section-card .logic-steps li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.language-section-card .logic-steps li:last-child {
+  border-bottom: none;
+}
+
+/* --- Tags de nível de tecnologia --- */
+.tech-level-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.18rem 0.55rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.tech-level-tag.hot    { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.tech-level-tag.new    { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.tech-level-tag.stable { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+[data-theme="dark"] .tech-level-tag.hot    { background: rgba(220,38,38,0.12); border-color: rgba(220,38,38,0.3); color: #fca5a5; }
+[data-theme="dark"] .tech-level-tag.new    { background: rgba(37,99,235,0.12); border-color: rgba(37,99,235,0.3); color: #93c5fd; }
+[data-theme="dark"] .tech-level-tag.stable { background: rgba(22,163,74,0.12); border-color: rgba(22,163,74,0.3); color: #86efac; }
+
+/* --- Melhoria no layout do comparador dinâmico --- */
+.lang-pills { gap: 0.5rem; }
+.lang-pill-btn {
+  font-size: 0.83rem;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.lang-pill-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* --- Focus ring melhorado para acessibilidade --- */
+:focus-visible {
+  outline: 2.5px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* --- Print styles básicos --- */
+@media print {
+  .site-header,
+  .sidebar-nav,
+  .btn-back-top,
+  .btn-floating-quick-search,
+  .modal-overlay,
+  .spotlight-overlay {
+    display: none !important;
+  }
+  .main-content {
+    max-width: 100%;
+    padding: 1rem;
+  }
+  .language-section-card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
   }
 }

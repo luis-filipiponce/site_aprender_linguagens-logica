@@ -1,0 +1,104 @@
+{
+  "id": 1,
+  "slug": "pensamento-logico",
+  "badge": "Módulo 1 · Fundamentos",
+  "nivel": "Iniciante",
+  "titulo": "Fundamentos do Pensamento Lógico",
+  "subtitulo": "Premissas, argumentos, validade lógica versus verdade factual e estruturação mental.",
+  "objetivo": "Compreender a essência da lógica dedutiva e indutiva, distinguir premissas de conclusões, reconhecer contradições e aprender a estruturar raciocínios rigorosos antes de qualquer código.",
+  "introducaoIntuitiva": "Quando você decide levar um guarda-chuva porque \"o céu está cinza e ouviu trovões\", você está processando premissas (fatos observados) e aplicando uma regra de inferência para chegar a uma conclusão (provavelmente vai chover). A lógica computacional funciona exatamente assim: premissas claras levam a conclusões confiáveis.",
+  "explicacaoAprofundada": "Lógica é o estudo das regras de inferência válida. Na computação, a lógica pura não depende de computadores físicos: é a capacidade formal de garantir que, a partir de dados conhecidos (entradas/premissas), um resultado necessário e inequívoco seja obtido. Diferenciamos estritamente Validade (a estrutura formal do raciocínio está correta) de Verdade (o conteúdo fático corresponde à realidade). Um algoritmo pode ser estruturalmente válido, mas produzir resultados indesejados se as premissas de entrada forem incorretas.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Premissa e Conclusão Simples",
+      "descricao": "Premissa 1: Todo número divisível por 2 é par. Premissa 2: O número 14 é divisível por 2. Conclusão lógica: O número 14 é par."
+    },
+    "intermediario": {
+      "titulo": "Identificação de Informações Insuficientes",
+      "descricao": "Premissa 1: Se estiver chovendo, o chão fica molhado. Observação: O chão está molhado. Conclusão precipitada: \"Está chovendo\". Erro lógico (Afirmação do Consequente): o chão pode ter sido lavado com uma mangueira."
+    },
+    "avancado": {
+      "titulo": "Validade Estrutural vs Verdade Factual",
+      "descricao": "Premissa 1: Todos os pássaros programam computadores. Premissa 2: O canário é um pássaro. Conclusão: O canário programa computadores. O raciocínio é LOGICAMENTE VÁLIDO, porém FATUALMENTE FALSO porque a Premissa 1 é falsa."
+    }
+  },
+  "passoAPasso": [
+    "1. Identificar o objetivo da reflexão ou problema.",
+    "2. Listar explicitamente todas as premissas e dados conhecidos.",
+    "3. Identificar premissas ocultas ou suposições infundadas.",
+    "4. Aplicar regras de dedução sem inventar informações extras.",
+    "5. Formular a conclusão e verificar se ela é a ÚNICA consequência necessária das premissas."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Confundir suposição com fato comprovado",
+      "correcao": "Uma hipótese só se torna fato quando validada por evidência incontestável."
+    },
+    {
+      "erro": "Conclusão precipitada (Salto Lógico)",
+      "correcao": "Não deduza mais do que as premissas estritamente garantem."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Análise passo a passo: Premissas claras -> Regra aplicada -> Conclusão garantida.",
+    "ruim": "Tentativa intuitiva sem checar se há outros fatores que possam causar o mesmo efeito."
+  },
+  "pseudocodigo": "// Estrutura Conceitual de um Raciocínio Lógico\nSE premissa_A == VERDADEIRA E premissa_B == VERDADEIRA ENTÃO\n    conclusao <- VERDADEIRA\nSENÃO\n    conclusao <- INDETERMINADA_OU_FALSA\nFIM_SE",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Receber Premissa 1 (idade >= 18)",
+      "estado": "idade = 20 (Verdadeiro)",
+      "obs": "Condição necessária"
+    },
+    {
+      "passo": 2,
+      "acao": "Receber Premissa 2 (tem_documento)",
+      "estado": "tem_documento = SIM",
+      "obs": "Condição necessária"
+    },
+    {
+      "passo": 3,
+      "acao": "Avaliar Conclusão (Permitir Entrada)",
+      "estado": "Resultado = AUTORIZADO",
+      "obs": "Ambas premissas cumpridas"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex1_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Considere as premissas: (1) \"Todo triângulo possui 3 lados\". (2) \"A figura X possui 3 lados\". Podemos concluir com certeza absoluta que a figura X é um triângulo?",
+      "opcoes": [
+        "Sim, pois toda figura de 3 lados fechada é um triângulo.",
+        "Não necessariamente, se a figura puder ser aberta ou composta por segmentos desconexos.",
+        "Sim, porque a premissa 1 afirma uma equivalência total.",
+        "Não, porque triângulos não possuem lados."
+      ],
+      "correta": 1,
+      "pista": "Atenção à definição estrita: a premissa afirma que triângulos têm 3 lados, mas não definiu se qualquer linha com 3 lados é automaticamente um triângulo fechado sem hipóteses extras.",
+      "justificativa": "Em lógica rigorosa, para garantir a equivalência precisamos da premissa bidirecional: \"Uma figura é triângulo SE E SOMENTE SE for um polígono fechado de 3 lados\"."
+    }
+  ],
+  "perguntasVerificacao": "Qual a diferença entre um argumento logicamente válido e um argumento factualmente verdadeiro?",
+  "keywordsIA": [
+    "premissa",
+    "conclusao",
+    "validade",
+    "verdade",
+    "argumento",
+    "deducao",
+    "fato",
+    "suposicao",
+    "inferencia",
+    "logica"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "verdade",
+      "erro": "Achar que argumento válido sempre descreve o mundo real",
+      "explicacao": "Validade é a consistência da forma lógica; verdade depende da realidade empírica das premissas."
+    }
+  ],
+  "explicacaoIdealIA": "Pensamento lógico é a estruturação de premissas para chegar a uma conclusão fundamentada. A lógica garante a validade formal da inferência. Diferencia-se de opiniões porque exige que cada passo decorra necessariamente dos dados anteriores."
+}

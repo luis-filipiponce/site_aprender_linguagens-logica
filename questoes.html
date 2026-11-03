@@ -4,15 +4,27 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Banco de Questões — Lógica de Programação — Ponce Metodologias</title>
-  <meta name="description" content="Banco de questões de lógica de programação com 4 níveis: Iniciante, Intermediário, Avançado e Expert, com correção e explicação imediata."/>
+  <meta name="description" content="Banco de questões de lógica de programação com 4 níveis: Iniciante, Intermediário, Avançado e Expert. +100 questões com correção e explicação imediata. Ponce Metodologias."/>
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/questoes.css"/>
 </head>
 <body>
 
+  <!-- Barra de Progresso de Leitura -->
+  <div id="scroll-indicator"></div>
+
   <header class="site-header">
     <div class="header-left">
       <a href="index.html" class="brand-logo" title="Ponce Metodologias & Dev — Início">
+        <div class="brand-icon-wrapper">
+          <div class="brand-icon-glow"></div>
+          <div class="brand-icon">
+            <svg class="brand-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a9 9 0 0 1 9 9c0 3.18-1.64 5.98-4.1 7.57L16 22H8l-.9-3.43A9 9 0 0 1 3 11a9 9 0 0 1 9-9z"/>
+              <path d="M9 10h6"/><path d="M10 14h4"/>
+            </svg>
+          </div>
+        </div>
         <div class="brand-text-block">
           <div class="brand-title">LÓGICA PURA<span class="brand-dot">.</span></div>
           <div class="brand-sub">PONCE METODOLOGIAS</div>
@@ -22,48 +34,177 @@
     <div class="header-right">
       <nav class="nav-links">
         <a href="index.html" class="nav-link">← Portal</a>
-        <a href="curso-logica.html" class="nav-link">Curso de Lógica</a>
+        <a href="curso-logica.html" class="nav-link">🚀 Curso de Lógica</a>
+        <a href="aprenda-programacao/index.html" class="nav-link">📚 Aprenda</a>
       </nav>
       <button class="btn-icon" id="theme-toggle-btn" type="button" title="Alternar Modo Claro / Escuro">🌙</button>
     </div>
   </header>
 
   <main class="qz-wrap">
+
+    <!-- HERO -->
     <div class="qz-head">
-      <span class="section-badge badge-purple">Prática</span>
-      <h1>🧩 Banco de Questões de Lógica</h1>
-      <p>Escolha um nível, responda e clique em <strong>Verificar</strong> para ver a correção e a explicação. Seu progresso fica salvo neste navegador.</p>
+      <span class="section-badge badge-purple">Prática Ativa</span>
+      <h1>🧩 Banco de Questões de Lógica de Programação</h1>
+      <p>
+        Aplique o <strong>Efeito Teste</strong> — a técnica de estudo mais eficaz comprovada pela neurociência.
+        Mais de <strong>100 questões</strong> em 4 níveis progressivos, com correção imediata e explicações aprofundadas.
+        Seu progresso fica salvo automaticamente neste navegador.
+      </p>
+
+      <!-- Cartões de Estatísticas -->
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin-top: 1.5rem;">
+        <div style="background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.3); border-radius: 12px; padding: 1rem; text-align:center;">
+          <div style="font-size:1.8rem; font-weight:900; color: var(--primary);">27+</div>
+          <div style="font-size:0.78rem; color: var(--text-muted); font-weight:600;">Questões Iniciante</div>
+        </div>
+        <div style="background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.3); border-radius: 12px; padding: 1rem; text-align:center;">
+          <div style="font-size:1.8rem; font-weight:900; color: #d97706;">28+</div>
+          <div style="font-size:0.78rem; color: var(--text-muted); font-weight:600;">Questões Intermediário</div>
+        </div>
+        <div style="background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); border-radius: 12px; padding: 1rem; text-align:center;">
+          <div style="font-size:1.8rem; font-weight:900; color: #dc2626;">26+</div>
+          <div style="font-size:0.78rem; color: var(--text-muted); font-weight:600;">Questões Avançado</div>
+        </div>
+        <div style="background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.3); border-radius: 12px; padding: 1rem; text-align:center;">
+          <div style="font-size:1.8rem; font-weight:900; color: #9333ea;">26+</div>
+          <div style="font-size:0.78rem; color: var(--text-muted); font-weight:600;">Questões Expert</div>
+        </div>
+      </div>
+
+      <!-- Guia Rápido -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-left: 4px solid var(--primary); border-radius: 12px; padding: 1rem 1.25rem; margin-top: 1.25rem; display:flex; flex-wrap:wrap; gap:1.25rem; font-size:0.85rem; color: var(--text-muted);">
+        <span>📌 <strong style="color:var(--text-main);">Como usar:</strong> Escolha o nível na aba → Leia a questão → Selecione a resposta → Clique em <strong>Verificar</strong></span>
+        <span>💾 <strong style="color:var(--text-main);">Progresso:</strong> Salvo automaticamente no <code>localStorage</code> deste navegador</span>
+        <span>♻️ <strong style="color:var(--text-main);">Reiniciar:</strong> Clique em "Reiniciar nível" para tentar de novo</span>
+        <span>🧠 <strong style="color:var(--text-main);">Dica:</strong> Tente resolver sem ajuda antes de ver a explicação</span>
+      </div>
     </div>
 
+    <!-- ABAS DE NÍVEL -->
     <div class="qz-tabs" id="qz-abas" role="tablist" aria-label="Níveis de dificuldade"></div>
 
+    <!-- PAINEL DE PROGRESSO -->
     <div class="qz-score">
       <div class="qz-score-row">
-        <span>Acertos: <strong id="qz-acertos">0</strong> &nbsp;|&nbsp; Respondidas: <strong id="qz-respondidas">0</strong> de <strong id="qz-total">0</strong></span>
-        <button type="button" id="qz-reiniciar">↺ Reiniciar nível</button>
+        <span>✅ Acertos: <strong id="qz-acertos">0</strong> &nbsp;|&nbsp; 📊 Respondidas: <strong id="qz-respondidas">0</strong> de <strong id="qz-total">0</strong></span>
+        <button type="button" id="qz-reiniciar" title="Zerar o progresso deste nível e tentar novamente">↺ Reiniciar nível</button>
       </div>
-      <div class="qz-progress"><div id="qz-barra"></div></div>
+      <div class="qz-progress" title="Progresso do nível atual">
+        <div id="qz-barra"></div>
+      </div>
     </div>
 
+    <!-- INTRO DO NÍVEL -->
     <p class="qz-intro" id="qz-intro"></p>
+
+    <!-- LISTA DE QUESTÕES -->
     <div id="qz-lista"></div>
+
+    <!-- RODAPÉ DO NÍVEL (NAVEGAÇÃO) -->
+    <div id="qz-nivel-rodape" class="qz-nivel-rodape"></div>
+
+    <!-- PAINEL DE DIAGNÓSTICO -->
+    <section id="qz-painel-diagnostico" class="qz-painel-diagnostico" style="display:none;" aria-live="polite"></section>
+
+    <!-- SEÇÃO DE INFORMAÇÃO SOBRE OS TÓPICOS -->
+    <section style="margin-top: 3rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem;">
+      <h2 style="font-size:1.25rem; font-weight:800; color:var(--text-main); margin-bottom:1rem;">📋 Tópicos Cobertos nas Questões</h2>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.75rem;">
+        <div style="background:var(--bg-main); border:1px solid var(--border-color); border-radius:10px; padding:0.85rem 1rem;">
+          <div style="font-weight:700; color:var(--primary); font-size:0.82rem; text-transform:uppercase; margin-bottom:0.4rem;">🟢 Iniciante</div>
+          <ul style="list-style:disc; padding-left:1.1rem; font-size:0.83rem; color:var(--text-muted); line-height:1.7; margin:0;">
+            <li>Proposições lógicas e silogismos</li>
+            <li>Variáveis, tipos e operadores</li>
+            <li>Estruturas condicionais (SE/ENTÃO)</li>
+            <li>Laços de repetição (PARA, ENQUANTO)</li>
+            <li>Tabela de trace (rastreamento)</li>
+            <li>Vetores e índices</li>
+            <li>Modelo IPO (Entrada/Processamento/Saída)</li>
+          </ul>
+        </div>
+        <div style="background:var(--bg-main); border:1px solid var(--border-color); border-radius:10px; padding:0.85rem 1rem;">
+          <div style="font-weight:700; color:#d97706; font-size:0.82rem; text-transform:uppercase; margin-bottom:0.4rem;">🟡 Intermediário</div>
+          <ul style="list-style:disc; padding-left:1.1rem; font-size:0.83rem; color:var(--text-muted); line-height:1.7; margin:0;">
+            <li>Lógica proposicional e De Morgan</li>
+            <li>Contrapositiva e implicação</li>
+            <li>Laços aninhados e contadores</li>
+            <li>Pilhas (LIFO) e filas (FIFO)</li>
+            <li>Busca linear e busca binária</li>
+            <li>Algoritmo de Euclides (MDC)</li>
+            <li>Testes de borda e off-by-one</li>
+          </ul>
+        </div>
+        <div style="background:var(--bg-main); border:1px solid var(--border-color); border-radius:10px; padding:0.85rem 1rem;">
+          <div style="font-weight:700; color:#dc2626; font-size:0.82rem; text-transform:uppercase; margin-bottom:0.4rem;">🔴 Avançado</div>
+          <ul style="list-style:disc; padding-left:1.1rem; font-size:0.83rem; color:var(--text-muted); line-height:1.7; margin:0;">
+            <li>Notação Big-O e complexidade</li>
+            <li>Recursão e caso base</li>
+            <li>Invariante de laço e correção</li>
+            <li>Indução matemática</li>
+            <li>Programação dinâmica e memoização</li>
+            <li>Árvores binárias de busca (BST)</li>
+            <li>Divisão e Conquista</li>
+          </ul>
+        </div>
+        <div style="background:var(--bg-main); border:1px solid var(--border-color); border-radius:10px; padding:0.85rem 1rem;">
+          <div style="font-weight:700; color:#9333ea; font-size:0.82rem; text-transform:uppercase; margin-bottom:0.4rem;">🟣 Expert</div>
+          <ul style="list-style:disc; padding-left:1.1rem; font-size:0.83rem; color:var(--text-muted); line-height:1.7; margin:0;">
+            <li>Teorema Mestre (recorrências)</li>
+            <li>Lógica de Hoare (triplas {P} C {Q})</li>
+            <li>Computabilidade e Máquinas de Turing</li>
+            <li>Tese de Church-Turing</li>
+            <li>Classes P, NP e NP-completo</li>
+            <li>Teorema de Rice</li>
+            <li>Recursão de cauda e análise amortizada</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <footer style="text-align:center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color);">
-    <p>© Ponce Metodologias & Dev — Ensino Rigoroso de Lógica de Programação Pura.</p>
+  <footer style="text-align:center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top:2rem;">
+    <p>
+      <a href="index.html" style="color:var(--primary); font-weight:600;">← Voltar ao Portal</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="curso-logica.html" style="color:var(--primary); font-weight:600;">🚀 Curso de Lógica (22 Módulos) →</a>
+    </p>
+    <p style="margin-top:0.75rem;">© 2025–2026 Ponce Metodologias & Dev — Ensino Rigoroso de Lógica de Programação Pura.</p>
   </footer>
 
   <script src="js/questoes-dados.js"></script>
   <script src="js/questoes.js"></script>
   <script>
     (function () {
+      // Tema claro/escuro
       var btn = document.getElementById('theme-toggle-btn');
       btn.addEventListener('click', function () {
         var doc = document.documentElement;
         var next = doc.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
         doc.setAttribute('data-theme', next);
         btn.textContent = next === 'dark' ? '☀️' : '🌙';
+        try { localStorage.setItem('ponce-theme', next); } catch(e) {}
       });
+      // Restaurar tema salvo
+      try {
+        var saved = localStorage.getItem('ponce-theme');
+        if (saved && saved !== 'light') {
+          document.documentElement.setAttribute('data-theme', saved);
+          btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        }
+      } catch(e) {}
+
+      // Barra de progresso de leitura
+      var bar = document.getElementById('scroll-indicator');
+      if (bar) {
+        window.addEventListener('scroll', function() {
+          var scrolled = document.documentElement.scrollTop;
+          var total = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          bar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+        });
+      }
     })();
   </script>
 </body>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Roadmap de Carreira | Aprenda Programação</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+  <style>
+    .timeline { margin: 24px 0; }
+    .tl-item  { display:flex; gap:18px; padding-bottom:28px; }
+    .tl-item:last-child { padding-bottom:0; }
+    .tl-left  { display:flex; flex-direction:column; align-items:center; }
+    .tl-dot   { width:14px; height:14px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+    .tl-line  { width:2px; background:var(--border); flex:1; margin-top:6px; }
+    .tl-body strong { font-size:15px; font-weight:700; display:block; margin-bottom:4px; }
+    .tl-body p  { font-size:13.5px; color:var(--muted); margin:0; }
+    .tl-body ul { font-size:13px; color:var(--muted); padding-left:18px; margin-top:6px; }
+    .career-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0; }
+    .career-card { border:1px solid var(--border); border-radius:8px; padding:16px 18px; }
+    .career-card h3 { font-size:14px; font-weight:700; margin-bottom:6px; }
+    .career-card p  { font-size:12.5px; color:var(--muted); margin:0 0 8px; }
+    .career-card .stack { font-size:11.5px; color:var(--blue); font-weight:600; }
+    @media(max-width:580px){ .career-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+<div id="scroll-bar" style="position:fixed;top:0;left:0;height:3px;width:0;background:var(--red);z-index:2000;transition:width .1s;"></div>
+
+<nav id="main-nav">
+  <a class="logo" href="../index.html">&#60;<span>code</span>/&#62; Aprenda Prog.</a>
+  <a class="nav-link" href="../index.html">Home</a>
+  <a class="nav-link" href="logica.html">Lógica</a>
+  <a class="nav-link" href="algoritmos.html">Algoritmos</a>
+  <a class="nav-link" href="estruturas.html">Estruturas</a>
+  <a class="nav-link" href="linguagens.html">Linguagens</a>
+  <a class="nav-link" href="paradigmas.html">Paradigmas</a>
+  <a class="nav-link" href="web.html">Web</a>
+  <a class="nav-link" href="banco.html">Banco de Dados</a>
+  <a class="nav-link" href="carreira.html">Carreira</a>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-hero">
+    <h1>🚀 Roadmap de Carreira</h1>
+    <p>Um cronograma realista de 12 meses para quem parte do zero e estuda de 1 a 2 horas por dia. Os caminhos profissionais disponíveis, como montar portfólio e entrar no mercado de trabalho.</p>
+    <div class="badge-row">
+      <span class="badge badge-red">Módulo 9</span>
+      <span class="badge badge-blue">12 Meses</span>
+      <span class="badge badge-green">Portfólio</span>
+      <span class="badge badge-orange">Mercado</span>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section" id="cronograma">
+    <div class="section-title"><div class="num-badge num-red">1</div><h2>Cronograma de 12 Meses</h2></div>
+    <p>Este plano considera <strong>1 a 2 horas diárias</strong>. Adapte conforme sua disponibilidade. O importante é consistência, não intensidade.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot" style="background:var(--purple);"></div><div class="tl-line"></div></div>
+        <div class="tl-body">
+          <strong>Mês 1–2 — Fundações: Lógica + Python Básico</strong>
+          <p>Não pule esta fase. É o alicerce de tudo. Lógica sem linguagem primeiro, depois Python.</p>
+          <ul>
+            <li>Variáveis, tipos, operadores, condicionais, loops, funções</li>
+            <li>Projetos: calculadora, jogo de adivinhação, conversor de temperaturas</li>
+            <li>Recursos: Python.org docs, CS50P (Harvard, gratuito)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot" style="background:var(--blue);"></div><div class="tl-line"></div></div>
+        <div class="tl-body">
+          <strong>Mês 3–4 — OOP + Estruturas de Dados + Git</strong>
+          <p>Orientação a objetos, pilhas, filas, dicionários. Primeiro repositório público no GitHub.</p>
+          <ul>
+            <li>Classes, herança, polimorfismo, encapsulamento</li>
+            <li>Arrays, hash tables, árvores básicas</li>
+            <li>Projetos: gerenciador de tarefas, sistema de biblioteca</li>
+            <li>Git: commit, branch, merge, pull request</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot" style="background:var(--green);"></div><div class="tl-line"></div></div>
+        <div class="tl-body">
+          <strong>Mês 5–6 — Web Fundamentals + SQL</strong>
+          <p>HTML, CSS, JavaScript básico, SQL e primeira API.</p>
+          <ul>
+            <li>HTML5 semântico, CSS3 (Flexbox/Grid), JS DOM</li>
+            <li>PostgreSQL ou SQLite — SELECT, INSERT, JOIN, índices</li>
+            <li>Projeto: CRUD completo com back-end + banco de dados</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot" style="background:var(--orange);"></div><div class="tl-line"></div></div>
+        <div class="tl-body">
+          <strong>Mês 7–9 — Especialização (escolha um caminho)</strong>
+          <p>Aprofunde na área que mais te atrai. Foco é essencial nesta fase.</p>
+          <ul>
+            <li>Front-end: React + TypeScript + Next.js</li>
+            <li>Back-end: FastAPI ou Django REST + PostgreSQL</li>
+            <li>Mobile: React Native ou Flutter</li>
+            <li>Dados: Pandas, NumPy, visualização, SQL avançado</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot" style="background:var(--red);"></div></div>
+        <div class="tl-body">
+          <strong>Mês 10–12 — Portfólio + Mercado + Entrevistas</strong>
+          <p>Prepare-se para entrar no mercado com projetos reais e postura profissional.</p>
+          <ul>
+            <li>2–3 projetos completos no GitHub com README detalhado</li>
+            <li>Deploy em produção (Vercel, Railway, Render, Heroku)</li>
+            <li>LeetCode: resolver 50+ problemas (Easy e Medium)</li>
+            <li>LinkedIn atualizado, portfólio online, contribuição open source</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMINHOS -->
+  <div class="section" id="caminhos">
+    <div class="section-title"><div class="num-badge num-red">2</div><h2>Caminhos de Carreira</h2></div>
+    <div class="career-grid">
+      <div class="career-card">
+        <h3>🖥️ Front-end Developer</h3>
+        <p>Constrói a interface que o usuário vê e interage. Foco em experiência do usuário, performance visual e acessibilidade.</p>
+        <span class="stack">HTML · CSS · JavaScript · TypeScript · React · Next.js</span>
+      </div>
+      <div class="career-card">
+        <h3>⚙️ Back-end Developer</h3>
+        <p>Constrói o servidor, APIs e lógica de negócio. Trabalha com bancos de dados, autenticação e segurança.</p>
+        <span class="stack">Python · Node.js · Java · SQL · Docker · REST APIs</span>
+      </div>
+      <div class="career-card">
+        <h3>🌐 Full-Stack Developer</h3>
+        <p>Domina tanto front quanto back-end. Muito valorizado em startups e times pequenos.</p>
+        <span class="stack">React · Node.js · TypeScript · PostgreSQL · Docker</span>
+      </div>
+      <div class="career-card">
+        <h3>📱 Mobile Developer</h3>
+        <p>Cria aplicativos para iOS e Android, nativos ou cross-platform.</p>
+        <span class="stack">Kotlin · Swift · Flutter · React Native</span>
+      </div>
+      <div class="career-card">
+        <h3>📊 Data Scientist / Engenheiro</h3>
+        <p>Analisa dados, cria modelos de IA/ML e transforma dados em decisões.</p>
+        <span class="stack">Python · SQL · Pandas · TensorFlow · Spark</span>
+      </div>
+      <div class="career-card">
+        <h3>☁️ DevOps / SRE / Cloud</h3>
+        <p>Garante que o software rode em produção de forma confiável, rápida e escalável.</p>
+        <span class="stack">Linux · Docker · Kubernetes · AWS/Azure · CI/CD</span>
+      </div>
+      <div class="career-card">
+        <h3>🔐 Segurança / CyberSec</h3>
+        <p>Protege sistemas contra ataques. Pentesting, análise de vulnerabilidades, forense.</p>
+        <span class="stack">Python · C · Bash · Redes · Criptografia</span>
+      </div>
+      <div class="career-card">
+        <h3>🎮 Game Developer</h3>
+        <p>Cria jogos para qualquer plataforma. Mistura arte, física, algoritmos e UX.</p>
+        <span class="stack">C# (Unity) · C++ (Unreal) · GDScript (Godot)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTFÓLIO -->
+  <div class="section" id="portfolio">
+    <div class="section-title"><div class="num-badge num-red">3</div><h2>Como Montar um Portfólio Forte</h2></div>
+    <ul class="check">
+      <li><strong>GitHub com commits regulares</strong> — mostra consistência e evolução.</li>
+      <li><strong>README detalhado</strong> em cada projeto: o que faz, como rodar, tecnologias usadas, print/demo.</li>
+      <li><strong>Projetos com deploy</strong> — link para o app funcionando ao vivo. Recrutadores querem ver, não imaginar.</li>
+      <li><strong>Variedade + profundidade</strong> — melhor 2 projetos profundos que 10 projetos rasos.</li>
+      <li><strong>Resolva problemas reais</strong> — apps que você ou alguém usaria de verdade.</li>
+      <li><strong>Código limpo e testado</strong> — com testes unitários e código legível.</li>
+    </ul>
+
+    <h3>Ideias de Projetos por Nível</h3>
+    <table>
+      <tr><th>Nível</th><th>Projeto</th><th>Tecnologias</th></tr>
+      <tr><td>Iniciante</td><td>Calculadora, to-do list, conversor de moedas</td><td>HTML/CSS/JS ou Python</td></tr>
+      <tr><td>Intermediário</td><td>API CRUD completa, clone de site famoso (UI)</td><td>React + FastAPI + PostgreSQL</td></tr>
+      <tr><td>Avançado</td><td>SaaS completo, app mobile, sistema de recomendação</td><td>Stack completa + Deploy</td></tr>
+    </table>
+  </div>
+
+  <!-- MENTALIDADE -->
+  <div class="section" id="mentalidade">
+    <div class="section-title"><div class="num-badge num-red">4</div><h2>A Mentalidade do Programador</h2></div>
+    <div class="info-box green">
+      <strong>Consistência > Intensidade.</strong> 1 hora por dia todos os dias > 8 horas no fim de semana uma vez por mês. O cérebro aprende por repetição e sono.
+    </div>
+    <ul class="check">
+      <li>Programação é uma habilidade, não um talento inato. Todo expert foi um dia totalmente iniciante.</li>
+      <li>Erros e bugs são normais — são a forma de aprender. Cada bug resolvido te torna mais forte.</li>
+      <li>Googling e leitura de documentação são habilidades profissionais, não trapaça.</li>
+      <li>Leia código de outras pessoas — aprenda como grandes projetos open source são estruturados.</li>
+      <li>Ensine — explicar conceitos para outros consolida seu próprio aprendizado.</li>
+      <li>Nunca pare de aprender — a tecnologia muda, mas os fundamentos persistem.</li>
+    </ul>
+
+    <h3>Recursos Recomendados</h3>
+    <table>
+      <tr><th>Recurso</th><th>O que oferece</th><th>Custo</th></tr>
+      <tr><td>CS50P — Harvard</td><td>Python do zero, rigoroso</td><td>Gratuito</td></tr>
+      <tr><td>The Odin Project</td><td>Full-stack web completo</td><td>Gratuito</td></tr>
+      <tr><td>LeetCode</td><td>Problemas algorítmicos para entrevistas</td><td>Free + Premium</td></tr>
+      <tr><td>MDN Web Docs</td><td>Referência definitiva de HTML/CSS/JS</td><td>Gratuito</td></tr>
+      <tr><td>docs.python.org</td><td>Documentação oficial do Python</td><td>Gratuito</td></tr>
+      <tr><td>GitHub</td><td>Portfólio, colaboração, open source</td><td>Gratuito</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  <p>← <a href="devops.html" style="color:var(--blue);">Git & DevOps</a> &nbsp;|&nbsp; <a href="../index.html" style="color:var(--blue);">Voltar ao início ↩</a></p>
+  <br/><p>Aprenda Programação — Made with IBM Bob</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

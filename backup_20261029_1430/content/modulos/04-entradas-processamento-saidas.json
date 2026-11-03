@@ -1,0 +1,97 @@
+{
+  "id": 4,
+  "slug": "entradas-processamento-saidas",
+  "badge": "Módulo 4 · Fluxo IPO",
+  "nivel": "Iniciante",
+  "titulo": "Entradas, Processamento e Saídas (Modelo IPO)",
+  "subtitulo": "A tríade fundamental de qualquer sistema computacional: Input, Process, Output.",
+  "objetivo": "Mapear com exatidão como as informações entram em um algoritmo, como sofrem transformações puras e como são comunicadas como resultados.",
+  "introducaoIntuitiva": "Pense em um liquidificador: você coloca frutas e leite (Entradas), liga o motor que bate os ingredientes conforme a velocidade (Processamento) e obtém uma vitamina pronta no copo (Saída).",
+  "explicacaoAprofundada": "O modelo IPO (Input-Process-Output) é a base da arquitetura computacional. A Entrada representa os dados fornecidos pelo ambiente externo; o Processamento é o conjunto de operações aplicadas sobre esses dados; a Saída é a apresentação do resultado.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Média de Duas Notas",
+      "descricao": "Entradas: nota1, nota2. Processamento: media = (nota1 + nota2) / 2. Saída: media."
+    },
+    "intermediario": {
+      "titulo": "Conversão de Temperatura",
+      "descricao": "Entrada: Celsius (C). Processamento: F = (C * 9/5) + 32. Saída: Fahrenheit (F)."
+    },
+    "avancado": {
+      "titulo": "Processamento com Validação Prévia",
+      "descricao": "Validar se horas >= 0 e valor > 0 antes de calcular salário."
+    }
+  },
+  "passoAPasso": [
+    "1. Listar variáveis de Entrada.",
+    "2. Validar o domínio dessas entradas.",
+    "3. Definir a fórmula de Processamento.",
+    "4. Emitir o resultado (Saída)."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Processar antes de receber todas as entradas",
+      "correcao": "Certifique-se de que todas as variáveis foram lidas antes de usá-las."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Separação clara entre Entrada, Validação, Cálculo e Saída.",
+    "ruim": "Misturar leitura com cálculos incompletos."
+  },
+  "pseudocodigo": "INÍCIO\n    LER valor_hora, horas_mes\n    salario_bruto <- valor_hora * horas_mes\n    imposto <- salario_bruto * 0.11\n    salario_liquido <- salario_bruto - imposto\n    ESCREVER salario_liquido\nFIM",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "LER entradas",
+      "estado": "valor_hora = 50, horas = 160",
+      "obs": "Entradas capturadas"
+    },
+    {
+      "passo": 2,
+      "acao": "salario_bruto <- 50 * 160",
+      "estado": "salario_bruto = 8000",
+      "obs": "Processamento"
+    },
+    {
+      "passo": 3,
+      "acao": "salario_liquido <- 8000 - 880",
+      "estado": "salario_liquido = 7120",
+      "obs": "Saída calculada"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex4_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Para calcular a área de um círculo (A = π * r²), quais são as entradas estritamente necessárias fornecidas pelo usuário?",
+      "opcoes": [
+        "Apenas o raio (r).",
+        "O raio e o valor de π.",
+        "A área e o diâmetro.",
+        "O perímetro."
+      ],
+      "correta": 0,
+      "pista": "π é uma constante matemática do processamento, não precisa ser digitado pelo usuário.",
+      "justificativa": "O raio r é a única variável de entrada necessária; π é uma constante conhecida no algoritmo."
+    }
+  ],
+  "perguntasVerificacao": "Qual o risco de processar dados sem antes validar as entradas?",
+  "keywordsIA": [
+    "entrada",
+    "processamento",
+    "saida",
+    "ipo",
+    "dados",
+    "transformacao",
+    "validacao",
+    "resultado"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "constante",
+      "erro": "Achar que constantes precisam ser digitadas como entrada",
+      "explicacao": "Constantes matemáticas são pré-definidas no algoritmo."
+    }
+  ],
+  "explicacaoIdealIA": "O modelo IPO divide a solução em três etapas: captura de dados externos (entrada), aplicação de transformações lógicas e matemáticas (processamento) e devolução do resultado útil (saída)."
+}

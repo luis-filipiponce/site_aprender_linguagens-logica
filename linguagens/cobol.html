@@ -618,6 +618,139 @@
         </div></div>
       </div>
 
+      <!-- Operadores & Condições (EVALUATE) -->
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Operadores, Condições &amp; EVALUATE (Switch COBOL) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>COBOL suporta operadores relacionais por palavras ou símbolos (<code>EQUAL TO / =</code>, <code>GREATER THAN / &gt;</code>, <code>LESS THAN / &lt;</code>, <code>NOT EQUAL TO</code>) e operadores lógicos (<code>AND</code>, <code>OR</code>, <code>NOT</code>). O comando <code>EVALUATE</code> é um dos mecanismos de switch mais poderosos da computação, avaliando múltiplas condições simultâneas (<code>EVALUATE TRUE ALSO TRUE</code>).</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">WS-IDADE</span>             <span class="t">PIC 9(03)</span> <span class="k">VALUE</span> <span class="n">20</span>.
+       <span class="t">01</span>  <span class="t">WS-TEM-CNH</span>           <span class="t">PIC X(01)</span> <span class="k">VALUE</span> <span class="s">"S"</span>.
+       <span class="t">01</span>  <span class="t">WS-FAIXA-SCORE</span>       <span class="t">PIC 9(04)</span> <span class="k">VALUE</span> <span class="n">850</span>.
+
+       <span class="k">PROCEDURE DIVISION.</span>
+           <span class="c">*> 1. IF / ELSE com operadores relacionais e logicos</span>
+           <span class="k">IF</span> <span class="t">WS-IDADE</span> <span class="k">&gt;=</span> <span class="n">18</span> <span class="k">AND</span> <span class="t">WS-TEM-CNH</span> <span class="k">=</span> <span class="s">"S"</span>
+               <span class="k">DISPLAY</span> <span class="s">"Habilitado para conducao de veiculos."</span>
+           <span class="k">ELSE</span>
+               <span class="k">DISPLAY</span> <span class="s">"Nao habilitado."</span>
+           <span class="k">END-IF</span>
+
+           <span class="c">*> 2. EVALUATE multivariável</span>
+           <span class="k">EVALUATE TRUE</span>
+               <span class="k">WHEN</span> <span class="t">WS-FAIXA-SCORE</span> <span class="k">&gt;=</span> <span class="n">800</span>
+                   <span class="k">DISPLAY</span> <span class="s">"Credito Premium Aprovado Automaticamente"</span>
+               <span class="k">WHEN</span> <span class="t">WS-FAIXA-SCORE</span> <span class="k">&gt;=</span> <span class="n">600</span>
+                   <span class="k">DISPLAY</span> <span class="s">"Credito Convencional sob Analise"</span>
+               <span class="k">WHEN OTHER</span>
+                   <span class="k">DISPLAY</span> <span class="s">"Credito Recusado pelo Sistema"</span>
+           <span class="k">END-EVALUATE</span>.</code></pre></div>
+        </div></div>
+      </div>
+
+      <!-- Conversão de Tipos e Movimentação -->
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Conversão de Tipos (MOVE, NUMVAL &amp; REDEFINES) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>O comando <code>MOVE</code> converte automaticamente dados entre diferentes formatos (ex: numérico para alfanumérico com formatação). Para converter strings com símbolos em números, usamos a função intrínseca <code>FUNCTION NUMVAL-C</code>. A cláusula <code>REDEFINES</code> sobrepõe o mesmo endereço de memória com outro tipo de layout (o casting direto da memória no COBOL).</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="c">*> Conversao com funcao intrinseca</span>
+       <span class="t">01</span>  <span class="t">WS-VALOR-TEXTO</span>       <span class="t">PIC X(12)</span> <span class="k">VALUE</span> <span class="s">"$1,250.50"</span>.
+       <span class="t">01</span>  <span class="t">WS-VALOR-NUMERO</span>      <span class="t">PIC 9(06)V99</span>.
+
+       <span class="c">*> REDEFINES: reinterpreta o mesmo bloco de bytes</span>
+       <span class="t">01</span>  <span class="t">WS-DATA-NATIVO</span>       <span class="t">PIC 9(08)</span> <span class="k">VALUE</span> <span class="n">20241030</span>.
+       <span class="t">01</span>  <span class="t">WS-DATA-CAMPOS</span> <span class="k">REDEFINES</span> <span class="t">WS-DATA-NATIVO</span>.
+           <span class="t">05</span>  <span class="t">WS-ANO</span>           <span class="t">PIC 9(04)</span>.
+           <span class="t">05</span>  <span class="t">WS-MES</span>           <span class="t">PIC 9(02)</span>.
+           <span class="t">05</span>  <span class="t">WS-DIA</span>           <span class="t">PIC 9(02)</span>.
+
+       <span class="k">PROCEDURE DIVISION.</span>
+           <span class="k">COMPUTE</span> <span class="t">WS-VALOR-NUMERO</span> <span class="k">=</span> <span class="k">FUNCTION NUMVAL-C</span>(<span class="t">WS-VALOR-TEXTO</span>)
+           <span class="k">DISPLAY</span> <span class="s">"Numero convertido: "</span> <span class="t">WS-VALOR-NUMERO</span>
+           <span class="k">DISPLAY</span> <span class="s">"Data desmembrada: "</span> <span class="t">WS-DIA</span> <span class="s">"/"</span> <span class="t">WS-MES</span> <span class="s">"/"</span> <span class="t">WS-ANO</span>.</code></pre></div>
+        </div></div>
+      </div>
+
+      <!-- Laços de Repetição com PERFORM -->
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Laços de Repetição com PERFORM (TIMES, UNTIL, VARYING) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>O <code>PERFORM</code> implementa todas as formas de repetição no COBOL: repetições fixas (<code>PERFORM N TIMES</code>), condicionais (<code>PERFORM UNTIL condicao</code>) e contadores incrementais (<code>PERFORM VARYING ... FROM ... BY</code>). <code>EXIT PERFORM</code> atua como <code>break</code> e <code>EXIT PERFORM CYCLE</code> como <code>continue</code>.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">WS-I</span>                 <span class="t">PIC 9(02)</span> <span class="k">VALUE</span> <span class="n">1</span>.
+
+       <span class="k">PROCEDURE DIVISION.</span>
+           <span class="c">*> 1. Repeticao fixa</span>
+           <span class="k">PERFORM</span> <span class="n">3</span> <span class="k">TIMES</span>
+               <span class="k">DISPLAY</span> <span class="s">"Processando lote financeiro..."</span>
+           <span class="k">END-PERFORM</span>
+
+           <span class="c">*> 2. PERFORM VARYING com EXIT PERFORM (break)</span>
+           <span class="k">PERFORM VARYING</span> <span class="t">WS-I</span> <span class="k">FROM</span> <span class="n">1</span> <span class="k">BY</span> <span class="n">1</span> <span class="k">UNTIL</span> <span class="t">WS-I</span> <span class="k">&gt;</span> <span class="n">10</span>
+               <span class="k">IF</span> <span class="t">WS-I</span> <span class="k">=</span> <span class="n">5</span>
+                   <span class="k">EXIT PERFORM</span> <span class="c">*> Interrompe o loop</span>
+               <span class="k">END-IF</span>
+               <span class="k">DISPLAY</span> <span class="s">"Indice: "</span> <span class="t">WS-I</span>
+           <span class="k">END-PERFORM</span>.</code></pre></div>
+        </div></div>
+      </div>
+
+      <!-- Tratamento de Erros e Exceções em COBOL -->
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Tratamento de Exceções &amp; Erros (ON SIZE ERROR, ON EXCEPTION) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>O tratamento de erros no COBOL é robusto e não permite falhas silenciosas: cláusula <code>ON SIZE ERROR</code> protege operações matemáticas contra estouros; <code>ON EXCEPTION</code> em chamadas <code>CALL</code> trata programas externos inexistentes; e a checagem de <code>FILE STATUS</code> valida cada operação de disco.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">WS-SUBPROG</span>           <span class="t">PIC X(08)</span> <span class="k">VALUE</span> <span class="s">"CALCJUR"</span>.
+       <span class="t">01</span>  <span class="t">WS-PARAMETRO</span>         <span class="t">PIC 9(04)</span> <span class="k">VALUE</span> <span class="n">1000</span>.
+
+       <span class="k">PROCEDURE DIVISION.</span>
+           <span class="c">*> Chamada protegida com ON EXCEPTION</span>
+           <span class="k">CALL</span> <span class="t">WS-SUBPROG</span> <span class="k">USING</span> <span class="t">WS-PARAMETRO</span>
+               <span class="k">ON EXCEPTION</span>
+                   <span class="k">DISPLAY</span> <span class="s">"ERRO CRITICO: Modulo "</span> <span class="t">WS-SUBPROG</span> <span class="s">" nao encontrado!"</span>
+               <span class="k">NOT ON EXCEPTION</span>
+                   <span class="k">DISPLAY</span> <span class="s">"Modulo executado com sucesso."</span>
+           <span class="k">END-CALL</span>.</code></pre></div>
+        </div></div>
+      </div>
+
+      <!-- OO-COBOL e Abstração -->
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Classes, Métodos &amp; OO-COBOL (Abstração Moderna) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>O padrão <strong>Object-Oriented COBOL (ISO/IEC 1989:2002+)</strong> introduziu suporte formal a Classes (<code>CLASS-ID</code>), Métodos (<code>METHOD-ID</code>), Herança (<code>INHERITS</code>), Interfaces e instanciação polimórfica via comando <code>INVOKE</code>.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code>       <span class="k">IDENTIFICATION DIVISION.</span>
+       <span class="k">CLASS-ID.</span> ContaBancaria.
+       <span class="k">ENVIRONMENT DIVISION.</span>
+       <span class="k">CONFIGURATION SECTION.</span>
+       <span class="k">REPOSITORY.</span>
+           <span class="k">CLASS</span> ContaBancaria.
+
+       <span class="k">DATA DIVISION.</span>
+       <span class="k">WORKING-STORAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">SaldoPrivado</span>         <span class="t">PIC 9(09)V99</span> <span class="k">VALUE</span> <span class="n">0</span>.
+
+       <span class="k">PROCEDURE DIVISION.</span>
+       <span class="k">IDENTIFICATION DIVISION.</span>
+       <span class="k">METHOD-ID.</span> Depositar.
+       <span class="k">DATA DIVISION.</span>
+       <span class="k">LINKAGE SECTION.</span>
+       <span class="t">01</span>  <span class="t">ValorDeposito</span>        <span class="t">PIC 9(06)V99</span>.
+       <span class="k">PROCEDURE DIVISION USING</span> <span class="t">ValorDeposito</span>.
+           <span class="k">ADD</span> <span class="t">ValorDeposito</span> <span class="k">TO</span> <span class="t">SaldoPrivado</span>
+           <span class="k">DISPLAY</span> <span class="s">"Deposito efetuado via Metodo OO-COBOL"</span>.
+       <span class="k">END METHOD</span> Depositar.
+
+       <span class="k">END CLASS</span> ContaBancaria.</code></pre></div>
+        </div></div>
+      </div>
+
     </div>
   </section>
 

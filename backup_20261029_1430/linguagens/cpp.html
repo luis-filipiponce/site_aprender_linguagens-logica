@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C++ | Ponce Metodologias & Dev</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #10b981;
+      --accent-dark: #059669;
+      --accent-light: #d1fae5;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface2: #334155;
+      --border: #334155;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --code-bg: #0d1117;
+      --radius: 10px;
+      --header-h: 64px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      gap: 16px;
+    }
+
+    .header-logo {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .header-logo:hover { color: var(--accent); }
+
+    .header-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.3px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      color: var(--accent);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-back:hover { background: var(--accent); color: #fff; }
+
+    /* ── LAYOUT ── */
+    main { padding-top: var(--header-h); }
+
+    .section {
+      padding: 72px 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 40px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 96px 24px 80px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16,185,129,0.15);
+      border: 1px solid rgba(16,185,129,0.4);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .hero-badge span { opacity: 0.5; }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #f1f5f9 30%, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hero-meta-item strong {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .hero-meta-item span {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 36px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px; top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px rgba(16,185,129,0.3);
+    }
+
+    .timeline-year {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .timeline-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .timeline-desc { color: var(--muted); font-size: 0.9rem; }
+
+    /* ── CARDS ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .card p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── ACCORDION ── */
+    .accordion { display: flex; flex-direction: column; gap: 8px; }
+
+    .acc-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .acc-item.open { border-color: var(--accent); }
+
+    .acc-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 0.975rem;
+      font-weight: 600;
+      text-align: left;
+      gap: 12px;
+    }
+
+    .acc-trigger:hover { color: var(--accent); }
+
+    .acc-arrow {
+      width: 20px; height: 20px;
+      flex-shrink: 0;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      transition: transform 0.3s, border-color 0.2s;
+    }
+
+    .acc-item.open .acc-arrow { transform: rotate(180deg); border-color: var(--accent); color: var(--accent); }
+
+    .acc-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .acc-content {
+      padding: 0 20px 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ── CODE BLOCKS ── */
+    .code-block {
+      position: relative;
+      margin-top: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--code-bg);
+      border: 1px solid #1e2937;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: #161b22;
+      border-bottom: 1px solid #1e2937;
+    }
+
+    .code-lang {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .copy-btn {
+      background: none;
+      border: 1px solid var(--surface2);
+      border-radius: 5px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .copy-btn.copied { border-color: var(--accent); color: var(--accent); }
+
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-size: 0.825rem;
+      line-height: 1.65;
+      color: #e6edf3;
+      font-family: "Cascadia Code", "Fira Code", "JetBrains Mono", monospace;
+    }
+
+    /* syntax colors */
+    .kw { color: #ff7b72; }
+    .ty { color: #79c0ff; }
+    .fn { color: #d2a8ff; }
+    .st { color: #a5d6ff; }
+    .cm { color: #8b949e; font-style: italic; }
+    .nm { color: #ffa657; }
+    .op { color: #ff7b72; }
+    .pp { color: #ffa657; }
+
+    /* ── TABS ── */
+    .tabs-nav {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 0;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      padding-bottom: 0;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      padding: 10px 18px;
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .tab-desc {
+      color: var(--muted);
+      font-size: 0.875rem;
+      padding: 16px 0 4px;
+    }
+
+    /* ── SALARY TABLE ── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    thead { background: var(--surface); }
+    thead th {
+      padding: 14px 18px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(16,185,129,0.04); }
+    tbody td { padding: 13px 18px; color: var(--text); }
+    tbody td:first-child { font-weight: 600; }
+
+    .salary-range {
+      display: inline-block;
+      background: rgba(16,185,129,0.12);
+      color: var(--accent);
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    /* ── CHIPS ── */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      background: var(--surface2);
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .chip.accent {
+      background: rgba(16,185,129,0.12);
+      border-color: rgba(16,185,129,0.3);
+      color: var(--accent);
+    }
+
+    /* ── ROADMAP ── */
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .phase {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      position: relative;
+    }
+
+    .phase-num {
+      font-size: 2rem;
+      font-weight: 900;
+      color: rgba(16,185,129,0.18);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .phase-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .phase ul {
+      padding-left: 16px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.8;
+    }
+
+    /* ── RESOURCES ── */
+    .resources-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .resource-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .resource-item:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .resource-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      width: 40px;
+      text-align: center;
+    }
+
+    .resource-info { flex: 1; min-width: 0; }
+
+    .resource-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--accent);
+    }
+
+    .resource-desc {
+      font-size: 0.83rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .resource-arrow {
+      color: var(--muted);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ── MARKET INFO ── */
+    .market-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .market-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .market-card h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer strong { color: var(--accent); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .header-title { display: none; }
+      .section { padding: 56px 18px; }
+      .section-title { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="../index.html" class="header-logo">🎓 Ponce Metodologias &amp; Dev</a>
+  <span class="header-title">🚀 C++</span>
+  <a href="../index.html" class="btn-back">← Voltar</a>
+</header>
+
+<main>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span>⚡</span> Alta Performance <span>|</span> Multiparadigma
+    </div>
+    <h1>🚀 C++</h1>
+    <p class="hero-sub">
+      A linguagem de zero-cost abstractions que alimenta motores de jogos, sistemas de trading de alta frequência, navegadores web e todo hardware ao seu redor.
+      Criada por Bjarne Stroustrup em 1979, C++ continua sendo a escolha definitiva quando performance não é negociável.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <strong>1979</strong>
+        <span>Criação</span>
+      </div>
+      <div class="hero-meta-item">
+        <strong>C++23</strong>
+        <span>Última versão</span>
+      </div>
+      <div class="hero-meta-item">
+        <strong>#3</strong>
+        <span>TIOBE Index</span>
+      </div>
+      <div class="hero-meta-item">
+        <strong>Stroustrup</strong>
+        <span>Criador</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ HISTÓRIA ══ -->
+  <section class="section">
+    <p class="section-label">Contexto</p>
+    <h2 class="section-title">História &amp; Evolução</h2>
+    <p class="section-sub">De uma extensão do C para a linguagem que molda toda a infraestrutura digital moderna — quatro décadas de inovação sem parar.</p>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <p class="timeline-year">1979</p>
+        <p class="timeline-title">C with Classes — Bjarne Stroustrup, Bell Labs</p>
+        <p class="timeline-desc">Stroustrup adiciona classes, herança e verificação de tipos mais rígida ao C, buscando combinar a expressividade de Simula com a performance do C.</p>
+      </div>
+
+      <div class="timeline-item">
+        <p class="timeline-year">1983</p>
+        <p class="timeline-title">Renomeado C++</p>
+        <p class="timeline-desc">O operador de incremento <code style="color:var(--accent)">++</code> no próprio nome: uma versão melhorada do C. Adiciona funções virtuais, sobrecarga de operadores, referências e <code style="color:var(--accent)">const</code>.</p>
+      </div>
+
+      <div class="timeline-item">
+        <p class="timeline-year">1998</p>
+        <p class="timeline-title">C++98 — Primeiro padrão ISO, STL padronizada</p>
+        <p class="timeline-desc">A Standard Template Library (STL) — containers, algoritmos e iterators — é incorporada ao padrão, unificando o ecossistema.</p>
+      </div>
+
+      <div class="timeline-item">
+        <p class="timeline-year">2011</p>
+        <p class="timeline-title">C++11 — A Grande Revolução Moderna</p>
+        <p class="timeline-desc">Move semantics, expressões lambda, smart pointers (<code style="color:var(--accent)">unique_ptr</code>, <code style="color:var(--accent)">shared_ptr</code>), dedução de tipos com <code style="color:var(--accent)">auto</code>, threads nativas, <code style="color:var(--accent)">nullptr</code>, range-for, e muito mais. Considerado o marco do C++ moderno.</p>
+      </div>
+
+      <div class="timeline-item">
+        <p class="timeline-year">2014</p>
+        <p class="timeline-title">C++14 — Refinamentos do C++11</p>
+        <p class="timeline-desc">Lambdas genéricas, dedução de retorno de funções, <code style="color:var(--accent)">std::make_unique</code>, relaxamento de <code style="color:var(--accent)">constexpr</code>.</p>
+      </div>
+
+      <div class="timeline-item">
+        <p class="timeline-year">2017</p>
+        <p class="timeline-title">C++17 — Structured Bindings, <code style="color:var(--accent)">if constexpr</code>, <code style="color:var(--accent)">std::optional</code></p>
+        <p class="timeline-desc">Parallel STL, structured bindings, <code style="color:var(--accent)">std::variant</code>, <code style="color:var(--accent)">std::any</code>, <code style="color:var(--accent)">std::filesystem</code> e fold expressions tornaram o código muito mais expressivo.</p>
+      </div>
+
+      <div class="timeline-item">
+        <p class="timeline-year">2020</p>
+        <p class="timeline-title">C++20 — Concepts, Ranges, Coroutines, Modules</p>
+        <p class="timeline-desc">A maior atualização desde C++11. Concepts permitem restrições semânticas em templates; Coroutines habilitam código assíncrono elegante; Modules eliminam problemas históricos com headers.</p>
+      </div>
+
+      <div class="timeline-item">
+        <p class="timeline-year">2023</p>
+        <p class="timeline-title">C++23 — Refinamentos contínuos</p>
+        <p class="timeline-desc"><code style="color:var(--accent)">std::expected</code>, <code style="color:var(--accent)">std::stacktrace</code>, melhorias em ranges e formatação, e dezenas de correções e adições ao padrão.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══ POR QUE APRENDER ══ -->
+  <section class="section">
+    <p class="section-label">Motivação</p>
+    <h2 class="section-title">Por Que Aprender C++?</h2>
+    <p class="section-sub">C++ domina os domínios onde nanosegundos importam e onde hardware precisa ser controlado com precisão cirúrgica.</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🎮</div>
+        <h3>Game Development</h3>
+        <p>Unreal Engine, id Tech e CryEngine são escritos em C++. Praticamente toda engine de jogos AAA usa C++ como linguagem primária.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <h3>Alta Frequência (HFT)</h3>
+        <p>Sistemas de trading executam ordens em microssegundos. Bancos e funds como Jane Street, Citadel e Two Sigma dependem de C++.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Motores de Navegador</h3>
+        <p>V8 (Chrome/Node.js), WebKit (Safari) e Blink são implementados em C++. A web que você usa roda em C++.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔧</div>
+        <h3>Sistemas Embarcados</h3>
+        <p>RTOS, automotive (AUTOSAR), aerospace, IoT industrial e dispositivos médicos — onde memória e ciclos de CPU são recursos escassos.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══ CONCEITOS FUNDAMENTAIS ══ -->
+  <section class="section">
+    <p class="section-label">Core</p>
+    <h2 class="section-title">Conceitos Fundamentais</h2>
+    <p class="section-sub">Os pilares que tornam C++ único — e que separam um programador médio de um especialista.</p>
+
+    <div class="accordion" id="accordion">
+
+      <!-- RAII -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>⚙️ &nbsp;RAII &amp; Smart Pointers</span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p><strong style="color:var(--text)">Resource Acquisition Is Initialization</strong> — o padrão mais importante de C++. Recursos (memória, arquivos, sockets) são vinculados ao ciclo de vida de objetos. Quando o objeto sai de escopo, o destrutor libera automaticamente o recurso.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="pp">#include &lt;memory&gt;
+#include &lt;fstream&gt;</span>
+
+<span class="kw">void</span> <span class="fn">processFile</span>(<span class="kw">const</span> std::<span class="ty">string</span>&amp; path) {
+    <span class="cm">// unique_ptr: ownership exclusivo, liberação automática</span>
+    <span class="kw">auto</span> buffer = std::<span class="fn">make_unique</span>&lt;<span class="kw">int</span>[]&gt;(<span class="nm">1024</span>);
+
+    <span class="cm">// file fecha automaticamente ao sair do escopo</span>
+    std::<span class="ty">ifstream</span> file(path);
+    <span class="kw">if</span> (!file) <span class="kw">throw</span> std::<span class="ty">runtime_error</span>(<span class="st">"Não encontrado"</span>);
+
+    <span class="cm">// shared_ptr: ownership compartilhado com ref-count</span>
+    <span class="kw">auto</span> shared = std::<span class="fn">make_shared</span>&lt;std::<span class="ty">vector</span>&lt;<span class="kw">int</span>&gt;&gt;();
+} <span class="cm">// buffer, file e shared liberados aqui — sem leaks!</span></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Templates -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🧬 &nbsp;Templates &amp; Generics</span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>Templates permitem escrever código genérico que é <strong style="color:var(--text)">instanciado em tempo de compilação</strong>, resultando em zero custo de runtime — diferente de generics via type erasure de outras linguagens.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="cm">// Template de função — gerado para cada tipo em compile-time</span>
+<span class="kw">template</span>&lt;<span class="kw">typename</span> T&gt;
+T <span class="fn">max_val</span>(T a, T b) { <span class="kw">return</span> a > b ? a : b; }
+
+<span class="cm">// Template de classe — container genérico</span>
+<span class="kw">template</span>&lt;<span class="kw">typename</span> T, std::<span class="ty">size_t</span> N&gt;
+<span class="kw">class</span> <span class="ty">Stack</span> {
+    T data[N];
+    <span class="kw">size_t</span> top = <span class="nm">0</span>;
+<span class="kw">public</span>:
+    <span class="kw">void</span> <span class="fn">push</span>(T val) { data[top++] = val; }
+    T    <span class="fn">pop</span>()      { <span class="kw">return</span> data[--top]; }
+};
+
+<span class="cm">// Instâncias distintas — sem overhead!</span>
+<span class="ty">Stack</span>&lt;<span class="kw">int</span>, <span class="nm">64</span>&gt;    intStack;
+<span class="ty">Stack</span>&lt;<span class="kw">double</span>, <span class="nm">32</span>&gt; dblStack;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Move Semantics -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>⚡ &nbsp;Move Semantics &amp; Perfect Forwarding</span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>Introduzido no C++11, move semantics permite <strong style="color:var(--text)">transferir ownership de recursos</strong> sem cópia — fundamental para performance com objetos grandes como vetores e strings.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="kw">class</span> <span class="ty">Buffer</span> {
+    <span class="kw">int</span>* data;
+    <span class="kw">size_t</span> size;
+<span class="kw">public</span>:
+    <span class="cm">// Move constructor — "rouba" o recurso</span>
+    <span class="ty">Buffer</span>(<span class="ty">Buffer</span>&amp;&amp; other) <span class="kw">noexcept</span>
+        : data(other.data), size(other.size) {
+        other.data = <span class="kw">nullptr</span>; <span class="cm">// invalida a fonte</span>
+    }
+};
+
+std::<span class="ty">vector</span>&lt;<span class="ty">Buffer</span>&gt; vec;
+<span class="ty">Buffer</span> buf(<span class="nm">1024</span>);
+vec.<span class="fn">push_back</span>(std::<span class="fn">move</span>(buf)); <span class="cm">// sem cópia!</span>
+
+<span class="cm">// Perfect forwarding preserva value category</span>
+<span class="kw">template</span>&lt;<span class="kw">typename</span> T&gt;
+<span class="kw">void</span> <span class="fn">wrapper</span>(T&amp;&amp; arg) {
+    <span class="fn">target</span>(std::<span class="fn">forward</span>&lt;T&gt;(arg));
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STL -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>📦 &nbsp;STL — Containers, Algorithms, Iterators</span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>A Standard Template Library oferece estruturas de dados e algoritmos prontos, todos com complexidade garantida pelo padrão e sem overhead de abstração.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="pp">#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;map&gt;
+#include &lt;ranges&gt;</span>   <span class="cm">// C++20</span>
+
+std::<span class="ty">vector</span>&lt;<span class="kw">int</span>&gt; nums = {<span class="nm">5</span>,<span class="nm">1</span>,<span class="nm">8</span>,<span class="nm">3</span>,<span class="nm">2</span>};
+std::<span class="fn">sort</span>(nums.<span class="fn">begin</span>(), nums.<span class="fn">end</span>());
+
+<span class="cm">// C++20 ranges — pipeline legível</span>
+<span class="kw">auto</span> evens = nums
+    | std::views::<span class="fn">filter</span>([](<span class="kw">int</span> n){ <span class="kw">return</span> n%<span class="nm">2</span>==<span class="nm">0</span>; })
+    | std::views::<span class="fn">transform</span>([](<span class="kw">int</span> n){ <span class="kw">return</span> n*<span class="nm">2</span>; });
+
+std::<span class="ty">map</span>&lt;std::<span class="ty">string</span>, <span class="kw">int</span>&gt; scores;
+scores[<span class="st">"Alice"</span>] = <span class="nm">95</span>;
+<span class="kw">auto</span> [name, score] = *scores.<span class="fn">begin</span>(); <span class="cm">// structured binding</span></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concorrência -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🔀 &nbsp;Concorrência — <code>std::thread</code>, mutex, atomic</span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>C++11 trouxe suporte nativo a threads, mutexes e operações atômicas diretamente no padrão — sem dependência de APIs do sistema operacional.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="pp">#include &lt;thread&gt;
+#include &lt;mutex&gt;
+#include &lt;atomic&gt;</span>
+
+std::<span class="ty">atomic</span>&lt;<span class="kw">int</span>&gt; counter{<span class="nm">0</span>};
+std::<span class="ty">mutex</span> mtx;
+
+<span class="kw">void</span> <span class="fn">worker</span>(<span class="kw">int</span> id) {
+    counter.<span class="fn">fetch_add</span>(<span class="nm">1</span>, std::<span class="nm">memory_order_relaxed</span>);
+    std::<span class="ty">lock_guard</span>&lt;std::<span class="ty">mutex</span>&gt; lock(mtx); <span class="cm">// RAII lock</span>
+    <span class="cm">// seção crítica protegida</span>
+}
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    std::<span class="ty">thread</span> t1(<span class="fn">worker</span>, <span class="nm">1</span>);
+    std::<span class="ty">thread</span> t2(<span class="fn">worker</span>, <span class="nm">2</span>);
+    t1.<span class="fn">join</span>(); t2.<span class="fn">join</span>();
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Polimorfismo -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🏛️ &nbsp;Polimorfismo &amp; <code>virtual</code></span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>C++ suporta polimorfismo em tempo de execução via vtables e <code style="color:var(--accent)">virtual</code>, além de polimorfismo estático via templates (zero overhead). A palavra-chave <code style="color:var(--accent)">override</code> (C++11) torna a intenção explícita e segura.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="kw">class</span> <span class="ty">Shape</span> {
+<span class="kw">public</span>:
+    <span class="kw">virtual</span> <span class="kw">double</span> <span class="fn">area</span>() <span class="kw">const</span> = <span class="nm">0</span>; <span class="cm">// pura virtual</span>
+    <span class="kw">virtual</span> ~<span class="ty">Shape</span>() = <span class="kw">default</span>;
+};
+
+<span class="kw">class</span> <span class="ty">Circle</span> : <span class="kw">public</span> <span class="ty">Shape</span> {
+    <span class="kw">double</span> r;
+<span class="kw">public</span>:
+    <span class="ty">Circle</span>(<span class="kw">double</span> r) : r(r) {}
+    <span class="kw">double</span> <span class="fn">area</span>() <span class="kw">const override</span> { <span class="kw">return</span> <span class="nm">3.14159</span> * r * r; }
+};
+
+<span class="cm">// Polimorfismo via smart pointer</span>
+std::<span class="ty">unique_ptr</span>&lt;<span class="ty">Shape</span>&gt; s = std::<span class="fn">make_unique</span>&lt;<span class="ty">Circle</span>&gt;(<span class="nm">5.0</span>);
+<span class="kw">auto</span> a = s-&gt;<span class="fn">area</span>(); <span class="cm">// despacho virtual, sem leak</span></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══ EXEMPLOS PRÁTICOS ══ -->
+  <section class="section">
+    <p class="section-label">Hands-On</p>
+    <h2 class="section-title">Exemplos Práticos</h2>
+    <p class="section-sub">Código realista cobrindo os padrões mais usados no C++ moderno do dia a dia.</p>
+
+    <div class="tabs-nav" id="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab(0)">1 — RAII &amp; unique_ptr</button>
+      <button class="tab-btn" onclick="switchTab(1)">2 — C++20 Concepts</button>
+      <button class="tab-btn" onclick="switchTab(2)">3 — Thread Pool</button>
+    </div>
+
+    <!-- Tab 0 -->
+    <div class="tab-panel active" id="tab-0">
+      <p class="tab-desc">Classe de recurso com RAII completo: construtor, destrutor, move e copy semânticos corretos (Rule of Five).</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">C++ — unique_ptr &amp; RAII</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+        </div>
+        <pre><span class="pp">#include &lt;memory&gt;
+#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;</span>
+
+<span class="kw">class</span> <span class="ty">FileResource</span> {
+    FILE* handle = <span class="kw">nullptr</span>;
+
+<span class="kw">public</span>:
+    <span class="kw">explicit</span> <span class="ty">FileResource</span>(<span class="kw">const</span> <span class="kw">char</span>* path, <span class="kw">const</span> <span class="kw">char</span>* mode) {
+        handle = <span class="fn">fopen</span>(path, mode);
+        <span class="kw">if</span> (!handle)
+            <span class="kw">throw</span> std::<span class="ty">runtime_error</span>(std::<span class="ty">string</span>(<span class="st">"Falha ao abrir: "</span>) + path);
+        std::<span class="fn">cout</span> &lt;&lt; <span class="st">"✅ Arquivo aberto\n"</span>;
+    }
+
+    <span class="cm">// Destrutor — liberação garantida (RAII)</span>
+    ~<span class="ty">FileResource</span>() {
+        <span class="kw">if</span> (handle) { <span class="fn">fclose</span>(handle); std::<span class="fn">cout</span> &lt;&lt; <span class="st">"🗑️  Arquivo fechado\n"</span>; }
+    }
+
+    <span class="cm">// Move constructor — transfere ownership</span>
+    <span class="ty">FileResource</span>(<span class="ty">FileResource</span>&amp;&amp; other) <span class="kw">noexcept</span>
+        : handle(std::<span class="fn">exchange</span>(other.handle, <span class="kw">nullptr</span>)) {}
+
+    <span class="cm">// Move assignment</span>
+    <span class="ty">FileResource</span>&amp; <span class="kw">operator</span>=(<span class="ty">FileResource</span>&amp;&amp; other) <span class="kw">noexcept</span> {
+        <span class="kw">if</span> (<span class="kw">this</span> != &amp;other) {
+            <span class="kw">if</span> (handle) <span class="fn">fclose</span>(handle);
+            handle = std::<span class="fn">exchange</span>(other.handle, <span class="kw">nullptr</span>);
+        }
+        <span class="kw">return</span> *<span class="kw">this</span>;
+    }
+
+    <span class="cm">// Sem cópia — recurso único</span>
+    <span class="ty">FileResource</span>(<span class="kw">const</span> <span class="ty">FileResource</span>&amp;)            = <span class="kw">delete</span>;
+    <span class="ty">FileResource</span>&amp; <span class="kw">operator</span>=(<span class="kw">const</span> <span class="ty">FileResource</span>&amp;) = <span class="kw">delete</span>;
+
+    FILE* <span class="fn">get</span>() <span class="kw">const</span> { <span class="kw">return</span> handle; }
+};
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="cm">// unique_ptr gerencia FileResource</span>
+    <span class="kw">auto</span> f = std::<span class="fn">make_unique</span>&lt;<span class="ty">FileResource</span>&gt;(<span class="st">"data.txt"</span>, <span class="st">"r"</span>);
+    <span class="cm">// ... usa f->get() ...</span>
+    <span class="cm">// sem necessidade de delete — RAII cuida de tudo</span>
+}</pre>
+      </div>
+    </div>
+
+    <!-- Tab 1 -->
+    <div class="tab-panel" id="tab-1">
+      <p class="tab-desc">C++20 Concepts restringem templates com precisão semântica — erros de compilação legíveis e intenção documentada no código.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">C++ — C++20 Concepts</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+        </div>
+        <pre><span class="pp">#include &lt;concepts&gt;
+#include &lt;numeric&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;</span>
+
+<span class="cm">// Concept: tipo deve ser numérico</span>
+<span class="kw">template</span>&lt;<span class="kw">typename</span> T&gt;
+<span class="kw">concept</span> <span class="ty">Numeric</span> = std::<span class="ty">integral</span>&lt;T&gt; || std::<span class="ty">floating_point</span>&lt;T&gt;;
+
+<span class="cm">// Concept: container iterável com tipo numérico</span>
+<span class="kw">template</span>&lt;<span class="kw">typename</span> C&gt;
+<span class="kw">concept</span> <span class="ty">NumericRange</span> =
+    std::<span class="ty">ranges::range</span>&lt;C&gt; &amp;&amp;
+    <span class="ty">Numeric</span>&lt;std::<span class="ty">ranges::range_value_t</span>&lt;C&gt;&gt;;
+
+<span class="cm">// Função restrita por concept — erro claro se violado</span>
+<span class="ty">Numeric</span> <span class="kw">auto</span> <span class="fn">average</span>(<span class="ty">NumericRange</span> <span class="kw">auto</span> <span class="kw">const</span>&amp; range) {
+    <span class="kw">if</span> (std::<span class="fn">empty</span>(range)) <span class="kw">return</span> <span class="nm">0.0</span>;
+    <span class="kw">auto</span> sum = std::<span class="fn">reduce</span>(
+        std::<span class="fn">begin</span>(range), std::<span class="fn">end</span>(range));
+    <span class="kw">return</span> <span class="kw">static_cast</span>&lt;<span class="kw">double</span>&gt;(sum) / std::<span class="fn">size</span>(range);
+}
+
+<span class="cm">// Overload baseado em concept (não em SFINAE!)</span>
+<span class="kw">template</span>&lt;<span class="ty">Numeric</span> T&gt;
+<span class="kw">void</span> <span class="fn">print</span>(T val) {
+    std::<span class="fn">cout</span> &lt;&lt; <span class="st">"Número: "</span> &lt;&lt; val &lt;&lt; <span class="st">'\n'</span>;
+}
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    std::<span class="ty">vector</span>&lt;<span class="kw">double</span>&gt; data = {<span class="nm">3.0</span>, <span class="nm">7.5</span>, <span class="nm">2.5</span>, <span class="nm">10.0</span>};
+    std::<span class="fn">cout</span> &lt;&lt; <span class="st">"Média: "</span> &lt;&lt; <span class="fn">average</span>(data) &lt;&lt; <span class="st">'\n'</span>; <span class="cm">// 5.75</span>
+    <span class="fn">print</span>(<span class="nm">42</span>);
+    <span class="cm">// print("oi"); — erro de compilação legível!</span>
+}</pre>
+      </div>
+    </div>
+
+    <!-- Tab 2 -->
+    <div class="tab-panel" id="tab-2">
+      <p class="tab-desc">Thread pool simples usando <code style="color:var(--accent)">std::thread</code>, <code style="color:var(--accent)">std::queue</code>, mutex e condition variable — padrão clássico de concorrência em C++.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">C++ — Thread Pool</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+        </div>
+        <pre><span class="pp">#include &lt;thread&gt;
+#include &lt;queue&gt;
+#include &lt;mutex&gt;
+#include &lt;condition_variable&gt;
+#include &lt;functional&gt;
+#include &lt;vector&gt;</span>
+
+<span class="kw">class</span> <span class="ty">ThreadPool</span> {
+    std::<span class="ty">vector</span>&lt;std::<span class="ty">thread</span>&gt;   workers;
+    std::<span class="ty">queue</span>&lt;std::<span class="ty">function</span>&lt;<span class="kw">void</span>()&gt;&gt; tasks;
+    std::<span class="ty">mutex</span>               queueMtx;
+    std::<span class="ty">condition_variable</span>  cv;
+    <span class="kw">bool</span>                     stop = <span class="kw">false</span>;
+
+<span class="kw">public</span>:
+    <span class="kw">explicit</span> <span class="ty">ThreadPool</span>(<span class="kw">size_t</span> n) {
+        <span class="kw">for</span> (<span class="kw">size_t</span> i = <span class="nm">0</span>; i &lt; n; ++i)
+            workers.<span class="fn">emplace_back</span>([<span class="kw">this</span>] {
+                <span class="kw">while</span> (<span class="kw">true</span>) {
+                    std::<span class="ty">function</span>&lt;<span class="kw">void</span>()&gt; task;
+                    {
+                        std::<span class="ty">unique_lock</span> lock(queueMtx);
+                        cv.<span class="fn">wait</span>(lock, [<span class="kw">this</span>]{
+                            <span class="kw">return</span> stop || !tasks.<span class="fn">empty</span>();
+                        });
+                        <span class="kw">if</span> (stop &amp;&amp; tasks.<span class="fn">empty</span>()) <span class="kw">return</span>;
+                        task = std::<span class="fn">move</span>(tasks.<span class="fn">front</span>());
+                        tasks.<span class="fn">pop</span>();
+                    }
+                    <span class="fn">task</span>(); <span class="cm">// executa fora do lock</span>
+                }
+            });
+    }
+
+    <span class="kw">void</span> <span class="fn">enqueue</span>(std::<span class="ty">function</span>&lt;<span class="kw">void</span>()&gt; task) {
+        { std::<span class="ty">lock_guard</span> lk(queueMtx); tasks.<span class="fn">push</span>(std::<span class="fn">move</span>(task)); }
+        cv.<span class="fn">notify_one</span>();
+    }
+
+    ~<span class="ty">ThreadPool</span>() {
+        { std::<span class="ty">lock_guard</span> lk(queueMtx); stop = <span class="kw">true</span>; }
+        cv.<span class="fn">notify_all</span>();
+        <span class="kw">for</span> (<span class="kw">auto</span>&amp; w : workers) w.<span class="fn">join</span>();
+    }
+};
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="ty">ThreadPool</span> pool(<span class="nm">4</span>); <span class="cm">// 4 workers</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">20</span>; ++i)
+        pool.<span class="fn">enqueue</span>([i]{ <span class="cm">/* processa tarefa i */</span> });
+} <span class="cm">// pool destruído → workers finalizam</span></pre>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══ MERCADO ══ -->
+  <section class="section">
+    <p class="section-label">Carreira</p>
+    <h2 class="section-title">Mercado de Trabalho</h2>
+    <p class="section-sub">C++ é uma das linguagens mais bem remuneradas do mercado — especialmente em nichos de alta especialização como games, HFT e sistemas embarcados.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nível</th>
+            <th>Faixa Salarial (Brasil)</th>
+            <th>Experiência Típica</th>
+            <th>Perfil</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Júnior</td>
+            <td><span class="salary-range">R$ 5.000 – 8.000</span></td>
+            <td>0–2 anos</td>
+            <td>C++ básico, STL, RAII, memory basics</td>
+          </tr>
+          <tr>
+            <td>Pleno</td>
+            <td><span class="salary-range">R$ 9.000 – 15.000</span></td>
+            <td>2–5 anos</td>
+            <td>Templates, concorrência, profiling, C++17</td>
+          </tr>
+          <tr>
+            <td>Sênior</td>
+            <td><span class="salary-range">R$ 16.000 – 28.000+</span></td>
+            <td>5+ anos</td>
+            <td>C++20, arquitetura, low-latency, engine dev</td>
+          </tr>
+          <tr>
+            <td>Staff / Principal</td>
+            <td><span class="salary-range">R$ 30.000+</span></td>
+            <td>8+ anos</td>
+            <td>Decisões de plataforma, compiler internals, standards</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="market-info">
+      <div class="market-card">
+        <h4>🏭 Setores</h4>
+        <div class="chips">
+          <span class="chip">🎮 Games AAA</span>
+          <span class="chip">📈 HFT / Quant</span>
+          <span class="chip">🔧 Embarcados</span>
+          <span class="chip">🌐 Browsers</span>
+          <span class="chip">🤖 Robótica</span>
+          <span class="chip">⚕️ MedTech</span>
+        </div>
+      </div>
+      <div class="market-card">
+        <h4>🏢 Empresas que Contratam</h4>
+        <div class="chips">
+          <span class="chip accent">NVIDIA</span>
+          <span class="chip accent">Epic Games</span>
+          <span class="chip accent">Valve</span>
+          <span class="chip accent">Bloomberg</span>
+          <span class="chip accent">ARM</span>
+          <span class="chip accent">Intel</span>
+          <span class="chip accent">Adobe</span>
+          <span class="chip accent">Qualcomm</span>
+        </div>
+      </div>
+      <div class="market-card">
+        <h4>🌍 Remoto Internacional</h4>
+        <div class="chips">
+          <span class="chip">$120k–250k USD</span>
+          <span class="chip">HFT NY/London</span>
+          <span class="chip">Game studios EU</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══ ROADMAP ══ -->
+  <section class="section">
+    <p class="section-label">Guia de Estudo</p>
+    <h2 class="section-title">Roadmap</h2>
+    <p class="section-sub">Uma trajetória progressiva para ir do zero ao C++ moderno e profissional.</p>
+
+    <div class="roadmap">
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div class="phase-title">Fase 1 — Fundamentos</div>
+        <ul>
+          <li>Sintaxe C básica</li>
+          <li>Classes e objetos</li>
+          <li>Ponteiros e referências</li>
+          <li>Gerenciamento manual de memória</li>
+          <li>Compilação e linkagem</li>
+          <li>Debugging com GDB</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div class="phase-title">Fase 2 — C++ Moderno</div>
+        <ul>
+          <li>STL completa</li>
+          <li>Templates &amp; generics</li>
+          <li>RAII na prática</li>
+          <li>Smart pointers</li>
+          <li>Lambdas e <code style="color:var(--accent)">auto</code></li>
+          <li>Move semantics</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div class="phase-title">Fase 3 — Avançado</div>
+        <ul>
+          <li>C++17 features</li>
+          <li>C++20 Concepts</li>
+          <li>Concorrência avançada</li>
+          <li>Profiling (perf, Valgrind)</li>
+          <li>Cache-friendly code</li>
+          <li>Build systems (CMake)</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div class="phase-title">Fase 4 — Especialização</div>
+        <ul>
+          <li>Game engine (OpenGL / Vulkan)</li>
+          <li>Low-latency / HFT patterns</li>
+          <li>Embedded / RTOS</li>
+          <li>Compiler &amp; toolchain</li>
+          <li>Contribuição open-source</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ══ RECURSOS ══ -->
+  <section class="section">
+    <p class="section-label">Referências</p>
+    <h2 class="section-title">Recursos Recomendados</h2>
+    <p class="section-sub">Os melhores materiais para aprender, consultar e se manter atualizado com o padrão C++.</p>
+
+    <div class="resources-list">
+
+      <a href="https://en.cppreference.com" class="resource-item" target="_blank" rel="noopener">
+        <div class="resource-icon">📚</div>
+        <div class="resource-info">
+          <div class="resource-name">cppreference.com</div>
+          <div class="resource-desc">A referência definitiva da standard library e da linguagem. Mais precisa e atualizada que qualquer livro.</div>
+        </div>
+        <span class="resource-arrow">↗</span>
+      </a>
+
+      <a href="https://isocpp.org" class="resource-item" target="_blank" rel="noopener">
+        <div class="resource-icon">🏛️</div>
+        <div class="resource-info">
+          <div class="resource-name">isocpp.org — ISO C++ Committee</div>
+          <div class="resource-desc">Site oficial do comitê de padronização. FAQ, guidelines e notícias sobre o futuro da linguagem.</div>
+        </div>
+        <span class="resource-arrow">↗</span>
+      </a>
+
+      <a href="https://www.youtube.com/@CppCon" class="resource-item" target="_blank" rel="noopener">
+        <div class="resource-icon">🎥</div>
+        <div class="resource-info">
+          <div class="resource-name">CppCon no YouTube</div>
+          <div class="resource-desc">Centenas de palestras dos maiores especialistas. "Back to Basics" para iniciantes; tracks avançadas para veteranos.</div>
+        </div>
+        <span class="resource-arrow">↗</span>
+      </a>
+
+      <a href="https://www.stroustrup.com/Tour.html" class="resource-item" target="_blank" rel="noopener">
+        <div class="resource-icon">📖</div>
+        <div class="resource-info">
+          <div class="resource-name">"A Tour of C++" — Bjarne Stroustrup</div>
+          <div class="resource-desc">O criador da linguagem apresenta o C++ moderno de forma concisa. Melhor introdução ao ecossistema atual.</div>
+        </div>
+        <span class="resource-arrow">↗</span>
+      </a>
+
+      <a href="https://godbolt.org" class="resource-item" target="_blank" rel="noopener">
+        <div class="resource-icon">⚙️</div>
+        <div class="resource-info">
+          <div class="resource-name">Compiler Explorer — godbolt.org</div>
+          <div class="resource-desc">Veja o assembly gerado em tempo real para qualquer trecho de C++. Essencial para entender performance e otimizações do compilador.</div>
+        </div>
+        <span class="resource-arrow">↗</span>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <p>© 2025 <strong>Ponce Metodologias &amp; Dev</strong> — Todos os direitos reservados.</p>
+</footer>
+
+<script>
+  // ── Accordion ──
+  function toggleAcc(btn) {
+    const item = btn.closest('.acc-item');
+    const body = item.querySelector('.acc-body');
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.acc-item.open').forEach(function(el) {
+      el.classList.remove('open');
+      el.querySelector('.acc-body').style.maxHeight = '0';
+    });
+
+    // Open clicked if was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  // ── Tabs ──
+  function switchTab(index) {
+    var panels = document.querySelectorAll('.tab-panel');
+    var buttons = document.querySelectorAll('#tabs-nav .tab-btn');
+    panels.forEach(function(p, i) {
+      p.classList.toggle('active', i === index);
+    });
+    buttons.forEach(function(b, i) {
+      b.classList.toggle('active', i === index);
+    });
+  }
+
+  // ── Copy buttons ──
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    var text = pre.innerText || pre.textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = '✓ Copiado!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 1800);
+      });
+    }
+  }
+</script>
+</body>
+</html>

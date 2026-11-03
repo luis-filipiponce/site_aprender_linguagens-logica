@@ -1,0 +1,102 @@
+{
+  "id": 21,
+  "slug": "teoria-computacao-turing-decidibilidade",
+  "badge": "Módulo 21 · Especialização Avançada",
+  "nivel": "Especialista",
+  "titulo": "Teoria da Computação, Máquinas de Turing e Decidibilidade",
+  "subtitulo": "Autômatos Finitos (DFA/NFA), Máquina de Turing de fita infinita, Tese de Church-Turing e o Problema da Parada.",
+  "objetivo": "Compreender os limites matemáticos universais da computação: o que PODE e o que NUNCA PODERÁ ser resolvido por um algoritmo.",
+  "introducaoIntuitiva": "Existe algum algoritmo perfeito capaz de analisar o código de qualquer outro programa e dizer com 100% de certeza se ele vai travar em loop infinito ou terminar? Alan Turing provou em 1936 que tal algoritmo é MATEMATICAMENTE IMPOSSÍVEL de existir.",
+  "explicacaoAprofundada": "1. HIERARQUIA DE CHOMSKY & MODELOS DE COMPUTAÇÃO:\n• Autômatos Finitos (DFA/NFA): Memória finita restrita (Reconhecem Linguagens Regulares / Regex).\n• Autômatos de Pilha (PDA): Memória com pilha LIFO (Reconhecem Linguagens Livres de Contexto / Sintaxe de linguagens de programação).\n• Máquina de Turing (Alan Turing, 1936): Modelo universal de computação composto por uma fita infinita dividida em células, uma cabeça de leitura/escrita e uma tabela de transição de estados finita.\n\n2. TESE DE CHURCH-TURING: Qualquer cálculo ou algoritmo realizável no universo físico pode ser simulado por uma Máquina de Turing universal. Todos os computadores modernos (seja um supercomputador quântico ou seu celular) possuem o mesmo poder teórico fundamental de computabilidade de uma Máquina de Turing.\n\n3. DECIDIBILIDADE & O PROBLEMA DA PARADA (The Halting Problem):\nUm problema é Decidível se existe uma Máquina de Turing que sempre para e responde Sim ou Não. O Problema da Parada pergunta: existe um algoritmo H(P, entrada) que determina se qualquer programa P para com a entrada fornecida? PROVA POR DIAGONALIZAÇÃO DE TURING: Suponha que H existe. Construímos D(P) que chama H(P, P); se H diz que P para, D entra em loop infinito; se H diz que P não para, D para imediatamente. Ao rodar D(D): se D para, D entra em loop; se D entra em loop, D para (CONTRADIÇÃO IRRESOLVÍVEL!). Logo, H não pode existir. O problema da parada é INDECIDÍVEL.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Autômato Finito Determinístico (DFA) para Validação de Números Pares",
+      "descricao": "Estado q0 (Par/Inicial/Aceitação) e q1 (Ímpar). Ao ler dígito par fica em q0; ao ler ímpar vai para q1. Modela validadores de regex em memória O(1)."
+    },
+    "intermediario": {
+      "titulo": "Máquina de Turing Reconhecendo Linguagem Não-Regular {a^n b^n c^n}",
+      "descricao": "Autômatos de pilha falham nesta linguagem. A Máquina de Turing marca o primeiro \"a\" com X, varre a fita até achar o primeiro \"b\" marcando com Y, varre até \"c\" marcando com Z e repete o ciclo até a fita estar balanceada."
+    },
+    "avancado": {
+      "titulo": "Teorema de Rice e Consequências para Compiladores",
+      "descricao": "O Teorema de Rice decorre do Problema da Parada: \"Qualquer propriedade semântica não-trivial sobre o comportamento de programas é indecidível\". É impossível criar um antivírus ou linter que encontre 100% dos bugs sem falsos positivos ou falsos negativos."
+    }
+  },
+  "passoAPasso": [
+    "1. Modelar o problema através de Estados (Q), Alfabeto de Entrada (Σ), Alfabeto da Fita (Γ) e Função de Transição (δ).",
+    "2. Analisar se a linguagem é Regular (DFA), Livre de Contexto (Gramática/Pilha) ou Recursivamente Enumerável (Turing).",
+    "3. Para provar que um problema é Indecidível, aplicar Redução a partir do Problema da Parada (se o problema X resolvesse a Parada, X seria impossível).",
+    "4. Compreender que limites teóricos de computabilidade não são limitações de hardware, mas leis lógicas universais."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Achar que computadores quânticos ou supercomputadores podem resolver problemas indecidíveis",
+      "correcao": "A tese de Church-Turing prova que problemas indecidíveis (como o Halting Problem) são indecidíveis em qualquer modelo computacional imaginável."
+    },
+    {
+      "erro": "Confundir problema difícil (complexidade alta) com problema indecidível",
+      "correcao": "Problema intratável tem solução lenta; problema indecidível NÃO tem algoritmo que garanta resposta correta para todas as instâncias."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Reconhecimento de limites de decidibilidade e uso de heurísticas aproximadas para problemas insolúveis.",
+    "ruim": "Tentar escrever um algoritmo geral exato para um problema matematicamente provado indecidível."
+  },
+  "pseudocodigo": "// Paradoxal: A Prova do Problema da Parada de Turing\nFUNÇÃO D(programa_P)\n    SE H(programa_P, programa_P) == \"PARA\" ENTÃO\n        ENQUANTO VERDADEIRO FAÇA // Entra em Loop Infinito\n            esperar()\n        FIM_ENQUANTO\n    SENÃO\n        RETORNAR // Para imediatamente\n    FIM_SE\nFIM_FUNÇÃO\n// O que acontece ao chamar D(D)? Contradição lógica prova que H não pode existir!",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Suposição",
+      "estado": "H(P, i) existe e é perfeito",
+      "obs": "Hipótese inicial"
+    },
+    {
+      "passo": 2,
+      "acao": "Construção Diagonal D(P)",
+      "estado": "D inverte o resultado de H",
+      "obs": "Diagonalização"
+    },
+    {
+      "passo": 3,
+      "acao": "Avaliação D(D)",
+      "estado": "D(D) para <==> D(D) não para",
+      "obs": "Contradição! H é impossível."
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex21_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "O que o resultado de Alan Turing sobre o Problema da Parada (Halting Problem) provou formalmente para a Ciência da Computação?",
+      "opcoes": [
+        "Que existem problemas matematicamente bem definidos que nenhum computador ou algoritmo jamais poderá resolver de forma genérica e exata.",
+        "Que computadores nunca teriam memória suficiente.",
+        "Que toda linguagem de programação pode compilar a si mesma.",
+        "Que a recursão é mais rápida que a iteração."
+      ],
+      "correta": 0,
+      "pista": "Trata-se do limite fundamental da computabilidade: problemas indecidíveis.",
+      "justificativa": "Turing provou a existência de problemas indecidíveis, estabelecendo que a computação possui limites lógicos intransponíveis independentemente da tecnologia."
+    }
+  ],
+  "perguntasVerificacao": "Qual a importância da Tese de Church-Turing para a equivalência entre diferentes linguagens de programação?",
+  "keywordsIA": [
+    "turing",
+    "maquina_turing",
+    "decidibilidade",
+    "problema_parada",
+    "halting_problem",
+    "automato",
+    "chomsky",
+    "church_turing",
+    "computabilidade"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "computador_infinito",
+      "erro": "Achar que com poder infinito de processamento tudo pode ser computado",
+      "explicacao": "O Problema da Parada é uma impossibilidade lógica dedutiva, não uma limitação de hardware ou tempo."
+    }
+  ],
+  "explicacaoIdealIA": "A Teoria da Computação estuda os limites universais do cálculo através de autômatos e Máquinas de Turing, provando que problemas como o da Parada são indecidíveis por qualquer algoritmo."
+}

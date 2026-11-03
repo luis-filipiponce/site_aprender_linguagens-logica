@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Aprenda Java: história, conceitos fundamentais, exemplos práticos com Spring Boot, Streams e Virtual Threads, mercado de trabalho e roadmap.">
+<title>☕ Java — Ponce Metodologias &amp; Dev</title>
+<style>
+  :root {
+    --accent: #ef4444;
+    --accent-dark: #b91c1c;
+    --accent-soft: rgba(239, 68, 68, 0.12);
+    --bg: #0f1117;
+    --surface: #171a23;
+    --surface-2: #1e222d;
+    --border: #2a2f3d;
+    --text: #e8eaf0;
+    --muted: #9aa3b5;
+    --code-bg: #0b0d12;
+    --header-h: 64px;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    padding-top: var(--header-h);
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- Header ---------- */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+    background: rgba(15, 17, 23, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--accent);
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1200px; height: 100%; margin: 0 auto; padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .logo { font-weight: 700; font-size: 1rem; white-space: nowrap; }
+  .logo:hover { color: var(--accent); }
+  .header-title { font-weight: 800; font-size: 1.25rem; color: var(--accent); }
+  .btn-back {
+    padding: 8px 16px; border-radius: 999px; border: 1px solid var(--accent);
+    color: var(--accent); font-weight: 600; font-size: 0.9rem; white-space: nowrap;
+    transition: background .2s, color .2s;
+  }
+  .btn-back:hover { background: var(--accent); color: #fff; }
+
+  /* ---------- Layout ---------- */
+  main { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 64px 0 8px; }
+  .section-title { font-size: 1.9rem; font-weight: 800; margin-bottom: 8px; }
+  .section-title span { color: var(--accent); }
+  .section-sub { color: var(--muted); margin-bottom: 32px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    text-align: center; padding: 80px 0 48px;
+  }
+  .badge {
+    display: inline-block; padding: 6px 16px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent);
+    border: 1px solid var(--accent); font-size: 0.85rem; font-weight: 700;
+    letter-spacing: .5px; margin-bottom: 20px;
+  }
+  .hero h1 { font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+  .hero p { max-width: 720px; margin: 0 auto 28px; color: var(--muted); font-size: 1.1rem; }
+  .hero-stats { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 22px; min-width: 150px;
+  }
+  .stat strong { display: block; color: var(--accent); font-size: 1.4rem; }
+  .stat small { color: var(--muted); }
+
+  /* ---------- Timeline ---------- */
+  .timeline { position: relative; padding-left: 34px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 9px; top: 6px; bottom: 6px;
+    width: 3px; background: linear-gradient(var(--accent), var(--accent-dark)); border-radius: 3px;
+  }
+  .tl-item { position: relative; margin-bottom: 22px; }
+  .tl-item::before {
+    content: ""; position: absolute; left: -33px; top: 18px;
+    width: 15px; height: 15px; border-radius: 50%;
+    background: var(--bg); border: 3px solid var(--accent);
+  }
+  .tl-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 20px;
+    transition: transform .2s, border-color .2s;
+  }
+  .tl-card:hover { transform: translateX(4px); border-color: var(--accent); }
+  .tl-year { color: var(--accent); font-weight: 800; font-size: 1.1rem; }
+  .tl-card h3 { font-size: 1.05rem; margin: 2px 0 4px; }
+  .tl-card p { color: var(--muted); font-size: 0.95rem; }
+  .lts {
+    display: inline-block; margin-left: 8px; padding: 1px 10px; font-size: .72rem;
+    background: var(--accent); color: #fff; border-radius: 999px; vertical-align: middle; font-weight: 700;
+  }
+
+  /* ---------- Cards ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 8px 24px rgba(239, 68, 68, .15); }
+  .card .icon { font-size: 2.2rem; margin-bottom: 10px; }
+  .card h3 { margin-bottom: 6px; }
+  .card p { color: var(--muted); font-size: .95rem; }
+
+  /* ---------- Code ---------- */
+  .code-wrap { position: relative; margin: 12px 0 4px; }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 18px; overflow-x: auto; font-size: .85rem; line-height: 1.55;
+    font-family: "Fira Code", "JetBrains Mono", Consolas, "Courier New", monospace;
+    color: #d6deeb; tab-size: 4;
+  }
+  code { font-family: inherit; }
+  .copy-btn {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--surface-2); color: var(--muted); border: 1px solid var(--border);
+    border-radius: 6px; padding: 4px 10px; font-size: .75rem; cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+  .copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .copy-btn.copied { background: #16a34a; color: #fff; border-color: #16a34a; }
+  .k { color: #ff7b72; } /* keyword */
+  .s { color: #a5d6ff; } /* string */
+  .c { color: #6b7694; font-style: italic; } /* comment */
+  .a { color: #f0c674; } /* annotation */
+  .t { color: #7ee787; } /* type */
+
+  /* ---------- Accordion ---------- */
+  .accordion-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 12px; overflow: hidden;
+  }
+  .accordion-item.open { border-color: var(--accent); }
+  .acc-header {
+    width: 100%; background: none; border: none; color: var(--text);
+    padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 1.05rem; font-weight: 700; cursor: pointer; text-align: left; font-family: inherit;
+  }
+  .acc-header:hover { color: var(--accent); }
+  .acc-header .arrow { transition: transform .25s; color: var(--accent); }
+  .accordion-item.open .arrow { transform: rotate(180deg); }
+  .acc-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+  .acc-content { padding: 0 22px 20px; }
+  .acc-content p { color: var(--muted); }
+  .acc-content code.inline, p code {
+    background: var(--code-bg); padding: 1px 6px; border-radius: 4px; color: var(--accent); font-size: .9em;
+  }
+
+  /* ---------- Tabs ---------- */
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .tab-btn {
+    background: var(--surface); color: var(--muted); border: 1px solid var(--border);
+    padding: 10px 18px; border-radius: 999px; cursor: pointer; font-weight: 600;
+    font-family: inherit; font-size: .92rem; transition: all .2s;
+  }
+  .tab-btn:hover { color: var(--text); border-color: var(--accent); }
+  .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fade .3s; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .tab-panel > p { color: var(--muted); margin-bottom: 6px; }
+
+  /* ---------- Table ---------- */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+  table { width: 100%; border-collapse: collapse; min-width: 480px; }
+  th, td { padding: 14px 18px; text-align: left; }
+  th { background: var(--surface-2); color: var(--accent); font-size: .85rem; text-transform: uppercase; letter-spacing: .5px; }
+  td { border-top: 1px solid var(--border); background: var(--surface); }
+  tr:hover td { background: var(--surface-2); }
+  td.salary { font-weight: 700; color: #4ade80; }
+  h3.sub { margin: 32px 0 14px; font-size: 1.2rem; }
+  .companies { display: flex; flex-wrap: wrap; gap: 12px; }
+  .company {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+    padding: 10px 22px; font-weight: 700; transition: all .2s;
+  }
+  .company:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- Roadmap ---------- */
+  .roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; counter-reset: fase; }
+  .phase {
+    position: relative; background: var(--surface); border: 1px solid var(--border);
+    border-top: 4px solid var(--accent); border-radius: var(--radius); padding: 22px;
+  }
+  .phase .num {
+    display: inline-block; background: var(--accent); color: #fff; font-weight: 800;
+    padding: 2px 12px; border-radius: 999px; font-size: .8rem; margin-bottom: 10px;
+  }
+  .phase h3 { margin-bottom: 10px; }
+  .phase ul { list-style: none; }
+  .phase li { color: var(--muted); padding: 3px 0 3px 18px; position: relative; font-size: .95rem; }
+  .phase li::before { content: "▸"; color: var(--accent); position: absolute; left: 0; }
+
+  /* ---------- Resources ---------- */
+  .resource {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 20px; margin-bottom: 12px;
+    transition: all .2s;
+  }
+  .resource:hover { border-color: var(--accent); transform: translateX(4px); }
+  .resource .icon { font-size: 1.8rem; }
+  .resource h3 { font-size: 1rem; }
+  .resource p { color: var(--muted); font-size: .9rem; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    margin-top: 72px; padding: 28px 20px; text-align: center;
+    border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 640px) {
+    :root { --header-h: 58px; }
+    .header-inner { padding: 0 12px; gap: 8px; }
+    .logo { font-size: .78rem; }
+    .header-title { font-size: 1rem; }
+    .btn-back { padding: 6px 12px; font-size: .8rem; }
+    .section-title { font-size: 1.5rem; }
+    .hero { padding-top: 48px; }
+    section { padding-top: 48px; }
+  }
+  @media (max-width: 420px) {
+    .header-title { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+    <span class="header-title">☕ Java</span>
+    <a class="btn-back" href="../index.html">← Voltar</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. HERO -->
+  <div class="hero" id="hero">
+    <span class="badge">Orientação a Objetos / JVM</span>
+    <h1>☕ Java</h1>
+    <p>
+      “Write Once, Run Anywhere” (WORA): compile uma vez e execute em qualquer lugar onde exista uma JVM.
+      Linguagem de referência no mundo corporativo, criada em 1995 por James Gosling na Sun Microsystems
+      e atualmente mantida pela Oracle.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><strong>1995</strong><small>Ano de criação</small></div>
+      <div class="stat"><strong>James Gosling</strong><small>Criador</small></div>
+      <div class="stat"><strong>Oracle</strong><small>Mantenedora atual</small></div>
+    </div>
+  </div>
+
+  <!-- 2. HISTÓRIA -->
+  <section id="historia">
+    <h2 class="section-title">📜 História &amp; <span>Evolução</span></h2>
+    <p class="section-sub">Quase três décadas de inovação mantendo compatibilidade retroativa.</p>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">1995</div>
+        <h3>Java 1.0</h3>
+        <p>Nasce a linguagem, originalmente chamada <strong>Oak</strong> e renomeada para Java, com a promessa do WORA.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">2004</div>
+        <h3>Java 5</h3>
+        <p>Generics, Enum, Autoboxing, anotações e laço for-each: a linguagem fica mais expressiva e segura.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">2014</div>
+        <h3>Java 8</h3>
+        <p>Lambdas, Streams e Optional: a revolução funcional que mudou a forma de escrever Java.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">2017</div>
+        <h3>Java 9</h3>
+        <p>Sistema de módulos (JPMS) com o Project Jigsaw, permitindo aplicações mais encapsuladas.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">2018</div>
+        <h3>Java 11 <span class="lts">LTS</span></h3>
+        <p>Versão de suporte de longo prazo: HTTP Client padrão, <code>var</code> em lambdas e remoção de módulos legados.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">2021</div>
+        <h3>Java 17 <span class="lts">LTS</span></h3>
+        <p>Records, Sealed Classes e text blocks consolidam uma sintaxe mais enxuta e moderna.</p>
+      </div></div>
+      <div class="tl-item"><div class="tl-card">
+        <div class="tl-year">2023</div>
+        <h3>Java 21 <span class="lts">LTS</span></h3>
+        <p>Virtual Threads (Project Loom) e Pattern Matching trazem concorrência massiva e código mais declarativo.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 3. POR QUE APRENDER -->
+  <section id="por-que">
+    <h2 class="section-title">🎯 Por Que Aprender <span>Java?</span></h2>
+    <p class="section-sub">Uma linguagem madura, com ecossistema gigantesco e demanda constante.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🏢</div>
+        <h3>Backend Empresarial</h3>
+        <p>Spring Boot e microsserviços sustentam grande parte das aplicações corporativas modernas.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📱</div>
+        <h3>Android</h3>
+        <p>Desenvolvimento mobile nativo: Java é a base histórica da plataforma Android.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>Big Data</h3>
+        <p>Hadoop, Spark e Kafka rodam na JVM e dominam o processamento de dados em larga escala.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🏦</div>
+        <h3>Sistemas Bancários</h3>
+        <p>Cerca de 70% dos bancos globais usam Java em sistemas críticos pela robustez e segurança.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. CONCEITOS (ACCORDION) -->
+  <section id="conceitos">
+    <h2 class="section-title">🧠 Conceitos <span>Fundamentais</span></h2>
+    <p class="section-sub">Clique em cada tópico para ver a explicação e um exemplo.</p>
+
+    <div class="accordion">
+
+      <div class="accordion-item open">
+        <button class="acc-header" aria-expanded="true">Classes &amp; Objetos <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Uma <strong>classe</strong> é o molde; um <strong>objeto</strong> é uma instância dele, com estado (atributos) e comportamento (métodos).</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="k">public class</span> <span class="t">Pessoa</span> {
+    <span class="k">private</span> <span class="t">String</span> nome;
+    <span class="k">private int</span> idade;
+
+    <span class="k">public</span> Pessoa(<span class="t">String</span> nome, <span class="k">int</span> idade) {
+        <span class="k">this</span>.nome = nome;
+        <span class="k">this</span>.idade = idade;
+    }
+
+    <span class="k">public</span> <span class="t">String</span> apresentar() {
+        <span class="k">return</span> <span class="s">"Olá, eu sou "</span> + nome + <span class="s">" e tenho "</span> + idade + <span class="s">" anos."</span>;
+    }
+}
+
+<span class="c">// Uso</span>
+<span class="t">Pessoa</span> p = <span class="k">new</span> Pessoa(<span class="s">"Ana"</span>, <span class="s">28</span>);
+System.out.println(p.apresentar());</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Herança &amp; Polimorfismo <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Com <code>extends</code>, uma subclasse reaproveita e especializa a superclasse. O polimorfismo permite tratar objetos diferentes pela mesma referência base.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="k">class</span> <span class="t">Animal</span> {
+    <span class="k">public</span> <span class="t">String</span> som() { <span class="k">return</span> <span class="s">"..."</span>; }
+}
+
+<span class="k">class</span> <span class="t">Cachorro</span> <span class="k">extends</span> <span class="t">Animal</span> {
+    <span class="a">@Override</span>
+    <span class="k">public</span> <span class="t">String</span> som() { <span class="k">return</span> <span class="s">"Au au!"</span>; }
+}
+
+<span class="k">class</span> <span class="t">Gato</span> <span class="k">extends</span> <span class="t">Animal</span> {
+    <span class="a">@Override</span>
+    <span class="k">public</span> <span class="t">String</span> som() { <span class="k">return</span> <span class="s">"Miau!"</span>; }
+}
+
+<span class="c">// Polimorfismo: mesma referência, comportamentos distintos</span>
+<span class="t">List</span>&lt;<span class="t">Animal</span>&gt; animais = <span class="t">List</span>.of(<span class="k">new</span> Cachorro(), <span class="k">new</span> Gato());
+<span class="k">for</span> (<span class="t">Animal</span> a : animais) {
+    System.out.println(a.som());
+}</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Interfaces &amp; Abstract Classes <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Interfaces definem contratos (e podem ter métodos <code>default</code>). Classes abstratas misturam estado compartilhado e métodos sem implementação.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="k">interface</span> <span class="t">Pagavel</span> {
+    <span class="k">double</span> valor();
+
+    <span class="k">default</span> <span class="t">String</span> descricao() {
+        <span class="k">return</span> <span class="s">"Valor a pagar: R$ "</span> + valor();
+    }
+}
+
+<span class="k">abstract class</span> <span class="t">Funcionario</span> <span class="k">implements</span> <span class="t">Pagavel</span> {
+    <span class="k">protected</span> <span class="t">String</span> nome;
+
+    <span class="k">protected</span> Funcionario(<span class="t">String</span> nome) { <span class="k">this</span>.nome = nome; }
+
+    <span class="k">public abstract double</span> valor(); <span class="c">// cada subclasse implementa</span>
+}
+
+<span class="k">class</span> <span class="t">Gerente</span> <span class="k">extends</span> <span class="t">Funcionario</span> {
+    Gerente(<span class="t">String</span> nome) { <span class="k">super</span>(nome); }
+
+    <span class="a">@Override</span>
+    <span class="k">public double</span> valor() { <span class="k">return</span> 15000.0; }
+}</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Generics &lt;T&gt; <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Generics permitem escrever classes e métodos reutilizáveis com segurança de tipos em tempo de compilação, sem casts.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="k">public class</span> <span class="t">Caixa</span>&lt;<span class="t">T</span>&gt; {
+    <span class="k">private</span> <span class="t">T</span> conteudo;
+
+    <span class="k">public void</span> guardar(<span class="t">T</span> conteudo) { <span class="k">this</span>.conteudo = conteudo; }
+    <span class="k">public</span> <span class="t">T</span> obter() { <span class="k">return</span> conteudo; }
+}
+
+<span class="c">// Método genérico com limite superior</span>
+<span class="k">public static</span> &lt;<span class="t">T</span> <span class="k">extends</span> <span class="t">Comparable</span>&lt;<span class="t">T</span>&gt;&gt; <span class="t">T</span> maior(<span class="t">T</span> a, <span class="t">T</span> b) {
+    <span class="k">return</span> a.compareTo(b) &gt;= 0 ? a : b;
+}
+
+<span class="t">Caixa</span>&lt;<span class="t">String</span>&gt; caixa = <span class="k">new</span> Caixa&lt;&gt;();
+caixa.guardar(<span class="s">"Java"</span>);
+<span class="t">String</span> valor = caixa.obter();      <span class="c">// sem cast</span>
+<span class="k">int</span> m = maior(<span class="s">10</span>, <span class="s">25</span>);          <span class="c">// 25</span></code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Streams API <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Streams processam coleções de forma declarativa e funcional: filtrar, transformar e agregar sem laços explícitos.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="t">List</span>&lt;<span class="t">Integer</span>&gt; numeros = <span class="t">List</span>.of(<span class="s">1</span>, <span class="s">2</span>, <span class="s">3</span>, <span class="s">4</span>, <span class="s">5</span>, <span class="s">6</span>, <span class="s">7</span>, <span class="s">8</span>, <span class="s">9</span>, <span class="s">10</span>);
+
+<span class="t">List</span>&lt;<span class="t">Integer</span>&gt; quadradosDosPares = numeros.stream()
+    .filter(n -&gt; n % <span class="s">2</span> == <span class="s">0</span>)
+    .map(n -&gt; n * n)
+    .collect(<span class="t">Collectors</span>.toList());
+
+System.out.println(quadradosDosPares); <span class="c">// [4, 16, 36, 64, 100]</span>
+
+<span class="k">int</span> soma = numeros.stream().mapToInt(<span class="t">Integer</span>::intValue).sum();
+System.out.println(<span class="s">"Soma: "</span> + soma); <span class="c">// 55</span></code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Concorrência &amp; Virtual Threads <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Java 21 trouxe <strong>Virtual Threads</strong>: threads leves gerenciadas pela JVM, ideais para milhares de tarefas bloqueantes simultâneas.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">// Thread virtual simples</span>
+<span class="t">Thread</span>.startVirtualThread(() -&gt; {
+    System.out.println(<span class="s">"Rodando em: "</span> + <span class="t">Thread</span>.currentThread());
+});
+
+<span class="c">// Executor com uma thread virtual por tarefa</span>
+<span class="k">try</span> (<span class="k">var</span> executor = <span class="t">Executors</span>.newVirtualThreadPerTaskExecutor()) {
+    <span class="k">for</span> (<span class="k">int</span> i = <span class="s">0</span>; i &lt; <span class="s">1000</span>; i++) {
+        <span class="k">int</span> id = i;
+        executor.submit(() -&gt; System.out.println(<span class="s">"Tarefa "</span> + id));
+    }
+} <span class="c">// close() aguarda todas as tarefas terminarem</span></code></pre></div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. EXEMPLOS (TABS) -->
+  <section id="exemplos">
+    <h2 class="section-title">💻 Exemplos <span>Práticos</span></h2>
+    <p class="section-sub">Código realista para você copiar e experimentar.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="tab-spring" role="tab">Spring Boot REST</button>
+      <button class="tab-btn" data-tab="tab-streams" role="tab">Streams API</button>
+      <button class="tab-btn" data-tab="tab-virtual" role="tab">Virtual Threads</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-spring">
+      <p>Controller REST completo com operações CRUD sobre produtos.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="k">package</span> com.ponce.loja.controller;
+
+<span class="k">import</span> com.ponce.loja.model.Produto;
+<span class="k">import</span> com.ponce.loja.service.ProdutoService;
+<span class="k">import</span> org.springframework.http.HttpStatus;
+<span class="k">import</span> org.springframework.http.ResponseEntity;
+<span class="k">import</span> org.springframework.web.bind.annotation.*;
+
+<span class="k">import</span> java.net.URI;
+<span class="k">import</span> java.util.List;
+
+<span class="a">@RestController</span>
+<span class="a">@RequestMapping</span>(<span class="s">"/api/produtos"</span>)
+<span class="k">public class</span> <span class="t">ProdutoController</span> {
+
+    <span class="k">private final</span> <span class="t">ProdutoService</span> service;
+
+    <span class="c">// Injeção de dependência via construtor</span>
+    <span class="k">public</span> ProdutoController(<span class="t">ProdutoService</span> service) {
+        <span class="k">this</span>.service = service;
+    }
+
+    <span class="a">@GetMapping</span>
+    <span class="k">public</span> <span class="t">List</span>&lt;<span class="t">Produto</span>&gt; listar() {
+        <span class="k">return</span> service.listarTodos();
+    }
+
+    <span class="a">@GetMapping</span>(<span class="s">"/{id}"</span>)
+    <span class="k">public</span> <span class="t">ResponseEntity</span>&lt;<span class="t">Produto</span>&gt; buscarPorId(<span class="a">@PathVariable</span> <span class="t">Long</span> id) {
+        <span class="k">return</span> service.buscarPorId(id)
+                .map(<span class="t">ResponseEntity</span>::ok)
+                .orElse(<span class="t">ResponseEntity</span>.notFound().build());
+    }
+
+    <span class="a">@GetMapping</span>(<span class="s">"/busca"</span>)
+    <span class="k">public</span> <span class="t">List</span>&lt;<span class="t">Produto</span>&gt; buscarPorNome(<span class="a">@RequestParam</span> <span class="t">String</span> nome) {
+        <span class="k">return</span> service.buscarPorNome(nome);
+    }
+
+    <span class="a">@PostMapping</span>
+    <span class="k">public</span> <span class="t">ResponseEntity</span>&lt;<span class="t">Produto</span>&gt; criar(<span class="a">@RequestBody</span> <span class="t">Produto</span> produto) {
+        <span class="t">Produto</span> salvo = service.salvar(produto);
+        <span class="k">return</span> <span class="t">ResponseEntity</span>
+                .created(<span class="t">URI</span>.create(<span class="s">"/api/produtos/"</span> + salvo.getId()))
+                .body(salvo);
+    }
+
+    <span class="a">@PutMapping</span>(<span class="s">"/{id}"</span>)
+    <span class="k">public</span> <span class="t">ResponseEntity</span>&lt;<span class="t">Produto</span>&gt; atualizar(<span class="a">@PathVariable</span> <span class="t">Long</span> id,
+                                             <span class="a">@RequestBody</span> <span class="t">Produto</span> produto) {
+        <span class="k">return</span> service.atualizar(id, produto)
+                .map(<span class="t">ResponseEntity</span>::ok)
+                .orElse(<span class="t">ResponseEntity</span>.notFound().build());
+    }
+
+    <span class="a">@DeleteMapping</span>(<span class="s">"/{id}"</span>)
+    <span class="a">@ResponseStatus</span>(<span class="t">HttpStatus</span>.NO_CONTENT)
+    <span class="k">public void</span> remover(<span class="a">@PathVariable</span> <span class="t">Long</span> id) {
+        service.remover(id);
+    }
+}</code></pre></div>
+    </div>
+
+    <div class="tab-panel" id="tab-streams">
+      <p>Filtrar, transformar e agrupar uma lista de objetos com a Streams API.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="k">import</span> java.util.*;
+<span class="k">import</span> java.util.stream.Collectors;
+
+<span class="k">public class</span> <span class="t">StreamsDemo</span> {
+
+    <span class="k">record</span> <span class="t">Funcionario</span>(<span class="t">String</span> nome, <span class="t">String</span> departamento, <span class="k">double</span> salario) {}
+
+    <span class="k">public static void</span> main(<span class="t">String</span>[] args) {
+        <span class="t">List</span>&lt;<span class="t">Funcionario</span>&gt; equipe = <span class="t">List</span>.of(
+            <span class="k">new</span> Funcionario(<span class="s">"Ana"</span>,    <span class="s">"TI"</span>,        <span class="s">9500.0</span>),
+            <span class="k">new</span> Funcionario(<span class="s">"Bruno"</span>,  <span class="s">"TI"</span>,        <span class="s">12000.0</span>),
+            <span class="k">new</span> Funcionario(<span class="s">"Carla"</span>,  <span class="s">"RH"</span>,        <span class="s">6500.0</span>),
+            <span class="k">new</span> Funcionario(<span class="s">"Diego"</span>,  <span class="s">"Financeiro"</span>, <span class="s">8000.0</span>),
+            <span class="k">new</span> Funcionario(<span class="s">"Elisa"</span>,  <span class="s">"TI"</span>,        <span class="s">15000.0</span>)
+        );
+
+        <span class="c">// 1) filter + map + collect: nomes dos funcionários de TI com salário > 10 mil</span>
+        <span class="t">List</span>&lt;<span class="t">String</span>&gt; nomes = equipe.stream()
+            .filter(f -&gt; f.departamento().equals(<span class="s">"TI"</span>))
+            .filter(f -&gt; f.salario() &gt; <span class="s">10000</span>)
+            .map(<span class="t">Funcionario</span>::nome)
+            .sorted()
+            .collect(<span class="t">Collectors</span>.toList());
+        System.out.println(<span class="s">"TI > 10k: "</span> + nomes); <span class="c">// [Bruno, Elisa]</span>
+
+        <span class="c">// 2) Média salarial</span>
+        <span class="k">double</span> media = equipe.stream()
+            .mapToDouble(<span class="t">Funcionario</span>::salario)
+            .average()
+            .orElse(<span class="s">0</span>);
+        System.out.printf(<span class="s">"Média salarial: R$ %.2f%n"</span>, media);
+
+        <span class="c">// 3) Agrupamento por departamento</span>
+        <span class="t">Map</span>&lt;<span class="t">String</span>, <span class="t">List</span>&lt;<span class="t">String</span>&gt;&gt; porDepto = equipe.stream()
+            .collect(<span class="t">Collectors</span>.groupingBy(
+                <span class="t">Funcionario</span>::departamento,
+                <span class="t">Collectors</span>.mapping(<span class="t">Funcionario</span>::nome, <span class="t">Collectors</span>.toList())
+            ));
+        porDepto.forEach((depto, lista) -&gt;
+            System.out.println(depto + <span class="s">" -> "</span> + lista));
+
+        <span class="c">// 4) Maior salário com Optional</span>
+        equipe.stream()
+            .max(<span class="t">Comparator</span>.comparingDouble(<span class="t">Funcionario</span>::salario))
+            .ifPresent(f -&gt; System.out.println(<span class="s">"Maior salário: "</span> + f.nome()));
+    }
+}</code></pre></div>
+    </div>
+
+    <div class="tab-panel" id="tab-virtual">
+      <p>Java 21: dez mil tarefas bloqueantes executadas com Virtual Threads (Project Loom).</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="k">import</span> java.time.Duration;
+<span class="k">import</span> java.time.Instant;
+<span class="k">import</span> java.util.concurrent.Executors;
+<span class="k">import</span> java.util.concurrent.atomic.AtomicInteger;
+
+<span class="k">public class</span> <span class="t">VirtualThreadsDemo</span> {
+
+    <span class="k">public static void</span> main(<span class="t">String</span>[] args) <span class="k">throws</span> <span class="t">Exception</span> {
+        <span class="k">final int</span> TAREFAS = <span class="s">10_000</span>;
+        <span class="t">AtomicInteger</span> concluidas = <span class="k">new</span> AtomicInteger();
+        <span class="t">Instant</span> inicio = <span class="t">Instant</span>.now();
+
+        <span class="c">// Uma virtual thread por tarefa; o try-with-resources aguarda o término</span>
+        <span class="k">try</span> (<span class="k">var</span> executor = <span class="t">Executors</span>.newVirtualThreadPerTaskExecutor()) {
+            <span class="k">for</span> (<span class="k">int</span> i = <span class="s">0</span>; i &lt; TAREFAS; i++) {
+                executor.submit(() -&gt; {
+                    simularChamadaExterna();
+                    concluidas.incrementAndGet();
+                });
+            }
+        }
+
+        <span class="t">Duration</span> duracao = <span class="t">Duration</span>.between(inicio, <span class="t">Instant</span>.now());
+        System.out.println(<span class="s">"Tarefas concluídas: "</span> + concluidas.get());
+        System.out.println(<span class="s">"Tempo total: "</span> + duracao.toMillis() + <span class="s">" ms"</span>);
+    }
+
+    <span class="c">// Simula I/O bloqueante (banco de dados, API REST, etc.)</span>
+    <span class="k">private static void</span> simularChamadaExterna() {
+        <span class="k">try</span> {
+            <span class="t">Thread</span>.sleep(<span class="t">Duration</span>.ofSeconds(<span class="s">1</span>));
+        } <span class="k">catch</span> (<span class="t">InterruptedException</span> e) {
+            <span class="t">Thread</span>.currentThread().interrupt();
+        }
+    }
+}
+
+<span class="c">// Com threads de plataforma, 10.000 tarefas de 1s exigiriam um pool enorme.
+// Com virtual threads, tudo termina em pouco mais de 1 segundo.</span></code></pre></div>
+    </div>
+  </section>
+
+  <!-- 6. MERCADO -->
+  <section id="mercado">
+    <h2 class="section-title">💼 Mercado de <span>Trabalho</span></h2>
+    <p class="section-sub">Faixas salariais aproximadas para desenvolvedores Java no Brasil.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Nível</th><th>Faixa Salarial (mensal)</th><th>Perfil</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Júnior</td><td class="salary">R$ 4.000 – 6.000</td><td>POO, Collections, SQL, primeiros projetos com Spring</td></tr>
+          <tr><td>Pleno</td><td class="salary">R$ 7.000 – 12.000</td><td>Spring Boot, JPA, testes, APIs REST, Docker</td></tr>
+          <tr><td>Sênior</td><td class="salary">R$ 14.000 – 22.000+</td><td>Arquitetura, microsserviços, cloud, liderança técnica</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">🏆 Principais Empresas</h3>
+    <div class="companies">
+      <span class="company">IBM</span>
+      <span class="company">Itaú</span>
+      <span class="company">Bradesco</span>
+      <span class="company">Mercado Livre</span>
+      <span class="company">Amazon</span>
+    </div>
+  </section>
+
+  <!-- 7. ROADMAP -->
+  <section id="roadmap">
+    <h2 class="section-title">🗺️ <span>Roadmap</span> de Estudos</h2>
+    <p class="section-sub">Um caminho em quatro fases, do básico à arquitetura.</p>
+    <div class="roadmap">
+      <div class="phase">
+        <span class="num">FASE 1</span>
+        <h3>Fundamentos</h3>
+        <ul><li>Sintaxe</li><li>POO</li><li>Collections</li></ul>
+      </div>
+      <div class="phase">
+        <span class="num">FASE 2</span>
+        <h3>Intermediário</h3>
+        <ul><li>Generics</li><li>Streams</li><li>I/O</li><li>Exceções</li></ul>
+      </div>
+      <div class="phase">
+        <span class="num">FASE 3</span>
+        <h3>Frameworks</h3>
+        <ul><li>Spring Boot</li><li>JPA/Hibernate</li><li>Testes JUnit</li></ul>
+      </div>
+      <div class="phase">
+        <span class="num">FASE 4</span>
+        <h3>Avançado</h3>
+        <ul><li>Microsserviços</li><li>Docker</li><li>Cloud</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. RECURSOS -->
+  <section id="recursos">
+    <h2 class="section-title">📚 <span>Recursos</span></h2>
+    <p class="section-sub">Materiais recomendados para continuar aprendendo.</p>
+
+    <a class="resource" href="https://docs.oracle.com/en/java/" target="_blank" rel="noopener noreferrer">
+      <span class="icon">📖</span>
+      <div><h3>Oracle Docs</h3><p>Documentação oficial da linguagem e da plataforma Java.</p></div>
+    </a>
+    <a class="resource" href="https://www.baeldung.com/" target="_blank" rel="noopener noreferrer">
+      <span class="icon">🧩</span>
+      <div><h3>Baeldung</h3><p>Tutoriais práticos de Java, Spring e testes.</p></div>
+    </a>
+    <a class="resource" href="https://spring.io/" target="_blank" rel="noopener noreferrer">
+      <span class="icon">🌱</span>
+      <div><h3>Spring.io</h3><p>Guias e documentação oficial do ecossistema Spring.</p></div>
+    </a>
+    <div class="resource">
+      <span class="icon">📕</span>
+      <div><h3>Effective Java</h3><p>Livro de Joshua Bloch com boas práticas essenciais da linguagem.</p></div>
+    </div>
+    <a class="resource" href="https://www.jetbrains.com/academy/" target="_blank" rel="noopener noreferrer">
+      <span class="icon">🎓</span>
+      <div><h3>JetBrains Academy</h3><p>Trilhas interativas de aprendizado com projetos práticos.</p></div>
+    </a>
+  </section>
+
+</main>
+
+<footer>© 2025 Ponce Metodologias &amp; Dev</footer>
+
+<script>
+  // ----- Accordion -----
+  document.querySelectorAll('.accordion-item').forEach(function (item) {
+    var header = item.querySelector('.acc-header');
+    var body = item.querySelector('.acc-body');
+    if (item.classList.contains('open')) body.style.maxHeight = body.scrollHeight + 'px';
+
+    header.addEventListener('click', function () {
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.accordion-item.open').forEach(function (other) {
+        other.classList.remove('open');
+        other.querySelector('.acc-body').style.maxHeight = null;
+        other.querySelector('.acc-header').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        header.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Recalcula altura do accordion aberto ao redimensionar
+  window.addEventListener('resize', function () {
+    var open = document.querySelector('.accordion-item.open .acc-body');
+    if (open) open.style.maxHeight = open.scrollHeight + 'px';
+  });
+
+  // ----- Tabs -----
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ----- Copy buttons -----
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.parentElement.querySelector('pre code').innerText;
+      var done = function () {
+        btn.textContent = 'Copiado!';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        done();
+      }
+    });
+  });
+</script>
+</body>
+</html>

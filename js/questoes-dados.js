@@ -373,6 +373,148 @@
       "Todo problema de NP se reduz em tempo polinomial a um NP-completo. Um algoritmo polinomial para qualquer um deles resolveria todos os problemas de NP em P.")
   ];
 
+  // ── NOVAS QUESTÕES INICIANTE (adicionadas v3.0) ──────────────────────────
+  iniciante.push(
+    q("Programação", "Qual a diferença entre '=' e '==' na maioria das linguagens de programação?", null,
+      ["Não há diferença, são a mesma coisa",
+       "'=' faz atribuição e '==' compara igualdade",
+       "'==' faz atribuição e '=' compara",
+       "'=' é para inteiros e '==' para texto"], 1,
+      "'=' é o operador de atribuição — guarda um valor numa variável. '==' é o operador de comparação — verifica se dois valores são iguais e retorna verdadeiro ou falso."),
+    q("Algoritmos", "O que é uma função (procedimento) em programação?", null,
+      ["Um tipo especial de variável",
+       "Um erro de execução",
+       "Um bloco de código com nome que pode ser chamado múltiplas vezes",
+       "Uma estrutura de repetição"], 2,
+      "Uma função é um bloco nomeado de instruções que realiza uma tarefa específica e pode ser reutilizado em vários pontos do programa, evitando repetição de código."),
+    q("Lógica", "Qual é o resultado de NÃO (Verdadeiro)?", null,
+      ["Verdadeiro", "Falso", "Indefinido", "Erro"], 1,
+      "O operador NÃO (NOT) inverte o valor lógico: NÃO(Verdadeiro) = Falso e NÃO(Falso) = Verdadeiro."),
+    q("Programação", "Qual estrutura de repetição é mais adequada quando não se sabe quantas vezes o bloco será executado?", null,
+      ["Para (FOR) com contador fixo",
+       "Enquanto (WHILE) com condição",
+       "Sequência simples sem repetição",
+       "Estrutura condicional SE-ENTÃO"], 1,
+      "O WHILE (Enquanto) repete enquanto uma condição for verdadeira, sendo ideal quando não se sabe o número de iterações. O FOR é melhor quando se sabe quantas vezes repetir."),
+    q("Programação", "O que armazena um vetor (array) de inteiros?", null,
+      ["Apenas um número inteiro",
+       "Uma coleção de valores de tipos diferentes",
+       "Uma coleção de valores do mesmo tipo acessíveis por índice",
+       "Uma função matemática"], 2,
+      "Um vetor (array) é uma coleção de elementos do mesmo tipo armazenados sequencialmente na memória, acessíveis através de um índice numérico (geralmente iniciando em 0).")
+  );
+
+  // ── NOVAS QUESTÕES INTERMEDIÁRIO (adicionadas v3.0) ──────────────────────
+  intermediario.push(
+    q("Estruturas", "Em uma fila (Queue — FIFO), após enfileirar 5, 10, 15 e desenfileirar uma vez, qual elemento é removido?", null,
+      ["15", "10", "5", "Nenhum, a fila é imutável"], 2,
+      "Fila é First-In, First-Out: o primeiro elemento inserido (5) é o primeiro a sair."),
+    q("Algoritmos", "O que é um algoritmo de ordenação estável?", null,
+      ["Um algoritmo que nunca erra",
+       "Um algoritmo que preserva a ordem relativa de elementos com chaves iguais",
+       "Um algoritmo que usa sempre O(n log n)",
+       "Um algoritmo que não usa recursão"], 1,
+      "Estabilidade significa que elementos com o mesmo valor mantêm a ordem original entre si após a ordenação. Merge Sort e Insertion Sort são estáveis; Quick Sort geralmente não é."),
+    q("Algoritmos", "Qual é a complexidade de tempo da busca linear em uma lista não ordenada de n elementos?", null,
+      ["O(1)", "O(log n)", "O(n)", "O(n²)"], 2,
+      "Na busca linear, no pior caso (elemento não encontrado ou na última posição), todos os n elementos são verificados, resultando em O(n)."),
+    q("Lógica", "Qual é o valor de x ao final? x = 3; y = x; x = 10; y = y + 1", null,
+      ["x = 3, y = 4", "x = 10, y = 4", "x = 10, y = 11", "x = 3, y = 3"], 1,
+      "Na linha 'y = x', y recebe uma cópia do valor 3. Em 'x = 10', apenas x muda. Em 'y = y + 1', y vira 4. Valores primitivos são copiados, não referenciados.")
+  );
+
+  // ── NOVAS QUESTÕES AVANÇADO (adicionadas v3.0) ──────────────────────────
+  avancado.push(
+    q("Algoritmos", "Qual paradigma usa a estratégia de dividir o problema ao meio recursivamente, resolver as partes e combinar os resultados?", null,
+      ["Programação Dinâmica", "Algoritmos Gulosos", "Divisão e Conquista", "Backtracking"], 2,
+      "Divisão e Conquista: Divide o problema em subproblemas menores, resolve cada um recursivamente e combina os resultados. Merge Sort, Quick Sort e a busca binária são exemplos clássicos."),
+    q("Complexidade", "Qual afirmação sobre notação Big-O é INCORRETA?", null,
+      ["O(1) representa tempo constante, independente do tamanho da entrada",
+       "O(n²) é pior que O(n log n) para entradas grandes",
+       "O(n!) cresce mais rápido que O(2^n) para n > 3",
+       "O Big-O mede o melhor caso de um algoritmo"], 3,
+      "Big-O (O grande) descreve o PIOR caso ou o limite assintótico superior do crescimento. Θ (Theta) descreve o caso médio e Ω (Omega) descreve o melhor caso."),
+    q("Estruturas", "Qual é a complexidade de inserção em uma árvore binária de busca (BST) balanceada?", null,
+      ["O(1)", "O(log n)", "O(n)", "O(n log n)"], 1,
+      "Em uma BST balanceada, a altura é O(log n), portanto inserção, busca e remoção são O(log n). Em uma BST degenerada (lista encadeada), as operações são O(n).")
+  );
+
+  // ── NOVAS QUESTÕES EXPERT (adicionadas v3.0) ────────────────────────────
+  expert.push(
+    q("Algoritmos", "No problema do Caixeiro Viajante (TSP), quantas rotas distintas existem para n cidades?", null,
+      ["n!", "(n-1)!/2", "n²", "2^n"], 1,
+      "Com n cidades, fixando uma de partida, há (n-1)! ordenações das restantes. Como a rota A→B→C é igual a C→B→A (sentido contrário), divide-se por 2: (n-1)!/2 rotas únicas. Para 20 cidades, são mais de 60 trilhões de rotas."),
+    q("Complexidade", "O que diferencia NP de NP-completo?", null,
+      ["NP-completo é um subconjunto de NP, sendo os problemas mais difíceis de NP — todo problema de NP se reduz polinomialmente a eles",
+       "NP e NP-completo são sinônimos",
+       "NP-completo só contém problemas indecidíveis",
+       "NP-completo não tem relação com P"], 0,
+      "NP é a classe de problemas verificáveis em tempo polinomial. NP-completo é o subconjunto mais difícil de NP: se qualquer NP-completo puder ser resolvido em tempo polinomial, então P = NP. SAT, TSP e Mochila 0/1 são NP-completos."),
+    q("Métodos Formais", "O que garante a corretude total de um algoritmo pela Lógica de Hoare?", null,
+      ["Apenas a pré-condição ser satisfeita",
+       "Apenas a pós-condição ser satisfeita",
+       "A tripla de Hoare válida {P} C {Q} mais a prova de terminação via função variante",
+       "O algoritmo não ter loops"], 2,
+      "Corretude parcial: {P} C {Q} garante que se C terminar partindo de P, o resultado satisfaz Q. Corretude total exige adicionalmente uma função variante (inteiro decrescente não-negativo) que comprova que o algoritmo sempre termina.")
+  );
+
+
+  // ── NOVAS QUESTÕES v4.0 — Java, Rust, Go, Arquitetura ─────────────────
+  intermediario.push(
+    q("Java", "O que é um Record em Java 16+?", null,
+      ["Uma interface funcional com um único método",
+       "Uma classe imutável cujo construtor, equals, hashCode e toString são gerados automaticamente",
+       "Um tipo de enum com métodos abstratos",
+       "Uma anotação de validação do Bean Validation"], 1,
+      "Records são classes de dados imutáveis introduzidas no Java 16. O compilador gera automaticamente o construtor canônico, getters sem prefixo 'get', equals, hashCode e toString baseados nos componentes declarados."),
+    q("Java", "O que caracteriza uma Sealed Class (Java 17+)?", null,
+      ["Uma classe que não pode ser instanciada diretamente",
+       "Uma classe que define explicitamente quais subclasses são permitidas com a cláusula 'permits'",
+       "Uma classe com todos os atributos privados",
+       "Uma classe abstrata sem métodos concretos"], 1,
+      "Sealed classes limitam a hierarquia de herança declarando explicitamente as subclasses permitidas. Isso permite ao compilador verificar exaustividade em pattern matching e torna os modelos de domínio fechados e mais seguros."),
+    q("Rust", "O que o Borrow Checker do Rust garante em tempo de compilação?", null,
+      ["Que o código seja formatado corretamente",
+       "Que nunca haverão duas referências mutáveis simultâneas ao mesmo dado, prevenindo data races",
+       "Que a performance seja igual a C",
+       "Que todos os tipos implementem a trait Clone"], 1,
+      "O Borrow Checker impõe regras rígidas: ou você tem múltiplas referências imutáveis (&T) OU uma única referência mutável (&mut T), nunca ambas. Isso garante que data races sejam impossíveis em código safe Rust."),
+    q("Go", "O que diferencia uma Goroutine de uma Thread de OS?", null,
+      ["Goroutines executam no kernel, threads no user space",
+       "Goroutines são gerenciadas pelo runtime Go, iniciam com ~2KB de stack e custam muito menos que threads de OS",
+       "Goroutines não podem acessar memória compartilhada",
+       "Goroutines são idênticas às threads de OS, apenas com nome diferente"], 1,
+      "Goroutines são threads virtuais (M:N threading) gerenciadas pelo scheduler do Go runtime. Iniciam com ~2KB de stack (expandível), enquanto threads de OS tipicamente começam com 1-8MB. Um programa Go pode ter milhões de goroutines ativas simultaneamente."),
+    q("Arquitetura", "O que é o padrão Repository em arquitetura de software?", null,
+      ["Um sistema de controle de versão como Git",
+       "Uma camada de abstração entre o domínio e a fonte de dados, encapsulando a lógica de acesso ao banco",
+       "Um design pattern para criar objetos complexos",
+       "Uma forma de organizar arquivos do projeto"], 1,
+      "O Repository Pattern abstrai o acesso a dados, permitindo que o domínio trabalhe com interfaces sem conhecer o banco de dados subjacente. Facilita testes unitários com mocks e troca de implementações (JPA → MongoDB, por exemplo).")
+  );
+
+  avancado.push(
+    q("Rust", "Qual é a principal vantagem do Axum sobre outros frameworks web Rust como Actix-Web?", null,
+      ["Actix-Web é mais rápido em benchmarks sintéticos",
+       "Axum é integrado nativamente ao ecossistema Tokio, usa extratores de tipo seguro e é mais idiomático",
+       "Axum suporta mais protocolos de rede",
+       "Axum não requer o runtime Tokio"], 1,
+      "Axum foi criado pela equipe do Tokio, usa tipos de extratores compostos (sem macros mágicas como em Actix), tem integração nativa com Tower middleware e é considerado mais ergonômico e idiomático para novos projetos."),
+    q("Java", "Qual é a principal diferença entre corretude parcial e corretude total no contexto de algoritmos?", null,
+      ["Corretude parcial analisa apenas metade dos casos de teste",
+       "Corretude parcial garante resultado correto SE o algoritmo terminar; corretude total adiciona a garantia de terminação",
+       "Corretude total só se aplica a algoritmos recursivos",
+       "Não há diferença prática entre os dois conceitos"], 1,
+      "Corretude parcial: {P} C {Q} garante que se o programa C terminar a partir da pré-condição P, o resultado satisfará Q. Corretude total exige adicionalmente uma função variante (inteiro decrescente não-negativo) que prova que o algoritmo sempre termina em tempo finito."),
+    q("Go", "O que é a 'Go 1 Compatibility Promise'?", null,
+      ["Uma promessa de que Go nunca terá bugs",
+       "A garantia de que código escrito para Go 1.x continuará compilando e rodando corretamente em qualquer versão futura Go 1.y",
+       "Uma promessa de compatibilidade com linguagens C e C++",
+       "A garantia de backward compatibility apenas para a biblioteca padrão"], 1,
+      "A Go 1 Compatibility Promise, estabelecida em 2012, garante que qualquer código Go 1 válido continuará compilando e funcionando em versões futuras de Go 1.x sem alterações. É uma das razões do sucesso de adoção de Go em infraestrutura crítica.")
+  );
+
+
   root.QUESTOES_BANCO = {
     iniciante: {
       rotulo: "Iniciante",

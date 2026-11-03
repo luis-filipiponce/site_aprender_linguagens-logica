@@ -1,0 +1,83 @@
+{
+  "id": 15,
+  "slug": "complexidade-eficiencia",
+  "badge": "Módulo 15 · Complexidade Big-O",
+  "nivel": "Avançado",
+  "titulo": "Complexidade e Eficiência de Algoritmos (Notação Big-O)",
+  "subtitulo": "Contagem de operações, crescimento assintótico, O(1), O(log n), O(n), O(n²) e trocas de eficiência.",
+  "objetivo": "Compreender a taxa de crescimento assintótico do tempo e espaço conforme a entrada n escala.",
+  "introducaoIntuitiva": "Para 1 bilhão de itens: Busca Linear faz 1.000.000.000 passos; Busca Binária faz apenas 30 comparações!",
+  "explicacaoAprofundada": "Classes assintóticas: O(1) Constante, O(log n) Logarítmica, O(n) Linear, O(n log n) Linearítmica, O(n²) Quadrática e O(2^n) Exponencial.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Acesso Direto O(1) vs Busca O(n)",
+      "descricao": "Acessar lista[0] é instantâneo; procurar exige varrer tudo."
+    },
+    "intermediario": {
+      "titulo": "Laços Aninhados O(n²)",
+      "descricao": "Comparar cada item com todos os outros faz n * n operações."
+    },
+    "avancado": {
+      "titulo": "Busca Binária O(log n)",
+      "descricao": "Divisão ao meio sucessiva reduz o espaço de busca exponencialmente."
+    }
+  },
+  "passoAPasso": [
+    "1. Identificar tamanho n.",
+    "2. Contar operações no pior caso.",
+    "3. Descartar constantes e termos de menor ordem."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Medir complexidade em segundos no relógio",
+      "correcao": "Complexidade mede operações abstratas independentes da CPU."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Algoritmo O(log n) escalável para bilhões de registros.",
+    "ruim": "Algoritmo O(n²) que trava em dados reais."
+  },
+  "pseudocodigo": "// Busca Binária O(log n)\ninicio <- 0, fim <- n - 1\nENQUANTO inicio <= fim FAÇA\n    meio <- (inicio + fim) / 2\n    SE lista[meio] == alvo ENTÃO RETORNAR meio\n    SENÃO SE lista[meio] < alvo ENTÃO inicio <- meio + 1\n    SENÃO fim <- meio - 1\nFIM_ENQUANTO",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "n = 1.000.000",
+      "estado": "Busca Binária: 20 passos",
+      "obs": "log₂(10⁶) ≈ 20"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex15_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Se dobrarmos a entrada (n para 2n), o que ocorre com as operações em um algoritmo O(n²)?",
+      "opcoes": [
+        "Quadruplicam (4x)",
+        "Dobram (2x)",
+        "Ficam iguais",
+        "Multiplicam por 8"
+      ],
+      "correta": 0,
+      "pista": "(2n)² = 4n².",
+      "justificativa": "Em algoritmos quadráticos, duplicar a entrada quadruplica o esforço."
+    }
+  ],
+  "perguntasVerificacao": "Por que a Busca Binária exige que a coleção esteja previamente ordenada?",
+  "keywordsIA": [
+    "complexidade",
+    "big-o",
+    "eficiencia",
+    "linear",
+    "quadratica",
+    "logaritmica",
+    "assintotica"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "segundos",
+      "erro": "Achar que computador rápido resolve algoritmo O(2^n)",
+      "explicacao": "Crescimento exponencial supera qualquer poder de hardware."
+    }
+  ],
+  "explicacaoIdealIA": "A Notação Big-O quantifica o crescimento assintótico de operações permitindo comparar a escalabilidade teórica de algoritmos."
+}

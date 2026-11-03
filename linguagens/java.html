@@ -264,8 +264,10 @@
     </p>
     <div class="hero-stats">
       <div class="stat"><strong>1995</strong><small>Ano de criação</small></div>
+      <div class="stat"><strong>Java 21</strong><small>Versão LTS atual</small></div>
       <div class="stat"><strong>James Gosling</strong><small>Criador</small></div>
       <div class="stat"><strong>Oracle</strong><small>Mantenedora atual</small></div>
+      <div class="stat"><strong>Records + Loom</strong><small>Novidades Java 21</small></div>
     </div>
   </div>
 
@@ -483,6 +485,179 @@ System.out.println(<span class="s">"Soma: "</span> + soma); <span class="c">// 5
         executor.submit(() -&gt; System.out.println(<span class="s">"Tarefa "</span> + id));
     }
 } <span class="c">// close() aguarda todas as tarefas terminarem</span></code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Operadores Relacionais, Lógicos &amp; Ternário <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Java fornece operadores relacionais (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>instanceof</code>), lógicos com curto-circuito (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>) e o operador ternário (<code>condicao ? valorSeTrue : valorSeFalse</code>). Lembre-se: para comparar conteúdo de Strings e objetos, use sempre <code>.equals()</code> e não <code>==</code>.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="k">int</span> idade = <span class="s">20</span>;
+<span class="k">boolean</span> temCnh = <span class="k">true</span>;
+
+<span class="c">// 1. Relacionais e Lógicos</span>
+<span class="k">boolean</span> podeDirigir = (idade &gt;= <span class="s">18</span>) &amp;&amp; temCnh; <span class="c">// true</span>
+<span class="k">boolean</span> precisaAcompanhante = (idade &lt; <span class="s">18</span>) || !temCnh;
+
+<span class="c">// Comparação de objetos com .equals()</span>
+<span class="t">String</span> s1 = <span class="k">new</span> String(<span class="s">"Java"</span>);
+<span class="t">String</span> s2 = <span class="s">"Java"</span>;
+<span class="k">boolean</span> mesmoConteudo = s1.equals(s2); <span class="c">// true</span>
+
+<span class="c">// 2. Operador Ternário</span>
+<span class="t">String</span> categoria = (idade &gt;= <span class="s">18</span>) ? <span class="s">"Maior de Idade"</span> : <span class="s">"Menor"</span>;
+System.out.println(categoria); <span class="c">// "Maior de Idade"</span></code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Condições &amp; Switch Expressions <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Além de <code>if / else if / else</code>, o Java moderno (Java 14+) introduziu as <strong>Switch Expressions</strong> com a seta <code>-&gt;</code>, eliminando a necessidade do <code>break</code> e permitindo retornar valores diretamente ou usar <code>yield</code> em blocos com múltiplas linhas.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">// 1. if / else if / else</span>
+<span class="k">int</span> pontuacao = <span class="s">85</span>;
+<span class="k">if</span> (pontuacao &gt;= <span class="s">90</span>) {
+    System.out.println(<span class="s">"Excelente"</span>);
+} <span class="k">else if</span> (pontuacao &gt;= <span class="s">70</span>) {
+    System.out.println(<span class="s">"Aprovado"</span>);
+} <span class="k">else</span> {
+    System.out.println(<span class="s">"Recuperação"</span>);
+}
+
+<span class="c">// 2. Switch Expression moderna com retorno de valor (Java 14+)</span>
+<span class="t">String</span> dia = <span class="s">"SEGUNDA"</span>;
+<span class="t">String</span> tipoDia = <span class="k">switch</span> (dia) {
+    <span class="k">case</span> <span class="s">"SABADO"</span>, <span class="s">"DOMINGO"</span> -&gt; <span class="s">"Fim de Semana"</span>;
+    <span class="k">case</span> <span class="s">"SEGUNDA"</span>, <span class="s">"TERCA"</span>, <span class="s">"QUARTA"</span>, <span class="s">"QUINTA"</span>, <span class="s">"SEXTA"</span> -&gt; <span class="s">"Dia Útil"</span>;
+    <span class="k">default</span> -&gt; {
+        System.out.println(<span class="s">"Dia desconhecido!"</span>);
+        <span class="k">yield</span> <span class="s">"Inválido"</span>;
+    }
+};
+System.out.println(tipoDia); <span class="c">// "Dia Útil"</span></code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Conversão de Tipos (Casting &amp; Parsing) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>O <strong>Widening Casting</strong> (conversão implícita de tipo menor para maior, ex: <code>int</code> para <code>double</code>) é seguro. O <strong>Narrowing Casting</strong> (tipo maior para menor) requer cast explícito <code>(tipo)</code> com risco de perda de precisão. O Java 16+ também suporta <strong>Pattern Matching para instanceof</strong>.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">// 1. Casting Primitivo</span>
+<span class="k">int</span> num = <span class="s">100</span>;
+<span class="k">double</span> d = num;              <span class="c">// Widening implícito: 100.0</span>
+<span class="k">double</span> pi = <span class="s">3.14159</span>;
+<span class="k">int</span> piInt = (<span class="k">int</span>) pi;        <span class="c">// Narrowing explícito: 3</span>
+
+<span class="c">// 2. Parsing de Strings</span>
+<span class="k">int</span> idadeNum = <span class="t">Integer</span>.parseInt(<span class="s">"28"</span>);
+<span class="k">double</span> valorDouble = <span class="t">Double</span>.parseDouble(<span class="s">"199.90"</span>);
+<span class="t">String</span> texto = <span class="t">String</span>.valueOf(<span class="s">42</span>);
+
+<span class="c">// 3. Pattern Matching para instanceof (Java 16+)</span>
+<span class="t">Object</span> obj = <span class="s">"Plataforma Ponce"</span>;
+<span class="k">if</span> (obj <span class="k">instanceof</span> <span class="t">String</span> s) {
+    System.out.println(<span class="s">"Tamanho: "</span> + s.length()); <span class="c">// casting automático sem cast manual</span>
+}</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Laços de Repetição (for, enhanced for-each, while, do-while) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Java oferece o laço <code>for</code> tradicional com contador, o <strong>enhanced for-each</strong> para percorrer arrays e coleções do tipo <code>Iterable</code>, e os laços <code>while</code> e <code>do-while</code>. Também é possível nomear laços com <em>labels</em> para controlar saídas em laços aninhados.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">// 1. Enhanced for-each em coleções e arrays</span>
+<span class="t">String</span>[] linguagens = {<span class="s">"Java"</span>, <span class="s">"Kotlin"</span>, <span class="s">"Scala"</span>};
+<span class="k">for</span> (<span class="t">String</span> lang : linguagens) {
+    <span class="k">if</span> (lang.equals(<span class="s">"Scala"</span>)) <span class="k">continue</span>;
+    System.out.println(<span class="s">"Lang: "</span> + lang);
+}
+
+<span class="c">// 2. while e do-while</span>
+<span class="k">int</span> contador = <span class="s">3</span>;
+<span class="k">while</span> (contador &gt; <span class="s">0</span>) {
+    contador--;
+}
+
+<span class="c">// 3. Labels para break em laços aninhados</span>
+buscaExterna:
+<span class="k">for</span> (<span class="k">int</span> i = <span class="s">0</span>; i &lt; <span class="s">5</span>; i++) {
+    <span class="k">for</span> (<span class="k">int</span> j = <span class="s">0</span>; j &lt; <span class="s">5</span>; j++) {
+        <span class="k">if</span> (i == <span class="s">2</span> &amp;&amp; j == <span class="s">3</span>) {
+            <span class="k">break</span> buscaExterna; <span class="c">// interrompe ambos os laços</span>
+        }
+    }
+}</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Wrappers &amp; Autoboxing / Unboxing <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Java possui tipos primitivos de alta performance (<code>int</code>, <code>double</code>, <code>boolean</code>, <code>char</code>...) e suas classes <strong>Wrapper</strong> correspondentes (<code>Integer</code>, <code>Double</code>, <code>Boolean</code>, <code>Character</code>...), necessárias em coleções genéricas como <code>List&lt;Integer&gt;</code>. O compilador converte automaticamente entre primitivo e wrapper (<strong>Autoboxing</strong> e <strong>Unboxing</strong>). Atenção: o unboxing de um wrapper <code>null</code> lança <code>NullPointerException</code>.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">// 1. Autoboxing (primitivo -&gt; Wrapper)</span>
+<span class="k">int</span> primitivo = <span class="s">25</span>;
+<span class="t">Integer</span> wrapper = primitivo; <span class="c">// autoboxing automático (equivale a Integer.valueOf(25))</span>
+
+<span class="c">// 2. Unboxing (Wrapper -&gt; primitivo)</span>
+<span class="k">int</span> valor = wrapper;         <span class="c">// unboxing automático (equivale a wrapper.intValue())</span>
+
+<span class="c">// 3. Cache de Wrappers (-128 a 127)</span>
+<span class="t">Integer</span> a = <span class="s">127</span>, b = <span class="s">127</span>;
+<span class="t">Integer</span> c = <span class="s">128</span>, d = <span class="s">128</span>;
+System.out.println(a == b);      <span class="c">// true (instâncias reutilizadas do cache)</span>
+System.out.println(c == d);      <span class="c">// false (novos objetos na heap; use .equals()!)</span>
+System.out.println(c.equals(d)); <span class="c">// true</span>
+
+<span class="c">// 4. Cuidado com NullPointerException no Unboxing</span>
+<span class="t">Integer</span> possivelNulo = <span class="k">null</span>;
+<span class="c">// int erro = possivelNulo; // Lança NullPointerException!</span></code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Tratamento de Exceções &amp; try-with-resources <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Java distingue <strong>Checked Exceptions</strong> (verificadas em tempo de compilação, herdadas de <code>Exception</code>) e <strong>Unchecked Exceptions</strong> (erros de lógica em tempo de execução, herdadas de <code>RuntimeException</code>). O <strong>try-with-resources</strong> fecha automaticamente qualquer recurso que implemente <code>AutoCloseable</code>.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">// Exceção customizada de negócio</span>
+<span class="k">public class</span> <span class="t">SaldoInsuficienteException</span> <span class="k">extends</span> <span class="t">Exception</span> {
+    <span class="k">public</span> SaldoInsuficienteException(<span class="t">String</span> msg) { <span class="k">super</span>(msg); }
+}
+
+<span class="c">// try-with-resources + multi-catch</span>
+<span class="k">try</span> (<span class="k">var</span> leitor = <span class="k">new</span> <span class="t">BufferedReader</span>(<span class="k">new</span> <span class="t">FileReader</span>(<span class="s">"contas.txt"</span>))) {
+    <span class="t">String</span> linha = leitor.readLine();
+    <span class="k">if</span> (linha == <span class="k">null</span>) {
+        <span class="k">throw new</span> <span class="t">SaldoInsuficienteException</span>(<span class="s">"Arquivo vazio"</span>);
+    }
+} <span class="k">catch</span> (<span class="t">IOException</span> | <span class="t">SaldoInsuficienteException</span> e) {
+    System.err.println(<span class="s">"Erro capturado: "</span> + e.getMessage());
+} <span class="k">finally</span> {
+    System.out.println(<span class="s">"Operação finalizada."</span>);
+}</code></pre></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="acc-header" aria-expanded="false">Records &amp; Métodos Estáticos (Java Moderno) <span class="arrow">▼</span></button>
+        <div class="acc-body"><div class="acc-content">
+          <p>Desde o Java 16, os <strong>Records</strong> oferecem uma sintaxe ultra concisa para criar classes imutáveis transportadoras de dados (DTOs), gerando automaticamente construtor, getters, <code>equals()</code>, <code>hashCode()</code> e <code>toString()</code>.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">// Record imutável com construtor compacto de validação</span>
+<span class="k">public record</span> <span class="t">ClienteDTO</span>(<span class="t">Long</span> id, <span class="t">String</span> nome, <span class="t">String</span> email) {
+    <span class="k">public</span> ClienteDTO {
+        <span class="k">if</span> (nome == <span class="k">null</span> || nome.isBlank()) {
+            <span class="k">throw new</span> <span class="t">IllegalArgumentException</span>(<span class="s">"Nome não pode ser vazio"</span>);
+        }
+    }
+
+    <span class="c">// Método estático de fábrica (Factory Method)</span>
+    <span class="k">public static</span> <span class="t">ClienteDTO</span> anonimo() {
+        <span class="k">return new</span> <span class="t">ClienteDTO</span>(<span class="s">0L</span>, <span class="s">"Anônimo"</span>, <span class="s">"anonimo@app.com"</span>);
+    }
+}
+
+<span class="t">ClienteDTO</span> cli = <span class="k">new</span> ClienteDTO(<span class="s">1L</span>, <span class="s">"Luis Ponce"</span>, <span class="s">"luis@ponce.dev"</span>);
+System.out.println(cli.nome()); <span class="c">// "Luis Ponce" (getter sem prefixo get)</span>
+System.out.println(cli);        <span class="c">// ClienteDTO[id=1, nome=Luis Ponce, email=luis@ponce.dev]</span></code></pre></div>
         </div></div>
       </div>
 
@@ -706,15 +881,209 @@ System.out.println(<span class="s">"Soma: "</span> + soma); <span class="c">// 5
       <div class="phase">
         <span class="num">FASE 3</span>
         <h3>Frameworks</h3>
-        <ul><li>Spring Boot</li><li>JPA/Hibernate</li><li>Testes JUnit</li></ul>
+        <ul><li>Spring Boot 3</li><li>JPA/Hibernate</li><li>Testes JUnit 5</li><li>Mockito + Testcontainers</li></ul>
       </div>
       <div class="phase">
         <span class="num">FASE 4</span>
-        <h3>Avançado</h3>
-        <ul><li>Microsserviços</li><li>Docker</li><li>Cloud</li></ul>
+        <h3>Java 21 + Cloud</h3>
+        <ul><li>Records &amp; Sealed Classes</li><li>Virtual Threads (Loom)</li><li>GraalVM Native</li><li>Microsserviços + K8s</li></ul>
       </div>
     </div>
   </section>
+
+
+  <!-- 8. JAVA 21 MODERNO -->
+  <section id="java21">
+    <h2 class="section-title">🚀 Java 21 <span>Moderno</span></h2>
+    <p class="section-sub">Records, Sealed Classes, Pattern Matching, Spring Boot 3, GraalVM e testes com JUnit 5 + Mockito.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="tab-records" role="tab">Records &amp; Sealed</button>
+      <button class="tab-btn" data-tab="tab-pattern" role="tab">Pattern Matching</button>
+      <button class="tab-btn" data-tab="tab-springboot3" role="tab">Spring Boot 3</button>
+      <button class="tab-btn" data-tab="tab-graalvm" role="tab">GraalVM Native</button>
+      <button class="tab-btn" data-tab="tab-testes21" role="tab">JUnit 5 + Mockito</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-records">
+      <p><strong>Records</strong> (Java 16+) — classes imutáveis com <code>equals</code>, <code>hashCode</code>, <code>toString</code> e acessores gerados automaticamente. <strong>Sealed Classes</strong> (Java 17+) — controle total sobre a hierarquia de tipos, tornando domínios fechados e seguros.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">// ─── Record: DTO imutável gerado automaticamente ─────────────────────</span>
+<span class="k">record</span> <span class="t">Pedido</span>(<span class="t">Long</span> id, <span class="t">String</span> cliente, <span class="k">double</span> total) {
+    <span class="c">// Validação compacta no construtor canônico</span>
+    <span class="k">public</span> Pedido {
+        <span class="k">if</span> (total &lt; 0) <span class="k">throw new</span> <span class="t">IllegalArgumentException</span>(<span class="s">"Total negativo"</span>);
+        cliente = cliente.strip();
+    }
+    <span class="k">public boolean</span> isGrande() { <span class="k">return</span> total &gt; 1_000.0; }
+}
+
+<span class="c">// ─── Sealed Interface: hierarquia fechada de formas ──────────────────</span>
+<span class="k">sealed interface</span> <span class="t">Forma</span> <span class="k">permits</span> <span class="t">Circulo</span>, <span class="t">Retangulo</span>, <span class="t">Triangulo</span> {}
+
+<span class="k">record</span> <span class="t">Circulo</span>(<span class="k">double</span> raio)              <span class="k">implements</span> <span class="t">Forma</span> {}
+<span class="k">record</span> <span class="t">Retangulo</span>(<span class="k">double</span> l, <span class="k">double</span> a)     <span class="k">implements</span> <span class="t">Forma</span> {}
+<span class="k">record</span> <span class="t">Triangulo</span>(<span class="k">double</span> b, <span class="k">double</span> h)     <span class="k">implements</span> <span class="t">Forma</span> {}
+
+<span class="c">// Uso</span>
+<span class="t">Pedido</span> p = <span class="k">new</span> Pedido(<span class="s">1L</span>, <span class="s">"  Ana  "</span>, <span class="s">1500.0</span>);
+System.out.println(p.cliente());     <span class="c">// "Ana"  (strip aplicado no construtor)</span>
+System.out.println(p.isGrande());    <span class="c">// true</span></code></pre></div>
+    </div>
+
+    <div class="tab-panel" id="tab-pattern">
+      <p><strong>Pattern Matching com switch</strong> (Java 21, estável) — correspondência exaustiva sobre sealed types, deconstruct patterns e guards, eliminando castings e ifs verbosos.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">// ─── Área com Pattern Matching exaustivo ─────────────────────────────</span>
+<span class="k">double</span> calcularArea(<span class="t">Forma</span> f) {
+    <span class="k">return switch</span> (f) {
+        <span class="k">case</span> <span class="t">Circulo</span>(var r)       -&gt; <span class="t">Math</span>.PI * r * r;
+        <span class="k">case</span> <span class="t">Retangulo</span>(var l, var a) -&gt; l * a;
+        <span class="k">case</span> <span class="t">Triangulo</span>(var b, var h) -&gt; (b * h) / 2;
+        <span class="c">// Sem default: o compilador verifica exaustividade via sealed</span>
+    };
+}
+
+<span class="c">// ─── Guard patterns + null handling ─────────────────────────────────</span>
+<span class="t">String</span> classificar(<span class="t">Object</span> obj) {
+    <span class="k">return switch</span> (obj) {
+        <span class="k">case</span> <span class="t">Integer</span> i <span class="k">when</span> i &gt; 0    -&gt; <span class="s">"Positivo: "</span>  + i;
+        <span class="k">case</span> <span class="t">Integer</span> i <span class="k">when</span> i &lt; 0    -&gt; <span class="s">"Negativo: "</span>  + i;
+        <span class="k">case</span> <span class="t">Integer</span> i               -&gt; <span class="s">"Zero"</span>;
+        <span class="k">case</span> <span class="t">String</span> s <span class="k">when</span> s.isEmpty() -&gt; <span class="s">"String vazia"</span>;
+        <span class="k">case</span> <span class="t">String</span> s                 -&gt; <span class="s">"Texto: "</span> + s;
+        <span class="k">case null</span>                     -&gt; <span class="s">"Nulo"</span>;
+        <span class="k">default</span>                       -&gt; <span class="s">"Outro tipo"</span>;
+    };
+}
+
+<span class="c">// ─── Record deconstruct pattern ──────────────────────────────────────</span>
+<span class="k">record</span> <span class="t">Ponto</span>(<span class="k">int</span> x, <span class="k">int</span> y) {}
+
+<span class="t">String</span> descrever(<span class="t">Object</span> o) {
+    <span class="k">return switch</span> (o) {
+        <span class="k">case</span> <span class="t">Ponto</span>(<span class="k">int</span> x, <span class="k">int</span> y) <span class="k">when</span> x == y -&gt; <span class="s">"Diagonal (%d)"</span>.formatted(x);
+        <span class="k">case</span> <span class="t">Ponto</span>(<span class="k">int</span> x, <span class="k">int</span> y)             -&gt; <span class="s">"Ponto (%d, %d)"</span>.formatted(x, y);
+        <span class="k">default</span> -&gt; <span class="s">"Não é um ponto"</span>;
+    };
+}</code></pre></div>
+    </div>
+
+    <div class="tab-panel" id="tab-springboot3">
+      <p><strong>Spring Boot 3.x</strong> (Java 17+) — Records como DTOs validados, HTTP Interface Clients declarativos, observabilidade com Micrometer/Prometheus e integração nativa com GraalVM.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">// ─── Record como DTO com validação Bean Validation ───────────────────</span>
+<span class="k">public record</span> <span class="t">CriarProdutoDTO</span>(
+    <span class="a">@NotBlank</span>(message = <span class="s">"Nome é obrigatório"</span>)   <span class="t">String</span> nome,
+    <span class="a">@Positive</span>(message = <span class="s">"Preço deve ser positivo"</span>) <span class="t">BigDecimal</span> preco,
+    <span class="a">@Min</span>(<span class="s">0</span>)                                        <span class="k">int</span> estoque
+) {}
+
+<span class="c">// ─── Controller com Records + ResponseEntity ─────────────────────────</span>
+<span class="a">@RestController</span>
+<span class="a">@RequestMapping</span>(<span class="s">"/api/v2/produtos"</span>)
+<span class="k">public class</span> <span class="t">ProdutoV2Controller</span> {
+    <span class="k">private final</span> <span class="t">ProdutoService</span> service;
+    <span class="k">public</span> ProdutoV2Controller(<span class="t">ProdutoService</span> service) { <span class="k">this</span>.service = service; }
+
+    <span class="a">@PostMapping</span>
+    <span class="k">public</span> <span class="t">ResponseEntity</span>&lt;<span class="t">ProdutoResponse</span>&gt; criar(
+            <span class="a">@RequestBody</span> <span class="a">@Valid</span> <span class="t">CriarProdutoDTO</span> dto) {
+        <span class="k">return</span> <span class="t">ResponseEntity</span>.status(<span class="s">201</span>).body(service.criar(dto));
+    }
+
+    <span class="a">@GetMapping</span>(<span class="s">"/{id}"</span>)
+    <span class="k">public</span> <span class="t">ResponseEntity</span>&lt;<span class="t">ProdutoResponse</span>&gt; buscar(<span class="a">@PathVariable</span> <span class="t">UUID</span> id) {
+        <span class="k">return</span> service.buscar(id)
+            .map(<span class="t">ResponseEntity</span>::ok)
+            .orElseThrow(() -&gt; <span class="k">new</span> <span class="t">ResponseStatusException</span>(<span class="t">HttpStatus</span>.NOT_FOUND));
+    }
+}
+
+<span class="c">// ─── HTTP Interface Client (Spring 6 / Boot 3) ───────────────────────</span>
+<span class="a">@HttpExchange</span>(<span class="s">"https://api.cotacoes.com"</span>)
+<span class="k">public interface</span> <span class="t">CotacaoClient</span> {
+    <span class="a">@GetExchange</span>(<span class="s">"/v1/{moeda}"</span>)
+    <span class="t">CotacaoDTO</span> getCotacao(<span class="a">@PathVariable</span> <span class="t">String</span> moeda);
+}
+<span class="c">// Registrado via WebClient + HttpServiceProxyFactory no @Bean</span></code></pre></div>
+    </div>
+
+    <div class="tab-panel" id="tab-graalvm">
+      <p><strong>GraalVM Native Image</strong> — compila o app num binário nativo: startup em ~58ms vs ~2.3s da JVM e ~50MB RAM vs ~320MB, ideal para serverless, K8s e AWS Lambda.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="c">&lt;!-- pom.xml — plugin nativo (Spring Boot 3.x) --&gt;</span>
+&lt;plugin&gt;
+    &lt;groupId&gt;org.graalvm.buildtools&lt;/groupId&gt;
+    &lt;artifactId&gt;native-maven-plugin&lt;/artifactId&gt;
+&lt;/plugin&gt;
+
+<span class="c">// ─── Build e execução ────────────────────────────────────────────────</span>
+<span class="c">// $ ./mvnw -Pnative native:compile   ← compila para binário nativo</span>
+<span class="c">// $ ./target/minha-api               ← startup em ~58ms!</span>
+
+<span class="c">// ─── Comparativo de desempenho ───────────────────────────────────────</span>
+<span class="c">// | Métrica          | JVM (JAR)  | Native Image  |</span>
+<span class="c">// |------------------|------------|---------------|</span>
+<span class="c">// | Startup          | ~2.3s      | ~58ms         |</span>
+<span class="c">// | RSS Memory       | ~320MB     | ~48MB         |</span>
+<span class="c">// | Throughput (RPS) | ~28.000    | ~26.000       | ← ligeiramente menor</span>
+<span class="c">// | Build Time       | ~30s       | ~3min         | ← compilação mais lenta</span>
+
+<span class="c">// ─── Dockerfile multi-stage (Red Hat UBI — imagem segura) ────────────</span>
+<span class="c">// FROM registry.redhat.io/ubi9/ubi-minimal:latest AS builder</span>
+<span class="c">// RUN ./mvnw -Pnative native:compile</span>
+<span class="c">// FROM registry.redhat.io/ubi9/ubi-minimal:latest</span>
+<span class="c">// COPY --from=builder /app/target/minha-api /app/minha-api</span>
+<span class="c">// USER 1001   ← execução sem root, conforme boas práticas</span>
+<span class="c">// CMD ["/app/minha-api"]</span></code></pre></div>
+    </div>
+
+    <div class="tab-panel" id="tab-testes21">
+      <p><strong>JUnit 5 + Mockito</strong> — o padrão moderno de testes Java: anotações expressivas, mocks poderosos e <strong>Testcontainers</strong> para testes de integração com banco de dados real.</p>
+<div class="code-wrap"><button class="copy-btn">Copiar</button><pre><code><span class="k">import</span> org.junit.jupiter.api.*;
+<span class="k">import</span> org.mockito.*;
+
+<span class="c">// ─── Teste unitário com Mockito ──────────────────────────────────────</span>
+<span class="a">@ExtendWith</span>(<span class="t">MockitoExtension</span>.class)
+<span class="k">class</span> <span class="t">ProdutoServiceTest</span> {
+
+    <span class="a">@Mock</span>         <span class="t">ProdutoRepository</span> repositorio;
+    <span class="a">@InjectMocks</span>  <span class="t">ProdutoService</span>    service;
+
+    <span class="a">@Test</span>
+    <span class="a">@DisplayName</span>(<span class="s">"Deve lançar exceção com preço negativo"</span>)
+    <span class="k">void</span> deveLancarExcecaoPrecoNegativo() {
+        <span class="k">var</span> dto = <span class="k">new</span> <span class="t">CriarProdutoDTO</span>(<span class="s">"Notebook"</span>, <span class="t">BigDecimal</span>.valueOf(<span class="s">-100</span>), <span class="s">0</span>);
+        <span class="t">Assertions</span>.assertThrows(<span class="t">IllegalArgumentException</span>.class, () -&gt; service.criar(dto));
+        <span class="t">Mockito</span>.verifyNoInteractions(repositorio);
+    }
+
+    <span class="a">@ParameterizedTest</span>
+    <span class="a">@ValueSource</span>(strings = {<span class="s">""</span>, <span class="s">"  "</span>})
+    <span class="k">void</span> nomeBlankDeveLancarExcecao(<span class="t">String</span> nome) {
+        <span class="k">var</span> dto = <span class="k">new</span> <span class="t">CriarProdutoDTO</span>(nome, <span class="t">BigDecimal</span>.ONE, <span class="s">1</span>);
+        <span class="t">Assertions</span>.assertThrows(<span class="t">IllegalArgumentException</span>.class, () -&gt; service.criar(dto));
+    }
+}
+
+<span class="c">// ─── Teste de integração com Testcontainers ──────────────────────────</span>
+<span class="a">@SpringBootTest</span>
+<span class="a">@Testcontainers</span>
+<span class="k">class</span> <span class="t">ProdutoRepositoryIT</span> {
+
+    <span class="a">@Container</span>
+    <span class="k">static</span> <span class="t">PostgreSQLContainer</span>&lt;?&gt; pg =
+        <span class="k">new</span> <span class="t">PostgreSQLContainer</span>&lt;&gt;(<span class="s">"postgres:16-alpine"</span>)
+            .withDatabaseName(<span class="s">"testdb"</span>);
+
+    <span class="a">@Autowired</span> <span class="t">ProdutoRepository</span> repo;
+
+    <span class="a">@Test</span>
+    <span class="k">void</span> devePersistirERecuperarProduto() {
+        <span class="k">var</span> salvo = repo.save(<span class="k">new</span> <span class="t">Produto</span>(<span class="s">"Monitor"</span>, <span class="t">BigDecimal</span>.valueOf(<span class="s">900</span>)));
+        <span class="t">Assertions</span>.assertTrue(repo.findById(salvo.id()).isPresent());
+    }
+}</code></pre></div>
+    </div>
+  </section>
+
 
   <!-- 8. RECURSOS -->
   <section id="recursos">
@@ -745,7 +1114,21 @@ System.out.println(<span class="s">"Soma: "</span> + soma); <span class="c">// 5
 
 </main>
 
-<footer>© 2025 Ponce Metodologias &amp; Dev</footer>
+<footer style="margin-top:72px;padding:32px 20px;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:.9rem;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <p style="margin-bottom:14px;font-weight:700;color:var(--text);font-size:1rem;">☕ Java — Ponce Metodologias &amp; Dev</p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:16px;">
+      <a href="#historia" style="color:var(--accent);">📜 História</a>
+      <a href="#conceitos" style="color:var(--accent);">🧠 Conceitos</a>
+      <a href="#exemplos" style="color:var(--accent);">💻 Exemplos</a>
+      <a href="#java21" style="color:var(--accent);">🚀 Java 21</a>
+      <a href="#mercado" style="color:var(--accent);">💼 Mercado</a>
+      <a href="#roadmap" style="color:var(--accent);">🗺️ Roadmap</a>
+      <a href="#recursos" style="color:var(--accent);">📚 Recursos</a>
+    </div>
+    <p>© 2025 Ponce Metodologias &amp; Dev — Formando engenheiros de software com rigor e profundidade.</p>
+  </div>
+</footer>
 
 <script>
   // ----- Accordion -----
@@ -778,8 +1161,9 @@ System.out.println(<span class="s">"Soma: "</span> + soma); <span class="c">// 5
   // ----- Tabs -----
   document.querySelectorAll('.tab-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
-      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      var scope = btn.closest('section');   // escopo por seção: abas independentes
+      scope.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      scope.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
       btn.classList.add('active');
       document.getElementById(btn.dataset.tab).classList.add('active');
     });

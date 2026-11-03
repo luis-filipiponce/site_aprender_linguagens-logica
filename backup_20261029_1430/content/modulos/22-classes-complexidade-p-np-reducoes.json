@@ -1,0 +1,101 @@
+{
+  "id": 22,
+  "slug": "classes-complexidade-p-np-reducoes",
+  "badge": "Módulo 22 · Especialização Avançada",
+  "nivel": "Especialista",
+  "titulo": "Classes de Complexidade (P vs NP), Reduções e Análise Amortizada",
+  "subtitulo": "Classes P, NP, NP-Completo (Cook-Levin), Redução Polinomial de Karp e Análise Amortizada (Método do Potencial).",
+  "objetivo": "Dominar as classes de complexidade computacional P, NP, NP-Completo e NP-Difícil, compreender o maior problema aberto da computação (P vs NP), aplicar reduções polinomiais e conduzir Análise Amortizada.",
+  "introducaoIntuitiva": "Encontrar a combinação de um cofre com 100 dígitos pode levar milhões de anos testando uma por uma (problema difícil de resolver), mas se alguém lhe der a combinação, você leva 1 segundo para girar e conferir se abre (problema fácil de verificar). Essa assimetria entre resolver e verificar é o cerne do problema P versus NP.",
+  "explicacaoAprofundada": "1. CLASSES DE COMPLEXIDADE:\n• CLASSE P: Conjunto dos problemas de decisão resolvidos por uma Máquina de Turing determinística em tempo Polinomial O(n^k) (ex: ordenação, caminho mínimo, busca binária). São problemas considerados tratáveis eficientemente.\n• CLASSE NP (Nondeterministic Polynomial): Conjunto dos problemas cuja solução proposta pode ser VERIFICADA em tempo polinomial por uma Máquina de Turing determinística (ou resolvidos em tempo polinomial por uma Máquina Não-Determinística).\n• O GRANDE ENIGMA P vs NP: Se é fácil verificar uma solução, é necessariamente fácil encontrá-la a partir do zero? Se P = NP, todo mistério verificável teria algoritmo rápido de resolução (quebrando a criptografia RSA do planeta). A ampla maioria dos cientistas crê que P ≠ NP.\n\n2. TEOREMA DE COOK-LEVIN & NP-COMPLETUDE:\nUm problema X é NP-Completo se: (1) X pertence a NP; e (2) Todo problema em NP pode ser reduzido a X em tempo polinomial (X é tão difícil quanto qualquer problema em NP). Stephen Cook e Leonid Levin provaram em 1971 que o problema SAT (Satisfatibilidade Booleana) é NP-Completo. Se alguém encontrar um algoritmo polinomial para QUALQUER problema NP-Completo (como Caixeiro Viajante, Clique, Subset-Sum, 3-SAT), TODOS os problemas em NP estarão automaticamente resolvidos em P!\n\n3. REDUÇÃO POLINOMIAL (A ≤_P B): Técnica onde uma instância do problema A é transformada em uma instância de B em tempo polinomial. Se B for fácil, A é fácil; se A for difícil, B é no mínimo tão difícil quanto A.\n\n4. ANÁLISE AMORTIZADA (Robert Tarjan):\nAnalisa a média de tempo por operação em uma sequência de operações, garantindo que operações ocasionais caras (ex: redimensionar array dinâmico dobrando de tamanho) são amortizadas pelas operações baratas anteriores. 3 Métodos: (a) Método do Agregado; (b) Método Contábil/Crédito; (c) Método do Potencial Φ(D_i).",
+  "exemplos": {
+    "basico": {
+      "titulo": "Análise Amortizada de Vetor Dinâmico (Array Duplicante)",
+      "descricao": "Inserir elemento é O(1). Quando enche (tamanho n), aloca 2n e copia todos (custa O(n)). Método do Potencial prova que o custo amortizado por inserção é estritamente O(1) constante!"
+    },
+    "intermediario": {
+      "titulo": "O Problema do Caixeiro Viajante (TSP)",
+      "descricao": "Visitar n cidades pelo menor caminho. Pertence a NP (dado um roteiro, soma-se o custo em O(n)). É NP-Completo: testar todas as rotas por força bruta faz O(n!) operações. Para 30 cidades, n! supera o número de átomos do universo!"
+    },
+    "avancado": {
+      "titulo": "Redução Polinomial de 3-SAT para Cobertura de Vértices (Vertex Cover)",
+      "descricao": "Construir um gadget de grafo onde cada cláusula booleana vira um triângulo. Prova que Cobertura de Vértices é NP-Completo herdando a complexidade de 3-SAT."
+    }
+  },
+  "passoAPasso": [
+    "1. Para provar que um problema X pertence a NP, construir um Certificado e um Verificador polinomial.",
+    "2. Para provar que X é NP-Completo, escolher um problema Y comprovadamente NP-Completo (ex: 3-SAT) e demonstrar uma Redução Polinomial Y ≤_P X.",
+    "3. Provar que a transformação é bidirecional (a resposta para Y é Sim se e somente se a resposta para X transformada for Sim).",
+    "4. Para análise de estruturas dinâmicas, definir a Função Potencial Φ(D) onde Φ(D_0)=0 e Φ(D_i)>=0 para derivar o custo amortizado c_i' = c_i + Φ(D_i) - Φ(D_{i-1})."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Inverter o sentido da redução polinomial ao provar NP-Completude",
+      "correcao": "Para provar que NovoProblema é NP-Completo, reduza ConhecidoNP_Completo <=_P NovoProblema (e NÃO o contrário!)."
+    },
+    {
+      "erro": "Confundir custo no Pior Caso com Custo Amortizado",
+      "correcao": "O pior caso de 1 operação isolada pode ser O(n), mas o custo amortizado na sequência de m operações é O(1)."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Identificar que o problema é NP-Completo e aplicar Algoritmos de Aproximação com garantia teórica de erro.",
+    "ruim": "Insistir em tentar criar algoritmo exato polinomial para um problema NP-Difícil."
+  },
+  "pseudocodigo": "// Redução Conceitual e Verificador Polinomial de Clique em Grafo\nFUNÇÃO verificar_clique_polinomial(Grafo G, subconjunto_V, inteiro k) : BOOLEANO\n    SE tamanho(subconjunto_V) < k ENTÃO RETORNAR FALSO\n    PARA CADA vertice_u EM subconjunto_V FAÇA\n        PARA CADA vertice_v EM subconjunto_V FAÇA\n            SE vertice_u != vertice_v E NÃO existe_aresta(G, vertice_u, vertice_v) ENTÃO\n                RETORNAR FALSO // Falhou na checagem do clique\n            FIM_SE\n        FIM_PARA\n    FIM_PARA\n    RETORNAR VERDADEIRO // Verificado com sucesso em tempo O(k²) Polinomial!\nFIM_FUNÇÃO",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Certificado recebido",
+      "estado": "Subconjunto de 4 vértices em Grafo de 1.000 nós",
+      "obs": "Candidato a solução"
+    },
+    {
+      "passo": 2,
+      "acao": "Verificação em pares",
+      "estado": "4*(4-1)/2 = 6 arestas testadas",
+      "obs": "Executado em microssegundos (Polinomial)"
+    },
+    {
+      "passo": 3,
+      "acao": "Conclusão NP",
+      "estado": "Verificação é O(k²) -> Problema pertence a NP",
+      "obs": "Certificado Válido"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex22_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Se um pesquisador descobrir um algoritmo que resolve o problema do Caixeiro Viajante (TSP) em tempo polinomial determinístico O(n³), qual seria a consequência histórica para a Ciência da Computação?",
+      "opcoes": [
+        "Provaria que P = NP, resolvendo o maior problema aberto da matemática e computação, pois todo problema em NP passaria a ter solução polinomial.",
+        "Apenas o problema do Caixeiro Viajante ficaria mais rápido, sem afetar outros problemas.",
+        "Provaria que computadores quânticos são desnecessários.",
+        "Não teria nenhum impacto relevante."
+      ],
+      "correta": 0,
+      "pista": "Lembre-se do Teorema de Cook-Levin e da definição de NP-Completude: todos os problemas em NP reduzem-se polinomialmente ao TSP.",
+      "justificativa": "Por definição de NP-Completude, se qualquer problema NP-Completo for resolvido em tempo polinomial P, TODOS os milhares de problemas em NP (incluindo criptografia, biologia computacional, otimização) passarão a ter algoritmo polinomial, provando P = NP."
+    }
+  ],
+  "perguntasVerificacao": "Qual a diferença entre a classe NP (verificável em tempo polinomial) e a classe NP-Completo (os problemas mais difíceis de NP)?",
+  "keywordsIA": [
+    "p_vs_np",
+    "np_completo",
+    "cook_levin",
+    "reducao_polinomial",
+    "analise_amortizada",
+    "metodo_potencial",
+    "sat",
+    "complexidade_computacional"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "np_nao_polinomial",
+      "erro": "Achar que a sigla NP significa \"Não Polinomial\"",
+      "explicacao": "NP significa \"Nondeterministic Polynomial\" (tempo polinomial em Máquina Não-Determinística / Verificável em tempo polinomial)."
+    }
+  ],
+  "explicacaoIdealIA": "As classes de complexidade categorizam problemas por sua tratabilidade teórica. P são os problemas resolvidos em tempo polinomial; NP são os verificáveis em tempo polinomial. Os problemas NP-Completos (como SAT e TSP) sintetizam a maior questão aberta da computação: P versus NP."
+}

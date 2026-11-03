@@ -1,0 +1,83 @@
+{
+  "id": 10,
+  "slug": "fluxogramas-representacao-visual",
+  "badge": "Módulo 10 · Modelagem Visual",
+  "nivel": "Intermediário",
+  "titulo": "Fluxogramas e Representação Visual de Algoritmos",
+  "subtitulo": "Simbologia ANSI/ISO, diagramas de blocos, caminhos de decisão e conversão para pseudocódigo.",
+  "objetivo": "Mapear fluxos lógicos através de notação gráfica padronizada ISO/ANSI.",
+  "introducaoIntuitiva": "Um fluxograma é o mapa rodoviário do raciocínio lógico.",
+  "explicacaoAprofundada": "Símbolos ISO 5807: Terminador (Oval), Processamento (Retângulo), E/S (Paralelogramo), Decisão (Losango) e Setas de fluxo.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Sequência Linear",
+      "descricao": "[Início] -> [/Ler raio/] -> [Área = π*r²] -> [Fim]."
+    },
+    "intermediario": {
+      "titulo": "Decisão Binária",
+      "descricao": "Losango <Saldo >= Compra?> com saídas Sim e Não."
+    },
+    "avancado": {
+      "titulo": "Ciclo com Seta de Retorno",
+      "descricao": "Seta que volta ao topo do losango de teste."
+    }
+  },
+  "passoAPasso": [
+    "1. Usar óvalo para início/fim.",
+    "2. Retângulos para cálculos.",
+    "3. Losangos para decisões."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Losango com apenas uma saída",
+      "correcao": "Toda decisão deve ter no mínimo duas saídas (V e F)."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Fluxo descendente limpo com símbolos padronizados.",
+    "ruim": "Diagrama caótico com cruzamento de linhas."
+  },
+  "pseudocodigo": "SE temp > 37.5 ENTÃO ESCREVER \"Febre\" SENÃO ESCREVER \"Normal\" FIM_SE",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Decisão visual",
+      "estado": "temp = 38 -> Ramo SIM",
+      "obs": "Desvio"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex10_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Qual símbolo geométrico representa uma Tomada de Decisão em fluxogramas?",
+      "opcoes": [
+        "Retângulo",
+        "Losango",
+        "Oval",
+        "Paralelogramo"
+      ],
+      "correta": 1,
+      "pista": "Polígono de 4 lados inclinados com saídas Sim/Não.",
+      "justificativa": "O Losango é o símbolo universal para bifurcações condicionais."
+    }
+  ],
+  "perguntasVerificacao": "Qual a principal vantagem da representação visual por fluxogramas?",
+  "keywordsIA": [
+    "fluxograma",
+    "losango",
+    "retangulo",
+    "simbologia",
+    "diagrama",
+    "visual",
+    "decisao"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "simbolos",
+      "erro": "Achar que qualquer forma geométrica serve",
+      "explicacao": "Símbolos ISO são universais."
+    }
+  ],
+  "explicacaoIdealIA": "Fluxogramas utilizam símbolos geométricos padronizados para ilustrar o caminho de execução de um algoritmo."
+}

@@ -1,0 +1,82 @@
+{
+  "id": 16,
+  "slug": "raciocinio-avancado-problemas",
+  "badge": "Módulo 16 · Desafios de Raciocínio",
+  "nivel": "Avançado",
+  "titulo": "Raciocínio Lógico Avançado Aplicado à Programação",
+  "subtitulo": "Múltiplas restrições simultâneas, eliminação de hipóteses, matrizes de decisão e problemas complexos.",
+  "objetivo": "Resolver problemas intrincados com regras interdependentes aplicando eliminação sistemática por matrizes de decisão.",
+  "introducaoIntuitiva": "Enigma com pistas cruzadas: deduzir a verdade eliminando contradições em uma tabela de certezas.",
+  "explicacaoAprofundada": "Análise combinatória de cenários, poda de ramos inválidos e formalização de regras de negócio em matrizes de decisão estritas.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Escalonamento com Restrições",
+      "descricao": "Alocar tarefas em núcleos respeitando prioridades e bloqueios."
+    },
+    "intermediario": {
+      "titulo": "Algoritmo Guloso e Contraexemplo",
+      "descricao": "Troco de moedas guloso falha em sistemas não canônicos."
+    },
+    "avancado": {
+      "titulo": "Motor Antifraude Multicritério",
+      "descricao": "Combinação de anomalias de tempo, distância física e dispositivo."
+    }
+  },
+  "passoAPasso": [
+    "1. Isolar restrições numeradas.",
+    "2. Montar matriz de possibilidades.",
+    "3. Eliminar contradições."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Presumir hipóteses não declaradas no enunciado",
+      "correcao": "Trabalhe apenas com fatos rigorosamente demonstráveis."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Matriz formal cobrindo todas as interseções de regras.",
+    "ruim": "Implementação por adivinhação intuitiva."
+  },
+  "pseudocodigo": "SE dist_km > 500 E tempo_min < 30 ENTÃO RETORNAR \"BLOQUEIO_IMEDIATO\" FIM_SE",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Validador multicritério",
+      "estado": "Restrições avaliadas",
+      "obs": "Seguro"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex16_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Se o acesso exige (Admin OU Gerente) E Horário Comercial E VPN. Um Admin fora do horário comercial usando VPN tem acesso liberado?",
+      "opcoes": [
+        "Não, porque violou a regra mandatória de horário.",
+        "Sim, admin pode tudo.",
+        "Sim, por causa da VPN.",
+        "Indeterminado."
+      ],
+      "correta": 0,
+      "pista": "Todas as 3 condições estão ligadas por E (conjunção mandatória).",
+      "justificativa": "A violação de qualquer uma das condições da conjunção invalida o acesso total."
+    }
+  ],
+  "perguntasVerificacao": "Como matrizes de decisão eliminam lacunas em regras de negócio complexas?",
+  "keywordsIA": [
+    "raciocinio",
+    "deducao",
+    "restricoes",
+    "matriz_decisao",
+    "eliminacao",
+    "regras_negocio"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "feeling",
+      "erro": "Confiar em intuição para regras interdependentes",
+      "explicacao": "Problemas complexos exigem prova matricial."
+    }
+  ],
+  "explicacaoIdealIA": "O raciocínio avançado decompõe enunciados extensos em matrizes de decisão garantindo soluções robustas."
+}

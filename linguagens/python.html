@@ -838,6 +838,213 @@ footer {
         </div>
       </div>
 
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-7" id="acc-btn-7">
+          <span>Operadores Relacionais, Lógicos &amp; Ternário</span><span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-7" role="region" aria-labelledby="acc-btn-7">
+          <div class="acc-inner">
+            <p>Python utiliza operadores relacionais (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>is</code> para identidade de memória e <code>in</code> para pertinência). Os operadores lógicos são escritos em inglês claro (<code>and</code>, <code>or</code>, <code>not</code>). O <strong>operador ternário</strong> em Python possui a sintaxe expressiva <code>valor_se_verdadeiro if condicao else valor_se_falso</code>.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>operadores.py</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt"># 1. Operadores Relacionais e Identidade</span>
+<span class="var">a</span>, <span class="var">b</span> = <span class="num">10</span>, <span class="num">20</span>
+<span class="var">lista1</span> = [<span class="num">1</span>, <span class="num">2</span>]
+<span class="var">lista2</span> = [<span class="num">1</span>, <span class="num">2</span>]
+
+<span class="fn">print</span>(<span class="var">a</span> &lt; <span class="var">b</span>)          <span class="cmt"># True</span>
+<span class="fn">print</span>(<span class="var">lista1</span> == <span class="var">lista2</span>) <span class="cmt"># True (mesmo conteúdo)</span>
+<span class="fn">print</span>(<span class="var">lista1</span> <span class="kw">is</span> <span class="var">lista2</span>) <span class="cmt"># False (objetos distintos na memória)</span>
+<span class="fn">print</span>(<span class="str">"py"</span> <span class="kw">in</span> <span class="str">"python"</span>) <span class="cmt"># True (pertinência)</span>
+
+<span class="cmt"># 2. Operadores Lógicos (and, or, not)</span>
+<span class="var">idade</span> = <span class="num">22</span>
+<span class="var">tem_cnh</span> = <span class="kw">True</span>
+<span class="var">pode_dirigir</span> = <span class="var">idade</span> &gt;= <span class="num">18</span> <span class="kw">and</span> <span class="var">tem_cnh</span>
+<span class="var">bloqueado</span> = <span class="kw">not</span> <span class="var">pode_dirigir</span>
+
+<span class="cmt"># 3. Operador Ternário (valor if cond else outro)</span>
+<span class="var">status</span> = <span class="str">"Maior de idade"</span> <span class="kw">if</span> <span class="var">idade</span> &gt;= <span class="num">18</span> <span class="kw">else</span> <span class="str">"Menor"</span>
+<span class="fn">print</span>(<span class="var">status</span>) <span class="cmt"># "Maior de idade"</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-8" id="acc-btn-8">
+          <span>Condições &amp; Structural Pattern Matching (match/case)</span><span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-8" role="region" aria-labelledby="acc-btn-8">
+          <div class="acc-inner">
+            <p>Controle de fluxo condicional com <code>if</code>, <code>elif</code> e <code>else</code>. Desde o Python 3.10, o <code>match / case</code> introduziu o <strong>Pattern Matching Estrutural</strong>, permitindo desestruturar sequências, dicionários, tipos e checar padrões com guard clauses (<code>if</code>).</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>condicoes_match.py</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt"># 1. if / elif / else</span>
+<span class="var">temperatura</span> = <span class="num">28</span>
+<span class="kw">if</span> <span class="var">temperatura</span> &gt; <span class="num">30</span>:
+    <span class="fn">print</span>(<span class="str">"Muito quente"</span>)
+<span class="kw">elif</span> <span class="var">temperatura</span> &gt;= <span class="num">20</span>:
+    <span class="fn">print</span>(<span class="str">"Agradável"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Frio"</span>)
+
+<span class="cmt"># 2. match / case (Python 3.10+)</span>
+<span class="kw">def</span> <span class="fn">processar_comando</span>(<span class="var">comando</span>):
+    <span class="kw">match</span> <span class="var">comando</span>:
+        <span class="kw">case</span> [<span class="str">"sair"</span>]:
+            <span class="fn">print</span>(<span class="str">"Encerrando..."</span>)
+        <span class="kw">case</span> [<span class="str">"mover"</span>, (<span class="str">"norte"</span> | <span class="str">"sul"</span> | <span class="str">"leste"</span> | <span class="str">"oeste"</span>) <span class="kw">as</span> <span class="var">direcao</span>]:
+            <span class="fn">print</span>(<span class="str">f"Movendo para {direcao}"</span>)
+        <span class="kw">case</span> {<span class="str">"acao"</span>: <span class="str">"login"</span>, <span class="str">"usuario"</span>: <span class="var">usr</span>}:
+            <span class="fn">print</span>(<span class="str">f"Login de {usr}"</span>)
+        <span class="kw">case</span> _:
+            <span class="fn">print</span>(<span class="str">"Comando não reconhecido"</span>)
+
+<span class="fn">processar_comando</span>([<span class="str">"mover"</span>, <span class="str">"norte"</span>])</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-9" id="acc-btn-9">
+          <span>Conversão de Tipos (Type Casting &amp; Parsing)</span><span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-9" role="region" aria-labelledby="acc-btn-9">
+          <div class="acc-inner">
+            <p>Python é fortemente tipado: conversões implícitas não seguras geram erro. A conversão de tipos (type casting) é feita através das funções construtoras dos tipos (<code>int()</code>, <code>float()</code>, <code>str()</code>, <code>bool()</code>, <code>list()</code>, <code>dict()</code>, <code>tuple()</code>, <code>set()</code>).</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>conversoes.py</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt"># Conversão de Strings para Números</span>
+<span class="var">txt_idade</span> = <span class="str">"28"</span>
+<span class="var">num_idade</span> = <span class="typ">int</span>(<span class="var">txt_idade</span>)          <span class="cmt"># 28 (int)</span>
+<span class="var">preco</span> = <span class="typ">float</span>(<span class="str">"49.90"</span>)             <span class="cmt"># 49.9 (float)</span>
+<span class="var">binario</span> = <span class="typ">int</span>(<span class="str">"1010"</span>, base=<span class="num">2</span>)       <span class="cmt"># 10 (base 2 para decimal)</span>
+
+<span class="cmt"># Conversão para String e Booleano</span>
+<span class="var">texto</span> = <span class="typ">str</span>(<span class="num">123.45</span>)                <span class="cmt"># "123.45"</span>
+<span class="var">verdade</span> = <span class="typ">bool</span>(<span class="num">1</span>)                  <span class="cmt"># True (0, "", [], None são False)</span>
+
+<span class="cmt"># Conversão entre Coleções</span>
+<span class="var">tupla_coords</span> = (<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>)
+<span class="var">lista_coords</span> = <span class="typ">list</span>(<span class="var">tupla_coords</span>)   <span class="cmt"># [10, 20, 30]</span>
+<span class="var">conjunto_sem_duplicatas</span> = <span class="typ">set</span>([<span class="num">1</span>, <span class="num">2</span>, <span class="num">2</span>, <span class="num">3</span>]) <span class="cmt"># {1, 2, 3}</span>
+<span class="var">pares</span> = [(<span class="str">"a"</span>, <span class="num">1</span>), (<span class="str">"b"</span>, <span class="num">2</span>)]
+<span class="var">dicionario</span> = <span class="typ">dict</span>(<span class="var">pares</span>)           <span class="cmt"># {'a': 1, 'b': 2}</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-10" id="acc-btn-10">
+          <span>Laços de Repetição (for, while, enumerate, zip, else)</span><span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-10" role="region" aria-labelledby="acc-btn-10">
+          <div class="acc-inner">
+            <p>O laço <code>for</code> itera diretamente sobre qualquer objeto iterável. Funções utilitárias como <code>range()</code>, <code>enumerate()</code> (índice e valor) e <code>zip()</code> (percorrer iteráveis em paralelo) tornam o código conciso. Python também possui a cláusula exclusiva <code>else</code> em laços, executada apenas se o laço terminar sem <code>break</code>.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>lacos.py</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt"># 1. for com range() e enumerate()</span>
+<span class="var">frutas</span> = [<span class="str">"maçã"</span>, <span class="str">"banana"</span>, <span class="str">"laranja"</span>]
+<span class="kw">for</span> <span class="var">indice</span>, <span class="var">fruta</span> <span class="kw">in</span> <span class="fn">enumerate</span>(<span class="var">frutas</span>, start=<span class="num">1</span>):
+    <span class="fn">print</span>(<span class="str">f"{indice}: {fruta}"</span>)
+
+<span class="cmt"># 2. zip() percorrendo listas simultâneas</span>
+<span class="var">precos</span> = [<span class="num">5.0</span>, <span class="num">3.5</span>, <span class="num">4.2</span>]
+<span class="kw">for</span> <span class="var">f</span>, <span class="var">p</span> <span class="kw">in</span> <span class="fn">zip</span>(<span class="var">frutas</span>, <span class="var">precos</span>):
+    <span class="fn">print</span>(<span class="str">f"{f} custa R${p:.2f}"</span>)
+
+<span class="cmt"># 3. while e laço com else</span>
+<span class="var">tentativas</span> = <span class="num">0</span>
+<span class="kw">while</span> <span class="var">tentativas</span> &lt; <span class="num">3</span>:
+    <span class="var">tentativas</span> += <span class="num">1</span>
+    <span class="kw">if</span> <span class="var">tentativas</span> == <span class="num">2</span>:
+        <span class="kw">continue</span> <span class="cmt"># pula iteração</span>
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Laço finalizado normalmente sem break!"</span>)</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-11" id="acc-btn-11">
+          <span>Wrappers &amp; Decorators com functools.wraps</span><span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-11" role="region" aria-labelledby="acc-btn-11">
+          <div class="acc-inner">
+            <p>Em Python, o conceito de <strong>Wrapper</strong> é implementado através de <em>Decorators</em> (funções que envolvem outras funções ou métodos para alterar seu comportamento). Usar <code>@functools.wraps</code> garante que a função embrulhada preserve seus metadados originais (como nome, docstring e assinatura).</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>wrappers_decorators.py</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="kw">import</span> time
+<span class="kw">from</span> functools <span class="kw">import</span> wraps
+
+<span class="kw">def</span> <span class="fn">medir_tempo</span>(<span class="var">func</span>):
+    <span class="str">"""Decorator wrapper para medir tempo de execução."""</span>
+    <span class="kw">@</span><span class="fn">wraps</span>(<span class="var">func</span>)  <span class="cmt"># Preserva __name__ e __doc__ da função original</span>
+    <span class="kw">def</span> <span class="fn">envelope</span>(*<span class="var">args</span>, **<span class="var">kwargs</span>):
+        <span class="var">inicio</span> = time.perf_counter()
+        <span class="var">resultado</span> = <span class="var">func</span>(*<span class="var">args</span>, **<span class="var">kwargs</span>)
+        <span class="var">fim</span> = time.perf_counter()
+        <span class="fn">print</span>(<span class="str">f"[{func.__name__}] executou em {fim - inicio:.4f}s"</span>)
+        <span class="kw">return</span> <span class="var">resultado</span>
+    <span class="kw">return</span> <span class="var">envelope</span>
+
+<span class="kw">@</span><span class="fn">medir_tempo</span>
+<span class="kw">def</span> <span class="fn">processar_dados</span>(<span class="var">n</span>: <span class="typ">int</span>) -&gt; <span class="typ">int</span>:
+    <span class="str">"""Soma os números até n."""</span>
+    <span class="kw">return</span> <span class="fn">sum</span>(<span class="fn">range</span>(<span class="var">n</span>))
+
+<span class="var">total</span> = <span class="fn">processar_dados</span>(<span class="num">1_000_000</span>)
+<span class="fn">print</span>(<span class="str">"Nome original preservado:"</span>, <span class="var">processar_dados</span>.__name__) <span class="cmt"># processar_dados</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-12" id="acc-btn-12">
+          <span>Abstração, Métodos de Classe (@classmethod, @staticmethod) &amp; ABC</span><span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-12" role="region" aria-labelledby="acc-btn-12">
+          <div class="acc-inner">
+            <p>Classes abstratas em Python são criadas herdando de <code>abc.ABC</code> e decorando métodos com <code>@abstractmethod</code>, impedindo instanciação de classes incompletas. Além de métodos de instância (com <code>self</code>), Python oferece <code>@classmethod</code> (recebe a classe <code>cls</code>, ideal para construtores alternativos) e <code>@staticmethod</code> (funções utilitárias vinculadas ao escopo da classe).</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>abstracao_metodos.py</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="kw">from</span> abc <span class="kw">import</span> ABC, abstractmethod
+
+<span class="kw">class</span> <span class="typ">Notificador</span>(ABC):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">origem</span>: <span class="typ">str</span>):
+        <span class="var">self</span>._origem = <span class="var">origem</span>  <span class="cmt"># Atributo protegido (convenção _)</span>
+
+    <span class="kw">@</span><span class="fn">abstractmethod</span>
+    <span class="kw">def</span> <span class="fn">enviar</span>(<span class="var">self</span>, <span class="var">destinatario</span>: <span class="typ">str</span>, <span class="var">mensagem</span>: <span class="typ">str</span>) -&gt; <span class="typ">bool</span>:
+        <span class="str">"""Contrato abstrato que toda subclasse DEVE implementar."""</span>
+        <span class="kw">pass</span>
+
+    <span class="kw">@</span><span class="fn">staticmethod</span>
+    <span class="kw">def</span> <span class="fn">formatar_mensagem</span>(<span class="var">texto</span>: <span class="typ">str</span>) -&gt; <span class="typ">str</span>:
+        <span class="kw">return</span> <span class="var">texto</span>.strip().capitalize()
+
+<span class="kw">class</span> <span class="typ">EmailNotificador</span>(<span class="typ">Notificador</span>):
+    <span class="kw">def</span> <span class="fn">enviar</span>(<span class="var">self</span>, <span class="var">destinatario</span>: <span class="typ">str</span>, <span class="var">mensagem</span>: <span class="typ">str</span>) -&gt; <span class="typ">bool</span>:
+        <span class="var">msg_limpa</span> = <span class="var">self</span>.<span class="fn">formatar_mensagem</span>(<span class="var">mensagem</span>)
+        <span class="fn">print</span>(<span class="str">f"E-mail de [{self._origem}] para [{destinatario}]: {msg_limpa}"</span>)
+        <span class="kw">return</span> <span class="kw">True</span>
+
+    <span class="kw">@</span><span class="fn">classmethod</span>
+    <span class="kw">def</span> <span class="fn">padrao_sistema</span>(<span class="var">cls</span>):
+        <span class="kw">return</span> <span class="var">cls</span>(<span class="var">origem</span>=<span class="str">"sistema@empresa.com"</span>)
+
+<span class="var">notificador</span> = <span class="typ">EmailNotificador</span>.<span class="fn">padrao_sistema</span>()
+<span class="var">notificador</span>.<span class="fn">enviar</span>(<span class="str">"cliente@teste.com"</span>, <span class="str">"  seu pedido foi enviado! "</span>)</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1098,6 +1305,125 @@ plt.<span class="fn">savefig</span>(<span class="str">"faturamento.png"</span>, 
           <li>Dados</li>
           <li>Web</li>
           <li>DevOps</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7B. FASTAPI, TESTES & MLOPS (NOVA SEÇÃO) -->
+<section id="python-moderno" style="background: linear-gradient(135deg, #071220 0%, #0b1a2e 100%); padding: 5rem 0;">
+  <div class="container">
+    <div class="section-head" style="text-align:center; margin-bottom: 3rem;">
+      <h2 style="color:#e2e8f0;">Python Moderno: <span style="color:#3b82f6;">FastAPI, Pytest &amp; IA na Prática</span></h2>
+      <p style="color:#94a3b8; max-width:640px; margin: 0 auto;">Depois do básico, estas são as habilidades que transformam um dev Python em profissional sênior.</p>
+    </div>
+
+    <!-- FastAPI -->
+    <div style="background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.3); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem;">
+      <h3 style="color:#67e8f9; margin:0 0 1rem; font-size:1.25rem;">⚡ FastAPI — O Framework Web mais Rápido do Ecossistema Python</h3>
+      <p style="color:#94a3b8; font-size:0.9rem; line-height:1.7; margin:0 0 1.5rem;">FastAPI combina tipagem estática (Pydantic) + documentação automática (Swagger/ReDoc) + performance assíncrona (ASGI/uvicorn). Benchmarks mostram velocidade comparável ao Node.js e Go.</p>
+      <div style="background:#050d1a; border-radius:10px; overflow:hidden;">
+        <div style="background:#091520; padding:0.6rem 1rem; font-family:monospace; font-size:0.78rem; color:#64748b; border-bottom:1px solid #0f2030;">FastAPI — API REST Completa com Validação Automática</div>
+        <pre style="margin:0; padding:1.25rem; font-family:'Fira Code',monospace; font-size:0.84rem; line-height:1.8; color:#e2e8f0; overflow-x:auto;"><code><span style="color:#94a3b8;">from</span> fastapi <span style="color:#94a3b8;">import</span> FastAPI, HTTPException, status
+<span style="color:#94a3b8;">from</span> pydantic <span style="color:#94a3b8;">import</span> BaseModel, EmailStr, field_validator
+<span style="color:#94a3b8;">from</span> typing <span style="color:#94a3b8;">import</span> Annotated
+
+<span style="color:#67e8f9;">app</span> = <span style="color:#6ee7b7;">FastAPI</span>(title=<span style="color:#86efac;">"API Ponce"</span>, version=<span style="color:#86efac;">"1.0.0"</span>)
+
+<span style="color:#94a3b8;"># Schema de entrada com validação automática</span>
+<span style="color:#c084fc;">class</span> <span style="color:#67e8f9;">CriarUsuario</span>(<span style="color:#6ee7b7;">BaseModel</span>):
+    nome: <span style="color:#fb923c;">str</span>
+    email: <span style="color:#fb923c;">EmailStr</span>  <span style="color:#94a3b8;"># Valida formato de email</span>
+    senha: <span style="color:#fb923c;">str</span>
+
+    <span style="color:#6ee7b7;">@field_validator</span>(<span style="color:#86efac;">"nome"</span>)
+    <span style="color:#c084fc;">@classmethod</span>
+    <span style="color:#c084fc;">def</span> <span style="color:#67e8f9;">validar_nome</span>(cls, v: <span style="color:#fb923c;">str</span>) -> <span style="color:#fb923c;">str</span>:
+        <span style="color:#c084fc;">if</span> <span style="color:#6ee7b7;">len</span>(v) < 2: <span style="color:#c084fc;">raise</span> <span style="color:#fb923c;">ValueError</span>(<span style="color:#86efac;">"Nome muito curto"</span>)
+        <span style="color:#c084fc;">return</span> v.strip()
+
+<span style="color:#94a3b8;"># Rota assíncrona — POST /usuarios</span>
+<span style="color:#6ee7b7;">@app</span>.post(<span style="color:#86efac;">"/usuarios"</span>, status_code=<span style="color:#fbbf24;">201</span>)
+<span style="color:#c084fc;">async def</span> <span style="color:#67e8f9;">criar_usuario</span>(dados: <span style="color:#67e8f9;">CriarUsuario</span>):
+    <span style="color:#94a3b8;"># FastAPI valida automaticamente — se 'email' for inválido,</span>
+    <span style="color:#94a3b8;"># retorna 422 com detalhes antes mesmo de entrar aqui.</span>
+    <span style="color:#c084fc;">return</span> {<span style="color:#86efac;">"id"</span>: <span style="color:#fbbf24;">1</span>, <span style="color:#86efac;">"nome"</span>: dados.nome, <span style="color:#86efac;">"email"</span>: dados.email}</code></pre>
+      </div>
+    </div>
+
+    <!-- Pytest -->
+    <div style="background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.25); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem;">
+      <h3 style="color:#4ade80; margin:0 0 1rem; font-size:1.25rem;">🧪 Pytest — Framework de Testes do Ecossistema Python</h3>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+        <div>
+          <h4 style="color:#86efac; font-size:0.88rem; margin:0 0 0.5rem;">📌 Conceitos Essenciais</h4>
+          <ul style="color:#94a3b8; font-size:0.82rem; padding-left:1rem; line-height:1.7; margin:0;">
+            <li><strong style="color:#86efac;">Fixtures</strong> — setup/teardown reutilizável com <code style="color:#67e8f9;">@pytest.fixture</code></li>
+            <li><strong style="color:#86efac;">Parametrize</strong> — múltiplos casos de teste em uma função</li>
+            <li><strong style="color:#86efac;">Mocking</strong> — substitui dependências reais com <code style="color:#67e8f9;">unittest.mock</code></li>
+            <li><strong style="color:#86efac;">Coverage</strong> — mede % de código coberto por testes</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color:#86efac; font-size:0.88rem; margin:0 0 0.5rem;">🏗️ Plugins Úteis</h4>
+          <ul style="color:#94a3b8; font-size:0.82rem; padding-left:1rem; line-height:1.7; margin:0;">
+            <li><strong style="color:#86efac;">pytest-asyncio</strong> — testa código async/await</li>
+            <li><strong style="color:#86efac;">pytest-httpx</strong> — mocka chamadas HTTP</li>
+            <li><strong style="color:#86efac;">factory_boy</strong> — cria objetos de teste</li>
+            <li><strong style="color:#86efac;">pytest-cov</strong> — relatório de cobertura</li>
+          </ul>
+        </div>
+      </div>
+      <div style="background:#050d1a; border-radius:10px; overflow:hidden;">
+        <div style="background:#0a130f; padding:0.6rem 1rem; font-family:monospace; font-size:0.78rem; color:#64748b; border-bottom:1px solid #16261d;">Pytest — Fixtures, Parametrize e Mocking</div>
+        <pre style="margin:0; padding:1.25rem; font-family:'Fira Code',monospace; font-size:0.84rem; line-height:1.8; color:#e2e8f0; overflow-x:auto;"><code><span style="color:#94a3b8;">import</span> pytest
+<span style="color:#94a3b8;">from</span> unittest.mock <span style="color:#94a3b8;">import</span> AsyncMock, patch
+
+<span style="color:#94a3b8;"># Fixture: cria um usuário de teste reutilizável</span>
+<span style="color:#6ee7b7;">@pytest.fixture</span>
+<span style="color:#c084fc;">def</span> <span style="color:#67e8f9;">usuario_mock</span>():
+    <span style="color:#c084fc;">return</span> {<span style="color:#86efac;">"id"</span>: <span style="color:#fbbf24;">1</span>, <span style="color:#86efac;">"nome"</span>: <span style="color:#86efac;">"Ana"</span>, <span style="color:#86efac;">"email"</span>: <span style="color:#86efac;">"ana@email.com"</span>}
+
+<span style="color:#94a3b8;"># Parametrize: testa múltiplos casos numa só função</span>
+<span style="color:#6ee7b7;">@pytest.mark.parametrize</span>(<span style="color:#86efac;">"entrada,esperado"</span>, [
+    (<span style="color:#fbbf24;">2</span>, <span style="color:#fbbf24;">4</span>), (<span style="color:#fbbf24;">3</span>, <span style="color:#fbbf24;">9</span>), (<span style="color:#fbbf24;">0</span>, <span style="color:#fbbf24;">0</span>), (<span style="color:#fbbf24;">-4</span>, <span style="color:#fbbf24;">16</span>)
+])
+<span style="color:#c084fc;">def</span> <span style="color:#67e8f9;">test_quadrado</span>(entrada, esperado):
+    <span style="color:#c084fc;">assert</span> entrada ** <span style="color:#fbbf24;">2</span> == esperado
+
+<span style="color:#94a3b8;"># Mock: isola dependência externa (banco, API)</span>
+<span style="color:#6ee7b7;">@pytest.mark.asyncio</span>
+<span style="color:#c084fc;">async def</span> <span style="color:#67e8f9;">test_buscar_usuario</span>(usuario_mock):
+    <span style="color:#c084fc;">with</span> patch(<span style="color:#86efac;">"servico.db.buscar"</span>, <span style="color:#67e8f9;">AsyncMock</span>(return_value=usuario_mock)):
+        resultado = <span style="color:#c084fc;">await</span> servico.buscar_usuario(<span style="color:#fbbf24;">1</span>)
+        <span style="color:#c084fc;">assert</span> resultado[<span style="color:#86efac;">"nome"</span>] == <span style="color:#86efac;">"Ana"</span></code></pre>
+      </div>
+    </div>
+
+    <!-- MLOps & Async -->
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+      <div style="background: rgba(168,85,247,0.08); border: 1px solid rgba(168,85,247,0.25); border-radius: 16px; padding: 1.75rem;">
+        <h3 style="color:#d8b4fe; margin:0 0 0.75rem; font-size:1.1rem;">🤖 IA/ML na Prática — Stack 2024</h3>
+        <ul style="color:#94a3b8; font-size:0.85rem; padding-left:1rem; line-height:1.8; margin:0;">
+          <li><strong style="color:#d8b4fe;">LangChain/LangGraph</strong> — orquestra LLMs e agentes</li>
+          <li><strong style="color:#d8b4fe;">LlamaIndex</strong> — RAG e indexação de documentos</li>
+          <li><strong style="color:#d8b4fe;">Polars</strong> — substituto 20× mais rápido do Pandas</li>
+          <li><strong style="color:#d8b4fe;">MLflow</strong> — rastreamento de experimentos</li>
+          <li><strong style="color:#d8b4fe;">Gradio / Streamlit</strong> — UIs para modelos ML</li>
+          <li><strong style="color:#d8b4fe;">Ruff</strong> — linter/formatter 10× mais rápido que Flake8</li>
+          <li><strong style="color:#d8b4fe;">UV</strong> — gerenciador de pacotes ultrarrápido (Astral)</li>
+        </ul>
+      </div>
+      <div style="background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.25); border-radius: 16px; padding: 1.75rem;">
+        <h3 style="color:#67e8f9; margin:0 0 0.75rem; font-size:1.1rem;">⚡ asyncio Avançado — Python 3.11+</h3>
+        <ul style="color:#94a3b8; font-size:0.85rem; padding-left:1rem; line-height:1.8; margin:0;">
+          <li><strong style="color:#67e8f9;">TaskGroup</strong> (PEP 654) — concorrência estruturada</li>
+          <li><strong style="color:#67e8f9;">asyncio.timeout()</strong> — timeout nativo e idiomático</li>
+          <li><strong style="color:#67e8f9;">asyncpg</strong> — driver PostgreSQL async de alta performance</li>
+          <li><strong style="color:#67e8f9;">httpx</strong> — cliente HTTP async moderno (substitui requests)</li>
+          <li><strong style="color:#67e8f9;">anyio</strong> — async compatível com asyncio e Trio</li>
+          <li><strong style="color:#67e8f9;">GIL livre (3.13)</strong> — paralelismo real sem multiprocessing</li>
         </ul>
       </div>
     </div>

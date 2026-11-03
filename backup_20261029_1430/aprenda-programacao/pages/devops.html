@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Git & DevOps | Aprenda Programação</title>
+  <link rel="stylesheet" href="../css/global.css"/>
+</head>
+<body>
+<div id="scroll-bar" style="position:fixed;top:0;left:0;height:3px;width:0;background:var(--orange);z-index:2000;transition:width .1s;"></div>
+
+<nav id="main-nav">
+  <a class="logo" href="../index.html">&#60;<span>code</span>/&#62; Aprenda Prog.</a>
+  <a class="nav-link" href="../index.html">Home</a>
+  <a class="nav-link" href="logica.html">Lógica</a>
+  <a class="nav-link" href="algoritmos.html">Algoritmos</a>
+  <a class="nav-link" href="estruturas.html">Estruturas</a>
+  <a class="nav-link" href="linguagens.html">Linguagens</a>
+  <a class="nav-link" href="paradigmas.html">Paradigmas</a>
+  <a class="nav-link" href="web.html">Web</a>
+  <a class="nav-link" href="banco.html">Banco de Dados</a>
+  <a class="nav-link" href="carreira.html">Carreira</a>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-hero">
+    <h1>🔧 Git, DevOps & Boas Práticas</h1>
+    <p>Como programadores profissionais trabalham no dia a dia. Controle de versão, testes, containers, cloud e os princípios que tornam código sustentável em equipes e longo prazo.</p>
+    <div class="badge-row">
+      <span class="badge badge-orange">Módulo 8</span>
+      <span class="badge badge-green">Git</span>
+      <span class="badge badge-blue">SOLID</span>
+      <span class="badge badge-purple">Docker & Cloud</span>
+    </div>
+  </div>
+
+  <!-- GIT -->
+  <div class="section" id="git">
+    <div class="section-title"><div class="num-badge num-orange">1</div><h2>Git — Controle de Versão</h2></div>
+    <p>Git é o sistema de controle de versão mais usado no mundo. Criado por Linus Torvalds (criador do Linux) em 2005. <strong>Todo desenvolvedor profissional usa Git todos os dias.</strong> Sem exceção.</p>
+    <div class="info-box">
+      Git registra cada mudança no código como um "snapshot" (commit). Você pode voltar a qualquer ponto da história, criar branches paralelos, e colaborar com times de qualquer tamanho.
+    </div>
+
+    <h3>Comandos Essenciais</h3>
+    <div class="code-block"><span class="cmt"># Configuração inicial (uma vez só)</span>
+git config --global user.name  <span class="str">"Seu Nome"</span>
+git config --global user.email <span class="str">"seu@email.com"</span>
+
+<span class="cmt"># Iniciar repositório</span>
+git init                     <span class="cmt"># cria .git/ no diretório atual</span>
+git clone https://github.com/user/repo.git  <span class="cmt"># clona do GitHub</span>
+
+<span class="cmt"># Fluxo diário</span>
+git status                   <span class="cmt"># ver o que mudou</span>
+git diff                     <span class="cmt"># ver as diferenças linha a linha</span>
+git add .                    <span class="cmt"># preparar tudo para commit (staging)</span>
+git add arquivo.py           <span class="cmt"># preparar arquivo específico</span>
+git commit -m <span class="str">"feat: adicionar login com OAuth"</span>  <span class="cmt"># salvar snapshot</span>
+
+<span class="cmt"># Branches — desenvolvimento paralelo</span>
+git branch feature/login     <span class="cmt"># criar branch</span>
+git checkout feature/login   <span class="cmt"># mudar para o branch</span>
+git checkout -b feature/login  <span class="cmt"># criar E mudar (atalho)</span>
+git merge feature/login      <span class="cmt"># integrar branch ao main</span>
+git branch -d feature/login  <span class="cmt"># deletar branch</span>
+
+<span class="cmt"># Remoto (GitHub/GitLab)</span>
+git push origin main         <span class="cmt"># enviar commits</span>
+git pull                     <span class="cmt"># baixar e integrar mudanças</span>
+git fetch                    <span class="cmt"># baixar sem integrar</span>
+git log --oneline --graph    <span class="cmt"># histórico visual</span></div>
+
+    <h3>Conventional Commits</h3>
+    <p>Padrão de mensagens de commit usado por empresas para tornar o histórico legível e gerar changelogs automaticamente:</p>
+    <div class="code-block">feat: adicionar autenticação com Google        <span class="cmt"># nova funcionalidade</span>
+fix: corrigir cálculo de desconto no carrinho  <span class="cmt"># correção de bug</span>
+docs: atualizar README com instruções de setup <span class="cmt"># documentação</span>
+style: formatar código com black               <span class="cmt"># formatação</span>
+refactor: extrair lógica de envio de email     <span class="cmt"># refatoração</span>
+test: adicionar testes unitários para Produto  <span class="cmt"># testes</span>
+chore: atualizar dependências do requirements  <span class="cmt"># manutenção</span></div>
+  </div>
+
+  <!-- BOAS PRÁTICAS -->
+  <div class="section" id="boas-praticas">
+    <div class="section-title"><div class="num-badge num-orange">2</div><h2>Boas Práticas de Código</h2></div>
+
+    <div class="card-grid">
+      <div class="card"><h3>DRY</h3><p><em>Don't Repeat Yourself.</em> Se o mesmo bloco de código aparece em dois lugares, extraia para uma função. Duplicação é a fonte de bugs difíceis.</p></div>
+      <div class="card"><h3>KISS</h3><p><em>Keep It Simple, Stupid.</em> A solução mais simples que resolve o problema é a melhor. Complexidade desnecessária = dívida técnica.</p></div>
+      <div class="card"><h3>YAGNI</h3><p><em>You Ain't Gonna Need It.</em> Não implemente funcionalidades que não foram pedidas hoje. Isso cria código morto e complexidade sem valor.</p></div>
+      <div class="card"><h3>Single Responsibility</h3><p>Cada função faz uma coisa. Cada classe tem um propósito. Funções com mais de 20 linhas geralmente estão fazendo coisas demais.</p></div>
+    </div>
+
+    <h3>Princípios SOLID</h3>
+    <table>
+      <tr><th>Letra</th><th>Nome</th><th>O que significa</th></tr>
+      <tr><td><strong>S</strong></td><td>Single Responsibility</td><td>Uma classe/função = um único motivo para mudar.</td></tr>
+      <tr><td><strong>O</strong></td><td>Open/Closed</td><td>Aberta para extensão, fechada para modificação.</td></tr>
+      <tr><td><strong>L</strong></td><td>Liskov Substitution</td><td>Subclasses devem poder substituir o tipo pai sem quebrar nada.</td></tr>
+      <tr><td><strong>I</strong></td><td>Interface Segregation</td><td>Interfaces específicas e pequenas > uma interface geral gigante.</td></tr>
+      <tr><td><strong>D</strong></td><td>Dependency Inversion</td><td>Dependa de abstrações, não de implementações concretas.</td></tr>
+    </table>
+  </div>
+
+  <!-- TESTES -->
+  <div class="section" id="testes">
+    <div class="section-title"><div class="num-badge num-orange">3</div><h2>Testes de Software</h2></div>
+    <p>Código sem testes é código que você torce pra funcionar. Testes são a rede de segurança que permite refatorar e evoluir sem medo.</p>
+    <div class="code-block"><span class="cmt"># pytest — testes unitários em Python</span>
+<span class="kw">def</span> <span class="fn">calcular_desconto</span>(<span class="var">preco</span>: float, <span class="var">pct</span>: float) -> float:
+    <span class="kw">if not</span> <span class="num">0</span> <= <span class="var">pct</span> <= <span class="num">100</span>:
+        <span class="kw">raise</span> <span class="fn">ValueError</span>(<span class="str">"Percentual deve estar entre 0 e 100"</span>)
+    <span class="kw">return</span> <span class="var">preco</span> * (<span class="num">1</span> - <span class="var">pct</span> / <span class="num">100</span>)
+
+<span class="cmt"># arquivo test_desconto.py</span>
+<span class="kw">import</span> pytest
+
+<span class="kw">def</span> <span class="fn">test_desconto_10_porcento</span>():
+    <span class="kw">assert</span> <span class="fn">calcular_desconto</span>(<span class="num">100.0</span>, <span class="num">10</span>) == <span class="num">90.0</span>
+
+<span class="kw">def</span> <span class="fn">test_sem_desconto</span>():
+    <span class="kw">assert</span> <span class="fn">calcular_desconto</span>(<span class="num">50.0</span>, <span class="num">0</span>) == <span class="num">50.0</span>
+
+<span class="kw">def</span> <span class="fn">test_percentual_invalido_levanta_erro</span>():
+    <span class="kw">with</span> pytest.<span class="fn">raises</span>(ValueError):
+        <span class="fn">calcular_desconto</span>(<span class="num">100.0</span>, <span class="num">110</span>)   <span class="cmt"># 110% é inválido</span></div>
+
+    <div class="card-grid">
+      <div class="card"><h3>Unitários</h3><p>Testam funções/métodos isolados. Rápidos (milissegundos). Devem ser a maioria dos seus testes.</p></div>
+      <div class="card"><h3>Integração</h3><p>Testam componentes juntos: API + banco. Mais lentos, mas validam o fluxo completo.</p></div>
+      <div class="card"><h3>E2E (End-to-End)</h3><p>Simulam o usuário real no browser. Cypress, Playwright. Lentos, mas cobrem o fluxo completo.</p></div>
+      <div class="card"><h3>TDD</h3><p>Test-Driven Development: escreva o teste <em>antes</em> do código. Força você a pensar na interface antes da implementação.</p></div>
+    </div>
+  </div>
+
+  <!-- DOCKER -->
+  <div class="section" id="docker">
+    <div class="section-title"><div class="num-badge num-orange">4</div><h2>Docker & Cloud</h2></div>
+    <p>Docker empacota sua aplicação e todas as dependências em um <strong>container</strong> — um ambiente isolado que roda identicamente em qualquer máquina. "Funciona na minha máquina" nunca mais.</p>
+    <div class="code-block"><span class="cmt"># Dockerfile — receita do container</span>
+<span class="kw">FROM</span> registry.redhat.io/ubi9/python-311-minimal:latest
+
+<span class="kw">WORKDIR</span> /app
+<span class="kw">COPY</span> requirements.txt .
+<span class="kw">RUN</span> pip install --no-cache-dir -r requirements.txt
+<span class="kw">COPY</span> . .
+
+<span class="kw">USER</span> 1001                         <span class="cmt"># nunca rodar como root!</span>
+<span class="kw">CMD</span> [<span class="str">"uvicorn"</span>, <span class="str">"main:app"</span>, <span class="str">"--host"</span>, <span class="str">"127.0.0.1"</span>, <span class="str">"--port"</span>, <span class="str">"8000"</span>]</div>
+    <div class="code-block"><span class="cmt"># Comandos Docker básicos</span>
+docker build -t meu-app .        <span class="cmt"># construir imagem</span>
+docker run -p 8000:8000 meu-app  <span class="cmt"># rodar container</span>
+docker ps                        <span class="cmt"># containers rodando</span>
+docker logs meu-container        <span class="cmt"># ver logs</span></div>
+
+    <h3>Cloud — As 3 Grandes</h3>
+    <table>
+      <tr><th>Provedor</th><th>Empresa</th><th>Serviços Chave</th></tr>
+      <tr><td>AWS</td><td>Amazon</td><td>EC2, S3, RDS, Lambda, EKS</td></tr>
+      <tr><td>Azure</td><td>Microsoft</td><td>VMs, Blob Storage, SQL, AKS</td></tr>
+      <tr><td>GCP</td><td>Google</td><td>Compute Engine, GCS, BigQuery, GKE</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  <p>← <a href="banco.html" style="color:var(--blue);">Banco de Dados</a> &nbsp;|&nbsp; <a href="carreira.html" style="color:var(--blue);">Roadmap de Carreira →</a></p>
+  <br/><p>Aprenda Programação — Made with IBM Bob</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

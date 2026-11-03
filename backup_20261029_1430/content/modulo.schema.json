@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "modulo.schema.json",
+  "title": "Módulo do Curso de Lógica de Programação Pura",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id", "slug", "badge", "nivel", "titulo", "subtitulo", "objetivo",
+    "introducaoIntuitiva", "explicacaoAprofundada", "exemplos", "passoAPasso",
+    "errosComuns", "comparacaoSolucoes", "pseudocodigo", "traceData",
+    "exercicios", "perguntasVerificacao", "keywordsIA", "misconceptionsIA",
+    "explicacaoIdealIA"
+  ],
+  "properties": {
+    "id": { "type": "integer", "minimum": 1, "maximum": 22 },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "badge": { "type": "string", "minLength": 3 },
+    "nivel": { "enum": ["Iniciante", "Intermediário", "Avançado", "Especialista"] },
+    "titulo": { "type": "string", "minLength": 3 },
+    "subtitulo": { "type": "string", "minLength": 3 },
+    "objetivo": { "type": "string", "minLength": 20 },
+    "introducaoIntuitiva": { "type": "string", "minLength": 20 },
+    "explicacaoAprofundada": { "type": "string", "minLength": 30 },
+    "exemplos": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basico", "intermediario", "avancado"],
+      "properties": {
+        "basico": { "$ref": "#/definitions/exemplo" },
+        "intermediario": { "$ref": "#/definitions/exemplo" },
+        "avancado": { "$ref": "#/definitions/exemplo" }
+      }
+    },
+    "passoAPasso": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "errosComuns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["erro", "correcao"],
+        "properties": {
+          "erro": { "type": "string", "minLength": 3 },
+          "correcao": { "type": "string", "minLength": 3 }
+        }
+      }
+    },
+    "comparacaoSolucoes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["boa", "ruim"],
+      "properties": {
+        "boa": { "type": "string", "minLength": 3 },
+        "ruim": { "type": "string", "minLength": 3 }
+      }
+    },
+    "pseudocodigo": { "type": "string", "minLength": 3 },
+    "traceData": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["passo", "acao", "estado", "obs"],
+        "properties": {
+          "passo": { "type": "integer", "minimum": 1 },
+          "acao": { "type": "string", "minLength": 1 },
+          "estado": { "type": "string", "minLength": 1 },
+          "obs": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "exercicios": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/exercicio" }
+    },
+    "perguntasVerificacao": { "type": "string", "minLength": 10 },
+    "keywordsIA": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2 }
+    },
+    "misconceptionsIA": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["termo", "erro", "explicacao"],
+        "properties": {
+          "termo": { "type": "string", "minLength": 2 },
+          "erro": { "type": "string", "minLength": 3 },
+          "explicacao": { "type": "string", "minLength": 3 }
+        }
+      }
+    },
+    "explicacaoIdealIA": { "type": "string", "minLength": 20 }
+  },
+  "definitions": {
+    "exemplo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["titulo", "descricao"],
+      "properties": {
+        "titulo": { "type": "string", "minLength": 3 },
+        "descricao": { "type": "string", "minLength": 10 }
+      }
+    },
+    "exercicio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "tipo", "enunciado", "opcoes", "correta", "pista", "justificativa"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^ex[0-9]+_[0-9]+$" },
+        "tipo": { "const": "multipla_escolha" },
+        "enunciado": { "type": "string", "minLength": 10 },
+        "opcoes": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "correta": { "type": "integer", "minimum": 0 },
+        "pista": { "type": "string", "minLength": 3 },
+        "justificativa": { "type": "string", "minLength": 3 }
+      }
+    }
+  }
+}

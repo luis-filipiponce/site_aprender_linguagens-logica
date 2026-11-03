@@ -922,6 +922,131 @@ footer {
         </div>
       </div>
 
+      <!-- Item 7 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-7" id="acc-btn-7">
+          <span>7. Operadores Relacionais, Lógicos &amp; Condições com CASE (O Ternário do SQL)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-7" role="region" aria-labelledby="acc-btn-7">
+          <div class="acc-inner">
+            <p>SQL suporta operadores relacionais (<code>=</code>, <code>!=</code> ou <code>&lt;&gt;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>BETWEEN</code>, <code>LIKE</code>, <code>IN</code>) e lógicos (<code>AND</code>, <code>OR</code>, <code>NOT</code>). A expressão <strong>CASE WHEN THEN ELSE END</strong> é o operador condicional/ternário fundamental do SQL, funcionando em qualquer cláusula (SELECT, WHERE, ORDER BY).</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>07_operadores_case.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="kw">SELECT</span>
+    <span class="var">id</span>,
+    <span class="var">nome</span>,
+    <span class="var">valor_total</span>,
+    <span class="cmt">-- Expressão CASE condicional (Ternário em SQL)</span>
+    <span class="kw">CASE</span>
+        <span class="kw">WHEN</span> <span class="var">valor_total</span> &gt;= <span class="num">5000</span> <span class="kw">THEN</span> <span class="str">'CLIENTE VIP'</span>
+        <span class="kw">WHEN</span> <span class="var">valor_total</span> &gt;= <span class="num">1000</span> <span class="kw">THEN</span> <span class="str">'CLIENTE REGULAR'</span>
+        <span class="kw">ELSE</span> <span class="str">'CLIENTE INICIANTE'</span>
+    <span class="kw">END AS</span> <span class="var">categoria_cliente</span>,
+    <span class="cmt">-- CASE inline para flags booleanas/status</span>
+    <span class="kw">CASE WHEN</span> <span class="var">ativo</span> = <span class="kw">TRUE AND</span> <span class="var">bloqueado</span> = <span class="kw">FALSE THEN</span> <span class="num">1</span> <span class="kw">ELSE</span> <span class="num">0</span> <span class="kw">END AS</span> <span class="var">pode_comprar</span>
+<span class="kw">FROM</span>
+    <span class="var">pedidos</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 8 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-8" id="acc-btn-8">
+          <span>8. Conversão de Tipos (CAST, CONVERT &amp; Operador ::)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-8" role="region" aria-labelledby="acc-btn-8">
+          <div class="acc-inner">
+            <p>O padrão ANSI SQL utiliza a função <code>CAST(expressao AS tipo)</code> para converter tipos de dados (ex: converter texto em data ou numérico em decimal). No PostgreSQL, o operador atalho <code>::tipo</code> é muito utilizado.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>08_conversao_tipos.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="kw">SELECT</span>
+    <span class="cmt">-- 1. CAST padrão ANSI</span>
+    <span class="fn">CAST</span>(<span class="str">'2024-10-30'</span> <span class="kw">AS DATE</span>) <span class="kw">AS</span> <span class="var">data_convertida</span>,
+    <span class="fn">CAST</span>(<span class="str">'149.99'</span> <span class="kw">AS NUMERIC</span>(<span class="num">10</span>, <span class="num">2</span>)) <span class="kw">AS</span> <span class="var">preco_decimal</span>,
+    
+    <span class="cmt">-- 2. Sintaxe Postgres (::)</span>
+    <span class="str">'42'</span>::<span class="kw">INTEGER</span> <span class="kw">AS</span> <span class="var">id_inteiro</span>,
+    
+    <span class="cmt">-- 3. Formatação segura para divisão sem truncar</span>
+    <span class="fn">CAST</span>(<span class="num">10</span> <span class="kw">AS FLOAT</span>) / <span class="num">4</span> <span class="kw">AS</span> <span class="var">divisao_exata</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 9 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-9" id="acc-btn-9">
+          <span>9. Laços de Repetição, Transações &amp; Exceções (Procedural SQL)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-9" role="region" aria-labelledby="acc-btn-9">
+          <div class="acc-inner">
+            <p>Em dialetos procedurais (PL/pgSQL, T-SQL, PL/SQL), você pode executar laços <code>WHILE / LOOP</code>, controlar transações com <code>BEGIN TRANSACTION</code>, <code>COMMIT</code> e <code>ROLLBACK</code>, e capturar falhas em blocos <code>BEGIN ... EXCEPTION / TRY ... CATCH</code>.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>09_transacoes_erros.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- Transação com tratamento de exceção garantindo atomicidade (ACID)</span>
+<span class="kw">BEGIN</span>;
+
+<span class="kw">DO</span> $$
+<span class="kw">DECLARE</span>
+    <span class="var">v_saldo</span> <span class="kw">NUMERIC</span>;
+<span class="kw">BEGIN</span>
+    <span class="kw">SELECT</span> <span class="var">saldo</span> <span class="kw">INTO</span> <span class="var">v_saldo</span> <span class="kw">FROM</span> <span class="var">contas</span> <span class="kw">WHERE</span> <span class="var">id</span> = <span class="num">1</span> <span class="kw">FOR UPDATE</span>;
+    <span class="kw">IF</span> <span class="var">v_saldo</span> &lt; <span class="num">100.00</span> <span class="kw">THEN</span>
+        <span class="kw">RAISE EXCEPTION</span> <span class="str">'Saldo insuficiente para transferência'</span>;
+    <span class="kw">END IF</span>;
+
+    <span class="kw">UPDATE</span> <span class="var">contas</span> <span class="kw">SET</span> <span class="var">saldo</span> = <span class="var">saldo</span> - <span class="num">100.00</span> <span class="kw">WHERE</span> <span class="var">id</span> = <span class="num">1</span>;
+    <span class="kw">UPDATE</span> <span class="var">contas</span> <span class="kw">SET</span> <span class="var">saldo</span> = <span class="var">saldo</span> + <span class="num">100.00</span> <span class="kw">WHERE</span> <span class="var">id</span> = <span class="num">2</span>;
+<span class="kw">EXCEPTION</span>
+    <span class="kw">WHEN OTHERS THEN</span>
+        <span class="kw">RAISE NOTICE</span> <span class="str">'Erro na operação: %'</span>, <span class="kw">SQLERRM</span>;
+        <span class="kw">ROLLBACK</span>;
+<span class="kw">END</span> $$;
+
+<span class="kw">COMMIT</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 10 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-10" id="acc-btn-10">
+          <span>10. Wrappers &amp; Abstração em Bancos (Views, Materialized Views &amp; Stored Procedures)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-10" role="region" aria-labelledby="acc-btn-10">
+          <div class="acc-inner">
+            <p>O conceito de <strong>Abstração e Wrappers</strong> em bancos relacionais é construído através de <strong>Views</strong> (que embrulham consultas complexas com segurança de acesso), <strong>Materialized Views</strong> (com cache persistido em disco para analytics) e <strong>Stored Procedures</strong> (que encapsulam operações de negócio inteiras dentro do banco de dados).</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>10_views_abstracao.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- View como Camada de Abstração e Segurança</span>
+<span class="kw">CREATE OR REPLACE VIEW</span> <span class="var">vw_resumo_financeiro_cliente</span> <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+    <span class="var">c</span>.<span class="var">id</span>,
+    <span class="var">c</span>.<span class="var">nome</span>,
+    <span class="fn">COUNT</span>(<span class="var">p</span>.<span class="var">id</span>) <span class="kw">AS</span> <span class="var">total_pedidos</span>,
+    <span class="fn">COALESCE</span>(<span class="fn">SUM</span>(<span class="var">p</span>.<span class="var">valor_total</span>), <span class="num">0</span>) <span class="kw">AS</span> <span class="var">gasto_acumulado</span>
+<span class="kw">FROM</span>
+    <span class="var">clientes</span> <span class="var">c</span>
+<span class="kw">LEFT JOIN</span>
+    <span class="var">pedidos</span> <span class="var">p</span> <span class="kw">ON</span> <span class="var">c</span>.<span class="var">id</span> = <span class="var">p</span>.<span class="var">cliente_id</span>
+<span class="kw">GROUP BY</span>
+    <span class="var">c</span>.<span class="var">id</span>, <span class="var">c</span>.<span class="var">nome</span>;
+
+<span class="cmt">-- Uso limpo da abstração sem expor tabelas internas</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="var">vw_resumo_financeiro_cliente</span> <span class="kw">WHERE</span> <span class="var">gasto_acumulado</span> &gt; <span class="num">1000</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -944,6 +1069,15 @@ footer {
         </button>
         <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-3" id="tab-btn-3">
           🗄️ Schema E-commerce (DDL + Índices + View)
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-4" id="tab-btn-4">
+          🌳 CTE Recursiva, LATERAL &amp; Janelas
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-5" id="tab-btn-5">
+          🧬 JSONB &amp; Busca Textual
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-6" id="tab-btn-6">
+          🛡️ Performance &amp; Segurança
         </button>
       </div>
 
@@ -1165,6 +1299,140 @@ footer {
     <span class="var">p</span>.<span class="var">id</span>, <span class="var">p</span>.<span class="var">data_pedido</span>, <span class="var">p</span>.<span class="var">status</span>, <span class="var">c</span>.<span class="var">id</span>, <span class="var">c</span>.<span class="var">nome</span>, <span class="var">c</span>.<span class="var">email</span>;</code></pre>
         </div>
       </div>
+
+      <!-- Tab 4 -->
+      <div class="tab-panel" id="tab-4" role="tabpanel" aria-labelledby="tab-btn-4">
+        <p>CTEs recursivas percorrem estruturas hierárquicas (organogramas, categorias, grafos) e <code>LATERAL</code> permite subconsultas que referenciam colunas da linha anterior — ideal para "top-N por grupo".</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>hierarquia_recursiva.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- PostgreSQL 16 | CTE recursiva: organograma completo com caminho e nível</span>
+<span class="kw">WITH RECURSIVE</span> <span class="var">organograma</span> <span class="kw">AS</span> (
+    <span class="cmt">-- Âncora: quem não tem gerente (raiz)</span>
+    <span class="kw">SELECT</span> <span class="var">id</span>, <span class="var">nome</span>, <span class="var">gerente_id</span>,
+           <span class="num">1</span> <span class="kw">AS</span> <span class="var">nivel</span>,
+           <span class="var">nome</span>::<span class="kw">text</span> <span class="kw">AS</span> <span class="var">caminho</span>
+    <span class="kw">FROM</span> <span class="var">funcionarios</span>
+    <span class="kw">WHERE</span> <span class="var">gerente_id</span> <span class="kw">IS NULL</span>
+
+    <span class="kw">UNION ALL</span>
+
+    <span class="cmt">-- Passo recursivo: subordinados diretos de quem já foi encontrado</span>
+    <span class="kw">SELECT</span> <span class="var">f</span>.<span class="var">id</span>, <span class="var">f</span>.<span class="var">nome</span>, <span class="var">f</span>.<span class="var">gerente_id</span>,
+           <span class="var">o</span>.<span class="var">nivel</span> + <span class="num">1</span>,
+           <span class="var">o</span>.<span class="var">caminho</span> || <span class="str">' &gt; '</span> || <span class="var">f</span>.<span class="var">nome</span>
+    <span class="kw">FROM</span> <span class="var">funcionarios</span> <span class="var">f</span>
+    <span class="kw">JOIN</span> <span class="var">organograma</span> <span class="var">o</span> <span class="kw">ON</span> <span class="var">f</span>.<span class="var">gerente_id</span> = <span class="var">o</span>.<span class="var">id</span>
+    <span class="kw">WHERE</span> <span class="var">o</span>.<span class="var">nivel</span> &lt; <span class="num">10</span>   <span class="cmt">-- trava de segurança contra ciclos</span>
+)
+<span class="kw">SELECT</span> <span class="fn">repeat</span>(<span class="str">'    '</span>, <span class="var">nivel</span> - <span class="num">1</span>) || <span class="var">nome</span> <span class="kw">AS</span> <span class="var">arvore</span>, <span class="var">nivel</span>, <span class="var">caminho</span>
+<span class="kw">FROM</span> <span class="var">organograma</span>
+<span class="kw">ORDER BY</span> <span class="var">caminho</span>;
+
+<span class="cmt">-- LATERAL: os 3 pedidos mais recentes de CADA cliente (top-N por grupo)</span>
+<span class="kw">SELECT</span> <span class="var">c</span>.<span class="var">nome</span>, <span class="var">ult</span>.<span class="var">id</span> <span class="kw">AS</span> <span class="var">pedido_id</span>, <span class="var">ult</span>.<span class="var">data_pedido</span>, <span class="var">ult</span>.<span class="var">total</span>
+<span class="kw">FROM</span> <span class="var">clientes</span> <span class="var">c</span>
+<span class="kw">CROSS JOIN LATERAL</span> (
+    <span class="kw">SELECT</span> <span class="var">p</span>.<span class="var">id</span>, <span class="var">p</span>.<span class="var">data_pedido</span>, <span class="var">p</span>.<span class="var">total</span>
+    <span class="kw">FROM</span> <span class="var">pedidos</span> <span class="var">p</span>
+    <span class="kw">WHERE</span> <span class="var">p</span>.<span class="var">cliente_id</span> = <span class="var">c</span>.<span class="var">id</span>
+    <span class="kw">ORDER BY</span> <span class="var">p</span>.<span class="var">data_pedido</span> <span class="kw">DESC</span>
+    <span class="kw">LIMIT</span> <span class="num">3</span>
+) <span class="var">ult</span>;
+
+<span class="cmt">-- Window functions avançadas: crescimento mês a mês e média móvel de 3 meses</span>
+<span class="kw">SELECT</span> <span class="var">mes</span>, <span class="var">receita</span>,
+       <span class="fn">LAG</span>(<span class="var">receita</span>) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> <span class="var">mes</span>) <span class="kw">AS</span> <span class="var">mes_anterior</span>,
+       <span class="fn">ROUND</span>(<span class="num">100.0</span> * (<span class="var">receita</span> - <span class="fn">LAG</span>(<span class="var">receita</span>) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> <span class="var">mes</span>))
+             / <span class="fn">NULLIF</span>(<span class="fn">LAG</span>(<span class="var">receita</span>) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> <span class="var">mes</span>), <span class="num">0</span>), <span class="num">2</span>) <span class="kw">AS</span> <span class="var">crescimento_pct</span>,
+       <span class="fn">AVG</span>(<span class="var">receita</span>) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> <span class="var">mes</span> <span class="kw">ROWS BETWEEN</span> <span class="num">2</span> <span class="kw">PRECEDING AND CURRENT ROW</span>) <span class="kw">AS</span> <span class="var">media_movel_3m</span>
+<span class="kw">FROM</span> (
+    <span class="kw">SELECT</span> <span class="fn">date_trunc</span>(<span class="str">'month'</span>, <span class="var">data_pedido</span>) <span class="kw">AS</span> <span class="var">mes</span>, <span class="fn">SUM</span>(<span class="var">total</span>) <span class="kw">AS</span> <span class="var">receita</span>
+    <span class="kw">FROM</span> <span class="var">pedidos</span> <span class="kw">GROUP BY</span> <span class="num">1</span>
+) <span class="var">m</span>;</code></pre>
+        </div>
+      </div>
+
+      <!-- Tab 5 -->
+      <div class="tab-panel" id="tab-5" role="tabpanel" aria-labelledby="tab-btn-5">
+        <p>O PostgreSQL combina o melhor de dois mundos: relacional e documento. <code>JSONB</code> com índices <code>GIN</code> e busca textual (<code>tsvector</code>) dispensam, em muitos casos, um banco NoSQL ou um motor de busca separado.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>jsonb_fulltext.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- JSONB: atributos flexíveis por produto, com integridade relacional ao redor</span>
+<span class="kw">CREATE TABLE</span> <span class="var">catalogo</span> (
+    <span class="var">id</span>        <span class="kw">BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY</span>,
+    <span class="var">nome</span>      <span class="kw">TEXT NOT NULL</span>,
+    <span class="var">descricao</span> <span class="kw">TEXT</span>,
+    <span class="var">atributos</span> <span class="kw">JSONB NOT NULL DEFAULT</span> <span class="str">'{}'</span>,
+    <span class="cmt">-- coluna gerada: vetor de busca mantido automaticamente pelo banco</span>
+    <span class="var">busca</span> <span class="kw">tsvector GENERATED ALWAYS AS</span> (
+        <span class="fn">to_tsvector</span>(<span class="str">'portuguese'</span>, <span class="fn">coalesce</span>(<span class="var">nome</span>,<span class="str">''</span>) || <span class="str">' '</span> || <span class="fn">coalesce</span>(<span class="var">descricao</span>,<span class="str">''</span>))
+    ) <span class="kw">STORED</span>
+);
+
+<span class="cmt">-- Índices GIN: consultas em JSONB e busca textual em milissegundos</span>
+<span class="kw">CREATE INDEX</span> <span class="var">idx_catalogo_atributos</span> <span class="kw">ON</span> <span class="var">catalogo</span> <span class="kw">USING GIN</span> (<span class="var">atributos</span> <span class="var">jsonb_path_ops</span>);
+<span class="kw">CREATE INDEX</span> <span class="var">idx_catalogo_busca</span>     <span class="kw">ON</span> <span class="var">catalogo</span> <span class="kw">USING GIN</span> (<span class="var">busca</span>);
+
+<span class="kw">INSERT INTO</span> <span class="var">catalogo</span> (<span class="var">nome</span>, <span class="var">descricao</span>, <span class="var">atributos</span>) <span class="kw">VALUES</span>
+  (<span class="str">'Notebook Pro'</span>, <span class="str">'Notebook leve para desenvolvimento'</span>, <span class="str">'{"ram_gb": 32, "tags": ["dev","leve"], "tela": {"pol": 14}}'</span>),
+  (<span class="str">'Monitor 4K'</span>,   <span class="str">'Monitor com ótima reprodução de cores'</span>, <span class="str">'{"ram_gb": null, "tags": ["design"], "tela": {"pol": 27}}'</span>);
+
+<span class="cmt">-- Contém (@&gt;): usa o índice GIN</span>
+<span class="kw">SELECT</span> <span class="var">nome</span> <span class="kw">FROM</span> <span class="var">catalogo</span> <span class="kw">WHERE</span> <span class="var">atributos</span> @&gt; <span class="str">'{"tags": ["dev"]}'</span>;
+
+<span class="cmt">-- Extração tipada: -&gt; devolve JSONB, -&gt;&gt; devolve texto</span>
+<span class="kw">SELECT</span> <span class="var">nome</span>, (<span class="var">atributos</span>-&gt;<span class="str">'tela'</span>-&gt;&gt;<span class="str">'pol'</span>)::<span class="kw">int</span> <span class="kw">AS</span> <span class="var">polegadas</span>
+<span class="kw">FROM</span> <span class="var">catalogo</span> <span class="kw">WHERE</span> (<span class="var">atributos</span>-&gt;&gt;<span class="str">'ram_gb'</span>)::<span class="kw">int</span> &gt;= <span class="num">16</span>;
+
+<span class="cmt">-- Busca textual em português com ranking de relevância (stemming incluso)</span>
+<span class="kw">SELECT</span> <span class="var">nome</span>, <span class="fn">ts_rank</span>(<span class="var">busca</span>, <span class="var">q</span>) <span class="kw">AS</span> <span class="var">relevancia</span>
+<span class="kw">FROM</span> <span class="var">catalogo</span>, <span class="fn">websearch_to_tsquery</span>(<span class="str">'portuguese'</span>, <span class="str">'notebook para programar'</span>) <span class="var">q</span>
+<span class="kw">WHERE</span> <span class="var">busca</span> @@ <span class="var">q</span>
+<span class="kw">ORDER BY</span> <span class="var">relevancia</span> <span class="kw">DESC</span>;</code></pre>
+        </div>
+      </div>
+
+      <!-- Tab 6 -->
+      <div class="tab-panel" id="tab-6" role="tabpanel" aria-labelledby="tab-btn-6">
+        <p>Performance e segurança andam juntas: leia o plano com <code>EXPLAIN ANALYZE</code>, crie índices parciais/de cobertura, escolha o nível de isolamento correto e restrinja acesso por linha com <strong>Row-Level Security</strong> e papéis de menor privilégio.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>performance_seguranca.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- 1) Diagnóstico: BUFFERS mostra I/O real; procure "Seq Scan" em tabelas grandes</span>
+<span class="kw">EXPLAIN</span> (<span class="kw">ANALYZE</span>, <span class="kw">BUFFERS</span>)
+<span class="kw">SELECT</span> <span class="var">id</span>, <span class="var">total</span> <span class="kw">FROM</span> <span class="var">pedidos</span> <span class="kw">WHERE</span> <span class="var">status</span> = <span class="str">'pendente'</span> <span class="kw">AND</span> <span class="var">cliente_id</span> = <span class="num">42</span>;
+
+<span class="cmt">-- 2) Índice PARCIAL: indexa só o que importa (menor, mais rápido de manter)</span>
+<span class="kw">CREATE INDEX</span> <span class="var">idx_pedidos_pendentes</span>
+    <span class="kw">ON</span> <span class="var">pedidos</span> (<span class="var">cliente_id</span>) <span class="kw">WHERE</span> <span class="var">status</span> = <span class="str">'pendente'</span>;
+
+<span class="cmt">-- 3) Índice de COBERTURA: Index-Only Scan, sem tocar na tabela</span>
+<span class="kw">CREATE INDEX</span> <span class="var">idx_pedidos_cliente_cobre</span>
+    <span class="kw">ON</span> <span class="var">pedidos</span> (<span class="var">cliente_id</span>) <span class="kw">INCLUDE</span> (<span class="var">total</span>, <span class="var">data_pedido</span>);
+
+<span class="cmt">-- 4) Transação atômica com lock explícito (transferência sem condição de corrida)</span>
+<span class="kw">BEGIN ISOLATION LEVEL</span> <span class="kw">REPEATABLE READ</span>;
+    <span class="kw">SELECT</span> <span class="var">saldo</span> <span class="kw">FROM</span> <span class="var">contas</span> <span class="kw">WHERE</span> <span class="var">id</span> = <span class="num">1</span> <span class="kw">FOR UPDATE</span>;
+    <span class="kw">UPDATE</span> <span class="var">contas</span> <span class="kw">SET</span> <span class="var">saldo</span> = <span class="var">saldo</span> - <span class="num">100</span> <span class="kw">WHERE</span> <span class="var">id</span> = <span class="num">1</span> <span class="kw">AND</span> <span class="var">saldo</span> &gt;= <span class="num">100</span>;
+    <span class="kw">UPDATE</span> <span class="var">contas</span> <span class="kw">SET</span> <span class="var">saldo</span> = <span class="var">saldo</span> + <span class="num">100</span> <span class="kw">WHERE</span> <span class="var">id</span> = <span class="num">2</span>;
+<span class="kw">COMMIT</span>;
+
+<span class="cmt">-- 5) Row-Level Security: cada usuário enxerga apenas seus próprios pedidos</span>
+<span class="kw">ALTER TABLE</span> <span class="var">pedidos</span> <span class="kw">ENABLE ROW LEVEL SECURITY</span>;
+<span class="kw">CREATE POLICY</span> <span class="var">politica_dono</span> <span class="kw">ON</span> <span class="var">pedidos</span>
+    <span class="kw">USING</span> (<span class="var">cliente_id</span> = <span class="fn">current_setting</span>(<span class="str">'app.cliente_id'</span>)::<span class="kw">bigint</span>);
+
+<span class="cmt">-- 6) Menor privilégio: a aplicação NUNCA usa superusuário</span>
+<span class="kw">CREATE ROLE</span> <span class="var">app_leitura</span> <span class="kw">NOLOGIN</span>;
+<span class="kw">GRANT SELECT</span> <span class="kw">ON</span> <span class="var">pedidos</span>, <span class="var">clientes</span> <span class="kw">TO</span> <span class="var">app_leitura</span>;
+<span class="kw">REVOKE ALL ON</span> <span class="var">contas</span> <span class="kw">FROM</span> <span class="var">app_leitura</span>;
+
+<span class="cmt">-- 7) Prepared statement (o driver faz isso): parâmetros nunca são concatenados</span>
+<span class="kw">PREPARE</span> <span class="var">busca_cliente</span> (<span class="kw">text</span>) <span class="kw">AS</span>
+    <span class="kw">SELECT</span> <span class="var">id</span>, <span class="var">nome</span> <span class="kw">FROM</span> <span class="var">clientes</span> <span class="kw">WHERE</span> <span class="var">email</span> = $1;
+<span class="kw">EXECUTE</span> <span class="var">busca_cliente</span>(<span class="str">'ana@exemplo.com'</span>);</code></pre>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>

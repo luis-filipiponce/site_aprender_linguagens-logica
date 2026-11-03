@@ -1477,6 +1477,155 @@
               </div>
             </div>
 
+            <!-- 7. Operadores & Ternário em Rust -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">7</span>
+                  <span>Operadores, Lógica &amp; If como Expressão (Ternário)</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Rust possui operadores relacionais (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>) e lógicos (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>). Como quase tudo em Rust é uma <strong>expressão que retorna valor</strong>, não há necessidade de um operador ternário <code>?:</code> separado — usamos <code>if cond { a } else { b }</code>.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">operadores_ternario.rs</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">fn</span> <span class="f">main</span>() {
+    <span class="k">let</span> idade = <span class="n">20</span>;
+    <span class="k">let</span> tem_cnh = <span class="k">true</span>;
+
+    <span class="c">// Relacionais e Lógicos</span>
+    <span class="k">let</span> pode_dirigir = idade &gt;= <span class="n">18</span> &amp;&amp; tem_cnh;
+    <span class="f">println!</span>(<span class="s">"Pode dirigir: {}"</span>, pode_dirigir);
+
+    <span class="c">// If como Expressão (equivalente ao operador ternário)</span>
+    <span class="k">let</span> status = <span class="k">if</span> idade &gt;= <span class="n">18</span> { <span class="s">"Adulto"</span> } <span class="k">else</span> { <span class="s">"Menor"</span> };
+    <span class="f">println!</span>(<span class="s">"Status: {}"</span>, status);
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 8. Conversão de Tipos em Rust -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">8</span>
+                  <span>Conversão de Tipos (as, From/Into, TryFrom, parse)</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Em Rust não há coerção implícita de tipos. Primitivos usam a palavra-chave <code>as</code>. Para tipos complexos, implementamos os traits padrão <code>From</code> / <code>Into</code> (conversão infalível) e <code>TryFrom</code> / <code>TryInto</code> (conversão com <code>Result</code>). Para parsing de strings, usamos <code>.parse::&lt;T&gt;()</code>.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">type_casting.rs</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">fn</span> <span class="f">main</span>() {
+    <span class="c">// 1. Casting primitivo com "as"</span>
+    <span class="k">let</span> a: <span class="t">u32</span> = <span class="n">42</span>;
+    <span class="k">let</span> b: <span class="t">f64</span> = a <span class="k">as</span> <span class="t">f64</span>;
+
+    <span class="c">// 2. Parsing de String para número</span>
+    <span class="k">let</span> porta: <span class="t">u16</span> = <span class="s">"8080"</span>.<span class="f">parse</span>().<span class="f">expect</span>(<span class="s">"Porta inválida"</span>);
+
+    <span class="c">// 3. Trait From / Into (ex: &str -> String)</span>
+    <span class="k">let</span> texto: <span class="t">String</span> = <span class="t">String</span>::<span class="f">from</span>(<span class="s">"Rust"</span>);
+    <span class="f">println!</span>(<span class="s">"Porta: {}, Texto: {}, Float: {:.1}"</span>, porta, texto, b);
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 9. Laços de Repetição em Rust -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">9</span>
+                  <span>Laços de Repetição (loop com retorno, while, for in)</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Rust possui três laços nativos: <code>loop</code> (infinito de alta velocidade que pode <strong>retornar valores com break</strong>), <code>while</code> / <code>while let</code> e <code>for item in iter</code>. Laços aninhados suportam rótulos nomeados (ex: <code>'externo: loop</code>).</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">lacos.rs</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">fn</span> <span class="f">main</span>() {
+    <span class="c">// 1. loop que retorna valor</span>
+    <span class="k">let</span> <span class="k">mut</span> contador = <span class="n">0</span>;
+    <span class="k">let</span> resultado = <span class="k">loop</span> {
+        contador += <span class="n">1</span>;
+        <span class="k">if</span> contador == <span class="n">10</span> {
+            <span class="k">break</span> contador * <span class="n">2</span>; <span class="c">// retorna 20</span>
+        }
+    };
+    <span class="f">println!</span>(<span class="s">"Resultado do loop: {}"</span>, resultado);
+
+    <span class="c">// 2. for in com iterador</span>
+    <span class="k">for</span> num <span class="k">in</span> <span class="n">1</span>..=<span class="n">3</span> {
+        <span class="f">println!</span>(<span class="s">"Iteração: {}"</span>, num);
+    }
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 10. Wrappers & Boxing (NewType & Box) -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">10</span>
+                  <span>Wrappers &amp; Padrão NewType (Box, Option, Struct Wrappers)</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Em Rust, tipos embrulho (<strong>Wrappers</strong>) são usados para encapsulamento e segurança. O padrão <strong>NewType</strong> (<code>struct UserId(u64)</code>) cria tipos distintos em tempo de compilação com zero custo de runtime. O smart pointer <code>Box&lt;T&gt;</code> embrulha valores na Heap para permitir tipos recursivos ou alocação dinâmica.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">wrappers_newtype.rs</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="c">// 1. Padrão NewType (Wrapper de Tipo com Zero Overhead)</span>
+<span class="m">#[derive(Debug, PartialEq)]</span>
+<span class="k">struct</span> <span class="t">UserId</span>(<span class="k">pub</span> <span class="t">u64</span>);
+
+<span class="m">#[derive(Debug, PartialEq)]</span>
+<span class="k">struct</span> <span class="t">OrderId</span>(<span class="k">pub</span> <span class="t">u64</span>);
+
+<span class="k">fn</span> <span class="f">buscar_pedidos</span>(user: <span class="t">UserId</span>) {
+    <span class="f">println!</span>(<span class="s">"Buscando pedidos do usuário: {:?}"</span>, user);
+}
+
+<span class="k">fn</span> <span class="f">main</span>() {
+    <span class="k">let</span> u = <span class="t">UserId</span>(<span class="n">101</span>);
+    <span class="k">let</span> o = <span class="t">OrderId</span>(<span class="n">101</span>);
+    <span class="c">// buscar_pedidos(o); // ERRO! Tipos distintos mesmo com mesmo valor interno!</span>
+    <span class="f">buscar_pedidos</span>(u);
+
+    <span class="c">// 2. Box<T> (Wrapper de Heap)</span>
+    <span class="k">let</span> boxed: <span class="t">Box</span>&lt;<span class="t">i32</span>&gt; = <span class="t">Box</span>::<span class="f">new</span>(<span class="n">500</span>);
+    <span class="f">println!</span>(<span class="s">"Valor na heap: {}"</span>, *boxed);
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -1736,6 +1885,207 @@
           </div>
         </div>
       </section>
+
+
+    <!-- ============================================================== -->
+    <!-- SEÇÃO AVANÇADA: RUST — Tokio, Axum, WebAssembly               -->
+    <!-- ============================================================== -->
+    <section class="section" id="rust-avancado">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label">Rust Avançado</span>
+          <h2 class="section-title">Tokio, Axum <span>&amp; WebAssembly</span></h2>
+          <p class="section-sub">Construção de APIs assíncronas de alta performance com Axum, concorrência massiva com Tokio e compilação para o navegador com WebAssembly.</p>
+        </div>
+
+        <div class="accordion" id="accordion-rust-adv">
+
+          <!-- TOKIO & ASYNC/AWAIT -->
+          <div class="acc-item open">
+            <button class="acc-trigger" type="button" aria-expanded="true">
+              <div class="acc-title-group">
+                <span class="acc-num">⚡</span>
+                <span>Tokio — Runtime Assíncrono de Alta Performance</span>
+              </div>
+              <span class="acc-chevron">▼</span>
+            </button>
+            <div class="acc-panel" style="max-height: 1500px;">
+              <div class="acc-body">
+                <p>O <strong>Tokio</strong> é o runtime assíncrono mais utilizado em Rust. Ele gerencia uma thread pool interna, executando milhares de tasks leves (<code>tokio::task</code>) com zero data races garantidas pelo compilador. O padrão <code>async/await</code> torna o código assíncrono legível como código síncrono.</p>
+                <ul>
+                  <li><code class="inline">tokio::spawn</code> — lança uma task assíncrona leve (como uma goroutine no Go)</li>
+                  <li><code class="inline">tokio::select!</code> — aguarda multiplos futures, tratando o primeiro que completar</li>
+                  <li><code class="inline">tokio::time::sleep</code> — suspende sem bloquear a thread de OS</li>
+                  <li><code class="inline">Arc&lt;Mutex&lt;T&gt;&gt;</code> — estado compartilhado seguro entre tasks assíncronas</li>
+                </ul>
+                <div class="code-block">
+                  <div class="code-header">
+                    <span class="lang-badge">tokio_concorrencia.rs</span>
+                    <button class="copy-btn" type="button">Copiar</button>
+                  </div>
+<pre><code><span class="c">// Cargo.toml: tokio = { version = "1", features = ["full"] }</span>
+
+<span class="k">use</span> std::sync::<span class="t">Arc</span>;
+<span class="k">use</span> tokio::sync::<span class="t">Mutex</span>;
+<span class="k">use</span> tokio::time::{sleep, <span class="t">Duration</span>};
+
+<span class="c">// Estado compartilhado entre tasks</span>
+<span class="k">type</span> <span class="t">Contador</span> = <span class="t">Arc</span>&lt;<span class="t">Mutex</span>&lt;<span class="t">u64</span>&gt;&gt;;
+
+<span class="k">async fn</span> <span class="f">incrementar</span>(contador: <span class="t">Contador</span>, id: <span class="t">u32</span>) {
+    sleep(<span class="t">Duration</span>::<span class="f">from_millis</span>(<span class="n">10</span>)).<span class="k">await</span>;
+    <span class="k">let mut</span> lock = contador.<span class="f">lock</span>().<span class="k">await</span>;
+    *lock += <span class="n">1</span>;
+    <span class="f">println!</span>(<span class="s">"Task {} concluída. Contador: {}"</span>, id, *lock);
+}
+
+<span class="a">#[tokio::main]</span>
+<span class="k">async fn</span> <span class="f">main</span>() {
+    <span class="k">let</span> contador: <span class="t">Contador</span> = <span class="t">Arc</span>::<span class="f">new</span>(<span class="t">Mutex</span>::<span class="f">new</span>(<span class="n">0</span>));
+    <span class="k">let mut</span> handles = <span class="f">vec!</span>[];
+
+    <span class="c">// Lança 100 tasks concorrentes sem data races</span>
+    <span class="k">for</span> i <span class="k">in</span> <span class="n">0</span>..<span class="n">100</span> {
+        <span class="k">let</span> c = <span class="t">Arc</span>::<span class="f">clone</span>(&amp;contador);
+        handles.<span class="f">push</span>(tokio::<span class="f">spawn</span>(<span class="k">async move</span> {
+            <span class="f">incrementar</span>(c, i).<span class="k">await</span>;
+        }));
+    }
+
+    <span class="k">for</span> h <span class="k">in</span> handles { h.<span class="k">await</span>.<span class="f">unwrap</span>(); }
+
+    <span class="f">println!</span>(<span class="s">"Total final: {}"</span>, *contador.<span class="f">lock</span>().<span class="k">await</span>); <span class="c">// 100</span>
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AXUM: API REST -->
+          <div class="acc-item">
+            <button class="acc-trigger" type="button" aria-expanded="false">
+              <div class="acc-title-group">
+                <span class="acc-num">🌐</span>
+                <span>Axum — API REST Assíncrona com Estado Compartilhado</span>
+              </div>
+              <span class="acc-chevron">▼</span>
+            </button>
+            <div class="acc-panel">
+              <div class="acc-body">
+                <p><strong>Axum</strong> é o framework web oficial do ecossistema Tokio, com roteamento ergonômico, extratores de tipo seguro e suporte completo a middleware via <code>tower</code>. É usado pela Cloudflare, Temporal.io e diversas startups de FinTech para APIs de missão crítica.</p>
+                <div class="code-block">
+                  <div class="code-header">
+                    <span class="lang-badge">axum_api.rs</span>
+                    <button class="copy-btn" type="button">Copiar</button>
+                  </div>
+<pre><code><span class="c">// Cargo.toml: axum = "0.7", tokio = { features = ["full"] }, serde = { features = ["derive"] }</span>
+
+<span class="k">use</span> axum::{
+    extract::{<span class="t">Path</span>, <span class="t">State</span>},
+    http::<span class="t">StatusCode</span>,
+    response::<span class="t">Json</span>,
+    routing::{<span class="f">get</span>, <span class="f">post</span>},
+    <span class="t">Router</span>,
+};
+<span class="k">use</span> serde::{<span class="t">Deserialize</span>, <span class="t">Serialize</span>};
+<span class="k">use</span> std::sync::<span class="t">Arc</span>;
+<span class="k">use</span> tokio::sync::<span class="t">RwLock</span>;
+
+<span class="a">#[derive(Clone, Serialize, Deserialize)]</span>
+<span class="k">struct</span> <span class="t">Produto</span> {
+    id: <span class="t">u32</span>,
+    nome: <span class="t">String</span>,
+    preco: <span class="t">f64</span>,
+}
+
+<span class="k">type</span> <span class="t">EstadoApp</span> = <span class="t">Arc</span>&lt;<span class="t">RwLock</span>&lt;<span class="t">Vec</span>&lt;<span class="t">Produto</span>&gt;&gt;&gt;;
+
+<span class="k">async fn</span> <span class="f">listar_produtos</span>(<span class="t">State</span>(estado): <span class="t">State</span>&lt;<span class="t">EstadoApp</span>&gt;) -&gt; <span class="t">Json</span>&lt;<span class="t">Vec</span>&lt;<span class="t">Produto</span>&gt;&gt; {
+    <span class="t">Json</span>(estado.<span class="f">read</span>().<span class="k">await</span>.<span class="f">clone</span>())
+}
+
+<span class="k">async fn</span> <span class="f">criar_produto</span>(
+    <span class="t">State</span>(estado): <span class="t">State</span>&lt;<span class="t">EstadoApp</span>&gt;,
+    <span class="t">Json</span>(novo): <span class="t">Json</span>&lt;<span class="t">Produto</span>&gt;,
+) -&gt; (<span class="t">StatusCode</span>, <span class="t">Json</span>&lt;<span class="t">Produto</span>&gt;) {
+    estado.<span class="f">write</span>().<span class="k">await</span>.<span class="f">push</span>(novo.<span class="f">clone</span>());
+    (<span class="t">StatusCode</span>::<span class="t">CREATED</span>, <span class="t">Json</span>(novo))
+}
+
+<span class="a">#[tokio::main]</span>
+<span class="k">async fn</span> <span class="f">main</span>() {
+    <span class="k">let</span> estado: <span class="t">EstadoApp</span> = <span class="t">Arc</span>::<span class="f">new</span>(<span class="t">RwLock</span>::<span class="f">new</span>(<span class="f">vec!</span>[]));
+
+    <span class="k">let</span> app = <span class="t">Router</span>::<span class="f">new</span>()
+        .<span class="f">route</span>(<span class="s">"/produtos"</span>, <span class="f">get</span>(<span class="f">listar_produtos</span>).<span class="f">post</span>(<span class="f">criar_produto</span>))
+        .<span class="f">with_state</span>(estado);
+
+    <span class="k">let</span> listener = tokio::net::<span class="t">TcpListener</span>::<span class="f">bind</span>(<span class="s">"127.0.0.1:3000"</span>).<span class="k">await</span>.<span class="f">unwrap</span>();
+    <span class="f">println!</span>(<span class="s">"API rodando em http://127.0.0.1:3000"</span>);
+    axum::<span class="f">serve</span>(listener, app).<span class="k">await</span>.<span class="f">unwrap</span>();
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- WEBASSEMBLY -->
+          <div class="acc-item">
+            <button class="acc-trigger" type="button" aria-expanded="false">
+              <div class="acc-title-group">
+                <span class="acc-num">🕸️</span>
+                <span>WebAssembly — Rust Rodando no Navegador</span>
+              </div>
+              <span class="acc-chevron">▼</span>
+            </button>
+            <div class="acc-panel">
+              <div class="acc-body">
+                <p>Com <strong>wasm-bindgen</strong>, código Rust pode ser compilado para WebAssembly e chamado diretamente no browser via JavaScript. Isso é como Figma, Photoshop na web e VS Code WASM funcionam por baixo dos panos. Performance de código nativo dentro do navegador!</p>
+                <ul>
+                  <li><code class="inline">wasm-pack build --target web</code> — compila para <code>.wasm</code> + bindings JS</li>
+                  <li><code class="inline">#[wasm_bindgen]</code> — exporta funções Rust para chamada de JavaScript</li>
+                  <li>Ideal para: processamento de imagem, simulações físicas, criptografia, compressão</li>
+                </ul>
+                <div class="code-block">
+                  <div class="code-header">
+                    <span class="lang-badge">lib.rs (wasm)</span>
+                    <button class="copy-btn" type="button">Copiar</button>
+                  </div>
+<pre><code><span class="c">// Cargo.toml: wasm-bindgen = "0.2"</span>
+
+<span class="k">use</span> wasm_bindgen::prelude::*;
+
+<span class="c">// Exporta esta função para JavaScript</span>
+<span class="a">#[wasm_bindgen]</span>
+<span class="k">pub fn</span> <span class="f">calcular_fibonacci</span>(n: <span class="t">u32</span>) -&gt; <span class="t">u64</span> {
+    <span class="k">if</span> n &lt;= <span class="n">1</span> { <span class="k">return</span> n <span class="k">as</span> <span class="t">u64</span>; }
+    <span class="k">let</span> (<span class="k">mut</span> a, <span class="k">mut</span> b) = (<span class="n">0u64</span>, <span class="n">1u64</span>);
+    <span class="k">for</span> _ <span class="k">in</span> <span class="n">2</span>..=n { (a, b) = (b, a + b); }
+    b
+}
+
+<span class="c">// Manipulação do DOM via web-sys</span>
+<span class="a">#[wasm_bindgen]</span>
+<span class="k">pub fn</span> <span class="f">escrever_no_dom</span>(texto: &amp;<span class="t">str</span>) {
+    <span class="k">let</span> window = web_sys::<span class="f">window</span>().<span class="f">expect</span>(<span class="s">"sem window"</span>);
+    <span class="k">let</span> document = window.<span class="f">document</span>().<span class="f">expect</span>(<span class="s">"sem document"</span>);
+    <span class="k">let</span> div = document.<span class="f">get_element_by_id</span>(<span class="s">"output"</span>).<span class="f">unwrap</span>();
+    div.<span class="f">set_inner_html</span>(texto);
+}
+
+<span class="c">// ─── Uso em JavaScript (após wasm-pack build) ─────────────────────</span>
+<span class="c">// import init, { calcular_fibonacci } from './pkg/meu_wasm.js';</span>
+<span class="c">// await init();</span>
+<span class="c">// console.log(calcular_fibonacci(30)); // 832040 em microssegundos!</span></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
 
     </div>
 
@@ -2162,6 +2512,193 @@
               </div>
             </div>
 
+            <!-- 7. Operadores & Condições em Go -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">7</span>
+                  <span>Operadores, Condições &amp; if com Inicializador</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Go suporta operadores relacionais (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>) e lógicos (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>). Propositalmente, <strong>Go não possui operador ternário</strong> (<code>?:</code>) para forçar legibilidade com <code>if/else</code>. O <code>if</code> e o <code>switch</code> aceitam uma declaração de inicialização curta com escopo isolado.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">condicoes_operadores.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="f">main</span>() {
+    valores := <span class="k">map</span>[<span class="t">string</span>]<span class="t">int</span>{<span class="s">"status"</span>: <span class="n">200</span>}
+
+    <span class="c">// if com inicialização curta (valor e ok existem apenas no bloco if/else)</span>
+    <span class="k">if</span> val, ok := valores[<span class="s">"status"</span>]; ok &amp;&amp; val == <span class="n">200</span> {
+        fmt.<span class="f">Println</span>(<span class="s">"Sucesso HTTP 200"</span>)
+    }
+
+    <span class="c">// switch sem expressão (atua como uma cadeia limpa de if/else)</span>
+    idade := <span class="n">25</span>
+    <span class="k">switch</span> {
+    <span class="k">case</span> idade &lt; <span class="n">18</span>:
+        fmt.<span class="f">Println</span>(<span class="s">"Menor de idade"</span>)
+    <span class="k">case</span> idade &gt;= <span class="n">18</span>:
+        fmt.<span class="f">Println</span>(<span class="s">"Adulto"</span>)
+    }
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 8. Conversão de Tipos e Type Assertions em Go -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">8</span>
+                  <span>Conversão de Tipos &amp; Type Assertions</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Go não faz coerção implícita de tipos numéricos. Toda conversão é explícita <code>Tipo(expressao)</code>. Para converter entre Strings e números, usamos o pacote <code>strconv</code>. Para desempacotar valores de interfaces genéricas (<code>any</code> ou <code>interface{}</code>), usamos <strong>Type Assertions</strong> e <strong>Type Switches</strong>.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">conversoes_assertions.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> (
+    <span class="s">"fmt"</span>
+    <span class="s">"strconv"</span>
+)
+
+<span class="k">func</span> <span class="f">main</span>() {
+    <span class="c">// 1. Conversão Numérica Explícita</span>
+    <span class="k">var</span> a <span class="t">int</span> = <span class="n">42</span>
+    <span class="k">var</span> b <span class="t">float64</span> = <span class="t">float64</span>(a)
+
+    <span class="c">// 2. Parsing com strconv</span>
+    num, _ := strconv.<span class="f">Atoi</span>(<span class="s">"1024"</span>)
+    txt := strconv.<span class="f">Itoa</span>(a)
+
+    <span class="c">// 3. Type Assertion com checagem (comma-ok)</span>
+    <span class="k">var</span> obj <span class="k">any</span> = <span class="s">"Ponce Dev"</span>
+    <span class="k">if</span> str, ok := obj.(<span class="t">string</span>); ok {
+        fmt.<span class="f">Printf</span>(<span class="s">"String desempacotada (%d caracteres): %s\n"</span>, <span class="f">len</span>(str), str)
+    }
+    fmt.<span class="f">Println</span>(<span class="s">"Float:"</span>, b, <span class="s">"Num:"</span>, num, <span class="s">"Txt:"</span>, txt)
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 9. Laços de Repetição em Go -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">9</span>
+                  <span>Laços de Repetição — O Poder Único do <code>for</code></span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Go simplifica tudo unificando todas as formas de repetição na única palavra-chave <code>for</code>: laço clássico com 3 cláusulas, estilo <code>while</code>, loop infinito <code>for {}</code> e iteração de coleções com <code>for range</code>.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">lacos.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="f">main</span>() {
+    <span class="c">// 1. for tradicional</span>
+    <span class="k">for</span> i := <span class="n">1</span>; i &lt;= <span class="n">3</span>; i++ {
+        fmt.<span class="f">Println</span>(<span class="s">"Contador:"</span>, i)
+    }
+
+    <span class="c">// 2. for estilo while</span>
+    n := <span class="n">3</span>
+    <span class="k">for</span> n &gt; <span class="n">0</span> {
+        n--
+    }
+
+    <span class="c">// 3. for range com slices e maps</span>
+    tecnologias := []<span class="t">string</span>{<span class="s">"Go"</span>, <span class="s">"Rust"</span>, <span class="s">"Docker"</span>}
+    <span class="k">for</span> indice, item := <span class="k">range</span> tecnologias {
+        <span class="k">if</span> item == <span class="s">"Rust"</span> {
+            <span class="k">continue</span>
+        }
+        fmt.<span class="f">Printf</span>(<span class="s">"[%d] %s\n"</span>, indice, item)
+    }
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 10. Wrappers & Struct Embedding em Go -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">10</span>
+                  <span>Wrappers, Type Definitions &amp; Struct Embedding</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Em Go, <strong>Wrappers</strong> são criados com <strong>Type Definitions</strong> (<code>type MyID int64</code>, criando um tipo com semântica própria) ou através de <strong>Struct Embedding</strong> (composição em que uma struct externa embrulha a interna, promovendo seus métodos automaticamente sem necessidade de herança tradicional).</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">wrappers_embedding.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="c">// 1. Type Wrapper com método associado</span>
+<span class="k">type</span> <span class="t">PrecoCentavos</span> <span class="t">int64</span>
+
+<span class="k">func</span> (p <span class="t">PrecoCentavos</span>) <span class="f">EmReais</span>() <span class="t">string</span> {
+    <span class="k">return</span> fmt.<span class="f">Sprintf</span>(<span class="s">"R$ %.2f"</span>, <span class="t">float64</span>(p)/<span class="n">100.0</span>)
+}
+
+<span class="c">// 2. Struct Wrapper via Embedding (Composição)</span>
+<span class="k">type</span> <span class="t">Logger</span> <span class="k">struct</span>{}
+
+<span class="k">func</span> (l <span class="t">Logger</span>) <span class="f">Log</span>(msg <span class="t">string</span>) {
+    fmt.<span class="f">Println</span>(<span class="s">"[LOG]"</span>, msg)
+}
+
+<span class="k">type</span> <span class="t">ServicoUsuario</span> <span class="k">struct</span> {
+    <span class="t">Logger</span> <span class="c">// Embrulha o Logger e herda o método Log automaticamente!</span>
+    Nome <span class="t">string</span>
+}
+
+<span class="k">func</span> <span class="f">main</span>() {
+    preco := <span class="t">PrecoCentavos</span>(<span class="n">350090</span>)
+    fmt.<span class="f">Println</span>(<span class="s">"Preço Formatado:"</span>, preco.<span class="f">EmReais</span>()) <span class="c">// R$ 3500.90</span>
+
+    srv := <span class="t">ServicoUsuario</span>{Nome: <span class="s">"AuthService"</span>}
+    srv.<span class="f">Log</span>(<span class="s">"Serviço inicializado com sucesso"</span>) <span class="c">// método promovido</span>
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -2460,6 +2997,201 @@
           </div>
         </div>
       </section>
+
+
+      <!-- GO AVANÇADO: gRPC, testify, embed -->
+      <section class="section" id="go-avancado">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-label">Go Avançado</span>
+            <h2 class="section-title">gRPC, Testes <span>&amp; Recursos Embutidos</span></h2>
+            <p class="section-sub">Comunicação de alta performance com gRPC/protobuf, testes idiomáticos com testify e empacotamento de assets com <code>embed</code>.</p>
+          </div>
+
+          <div class="accordion" id="accordion-go-adv">
+
+            <!-- gRPC -->
+            <div class="acc-item open">
+              <button class="acc-trigger" type="button" aria-expanded="true">
+                <div class="acc-title-group">
+                  <span class="acc-num">📡</span>
+                  <span>gRPC + Protobuf — Comunicação de Alta Performance</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel" style="max-height: 1400px;">
+                <div class="acc-body">
+                  <p>O <strong>gRPC</strong> é o protocolo de comunicação preferido em microsserviços de alta performance. Comparado ao REST+JSON: <strong>5-10x mais rápido</strong> (protobuf binário vs texto), tipagem forte gerada automaticamente a partir de <code>.proto</code>, e suporte nativo a streaming bidirecional.</p>
+                  <ul>
+                    <li><strong>Unary RPC</strong> — requisição/resposta simples (como REST POST)</li>
+                    <li><strong>Server Streaming</strong> — servidor envia múltiplas respostas para uma requisição</li>
+                    <li><strong>Bidirectional Streaming</strong> — fluxo bidirecional simultâneo (chat, telemetria)</li>
+                  </ul>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">produto.proto + server.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="c">// ─── produto.proto ─────────────────────────────────────────────────</span>
+<span class="k">syntax</span> = <span class="s">"proto3"</span>;
+<span class="k">package</span> produto;
+<span class="k">option</span> go_package = <span class="s">"./pb;produto"</span>;
+
+<span class="k">message</span> <span class="t">Produto</span> {
+    <span class="t">uint32</span> id    = <span class="n">1</span>;
+    <span class="t">string</span> nome  = <span class="n">2</span>;
+    <span class="t">double</span> preco = <span class="n">3</span>;
+}
+<span class="k">message</span> <span class="t">BuscarRequest</span>  { <span class="t">uint32</span> id = <span class="n">1</span>; }
+
+<span class="k">service</span> <span class="t">ProdutoService</span> {
+    <span class="k">rpc</span> <span class="f">BuscarPorId</span>(<span class="t">BuscarRequest</span>) <span class="k">returns</span> (<span class="t">Produto</span>);
+    <span class="k">rpc</span> <span class="f">ListarTodos</span>(<span class="t">BuscarRequest</span>) <span class="k">returns</span> (<span class="k">stream</span> <span class="t">Produto</span>);
+}
+
+<span class="c">// ─── server.go ─────────────────────────────────────────────────────</span>
+<span class="k">package</span> main
+
+<span class="k">import</span> (
+    <span class="s">"context"</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"net"</span>
+    pb <span class="s">"github.com/ponce/loja/pb"</span>
+    <span class="s">"google.golang.org/grpc"</span>
+)
+
+<span class="k">type</span> <span class="t">servidor</span> <span class="k">struct</span> { pb.<span class="t">UnimplementedProdutoServiceServer</span> }
+
+<span class="k">func</span> (s *<span class="t">servidor</span>) <span class="f">BuscarPorId</span>(ctx <span class="t">context.Context</span>, req *pb.<span class="t">BuscarRequest</span>) (*pb.<span class="t">Produto</span>, <span class="t">error</span>) {
+    <span class="k">return</span> &amp;pb.<span class="t">Produto</span>{Id: req.Id, Nome: <span class="s">"Notebook Go"</span>, Preco: <span class="n">4500.0</span>}, <span class="n">nil</span>
+}
+
+<span class="k">func</span> <span class="f">main</span>() {
+    lis, _ := net.<span class="f">Listen</span>(<span class="s">"tcp"</span>, <span class="s">"127.0.0.1:50051"</span>)
+    s := grpc.<span class="f">NewServer</span>()
+    pb.<span class="f">RegisterProdutoServiceServer</span>(s, &amp;<span class="t">servidor</span>{})
+    fmt.<span class="f">Println</span>(<span class="s">"gRPC server em :50051"</span>)
+    s.<span class="f">Serve</span>(lis)
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TESTIFY -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">🧪</span>
+                  <span>Testify — Testes Expressivos e Mocks em Go</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>Go tem testes nativos com <code>testing</code>, mas o <strong>testify</strong> adiciona assertions fluentes, mocks automáticos e suítes organizadas. Com <strong>testify/mock</strong> você cria doubles de interfaces e verifica interações, similar ao Mockito no Java.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">produto_test.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> service_test
+
+<span class="k">import</span> (
+    <span class="s">"testing"</span>
+    <span class="s">"github.com/stretchr/testify/assert"</span>
+    <span class="s">"github.com/stretchr/testify/mock"</span>
+)
+
+<span class="c">// ─── Mock gerado manualmente (ou via mockery) ──────────────────────</span>
+<span class="k">type</span> <span class="t">MockProdutoRepo</span> <span class="k">struct</span> { mock.<span class="t">Mock</span> }
+
+<span class="k">func</span> (m *<span class="t">MockProdutoRepo</span>) <span class="f">BuscarPorId</span>(id <span class="t">uint32</span>) (*<span class="t">Produto</span>, <span class="t">error</span>) {
+    args := m.<span class="f">Called</span>(id)
+    <span class="k">return</span> args.<span class="f">Get</span>(<span class="n">0</span>).(*<span class="t">Produto</span>), args.<span class="f">Error</span>(<span class="n">1</span>)
+}
+
+<span class="c">// ─── Testes com assert e mock ──────────────────────────────────────</span>
+<span class="k">func</span> <span class="f">TestBuscarProduto_Sucesso</span>(t *testing.<span class="t">T</span>) {
+    mockRepo := <span class="k">new</span>(<span class="t">MockProdutoRepo</span>)
+    esperado := &amp;<span class="t">Produto</span>{Id: <span class="n">1</span>, Nome: <span class="s">"Notebook"</span>, Preco: <span class="n">4500.0</span>}
+
+    mockRepo.<span class="f">On</span>(<span class="s">"BuscarPorId"</span>, <span class="t">uint32</span>(<span class="n">1</span>)).<span class="f">Return</span>(esperado, <span class="n">nil</span>)
+
+    svc := <span class="t">ProdutoService</span>{Repo: mockRepo}
+    resultado, err := svc.<span class="f">Buscar</span>(<span class="n">1</span>)
+
+    assert.<span class="f">NoError</span>(t, err)
+    assert.<span class="f">Equal</span>(t, <span class="s">"Notebook"</span>, resultado.Nome)
+    mockRepo.<span class="f">AssertExpectations</span>(t)
+}
+
+<span class="k">func</span> <span class="f">TestBuscarProduto_NaoEncontrado</span>(t *testing.<span class="t">T</span>) {
+    mockRepo := <span class="k">new</span>(<span class="t">MockProdutoRepo</span>)
+    mockRepo.<span class="f">On</span>(<span class="s">"BuscarPorId"</span>, <span class="t">uint32</span>(<span class="n">99</span>)).<span class="f">Return</span>((*<span class="t">Produto</span>)(<span class="n">nil</span>), <span class="t">ErrNotFound</span>)
+
+    svc := <span class="t">ProdutoService</span>{Repo: mockRepo}
+    _, err := svc.<span class="f">Buscar</span>(<span class="n">99</span>)
+
+    assert.<span class="f">ErrorIs</span>(t, err, <span class="t">ErrNotFound</span>)
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- EMBED -->
+            <div class="acc-item">
+              <button class="acc-trigger" type="button" aria-expanded="false">
+                <div class="acc-title-group">
+                  <span class="acc-num">📦</span>
+                  <span>embed — Arquivos Estáticos no Binário</span>
+                </div>
+                <span class="acc-chevron">▼</span>
+              </button>
+              <div class="acc-panel">
+                <div class="acc-body">
+                  <p>O pacote <code>embed</code> (Go 1.16+) permite embutir arquivos (HTML, SQL, certificados, templates) diretamente no binário compilado, eliminando a necessidade de distribuir arquivos externos junto ao executável. Essencial para aplicações em containers.</p>
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="lang-badge">embed_exemplo.go</span>
+                      <button class="copy-btn" type="button">Copiar</button>
+                    </div>
+<pre><code><span class="k">package</span> main
+
+<span class="k">import</span> (
+    _ <span class="s">"embed"</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"net/http"</span>
+)
+
+<span class="c">// Embute o arquivo SQL diretamente no binário em tempo de compilação</span>
+<span class="c">//go:embed migrations/schema.sql</span>
+<span class="k">var</span> schemaSql <span class="t">string</span>
+
+<span class="c">// Embute um diretório inteiro (HTML, CSS, JS) no binário</span>
+<span class="c">//go:embed static/*</span>
+<span class="k">var</span> staticFiles embed.<span class="t">FS</span>
+
+<span class="k">func</span> <span class="f">main</span>() {
+    fmt.<span class="f">Printf</span>(<span class="s">"Schema SQL embutido (%d bytes)\n"</span>, <span class="f">len</span>(schemaSql))
+
+    <span class="c">// Serve arquivos estáticos embutidos via HTTP</span>
+    http.<span class="f">Handle</span>(<span class="s">"/"</span>, http.<span class="f">FileServer</span>(http.<span class="f">FS</span>(staticFiles)))
+    http.<span class="f">ListenAndServe</span>(<span class="s">"127.0.0.1:8080"</span>, <span class="n">nil</span>)
+
+    <span class="c">// Vantagem: binário único, sem dependências externas de arquivo!</span>
+    <span class="c">// Perfeito para containers Docker mínimos (scratch ou distroless)</span>
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
 
     </div>
 

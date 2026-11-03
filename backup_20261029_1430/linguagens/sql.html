@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL — Ponce Metodologias &amp; Dev</title>
+<meta name="description" content="Aprenda SQL: história, conceitos fundamentais, exemplos práticos com CTEs e Window Functions, mercado de trabalho e roadmap de aprendizagem.">
+<style>
+:root {
+  --accent: #06b6d4;
+  --accent-dark: #0891b2;
+  --accent-light: #22d3ee;
+  --accent-soft: rgba(6, 182, 212, 0.12);
+  --accent-border: rgba(6, 182, 212, 0.35);
+  --bg: #0b1120;
+  --bg-2: #0f172a;
+  --surface: #131c31;
+  --surface-2: #1a2540;
+  --border: #243252;
+  --text: #e6ebf5;
+  --muted: #9aa8c4;
+  --code-bg: #0a0f1d;
+  --header-h: 64px;
+  --radius: 14px;
+  --font: -apple-system, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img, svg { max-width: 100%; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 .5em; }
+p { margin: 0 0 1em; }
+code.inline {
+  font-family: var(--mono);
+  font-size: .88em;
+  background: var(--accent-soft);
+  color: var(--accent-light);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+  background: rgba(11, 17, 32, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+.logo:hover { text-decoration: none; color: var(--accent); }
+.header-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--accent);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: .9rem;
+  white-space: nowrap;
+  transition: background .2s, color .2s;
+}
+.btn-back:hover { background: var(--accent); color: #0b1120; font-weight: 700; text-decoration: none; }
+
+/* ---------- Sub navigation ---------- */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 50;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  margin-top: var(--header-h);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.subnav ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 1100px;
+  display: flex;
+  gap: 4px;
+}
+.subnav a {
+  display: block;
+  padding: 12px 14px;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.subnav a:hover { color: var(--text); text-decoration: none; border-bottom-color: var(--accent); }
+
+/* ---------- Layout ---------- */
+main { display: block; }
+section { padding: 72px 24px; }
+section:nth-of-type(even) { background: var(--bg-2); }
+.container { max-width: 1000px; margin: 0 auto; }
+.section-head { text-align: center; margin-bottom: 44px; }
+.section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.section-head h2::after {
+  content: "";
+  display: block;
+  width: 56px; height: 4px;
+  margin: 14px auto 0;
+  border-radius: 4px;
+  background: var(--accent);
+}
+.section-head p { color: var(--muted); max-width: 640px; margin: 14px auto 0; }
+
+/* ---------- Hero ---------- */
+.hero {
+  text-align: center;
+  padding: 96px 24px 88px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(6,182,212,.22), transparent 60%),
+    var(--bg);
+}
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-light);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 4.5rem);
+  margin: 22px 0 16px;
+  letter-spacing: -.02em;
+}
+.hero .subtitle {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  color: var(--muted);
+  font-size: 1.12rem;
+}
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+.stat {
+  padding: 12px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-width: 170px;
+}
+.stat strong { display: block; color: var(--accent); font-size: 1.15rem; }
+.stat span { color: var(--muted); font-size: .85rem; }
+
+/* ---------- Timeline ---------- */
+.timeline { position: relative; max-width: 760px; margin: 0 auto; padding-left: 8px; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 49px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(var(--accent), var(--border));
+}
+.tl-item { position: relative; display: flex; gap: 24px; margin-bottom: 28px; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-year {
+  flex: 0 0 82px;
+  height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent);
+  color: #0b1120;
+  font-weight: 800;
+  font-size: .9rem;
+  border-radius: 999px;
+  z-index: 1;
+  box-shadow: 0 0 0 5px var(--bg-2);
+}
+.tl-body {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+}
+.tl-body h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.tl-body p { margin: 0; color: var(--muted); font-size: .94rem; }
+
+/* ---------- Cards ---------- */
+.grid { display: grid; gap: 20px; }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 22px;
+  transition: transform .2s, border-color .2s;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.card .icon {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  background: var(--accent-soft);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.card h3 { font-size: 1.1rem; }
+.card p { color: var(--muted); font-size: .92rem; margin-bottom: 14px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  padding: 3px 10px;
+  font-size: .78rem;
+  font-weight: 600;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: #a5f3fc;
+}
+
+/* ---------- Code blocks ---------- */
+.code-block {
+  position: relative;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 14px 0 4px;
+}
+.code-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 8px 16px;
+  background: #0e1628;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: .78rem;
+  color: var(--muted);
+}
+.code-bar .dots { display: flex; gap: 6px; margin-right: 12px; }
+.code-bar .dots i { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; display: block; }
+.code-bar .dots i:nth-child(2) { background: #f59e0b; }
+.code-bar .dots i:nth-child(3) { background: #22c55e; }
+.code-bar .left { display: flex; align-items: center; }
+.copy-btn {
+  font-family: var(--font);
+  font-size: .78rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.copy-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+.copy-btn.copied { background: #16a34a; border-color: #16a34a; color: #fff; }
+.code-block pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: .86rem;
+  line-height: 1.65;
+  tab-size: 4;
+  color: #d6deeb;
+}
+.code-block code { font-family: inherit; }
+.kw  { color: #c792ea; font-weight: 600; }
+.fn  { color: #82aaff; font-weight: 600; }
+.str { color: #ecc48d; }
+.cmt { color: #637777; font-style: italic; }
+.var { color: #7fdbca; }
+.num { color: #f78c6c; }
+.typ { color: #ffcb6b; }
+
+/* ---------- Accordion ---------- */
+.accordion { max-width: 820px; margin: 0 auto; display: grid; gap: 12px; }
+.acc-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.acc-item.open { border-color: var(--accent); }
+.acc-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.acc-btn:hover { background: var(--surface-2); }
+.acc-btn:focus-visible, .tab-btn:focus-visible, .copy-btn:focus-visible, .btn-back:focus-visible, .logo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.acc-btn .chev {
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  transition: transform .3s;
+}
+.acc-item.open .chev { transform: rotate(180deg); }
+.acc-panel { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+.acc-inner { padding: 0 22px 22px; }
+.acc-inner p { color: var(--muted); font-size: .94rem; margin-bottom: 0; }
+
+/* ---------- Tabs ---------- */
+.tabs { max-width: 900px; margin: 0 auto; }
+.tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+.tab-btn {
+  font-family: var(--font);
+  font-size: .92rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.tab-btn:hover { color: var(--text); border-color: var(--accent); }
+.tab-btn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #0b1120; font-weight: 700; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.tab-panel > p { color: var(--muted); font-size: .94rem; }
+
+/* ---------- Market ---------- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+table { width: 100%; border-collapse: collapse; min-width: 480px; background: var(--surface); }
+th, td { padding: 14px 20px; text-align: left; }
+th { background: var(--surface-2); font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+td { border-top: 1px solid var(--border); }
+td.salary { color: var(--accent); font-weight: 700; white-space: nowrap; }
+.market-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 24px; }
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.panel h3 { font-size: 1.05rem; margin-bottom: 14px; }
+.panel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.panel li { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .94rem; }
+.panel li::before {
+  content: "";
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  flex: 0 0 auto;
+}
+.panel li strong { color: var(--text); }
+.note { color: var(--muted); font-size: .8rem; text-align: center; margin-top: 16px; }
+
+/* ---------- Roadmap ---------- */
+.roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; position: relative; }
+.step {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 24px 20px 22px;
+}
+.step .num-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #0b1120;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.step h3 { font-size: 1.05rem; margin-bottom: 2px; }
+.step .phase { color: var(--accent); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.step ul { margin: 12px 0 0; padding-left: 18px; color: var(--muted); font-size: .92rem; }
+.step ul li { margin-bottom: 4px; }
+.step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -18px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  text-align: center;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 1.1rem;
+  z-index: 2;
+}
+
+/* ---------- Resources ---------- */
+.resource {
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+}
+.resource:hover { text-decoration: none; }
+.resource .link { margin-top: auto; color: var(--accent); font-weight: 600; font-size: .88rem; word-break: break-all; }
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--code-bg);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .step:not(:last-child)::after { display: none; }
+}
+@media (max-width: 720px) {
+  :root { --header-h: 56px; }
+  .site-header { padding: 0 12px; }
+  .logo { font-size: .85rem; }
+  .header-title { display: none; }
+  section { padding: 52px 16px; }
+  .hero { padding: 64px 16px 56px; }
+  .timeline::before { left: 41px; }
+  .tl-item { gap: 14px; }
+  .tl-year { flex-basis: 68px; font-size: .8rem; }
+  .code-block pre { font-size: .78rem; padding: 14px; }
+  th, td { padding: 12px 14px; }
+}
+@media (max-width: 420px) {
+  .logo { font-size: .76rem; }
+  .btn-back { padding: 7px 12px; font-size: .82rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+  <div class="header-title">🗄️ SQL</div>
+  <a class="btn-back" href="../index.html">← Voltar</a>
+</header>
+
+<nav class="subnav" aria-label="Navegação da página">
+  <ul>
+    <li><a href="#hero">Início</a></li>
+    <li><a href="#historia">História</a></li>
+    <li><a href="#por-que-aprender">Por que aprender</a></li>
+    <li><a href="#conceitos">Conceitos</a></li>
+    <li><a href="#exemplos">Exemplos</a></li>
+    <li><a href="#mercado">Mercado</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#recursos">Recursos</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- 1. HERO -->
+<section id="hero" class="hero">
+  <div class="container">
+    <span class="badge">Linguagem Declarativa / Banco de Dados</span>
+    <h1>🗄️ SQL</h1>
+    <p class="subtitle">A linguagem universal dos dados. Nascida da teoria relacional de Edgar Codd (1970) e concretizada no projeto IBM System R (1974), o SQL tornou-se o padrão ANSI/ISO indiscutível para consultar, transformar e governar informações em qualquer escala.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <strong>1970</strong>
+        <span>Teoria Relacional (Codd)</span>
+      </div>
+      <div class="stat">
+        <strong>1986</strong>
+        <span>Padrão ANSI / ISO</span>
+      </div>
+      <div class="stat">
+        <strong>#1</strong>
+        <span>Linguagem de Dados</span>
+      </div>
+      <div class="stat">
+        <strong>Declarativa</strong>
+        <span>Diga o "quê", não o "como"</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. HISTÓRIA & EVOLUÇÃO -->
+<section id="historia">
+  <div class="container">
+    <div class="section-head">
+      <h2>História &amp; Evolução</h2>
+      <p>Mais de 50 anos de solidez, adaptando-se da era dos mainframes à moderna computação em nuvem.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1970</div>
+        <div class="tl-body">
+          <h3>Modelo Relacional (Edgar F. Codd, IBM)</h3>
+          <p>Edgar Frank Codd publica o lendário artigo <em>"A Relational Model of Data for Large Shared Data Banks"</em> no laboratório da IBM, fundamentando os bancos de dados na teoria matemática dos conjuntos e na lógica de predicados.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1974</div>
+        <div class="tl-body">
+          <h3>SEQUEL no IBM System R</h3>
+          <p>Donald Chamberlin e Raymond Boyce criam a <strong>SEQUEL</strong> (<em>Structured English QUEry Language</em>) para o projeto experimental System R da IBM. O nome foi abreviado posteriormente para <strong>SQL</strong> por questões de direitos de marca.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1979</div>
+        <div class="tl-body">
+          <h3>Primeiro SGBD Comercial (Oracle)</h3>
+          <p>A Relational Software Inc. (fundada por Larry Ellison, Bob Miner e Ed Oates, hoje Oracle Corporation) lança o <strong>Oracle V2</strong>, o primeiro SGBD relacional comercial baseado em SQL para sistemas PDP-11 e VAX.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1986</div>
+        <div class="tl-body">
+          <h3>SQL-86: O Padrão ANSI</h3>
+          <p>O American National Standards Institute (ANSI) ratifica o SQL como padrão formal, seguido pela ISO em 1987. A indústria unifica a sintaxe básica de DDL e DML entre fornecedores.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1992</div>
+        <div class="tl-body">
+          <h3>SQL-92 (SQL2): A Grande Revisão</h3>
+          <p>Consolidação do SQL moderno: padronização da sintaxe explícita de junções (<code class="inline">JOIN ... ON</code>), novos tipos de dados (VARCHAR, DATE, TIME), subqueries na cláusula FROM e integridade referencial com restrições CASCADE.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1999</div>
+        <div class="tl-body">
+          <h3>SQL:1999 (SQL3): CTEs &amp; Recursão</h3>
+          <p>Adoção de Common Table Expressions (<code class="inline">WITH</code>), consultas recursivas para hierarquias de grafos/árvores, suporte a triggers, tipos definidos pelo usuário (UDT) e recursos orientados a objetos.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2003</div>
+        <div class="tl-body">
+          <h3>SQL:2003: Window Functions</h3>
+          <p>Revolução analítica com a introdução das <strong>Window Functions</strong> (<code class="inline">OVER</code>, <code class="inline">ROW_NUMBER</code>, <code class="inline">RANK</code>), além de geradores automáticos de sequências (<code class="inline">IDENTITY</code>) e suporte a documentos XML.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2016</div>
+        <div class="tl-body">
+          <h3>SQL:2016: Suporte Nativo a JSON</h3>
+          <p>Inclusão oficial de operadores e funções nativas de manipulação JSON, tabelas temporais com versionamento histórico de registros e funções de agregação polimórficas.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">Hoje</div>
+        <div class="tl-body">
+          <h3>PostgreSQL 16+ &amp; MySQL 8+</h3>
+          <p>O SQL domina tanto transações OLTP de altíssima escala quanto data warehouses analíticos OLAP (Snowflake, BigQuery, DuckDB), integrando busca vetorial com IA (<code class="inline">pgvector</code>), particionamento distribuído e execução paralela.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. POR QUE APRENDER SQL -->
+<section id="por-que-aprender">
+  <div class="container">
+    <div class="section-head">
+      <h2>Por Que Aprender SQL?</h2>
+      <p>A habilidade mais versátil e resiliente da tecnologia: independente do framework ou linguagem de programação que você use, os dados estarão no SQL.</p>
+    </div>
+
+    <div class="grid grid-4">
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>Análise de Dados</h3>
+        <p>A ferramenta #1 indispensável para todo analista e cientista de dados. Permite fatiar, agregar e extrair insights direto da fonte com alta velocidade.</p>
+        <div class="tags">
+          <span class="tag">Data Analysis</span>
+          <span class="tag">Estatística</span>
+          <span class="tag">EDA</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>Back-End &amp; APIs</h3>
+        <p>Praticamente todo backend (Node.js, Python, Java, C#, Go) interage com bancos relacionais para persistir clientes, pagamentos e regras de negócio com garantias ACID.</p>
+        <div class="tags">
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">Transações ACID</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon">📈</div>
+        <h3>BI &amp; Relatórios</h3>
+        <p>Plataformas como Power BI, Tableau, Metabase e Looker alimentam seus painéis e dashboards executivos diretamente através de consultas SQL otimizadas.</p>
+        <div class="tags">
+          <span class="tag">Power BI</span>
+          <span class="tag">Tableau</span>
+          <span class="tag">Dashboards</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon">🏗️</div>
+        <h3>Data Engineering</h3>
+        <p>A base de pipelines modernos de ETL/ELT, transformações escaláveis com <strong>dbt</strong> e modelagem dimensional em Data Warehouses e Data Lakehouses na nuvem.</p>
+        <div class="tags">
+          <span class="tag">dbt</span>
+          <span class="tag">BigQuery</span>
+          <span class="tag">Snowflake</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. CONCEITOS FUNDAMENTAIS -->
+<section id="conceitos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Conceitos Fundamentais</h2>
+      <p>Explore as principais construções da linguagem, com explicações objetivas e códigos prontos para o dia a dia.</p>
+    </div>
+
+    <div class="accordion">
+
+      <!-- Item 1 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-1" id="acc-btn-1">
+          <span>1. SELECT &amp; Projeção (Filtros, Alias e Ordenação)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-1" role="region" aria-labelledby="acc-btn-1">
+          <div class="acc-inner">
+            <p>A instrução <code class="inline">SELECT</code> define as colunas retornadas, <code class="inline">FROM</code> indica a tabela de origem, <code class="inline">WHERE</code> filtra as linhas antes de qualquer processamento e <code class="inline">ORDER BY</code> ordena o resultado final.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>01_select_basico.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- Consulta clientes ativos de SP ou RJ com saldo acima de R$ 1.000</span>
+<span class="kw">SELECT</span>
+    <span class="var">id</span>,
+    <span class="var">nome</span>,
+    <span class="var">email</span>,
+    <span class="var">cidade</span>,
+    <span class="var">saldo_pontos</span> <span class="kw">AS</span> <span class="var">pontos_fidelidade</span>,
+    <span class="var">criado_em</span>
+<span class="kw">FROM</span>
+    <span class="var">clientes</span>
+<span class="kw">WHERE</span>
+    <span class="var">ativo</span> = <span class="kw">TRUE</span>
+    <span class="kw">AND</span> <span class="var">estado</span> <span class="kw">IN</span> (<span class="str">'SP'</span>, <span class="str">'RJ'</span>)
+    <span class="kw">AND</span> <span class="var">saldo_pontos</span> &gt;= <span class="num">1000</span>
+    <span class="kw">AND</span> <span class="var">email</span> <span class="kw">IS NOT NULL</span>
+<span class="kw">ORDER BY</span>
+    <span class="var">saldo_pontos</span> <span class="kw">DESC</span>,
+    <span class="var">nome</span> <span class="kw">ASC</span>
+<span class="kw">LIMIT</span> <span class="num">20</span> <span class="kw">OFFSET</span> <span class="num">0</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-2" id="acc-btn-2">
+          <span>2. JOINs Relacionais (INNER, LEFT, RIGHT, FULL)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-2" role="region" aria-labelledby="acc-btn-2">
+          <div class="acc-inner">
+            <p>Os <code class="inline">JOINs</code> conectam tabelas através de chaves primárias e estrangeiras. <code class="inline">INNER JOIN</code> traz apenas correspondências em ambos os lados; <code class="inline">LEFT JOIN</code> preserva todos os registros da tabela à esquerda mesmo sem par à direita.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>02_joins.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- INNER JOIN: Somente pedidos com clientes válidos</span>
+<span class="cmt">-- LEFT JOIN: Todos os clientes, mesmo aqueles sem nenhum pedido</span>
+<span class="kw">SELECT</span>
+    <span class="var">c</span>.<span class="var">id</span> <span class="kw">AS</span> <span class="var">cliente_id</span>,
+    <span class="var">c</span>.<span class="var">nome</span> <span class="kw">AS</span> <span class="var">cliente</span>,
+    <span class="var">p</span>.<span class="var">id</span> <span class="kw">AS</span> <span class="var">pedido_id</span>,
+    <span class="fn">COALESCE</span>(<span class="var">p</span>.<span class="var">valor_total</span>, <span class="num">0.00</span>) <span class="kw">AS</span> <span class="var">valor_total</span>,
+    <span class="fn">COALESCE</span>(<span class="var">p</span>.<span class="var">status</span>, <span class="str">'SEM_PEDIDO'</span>) <span class="kw">AS</span> <span class="var">status_pedido</span>
+<span class="kw">FROM</span>
+    <span class="var">clientes</span> <span class="var">c</span>
+<span class="kw">LEFT JOIN</span>
+    <span class="var">pedidos</span> <span class="var">p</span> <span class="kw">ON</span> <span class="var">c</span>.<span class="var">id</span> = <span class="var">p</span>.<span class="var">cliente_id</span>
+<span class="kw">WHERE</span>
+    <span class="var">c</span>.<span class="var">ativo</span> = <span class="kw">TRUE</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-3" id="acc-btn-3">
+          <span>3. GROUP BY, HAVING &amp; Agregações (COUNT, SUM, AVG)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-3" role="region" aria-labelledby="acc-btn-3">
+          <div class="acc-inner">
+            <p>O <code class="inline">GROUP BY</code> agrupa linhas com valores idênticos para calcular métricas agregadas. O filtro <code class="inline">HAVING</code> é aplicado <em>após</em> o cálculo da agregação, diferente do <code class="inline">WHERE</code> que filtra antes.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>03_group_by_having.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- Resumo de vendas por categoria de produto em 2024</span>
+<span class="kw">SELECT</span>
+    <span class="var">cat</span>.<span class="var">nome</span> <span class="kw">AS</span> <span class="var">categoria</span>,
+    <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="var">p</span>.<span class="var">id</span>) <span class="kw">AS</span> <span class="var">total_pedidos</span>,
+    <span class="fn">SUM</span>(<span class="var">ip</span>.<span class="var">quantidade</span>) <span class="kw">AS</span> <span class="var">itens_vendidos</span>,
+    <span class="fn">ROUND</span>(<span class="fn">AVG</span>(<span class="var">ip</span>.<span class="var">preco_unitario</span>), <span class="num">2</span>) <span class="kw">AS</span> <span class="var">preco_medio</span>,
+    <span class="fn">SUM</span>(<span class="var">ip</span>.<span class="var">quantidade</span> * <span class="var">ip</span>.<span class="var">preco_unitario</span>) <span class="kw">AS</span> <span class="var">faturamento_bruto</span>
+<span class="kw">FROM</span>
+    <span class="var">categorias</span> <span class="var">cat</span>
+<span class="kw">INNER JOIN</span> <span class="var">produtos</span> <span class="var">prod</span> <span class="kw">ON</span> <span class="var">cat</span>.<span class="var">id</span> = <span class="var">prod</span>.<span class="var">categoria_id</span>
+<span class="kw">INNER JOIN</span> <span class="var">itens_pedido</span> <span class="var">ip</span> <span class="kw">ON</span> <span class="var">prod</span>.<span class="var">id</span> = <span class="var">ip</span>.<span class="var">produto_id</span>
+<span class="kw">INNER JOIN</span> <span class="var">pedidos</span> <span class="var">p</span> <span class="kw">ON</span> <span class="var">ip</span>.<span class="var">pedido_id</span> = <span class="var">p</span>.<span class="var">id</span>
+<span class="kw">WHERE</span>
+    <span class="var">p</span>.<span class="var">status</span> = <span class="str">'CONCLUIDO'</span>
+    <span class="kw">AND</span> <span class="var">p</span>.<span class="var">data_pedido</span> &gt;= <span class="str">'2024-01-01'</span>
+<span class="kw">GROUP BY</span>
+    <span class="var">cat</span>.<span class="var">nome</span>
+<span class="kw">HAVING</span>
+    <span class="fn">SUM</span>(<span class="var">ip</span>.<span class="var">quantidade</span> * <span class="var">ip</span>.<span class="var">preco_unitario</span>) &gt; <span class="num">50000.00</span>
+<span class="kw">ORDER BY</span>
+    <span class="var">faturamento_bruto</span> <span class="kw">DESC</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-4" id="acc-btn-4">
+          <span>4. Subqueries &amp; CTEs (WITH Cláusula)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-4" role="region" aria-labelledby="acc-btn-4">
+          <div class="acc-inner">
+            <p>As <strong>Common Table Expressions (CTEs)</strong> com a palavra-chave <code class="inline">WITH</code> tornam consultas complexas limpas, modulares e reutilizáveis, substituindo subqueries aninhadas de difícil leitura.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>04_cte_with.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- Identifica clientes com faturamento superior à média geral de todos os clientes</span>
+<span class="kw">WITH</span> <span class="var">GastosPorCliente</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        <span class="var">cliente_id</span>,
+        <span class="fn">COUNT</span>(<span class="var">id</span>) <span class="kw">AS</span> <span class="var">qtd_pedidos</span>,
+        <span class="fn">SUM</span>(<span class="var">valor_total</span>) <span class="kw">AS</span> <span class="var">total_gasto</span>
+    <span class="kw">FROM</span>
+        <span class="var">pedidos</span>
+    <span class="kw">WHERE</span>
+        <span class="var">status</span> = <span class="str">'CONCLUIDO'</span>
+    <span class="kw">GROUP BY</span>
+        <span class="var">cliente_id</span>
+),
+<span class="var">MediaGeral</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span> <span class="fn">AVG</span>(<span class="var">total_gasto</span>) <span class="kw">AS</span> <span class="var">media_ticket_cliente</span>
+    <span class="kw">FROM</span> <span class="var">GastosPorCliente</span>
+)
+<span class="kw">SELECT</span>
+    <span class="var">c</span>.<span class="var">nome</span>,
+    <span class="var">c</span>.<span class="var">email</span>,
+    <span class="var">g</span>.<span class="var">qtd_pedidos</span>,
+    <span class="var">g</span>.<span class="var">total_gasto</span>,
+    <span class="fn">ROUND</span>(<span class="var">m</span>.<span class="var">media_ticket_cliente</span>, <span class="num">2</span>) <span class="kw">AS</span> <span class="var">media_geral</span>
+<span class="kw">FROM</span>
+    <span class="var">GastosPorCliente</span> <span class="var">g</span>
+<span class="kw">CROSS JOIN</span>
+    <span class="var">MediaGeral</span> <span class="var">m</span>
+<span class="kw">INNER JOIN</span>
+    <span class="var">clientes</span> <span class="var">c</span> <span class="kw">ON</span> <span class="var">g</span>.<span class="var">cliente_id</span> = <span class="var">c</span>.<span class="var">id</span>
+<span class="kw">WHERE</span>
+    <span class="var">g</span>.<span class="var">total_gasto</span> &gt; <span class="var">m</span>.<span class="var">media_ticket_cliente</span>
+<span class="kw">ORDER BY</span>
+    <span class="var">g</span>.<span class="var">total_gasto</span> <span class="kw">DESC</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-5" id="acc-btn-5">
+          <span>5. Window Functions (OVER, ROW_NUMBER, RANK, LAG/LEAD)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-5" role="region" aria-labelledby="acc-btn-5">
+          <div class="acc-inner">
+            <p>Funções de janela executam cálculos analíticos através de partições de dados sem colapsar as linhas como o <code class="inline">GROUP BY</code>. Permitem rankings, médias móveis e comparações temporais.</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>05_window_functions.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- Ranking e evolução diária das vendas por vendedor</span>
+<span class="kw">SELECT</span>
+    <span class="var">vendedor_id</span>,
+    <span class="var">data_venda</span>,
+    <span class="var">valor_venda</span>,
+    <span class="cmt">-- Número sequencial único da venda por vendedor</span>
+    <span class="fn">ROW_NUMBER</span>() <span class="kw">OVER</span> (
+        <span class="kw">PARTITION BY</span> <span class="var">vendedor_id</span> <span class="kw">ORDER BY</span> <span class="var">data_venda</span> <span class="kw">ASC</span>
+    ) <span class="kw">AS</span> <span class="var">num_venda_vendedor</span>,
+    <span class="cmt">-- Valor da venda anterior para comparar crescimento</span>
+    <span class="fn">LAG</span>(<span class="var">valor_venda</span>, <span class="num">1</span>, <span class="num">0</span>) <span class="kw">OVER</span> (
+        <span class="kw">PARTITION BY</span> <span class="var">vendedor_id</span> <span class="kw">ORDER BY</span> <span class="var">data_venda</span> <span class="kw">ASC</span>
+    ) <span class="kw">AS</span> <span class="var">valor_venda_anterior</span>,
+    <span class="cmt">-- Soma acumulada de vendas ao longo do tempo</span>
+    <span class="fn">SUM</span>(<span class="var">valor_venda</span>) <span class="kw">OVER</span> (
+        <span class="kw">PARTITION BY</span> <span class="var">vendedor_id</span> <span class="kw">ORDER BY</span> <span class="var">data_venda</span> <span class="kw">ASC</span>
+        <span class="kw">ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</span>
+    ) <span class="kw">AS</span> <span class="var">total_acumulado_vendedor</span>
+<span class="kw">FROM</span>
+    <span class="var">vendas</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 6 -->
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-6" id="acc-btn-6">
+          <span>6. Índices &amp; EXPLAIN (Performance e Otimização)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-6" role="region" aria-labelledby="acc-btn-6">
+          <div class="acc-inner">
+            <p>Índices (como árvores B-Tree) aceleram buscas de <code class="inline">O(N)</code> para <code class="inline">O(log N)</code>. O comando <code class="inline">EXPLAIN ANALYZE</code> detalha o plano de execução, custo estimado e tempo real de varredura (Index Scan vs Seq Scan).</p>
+            <div class="code-block">
+              <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>06_indices_explain.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- 1. Criação de índice composto otimizado para filtros em pedidos</span>
+<span class="kw">CREATE INDEX</span> <span class="var">idx_pedidos_cliente_status_data</span>
+<span class="kw">ON</span> <span class="var">pedidos</span> (<span class="var">cliente_id</span>, <span class="var">status</span>, <span class="var">data_pedido</span> <span class="kw">DESC</span>);
+
+<span class="cmt">-- 2. Índice parcial: indexa somente pedidos pendentes (tamanho reduzido em disco)</span>
+<span class="kw">CREATE INDEX</span> <span class="var">idx_pedidos_pendentes</span>
+<span class="kw">ON</span> <span class="var">pedidos</span> (<span class="var">data_pedido</span>)
+<span class="kw">WHERE</span> <span class="var">status</span> = <span class="str">'PENDENTE'</span>;
+
+<span class="cmt">-- 3. Inspecionando o plano de execução e estatísticas de I/O no PostgreSQL</span>
+<span class="kw">EXPLAIN ANALYZE</span>
+<span class="kw">SELECT</span>
+    <span class="var">id</span>, <span class="var">valor_total</span>, <span class="var">data_pedido</span>
+<span class="kw">FROM</span>
+    <span class="var">pedidos</span>
+<span class="kw">WHERE</span>
+    <span class="var">cliente_id</span> = <span class="num">4821</span>
+    <span class="kw">AND</span> <span class="var">status</span> = <span class="str">'CONCLUIDO'</span>
+<span class="kw">ORDER BY</span>
+    <span class="var">data_pedido</span> <span class="kw">DESC</span>
+<span class="kw">LIMIT</span> <span class="num">10</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 5. EXEMPLOS PRÁTICOS -->
+<section id="exemplos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Exemplos Práticos Completos</h2>
+      <p>Consultas SQL do mundo real preparadas para cenários de alta produtividade, analytics e arquitetura de banco de dados.</p>
+    </div>
+
+    <div class="tabs">
+      <div class="tab-list" role="tablist" aria-label="Exemplos práticos de SQL">
+        <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-1" id="tab-btn-1">
+          📊 Análise de Vendas (JOINs + CTEs)
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-2" id="tab-btn-2">
+          👥 Dashboard de RH (Window Functions)
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-3" id="tab-btn-3">
+          🗄️ Schema E-commerce (DDL + Índices + View)
+        </button>
+      </div>
+
+      <!-- Tab 1 -->
+      <div class="tab-panel active" id="tab-1" role="tabpanel" aria-labelledby="tab-btn-1">
+        <p>Pipeline analítico completo de faturamento: consolida múltiplos JOINs, calcula margem de contribuição, segmenta por região e rankeia os clientes de maior valor gerado.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>analise_vendas_avancada.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">/*
+   RELATÓRIO EXECUTIVO DE VENDAS
+   Objetivo: Calcular métricas de margem, ticket médio e fidelidade
+   Recursos: CTEs múltiplas, INNER/LEFT JOINs, agregação e condicionais CASE
+*/</span>
+
+<span class="kw">WITH</span> <span class="var">VendasDetalhadas</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        <span class="var">p</span>.<span class="var">id</span> <span class="kw">AS</span> <span class="var">pedido_id</span>,
+        <span class="var">p</span>.<span class="var">cliente_id</span>,
+        <span class="var">c</span>.<span class="var">nome</span> <span class="kw">AS</span> <span class="var">cliente_nome</span>,
+        <span class="var">c</span>.<span class="var">estado</span> <span class="kw">AS</span> <span class="var">uf</span>,
+        <span class="var">p</span>.<span class="var">data_pedido</span>,
+        <span class="var">prod</span>.<span class="var">id</span> <span class="kw">AS</span> <span class="var">produto_id</span>,
+        <span class="var">prod</span>.<span class="var">nome</span> <span class="kw">AS</span> <span class="var">produto_nome</span>,
+        <span class="var">cat</span>.<span class="var">nome</span> <span class="kw">AS</span> <span class="var">categoria_nome</span>,
+        <span class="var">ip</span>.<span class="var">quantidade</span>,
+        <span class="var">ip</span>.<span class="var">preco_unitario</span>,
+        <span class="var">prod</span>.<span class="var">custo_unitario</span>,
+        (<span class="var">ip</span>.<span class="var">quantidade</span> * <span class="var">ip</span>.<span class="var">preco_unitario</span>) <span class="kw">AS</span> <span class="var">receita_bruta</span>,
+        (<span class="var">ip</span>.<span class="var">quantidade</span> * (<span class="var">ip</span>.<span class="var">preco_unitario</span> - <span class="var">prod</span>.<span class="var">custo_unitario</span>)) <span class="kw">AS</span> <span class="var">lucro_bruto</span>
+    <span class="kw">FROM</span>
+        <span class="var">pedidos</span> <span class="var">p</span>
+    <span class="kw">INNER JOIN</span> <span class="var">clientes</span> <span class="var">c</span> <span class="kw">ON</span> <span class="var">p</span>.<span class="var">cliente_id</span> = <span class="var">c</span>.<span class="var">id</span>
+    <span class="kw">INNER JOIN</span> <span class="var">itens_pedido</span> <span class="var">ip</span> <span class="kw">ON</span> <span class="var">p</span>.<span class="var">id</span> = <span class="var">ip</span>.<span class="var">pedido_id</span>
+    <span class="kw">INNER JOIN</span> <span class="var">produtos</span> <span class="var">prod</span> <span class="kw">ON</span> <span class="var">ip</span>.<span class="var">produto_id</span> = <span class="var">prod</span>.<span class="var">id</span>
+    <span class="kw">INNER JOIN</span> <span class="var">categorias</span> <span class="var">cat</span> <span class="kw">ON</span> <span class="var">prod</span>.<span class="var">categoria_id</span> = <span class="var">cat</span>.<span class="var">id</span>
+    <span class="kw">WHERE</span>
+        <span class="var">p</span>.<span class="var">status</span> = <span class="str">'CONCLUIDO'</span>
+        <span class="kw">AND</span> <span class="var">p</span>.<span class="var">data_pedido</span> &gt;= <span class="fn">DATE_TRUNC</span>(<span class="str">'year'</span>, <span class="fn">CURRENT_DATE</span>)
+),
+<span class="var">ResumoPorCliente</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        <span class="var">cliente_id</span>,
+        <span class="var">cliente_nome</span>,
+        <span class="var">uf</span>,
+        <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> <span class="var">pedido_id</span>) <span class="kw">AS</span> <span class="var">total_pedidos</span>,
+        <span class="fn">SUM</span>(<span class="var">quantidade</span>) <span class="kw">AS</span> <span class="var">total_itens</span>,
+        <span class="fn">SUM</span>(<span class="var">receita_bruta</span>) <span class="kw">AS</span> <span class="var">faturamento_total</span>,
+        <span class="fn">SUM</span>(<span class="var">lucro_bruto</span>) <span class="kw">AS</span> <span class="var">lucro_total</span>,
+        <span class="fn">ROUND</span>(<span class="fn">AVG</span>(<span class="var">receita_bruta</span>), <span class="num">2</span>) <span class="kw">AS</span> <span class="var">ticket_medio_item</span>
+    <span class="kw">FROM</span>
+        <span class="var">VendasDetalhadas</span>
+    <span class="kw">GROUP BY</span>
+        <span class="var">cliente_id</span>, <span class="var">cliente_nome</span>, <span class="var">uf</span>
+)
+<span class="kw">SELECT</span>
+    <span class="var">cliente_id</span>,
+    <span class="var">cliente_nome</span>,
+    <span class="var">uf</span>,
+    <span class="var">total_pedidos</span>,
+    <span class="var">total_itens</span>,
+    <span class="var">faturamento_total</span>,
+    <span class="var">lucro_total</span>,
+    <span class="fn">ROUND</span>((<span class="var">lucro_total</span> / <span class="fn">NULLIF</span>(<span class="var">faturamento_total</span>, <span class="num">0</span>)) * <span class="num">100</span>, <span class="num">2</span>) <span class="kw">AS</span> <span class="var">margem_lucro_pct</span>,
+    <span class="kw">CASE</span>
+        <span class="kw">WHEN</span> <span class="var">faturamento_total</span> &gt;= <span class="num">50000</span> <span class="kw">THEN</span> <span class="str">'Tier Diamante (VIP)'</span>
+        <span class="kw">WHEN</span> <span class="var">faturamento_total</span> &gt;= <span class="num">20000</span> <span class="kw">THEN</span> <span class="str">'Tier Ouro'</span>
+        <span class="kw">WHEN</span> <span class="var">faturamento_total</span> &gt;= <span class="num">5000</span>  <span class="kw">THEN</span> <span class="str">'Tier Prata'</span>
+        <span class="kw">ELSE</span> <span class="str">'Tier Bronze'</span>
+    <span class="kw">END</span> <span class="kw">AS</span> <span class="var">segmento_cliente</span>
+<span class="kw">FROM</span>
+    <span class="var">ResumoPorCliente</span>
+<span class="kw">ORDER BY</span>
+    <span class="var">faturamento_total</span> <span class="kw">DESC</span>
+<span class="kw">LIMIT</span> <span class="num">50</span>;</code></pre>
+        </div>
+      </div>
+
+      <!-- Tab 2 -->
+      <div class="tab-panel" id="tab-2" role="tabpanel" aria-labelledby="tab-btn-2">
+        <p>Dashboard analítico de Recursos Humanos: ranking salarial por departamento via <code class="inline">DENSE_RANK()</code>, desvio salarial em relação à média departamental com <code class="inline">AVG() OVER()</code> e variação para o funcionário anterior com <code class="inline">LAG()</code>.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>dashboard_rh_window_functions.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">/*
+   DASHBOARD ANALÍTICO DE RH &amp; SALÁRIOS
+   Calcula hierarquias de remuneração, médias departamentais e dispersão
+*/</span>
+
+<span class="kw">WITH</span> <span class="var">EstatisticasSalariais</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        <span class="var">f</span>.<span class="var">id</span> <span class="kw">AS</span> <span class="var">funcionario_id</span>,
+        <span class="var">f</span>.<span class="var">nome</span> <span class="kw">AS</span> <span class="var">funcionario</span>,
+        <span class="var">f</span>.<span class="var">cargo</span>,
+        <span class="var">d</span>.<span class="var">nome</span> <span class="kw">AS</span> <span class="var">departamento</span>,
+        <span class="var">f</span>.<span class="var">salario</span>,
+        <span class="cmt">-- Ranking denso de remuneração dentro do departamento</span>
+        <span class="fn">DENSE_RANK</span>() <span class="kw">OVER</span> (
+            <span class="kw">PARTITION BY</span> <span class="var">f</span>.<span class="var">departamento_id</span>
+            <span class="kw">ORDER BY</span> <span class="var">f</span>.<span class="var">salario</span> <span class="kw">DESC</span>
+        ) <span class="kw">AS</span> <span class="var">rank_depto</span>,
+        <span class="cmt">-- Média salarial global daquele departamento</span>
+        <span class="fn">AVG</span>(<span class="var">f</span>.<span class="var">salario</span>) <span class="kw">OVER</span> (
+            <span class="kw">PARTITION BY</span> <span class="var">f</span>.<span class="var">departamento_id</span>
+        ) <span class="kw">AS</span> <span class="var">media_salarial_depto</span>,
+        <span class="cmt">-- Salário imediatamente anterior na ordem de remuneração</span>
+        <span class="fn">LAG</span>(<span class="var">f</span>.<span class="var">salario</span>) <span class="kw">OVER</span> (
+            <span class="kw">PARTITION BY</span> <span class="var">f</span>.<span class="var">departamento_id</span>
+            <span class="kw">ORDER BY</span> <span class="var">f</span>.<span class="var">salario</span> <span class="kw">DESC</span>
+        ) <span class="kw">AS</span> <span class="var">salario_degrau_acima</span>,
+        <span class="cmt">-- Total de colaboradores no departamento</span>
+        <span class="fn">COUNT</span>(*) <span class="kw">OVER</span> (
+            <span class="kw">PARTITION BY</span> <span class="var">f</span>.<span class="var">departamento_id</span>
+        ) <span class="kw">AS</span> <span class="var">total_funcionarios_depto</span>
+    <span class="kw">FROM</span>
+        <span class="var">funcionarios</span> <span class="var">f</span>
+    <span class="kw">INNER JOIN</span>
+        <span class="var">departamentos</span> <span class="var">d</span> <span class="kw">ON</span> <span class="var">f</span>.<span class="var">departamento_id</span> = <span class="var">d</span>.<span class="var">id</span>
+    <span class="kw">WHERE</span>
+        <span class="var">f</span>.<span class="var">ativo</span> = <span class="kw">TRUE</span>
+)
+<span class="kw">SELECT</span>
+    <span class="var">funcionario_id</span>,
+    <span class="var">funcionario</span>,
+    <span class="var">cargo</span>,
+    <span class="var">departamento</span>,
+    <span class="var">salario</span>,
+    <span class="var">rank_depto</span>,
+    <span class="fn">ROUND</span>(<span class="var">media_salarial_depto</span>, <span class="num">2</span>) <span class="kw">AS</span> <span class="var">media_depto</span>,
+    <span class="fn">ROUND</span>(<span class="var">salario</span> - <span class="var">media_salarial_depto</span>, <span class="num">2</span>) <span class="kw">AS</span> <span class="var">diferenca_para_media</span>,
+    <span class="fn">COALESCE</span>(<span class="fn">ROUND</span>(<span class="var">salario_degrau_acima</span> - <span class="var">salario</span>, <span class="num">2</span>), <span class="num">0.00</span>) <span class="kw">AS</span> <span class="var">distancia_para_topo</span>,
+    <span class="var">total_funcionarios_depto</span>
+<span class="kw">FROM</span>
+    <span class="var">EstatisticasSalariais</span>
+<span class="kw">ORDER BY</span>
+    <span class="var">departamento</span> <span class="kw">ASC</span>,
+    <span class="var">salario</span> <span class="kw">DESC</span>;</code></pre>
+        </div>
+      </div>
+
+      <!-- Tab 3 -->
+      <div class="tab-panel" id="tab-3" role="tabpanel" aria-labelledby="tab-btn-3">
+        <p>Modelagem relacional completa (DDL) para uma plataforma de e-commerce moderna com chaves primárias, chaves estrangeiras com integridade referencial, constraints avançadas, índices estratégicos e uma View analítica.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>schema_ecommerce.sql</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="cmt">-- 1. TABELA DE CATEGORIAS</span>
+<span class="kw">CREATE TABLE</span> <span class="var">categorias</span> (
+    <span class="var">id</span> <span class="typ">SERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">100</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">slug</span> <span class="typ">VARCHAR</span>(<span class="num">120</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">ativo</span> <span class="typ">BOOLEAN</span> <span class="kw">DEFAULT TRUE</span>,
+    <span class="var">criado_em</span> <span class="typ">TIMESTAMP WITH TIME ZONE</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="cmt">-- 2. TABELA DE PRODUTOS COM CONSTRAINTS E CHECK</span>
+<span class="kw">CREATE TABLE</span> <span class="var">produtos</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">categoria_id</span> <span class="typ">INT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">categorias</span>(<span class="var">id</span>) <span class="kw">ON DELETE RESTRICT</span>,
+    <span class="var">sku</span> <span class="typ">VARCHAR</span>(<span class="num">50</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">255</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">preco</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL CHECK</span> (<span class="var">preco</span> &gt;= <span class="num">0</span>),
+    <span class="var">custo_unitario</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL CHECK</span> (<span class="var">custo_unitario</span> &gt;= <span class="num">0</span>),
+    <span class="var">estoque</span> <span class="typ">INT</span> <span class="kw">NOT NULL DEFAULT</span> <span class="num">0</span> <span class="kw">CHECK</span> (<span class="var">estoque</span> &gt;= <span class="num">0</span>),
+    <span class="var">ativo</span> <span class="typ">BOOLEAN</span> <span class="kw">DEFAULT TRUE</span>,
+    <span class="var">criado_em</span> <span class="typ">TIMESTAMP WITH TIME ZONE</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="cmt">-- 3. TABELA DE CLIENTES</span>
+<span class="kw">CREATE TABLE</span> <span class="var">clientes</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">cpf_cnpj</span> <span class="typ">VARCHAR</span>(<span class="num">18</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">nome</span> <span class="typ">VARCHAR</span>(<span class="num">150</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">email</span> <span class="typ">VARCHAR</span>(<span class="num">255</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    <span class="var">estado</span> <span class="typ">CHAR</span>(<span class="num">2</span>) <span class="kw">NOT NULL</span>,
+    <span class="var">ativo</span> <span class="typ">BOOLEAN</span> <span class="kw">DEFAULT TRUE</span>,
+    <span class="var">criado_em</span> <span class="typ">TIMESTAMP WITH TIME ZONE</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="cmt">-- 4. TABELA DE PEDIDOS</span>
+<span class="kw">CREATE TABLE</span> <span class="var">pedidos</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">cliente_id</span> <span class="typ">BIGINT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">clientes</span>(<span class="var">id</span>) <span class="kw">ON DELETE CASCADE</span>,
+    <span class="var">data_pedido</span> <span class="typ">TIMESTAMP WITH TIME ZONE</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>,
+    <span class="var">status</span> <span class="typ">VARCHAR</span>(<span class="num">30</span>) <span class="kw">NOT NULL DEFAULT</span> <span class="str">'PENDENTE'</span>
+        <span class="kw">CHECK</span> (<span class="var">status</span> <span class="kw">IN</span> (<span class="str">'PENDENTE'</span>, <span class="str">'PAGO'</span>, <span class="str">'ENVIADO'</span>, <span class="str">'CONCLUIDO'</span>, <span class="str">'CANCELADO'</span>)),
+    <span class="var">valor_total</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL DEFAULT</span> <span class="num">0.00</span>
+);
+
+<span class="cmt">-- 5. TABELA DE ITENS DO PEDIDO (N:N)</span>
+<span class="kw">CREATE TABLE</span> <span class="var">itens_pedido</span> (
+    <span class="var">id</span> <span class="typ">BIGSERIAL</span> <span class="kw">PRIMARY KEY</span>,
+    <span class="var">pedido_id</span> <span class="typ">BIGINT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">pedidos</span>(<span class="var">id</span>) <span class="kw">ON DELETE CASCADE</span>,
+    <span class="var">produto_id</span> <span class="typ">BIGINT</span> <span class="kw">NOT NULL REFERENCES</span> <span class="var">produtos</span>(<span class="var">id</span>) <span class="kw">ON DELETE RESTRICT</span>,
+    <span class="var">quantidade</span> <span class="typ">INT</span> <span class="kw">NOT NULL CHECK</span> (<span class="var">quantidade</span> &gt; <span class="num">0</span>),
+    <span class="var">preco_unitario</span> <span class="typ">NUMERIC</span>(<span class="num">12</span>, <span class="num">2</span>) <span class="kw">NOT NULL CHECK</span> (<span class="var">preco_unitario</span> &gt;= <span class="num">0</span>),
+    <span class="kw">CONSTRAINT</span> <span class="var">uk_pedido_produto</span> <span class="kw">UNIQUE</span> (<span class="var">pedido_id</span>, <span class="var">produto_id</span>)
+);
+
+<span class="cmt">-- 6. ÍNDICES DE ALTA PERFORMANCE</span>
+<span class="kw">CREATE INDEX</span> <span class="var">idx_produtos_categoria</span> <span class="kw">ON</span> <span class="var">produtos</span> (<span class="var">categoria_id</span>);
+<span class="kw">CREATE INDEX</span> <span class="var">idx_pedidos_cliente_data</span> <span class="kw">ON</span> <span class="var">pedidos</span> (<span class="var">cliente_id</span>, <span class="var">data_pedido</span> <span class="kw">DESC</span>);
+<span class="kw">CREATE INDEX</span> <span class="var">idx_itens_pedido_produto</span> <span class="kw">ON</span> <span class="var">itens_pedido</span> (<span class="var">produto_id</span>);
+
+<span class="cmt">-- 7. VIEW ANALÍTICA PARA CONSULTA RÁPIDA DE VENDAS</span>
+<span class="kw">CREATE OR REPLACE VIEW</span> <span class="var">vw_resumo_pedidos_detalhados</span> <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+    <span class="var">p</span>.<span class="var">id</span> <span class="kw">AS</span> <span class="var">pedido_id</span>,
+    <span class="var">p</span>.<span class="var">data_pedido</span>,
+    <span class="var">p</span>.<span class="var">status</span>,
+    <span class="var">c</span>.<span class="var">id</span> <span class="kw">AS</span> <span class="var">cliente_id</span>,
+    <span class="var">c</span>.<span class="var">nome</span> <span class="kw">AS</span> <span class="var">cliente_nome</span>,
+    <span class="var">c</span>.<span class="var">email</span> <span class="kw">AS</span> <span class="var">cliente_email</span>,
+    <span class="fn">COUNT</span>(<span class="var">ip</span>.<span class="var">id</span>) <span class="kw">AS</span> <span class="var">total_linhas_itens</span>,
+    <span class="fn">SUM</span>(<span class="var">ip</span>.<span class="var">quantidade</span>) <span class="kw">AS</span> <span class="var">total_unidades</span>,
+    <span class="fn">SUM</span>(<span class="var">ip</span>.<span class="var">quantidade</span> * <span class="var">ip</span>.<span class="var">preco_unitario</span>) <span class="kw">AS</span> <span class="var">valor_calculado</span>
+<span class="kw">FROM</span>
+    <span class="var">pedidos</span> <span class="var">p</span>
+<span class="kw">INNER JOIN</span> <span class="var">clientes</span> <span class="var">c</span> <span class="kw">ON</span> <span class="var">p</span>.<span class="var">cliente_id</span> = <span class="var">c</span>.<span class="var">id</span>
+<span class="kw">LEFT JOIN</span> <span class="var">itens_pedido</span> <span class="var">ip</span> <span class="kw">ON</span> <span class="var">p</span>.<span class="var">id</span> = <span class="var">ip</span>.<span class="var">pedido_id</span>
+<span class="kw">GROUP BY</span>
+    <span class="var">p</span>.<span class="var">id</span>, <span class="var">p</span>.<span class="var">data_pedido</span>, <span class="var">p</span>.<span class="var">status</span>, <span class="var">c</span>.<span class="var">id</span>, <span class="var">c</span>.<span class="var">nome</span>, <span class="var">c</span>.<span class="var">email</span>;</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. MERCADO DE TRABALHO -->
+<section id="mercado">
+  <div class="container">
+    <div class="section-head">
+      <h2>Mercado de Trabalho</h2>
+      <p>A habilidade mais solicitada em vagas de dados e backend no Brasil e no mundo.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nível / Perfil</th>
+            <th>Faixa Salarial Mensal</th>
+            <th>Escopo de Atuação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Júnior / Analista</strong></td>
+            <td class="salary">R$ 3.500 – R$ 5.500</td>
+            <td>Consultas ad-hoc, filtros, joins simples, manutenção de views e relatórios analíticos.</td>
+          </tr>
+          <tr>
+            <td><strong>Pleno</strong></td>
+            <td class="salary">R$ 6.000 – R$ 10.000</td>
+            <td>Modelagem relacional, otimização com CTEs/Window Functions, criação de procedures e índices.</td>
+          </tr>
+          <tr>
+            <td><strong>Sênior / DBA / Lead</strong></td>
+            <td class="salary">R$ 12.000 – R$ 22.000+</td>
+            <td>Tuning fino de performance, particionamento de tabelas, replicação, alta disponibilidade e governança de dados.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="market-grid">
+      <div class="panel">
+        <h3>🏢 Empresas que demandam SQL em grande escala</h3>
+        <ul>
+          <li><strong>iFood</strong> — Roteamento, pedidos e billing</li>
+          <li><strong>Magazine Luiza</strong> — E-commerce e logística nacional</li>
+          <li><strong>Ambev</strong> — Logística, suprimentos e B2B</li>
+          <li><strong>Itaú Unibanco</strong> — Transações e regulação financeira</li>
+          <li><strong>Nubank</strong> — Ledger e conciliação contábil</li>
+          <li><strong>Mercado Livre</strong> &amp; Grandes Consultorias (Accenture, CI&amp;T)</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>💼 Papéis profissionais onde SQL é essencial</h3>
+        <ul>
+          <li><strong>Database Administrator (DBA)</strong> — Administração e tuning de SGBD</li>
+          <li><strong>Data Analyst</strong> — Geração de métricas e exploração de negócio</li>
+          <li><strong>Data Engineer</strong> — Pipelines e modelagem em Data Warehouses</li>
+          <li><strong>Back-end Developer</strong> — APIs, persistência e arquitetura de microsserviços</li>
+          <li><strong>Analytics Engineer</strong> — Transformações analíticas com dbt</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Valores médios para o mercado nacional de tecnologia (regime CLT/PJ equivalentes) em 2024/2025.</p>
+  </div>
+</section>
+
+<!-- 7. ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-head">
+      <h2>Roadmap de Aprendizagem</h2>
+      <p>Um caminho estruturado do zero à especialização em performance e arquitetura de dados.</p>
+    </div>
+
+    <div class="roadmap">
+      <div class="step">
+        <span class="num-badge">1</span>
+        <div class="phase">Fase 1</div>
+        <h3>Fundamentos</h3>
+        <ul>
+          <li>SELECT &amp; projeção</li>
+          <li>WHERE &amp; operadores lógicos</li>
+          <li>ORDER BY (ASC / DESC)</li>
+          <li>LIMIT &amp; OFFSET</li>
+          <li>Tipos de dados primitivos</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">2</span>
+        <div class="phase">Fase 2</div>
+        <h3>Relacionamentos</h3>
+        <ul>
+          <li>INNER &amp; LEFT JOINs</li>
+          <li>RIGHT &amp; FULL JOINs</li>
+          <li>GROUP BY &amp; HAVING</li>
+          <li>Funções COUNT, SUM, AVG</li>
+          <li>Modelagem relacional básica</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">3</span>
+        <div class="phase">Fase 3</div>
+        <h3>SQL Avançado</h3>
+        <ul>
+          <li>Subqueries correlacionadas</li>
+          <li>CTEs com cláusula WITH</li>
+          <li>Window Functions (OVER)</li>
+          <li>Índices B-Tree estratégicos</li>
+          <li>Views &amp; Constraints</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">4</span>
+        <div class="phase">Fase 4</div>
+        <h3>Performance &amp; SGBD</h3>
+        <ul>
+          <li>EXPLAIN ANALYZE</li>
+          <li>Particionamento de tabelas</li>
+          <li>Modelagem dimensional (3FN)</li>
+          <li>PostgreSQL ou MySQL a fundo</li>
+          <li>Transações ACID &amp; Locks</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. RECURSOS -->
+<section id="recursos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Recursos Recomendados</h2>
+      <p>Links e referências selecionadas para você aprofundar seu conhecimento prático em SQL.</p>
+    </div>
+
+    <div class="grid grid-3">
+      <a class="card resource" href="https://www.postgresql.org/docs/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🐘</div>
+        <h3>Documentação PostgreSQL</h3>
+        <p>A referência definitiva do banco relacional open-source mais avançado do mercado.</p>
+        <span class="link">postgresql.org/docs →</span>
+      </a>
+
+      <a class="card resource" href="https://dev.mysql.com/doc/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🐬</div>
+        <h3>Documentação MySQL</h3>
+        <p>Manual oficial do MySQL 8+, cobrindo recursos de otimização, índices e replicação.</p>
+        <span class="link">dev.mysql.com/doc →</span>
+      </a>
+
+      <a class="card resource" href="https://sqlzoo.net/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🦁</div>
+        <h3>SQLZoo</h3>
+        <p>Plataforma interativa gratuita com exercícios práticos para treinar consultas de todos os níveis.</p>
+        <span class="link">sqlzoo.net →</span>
+      </a>
+
+      <a class="card resource" href="https://mode.com/sql-tutorial/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">📊</div>
+        <h3>Mode Analytics SQL Tutorial</h3>
+        <p>Um dos melhores tutoriais práticos de SQL com foco em análise de dados e business intelligence.</p>
+        <span class="link">mode.com/sql-tutorial →</span>
+      </a>
+
+      <a class="card resource" href="https://www.oreilly.com/library/view/learning-sql-3rd/9781492057604/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">📖</div>
+        <h3>Livro "Learning SQL" (O'Reilly)</h3>
+        <p>De Alan Beaulieu. O livro de cabeceira para dominar os fundamentos e truques avançados do SQL.</p>
+        <span class="link">oreilly.com →</span>
+      </a>
+
+      <a class="card resource" href="https://pgexercises.com/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🎯</div>
+        <h3>PGExercises</h3>
+        <p>Bateria de desafios práticos progressivos baseados em um banco real no PostgreSQL.</p>
+        <span class="link">pgexercises.com →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p style="margin:0">© 2025 Ponce Metodologias &amp; Dev</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Accordion ---------- */
+  document.querySelectorAll('.acc-item').forEach(function (item) {
+    var btn = item.querySelector('.acc-btn');
+    var panel = item.querySelector('.acc-panel');
+    btn.addEventListener('click', function () {
+      var open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+    });
+  });
+
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.acc-item.open .acc-panel').forEach(function (p) {
+      p.style.maxHeight = p.scrollHeight + 'px';
+    });
+  });
+
+  /* ---------- Tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+  function activate(tab) {
+    tabs.forEach(function (t) {
+      var selected = t === tab;
+      t.setAttribute('aria-selected', selected ? 'true' : 'false');
+      t.tabIndex = selected ? 0 : -1;
+      var panelId = t.getAttribute('aria-controls');
+      var panel = document.getElementById(panelId);
+      if (panel) {
+        panel.classList.toggle('active', selected);
+      }
+    });
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { activate(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (next) { e.preventDefault(); activate(next); next.focus(); }
+    });
+  });
+
+  /* ---------- Copy button ---------- */
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.closest('.code-block').querySelector('code').textContent;
+      var done = function (ok) {
+        btn.textContent = ok ? 'Copiado!' : 'Falhou';
+        btn.classList.toggle('copied', ok);
+        setTimeout(function () {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 1800);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(
+          function () { done(true); },
+          function () { done(fallbackCopy(code)); }
+        );
+      } else {
+        done(fallbackCopy(code));
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

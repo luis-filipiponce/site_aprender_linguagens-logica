@@ -1,0 +1,97 @@
+{
+  "id": 6,
+  "slug": "operadores-expressoes",
+  "badge": "Módulo 6 · Operadores",
+  "nivel": "Iniciante",
+  "titulo": "Operadores e Avaliação de Expressões",
+  "subtitulo": "Aritméticos, relacionais, lógicos, precedência de operadores e uso de parênteses.",
+  "objetivo": "Dominar a avaliação rigorosa de expressões, respeitando a ordem de precedência e o uso de parênteses.",
+  "introducaoIntuitiva": "Em matemática básica, 2 + 3 * 4 não é 20, mas 14, porque a multiplicação tem prioridade.",
+  "explicacaoAprofundada": "Operadores combinam operandos para produzir um único valor: aritméticos (+, -, *, /, %), relacionais (==, !=, >, <, >=, <=) e lógicos (NÃO, E, OU).",
+  "exemplos": {
+    "basico": {
+      "titulo": "Operador Módulo (%)",
+      "descricao": "17 % 5 = 2. N % 2 == 0 identifica números pares."
+    },
+    "intermediario": {
+      "titulo": "Expressão Mista",
+      "descricao": "(10 + 2) > (4 * 3) -> 12 > 12 -> Falso."
+    },
+    "avancado": {
+      "titulo": "Curto-circuito",
+      "descricao": "Na expressão FALSO E f(), f() nem é avaliada."
+    }
+  },
+  "passoAPasso": [
+    "1. Resolver parênteses internos.",
+    "2. Multiplicações, divisões e restos.",
+    "3. Somas e subtrações.",
+    "4. Relacionais.",
+    "5. Lógicos."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Esquecer parênteses no cálculo de médias (a + b / 2)",
+      "correcao": "Use (a + b) / 2."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Uso explícito de parênteses para garantir clareza.",
+    "ruim": "Expressões longas confiando na precedência implícita."
+  },
+  "pseudocodigo": "teste <- (10 + 5 * 2) > 15 E (20 % 3 == 2)",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "5 * 2",
+      "estado": "10 + 10 > 15 E 20 % 3 == 2",
+      "obs": "Aritmética prioritária"
+    },
+    {
+      "passo": 2,
+      "acao": "20 > 15 E 2 == 2",
+      "estado": "VERDADEIRO E VERDADEIRO",
+      "obs": "Relacionais"
+    },
+    {
+      "passo": 3,
+      "acao": "Conjunção",
+      "estado": "Resultado = VERDADEIRO",
+      "obs": "Lógico"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex6_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Qual o resultado de: NÃO(4 + 2 == 6 OU 8 < 3)?",
+      "opcoes": [
+        "VERDADEIRO",
+        "FALSO",
+        "6",
+        "Indeterminado"
+      ],
+      "correta": 1,
+      "pista": "4+2==6 é V; V OU F resulta em V; NÃO(V) resulta em F.",
+      "justificativa": "A disjunção interna resulta em Verdadeiro. A negação externa NÃO(V) produz FALSO."
+    }
+  ],
+  "perguntasVerificacao": "Qual a ordem de precedência padrão entre operadores aritméticos, relacionais e lógicos?",
+  "keywordsIA": [
+    "operadores",
+    "precedencia",
+    "aritmetico",
+    "relacional",
+    "logico",
+    "parenteses",
+    "modulo"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "precedencia",
+      "erro": "Achar que contas são sempre feitas da esquerda para a direita",
+      "explicacao": "Operadores possuem hierarquia estrita."
+    }
+  ],
+  "explicacaoIdealIA": "Expressões são avaliadas respeitando precedência rígida: parênteses, aritméticos, relacionais e lógicos."
+}

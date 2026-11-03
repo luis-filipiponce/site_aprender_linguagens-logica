@@ -24,6 +24,7 @@
   --code-bg: #0a0e14;
   --success: #34d399;
   --header-h: 64px;
+  --subnav-h: 46px;
   --radius: 14px;
   --font: -apple-system, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: "Cascadia Code", "Fira Code", Consolas, "SF Mono", Menlo, monospace;
@@ -31,7 +32,7 @@
 
 /* ===== Reset ===== */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--subnav-h) + 16px); }
 body {
   margin: 0;
   font-family: var(--font);
@@ -139,13 +140,18 @@ section:nth-of-type(even) { background: var(--bg-alt); }
   position: sticky; top: var(--header-h); z-index: 50;
   background: rgba(17, 24, 35, 0.95); backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
-  overflow-x: auto; white-space: nowrap; text-align: center; padding: 0 16px;
+  display: flex; overflow-x: auto; white-space: nowrap; padding: 0 16px;
+  height: var(--subnav-h); scrollbar-width: none;
 }
+.subnav::-webkit-scrollbar { display: none; }
+.subnav a:first-child { margin-left: auto; }
+.subnav a:last-child { margin-right: auto; }
 .subnav a {
-  display: inline-block; padding: 12px 14px; font-size: .85rem; font-weight: 600; color: var(--muted);
+  flex: 0 0 auto; display: inline-flex; align-items: center; padding: 0 14px; font-size: .85rem; font-weight: 600; color: var(--muted);
   border-bottom: 2px solid transparent;
 }
 .subnav a:hover { color: var(--accent-light); border-bottom-color: var(--accent); text-decoration: none; }
+.subnav a.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ===== Timeline ===== */
 .timeline { position: relative; max-width: 780px; margin: 0 auto; padding-left: 36px; }
@@ -399,6 +405,7 @@ td.desc { color: var(--muted); font-size: .92rem; }
   <a href="#exemplos">Exemplos</a>
   <a href="#mercado">Mercado</a>
   <a href="#roadmap">Roadmap</a>
+  <a href="#typescript-nextjs">TypeScript &amp; Next.js</a>
   <a href="#recursos">Recursos</a>
 </nav>
 
@@ -679,6 +686,550 @@ botao.addEventListener(<span class="s">'click'</span>, <span class="k">async</sp
   <span class="k">const</span> { renderizar } = <span class="k">await</span> <span class="k">import</span>(<span class="s">'./grafico.js'</span>);
   <span class="f">renderizar</span>();
 });</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-7" id="acc-btn-7">
+          <span><span class="num">7</span>DOM — Document Object Model</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-7" role="region" aria-labelledby="acc-btn-7">
+          <div class="acc-inner">
+            <p>O <strong>DOM</strong> é a representação do HTML como uma <em>árvore de objetos</em> (nós) que o JavaScript pode ler e modificar. Tudo começa em <code>document</code>. Selecione com <code>querySelector</code>/<code>querySelectorAll</code>, crie nós com <code>createElement</code> e altere classes com <code>classList</code>. <strong>Segurança:</strong> prefira <code>textContent</code> a <code>innerHTML</code> ao exibir dados de usuários — <code>innerHTML</code> abre brecha para ataques XSS.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>dom.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c">// 1. Seleção de elementos</span>
+<span class="k">const</span> titulo = document.querySelector(<span class="s">'#titulo'</span>);          <span class="c">// primeiro que casar (ou null)</span>
+<span class="k">const</span> itens  = document.querySelectorAll(<span class="s">'.lista li'</span>);    <span class="c">// NodeList estática</span>
+
+<span class="c">// 2. Leitura e alteração de conteúdo, atributos e estilo</span>
+titulo.textContent = <span class="s">'Olá, DOM!'</span>;                 <span class="c">// seguro: trata como texto puro</span>
+titulo.setAttribute(<span class="s">'data-status'</span>, <span class="s">'ativo'</span>);
+titulo.classList.add(<span class="s">'destaque'</span>);                 <span class="c">// também: remove, toggle, contains</span>
+titulo.style.color = <span class="s">'tomato'</span>;
+<span class="f">console</span>.log(titulo.dataset.status);               <span class="c">// "ativo" (atributos data-*)</span>
+
+<span class="c">// 3. Criação e inserção de nós</span>
+<span class="k">const</span> lista = document.querySelector(<span class="s">'.lista'</span>);
+<span class="k">const</span> novo  = document.createElement(<span class="s">'li'</span>);
+novo.textContent = <span class="s">'Novo item'</span>;
+lista.append(novo);                                  <span class="c">// ao final</span>
+lista.prepend(<span class="s">'Primeiro'</span>);                         <span class="c">// ao início (aceita texto)</span>
+novo.after(document.createElement(<span class="s">'li'</span>));          <span class="c">// irmão seguinte</span>
+
+<span class="c">// 4. Navegação pela árvore</span>
+<span class="f">console</span>.log(lista.parentElement, lista.children, lista.firstElementChild);
+<span class="f">console</span>.log(novo.closest(<span class="s">'.lista'</span>));                  <span class="c">// ancestral mais próximo que casa</span>
+novo.remove();                                       <span class="c">// remove do DOM</span>
+
+<span class="c">// 5. Várias inserções de uma vez (evita reflow repetido)</span>
+<span class="k">const</span> frag = document.createDocumentFragment();
+[<span class="s">'A'</span>, <span class="s">'B'</span>, <span class="s">'C'</span>].forEach((t) =&gt; {
+  <span class="k">const</span> li = document.createElement(<span class="s">'li'</span>);
+  li.textContent = t;
+  frag.append(li);
+});
+lista.append(frag);</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-8" id="acc-btn-8">
+          <span><span class="num">8</span>Eventos &amp; Delegação</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-8" role="region" aria-labelledby="acc-btn-8">
+          <div class="acc-inner">
+            <p>Eventos conectam o usuário ao código (<code>click</code>, <code>input</code>, <code>submit</code>, <code>keydown</code>…). Um evento percorre <strong>captura → alvo → bubbling</strong> (sobe pelos ancestrais). Isso permite a <strong>delegação de eventos</strong>: um único listener no pai atende todos os filhos, inclusive os criados depois. Use <code>preventDefault()</code> para cancelar o comportamento padrão e <code>stopPropagation()</code> com parcimônia.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>eventos.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="k">const</span> form  = document.querySelector(<span class="s">'#form'</span>);
+<span class="k">const</span> lista = document.querySelector(<span class="s">'#tarefas'</span>);
+
+<span class="c">// Formulário: cancela o envio padrão e lê os dados</span>
+form.addEventListener(<span class="s">'submit'</span>, (e) =&gt; {
+  e.preventDefault();
+  <span class="k">const</span> dados = Object.fromEntries(<span class="k">new</span> FormData(form));
+  <span class="f">console</span>.log(dados);                       <span class="c">// { titulo: '...' }</span>
+});
+
+<span class="c">// Delegação: UM listener para todos os botões "remover", presentes e futuros</span>
+lista.addEventListener(<span class="s">'click'</span>, (e) =&gt; {
+  <span class="k">const</span> botao = e.target.closest(<span class="s">'button.remover'</span>);
+  <span class="k">if</span> (!botao || !lista.contains(botao)) <span class="k">return</span>;
+  botao.closest(<span class="s">'li'</span>).remove();
+});
+
+<span class="c">// Opções do listener: once (roda uma vez) e AbortController (remoção em lote)</span>
+<span class="k">const</span> ctrl = <span class="k">new</span> AbortController();
+window.addEventListener(<span class="s">'resize'</span>, () =&gt; <span class="f">console</span>.log(innerWidth), { signal: ctrl.signal });
+document.addEventListener(<span class="s">'keydown'</span>, (e) =&gt; {
+  <span class="k">if</span> (e.key === <span class="s">'Escape'</span>) ctrl.abort();    <span class="c">// remove os listeners ligados ao signal</span>
+});
+
+<span class="c">// Eventos personalizados</span>
+lista.addEventListener(<span class="s">'tarefa:criada'</span>, (e) =&gt; <span class="f">console</span>.log(e.detail));
+lista.dispatchEvent(<span class="k">new</span> CustomEvent(<span class="s">'tarefa:criada'</span>, { detail: { id: <span class="n">1</span> } }));
+
+<span class="c">// Rodar só quando o DOM estiver pronto (se o script não for type="module"/defer)</span>
+document.addEventListener(<span class="s">'DOMContentLoaded'</span>, () =&gt; <span class="f">console</span>.log(<span class="s">'DOM pronto'</span>));</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-9" id="acc-btn-9">
+          <span><span class="num">9</span>Web Storage &amp; JSON</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-9" role="region" aria-labelledby="acc-btn-9">
+          <div class="acc-inner">
+            <p><code>localStorage</code> persiste dados no navegador sem expirar; <code>sessionStorage</code> vale apenas para a aba aberta. Ambos guardam <strong>somente strings</strong>, por isso usamos <code>JSON.stringify</code>/<code>JSON.parse</code>. <strong>Segurança:</strong> nunca guarde senhas, tokens sensíveis ou dados pessoais no Web Storage — qualquer script da página consegue lê-lo.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>storage.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="k">const</span> CHAVE = <span class="s">'preferencias'</span>;
+
+<span class="k">function</span> <span class="f">salvar</span>(prefs) {
+  <span class="k">try</span> {
+    localStorage.setItem(CHAVE, JSON.stringify(prefs));
+  } <span class="k">catch</span> (erro) {
+    <span class="f">console</span>.warn(<span class="s">'Armazenamento indisponível ou cheio'</span>, erro.name); <span class="c">// QuotaExceededError</span>
+  }
+}
+
+<span class="k">function</span> <span class="f">carregar</span>() {
+  <span class="k">try</span> {
+    <span class="k">return</span> JSON.parse(localStorage.getItem(CHAVE)) ?? { tema: <span class="s">'claro'</span> };
+  } <span class="k">catch</span> {
+    <span class="k">return</span> { tema: <span class="s">'claro'</span> };                  <span class="c">// JSON corrompido → valor padrão</span>
+  }
+}
+
+<span class="f">salvar</span>({ tema: <span class="s">'escuro'</span>, fonte: <span class="n">16</span> });
+<span class="f">console</span>.log(<span class="f">carregar</span>().tema);                  <span class="c">// "escuro"</span>
+
+localStorage.removeItem(CHAVE);                    <span class="c">// remove uma chave</span>
+
+<span class="c">// Reage a mudanças feitas em OUTRAS abas</span>
+window.addEventListener(<span class="s">'storage'</span>, (e) =&gt; <span class="f">console</span>.log(e.key, e.newValue));</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-10" id="acc-btn-10">
+          <span><span class="num">10</span>Observers &amp; Web APIs</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-10" role="region" aria-labelledby="acc-btn-10">
+          <div class="acc-inner">
+            <p>O navegador oferece APIs além do DOM básico. <code>IntersectionObserver</code> detecta quando um elemento entra na tela (lazy loading, animações ao rolar) sem escutar <code>scroll</code>; <code>MutationObserver</code> observa mudanças no DOM; <code>ResizeObserver</code> reage a mudanças de tamanho. Também são úteis <code>URL</code>/<code>URLSearchParams</code>, <code>History API</code> e <code>requestAnimationFrame</code> para animações.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>web-apis.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c">// Lazy loading de imagens com IntersectionObserver</span>
+<span class="k">const</span> observador = <span class="k">new</span> IntersectionObserver((entradas, obs) =&gt; {
+  entradas.forEach((entrada) =&gt; {
+    <span class="k">if</span> (!entrada.isIntersecting) <span class="k">return</span>;
+    <span class="k">const</span> img = entrada.target;
+    img.src = img.dataset.src;          <span class="c">// carrega só quando visível</span>
+    obs.unobserve(img);
+  });
+}, { rootMargin: <span class="s">'200px'</span> });
+
+document.querySelectorAll(<span class="s">'img[data-src]'</span>).forEach((img) =&gt; observador.observe(img));
+
+<span class="c">// URL e parâmetros de consulta, sem concatenar strings</span>
+<span class="k">const</span> url = <span class="k">new</span> URL(<span class="s">'https://exemplo.com/busca'</span>);
+url.searchParams.set(<span class="s">'q'</span>, <span class="s">'javascript dom'</span>);
+<span class="f">console</span>.log(url.href);                         <span class="c">// https://exemplo.com/busca?q=javascript+dom</span>
+
+<span class="c">// Animação sincronizada com a taxa de atualização da tela</span>
+<span class="k">function</span> <span class="f">animar</span>(tempo) {
+  <span class="c">// ...atualizar posição com base em "tempo"...</span>
+  requestAnimationFrame(animar);
+}
+requestAnimationFrame(animar);
+
+<span class="c">// Debounce: evita disparar a cada tecla (busca, resize)</span>
+<span class="k">const</span> debounce = (fn, ms = <span class="n">300</span>) =&gt; {
+  <span class="k">let</span> t;
+  <span class="k">return</span> (...args) =&gt; { clearTimeout(t); t = <span class="f">setTimeout</span>(() =&gt; fn(...args), ms); };
+};
+document.querySelector(<span class="s">'#busca'</span>).addEventListener(<span class="s">'input'</span>, debounce((e) =&gt; <span class="f">console</span>.log(e.target.value)));</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-11" id="acc-btn-11">
+          <span><span class="num">11</span>Arrays: map, filter, reduce</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-11" role="region" aria-labelledby="acc-btn-11">
+          <div class="acc-inner">
+            <p>Os métodos de ordem superior transformam coleções sem laços manuais nem mutação: <code>map</code> (transforma), <code>filter</code> (seleciona), <code>reduce</code> (acumula), <code>find</code>/<code>some</code>/<code>every</code> (busca e testes). Combine-os em cadeia (<em>pipeline</em>). Atenção: <code>sort()</code>, <code>push()</code> e <code>splice()</code> <strong>mutam</strong> o array original — prefira <code>toSorted()</code>, <code>toSpliced()</code> ou uma cópia.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>arrays.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="k">const</span> produtos = [
+  { nome: <span class="s">'Notebook'</span>, preco: <span class="n">3500</span>, estoque: <span class="n">2</span> },
+  { nome: <span class="s">'Mouse'</span>,    preco: <span class="n">80</span>,   estoque: <span class="n">0</span> },
+  { nome: <span class="s">'Teclado'</span>,  preco: <span class="n">250</span>,  estoque: <span class="n">5</span> },
+];
+
+<span class="k">const</span> total = produtos
+  .filter((p) =&gt; p.estoque &gt; <span class="n">0</span>)                  <span class="c">// só disponíveis</span>
+  .map((p) =&gt; p.preco * <span class="n">0.85</span>)                   <span class="c">// 15% de desconto</span>
+  .reduce((soma, preco) =&gt; soma + preco, <span class="n">0</span>);    <span class="c">// total</span>
+<span class="f">console</span>.log(total.toFixed(<span class="n">2</span>));                    <span class="c">// "3187.50"</span>
+
+<span class="f">console</span>.log(produtos.find((p) =&gt; p.nome === <span class="s">'Mouse'</span>));
+<span class="f">console</span>.log(produtos.some((p) =&gt; p.estoque === <span class="n">0</span>));    <span class="c">// true</span>
+<span class="f">console</span>.log(produtos.every((p) =&gt; p.preco &gt; <span class="n">50</span>));    <span class="c">// true</span>
+
+<span class="c">// Ordenar uma CÓPIA, sem mutar o original</span>
+<span class="k">const</span> porPreco = [...produtos].sort((a, b) =&gt; a.preco - b.preco);
+<span class="k">const</span> nomes    = produtos.map(({ nome }) =&gt; nome);
+<span class="f">console</span>.log(porPreco[<span class="n">0</span>].nome, nomes);              <span class="c">// Mouse [ 'Notebook', 'Mouse', 'Teclado' ]</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-12" id="acc-btn-12">
+          <span><span class="num">12</span>Tipos, Coerção &amp; Igualdade</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-12" role="region" aria-labelledby="acc-btn-12">
+          <div class="acc-inner">
+            <p>JavaScript tem tipagem dinâmica e <strong>coerção implícita</strong>. Os tipos primitivos são <code>string</code>, <code>number</code>, <code>bigint</code>, <code>boolean</code>, <code>undefined</code>, <code>null</code> e <code>symbol</code>; o resto é objeto. Use sempre <code>===</code>/<code>!==</code> (sem coerção) e conheça os valores <em>falsy</em>: <code>false</code>, <code>0</code>, <code>''</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Para números decimais, lembre que <code>0.1 + 0.2 !== 0.3</code> (ponto flutuante IEEE 754).</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>tipos.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="f">console</span>.log(<span class="k">typeof</span> <span class="s">'a'</span>, <span class="k">typeof</span> <span class="n">1</span>, <span class="k">typeof</span> <span class="k">undefined</span>, <span class="k">typeof</span> <span class="k">null</span>); <span class="c">// string number undefined object (!)</span>
+<span class="f">console</span>.log(<span class="n">0</span> == <span class="s">''</span>, <span class="n">0</span> === <span class="s">''</span>);            <span class="c">// true false — prefira ===</span>
+<span class="f">console</span>.log(<span class="s">'5'</span> + <span class="n">1</span>, <span class="s">'5'</span> - <span class="n">1</span>);              <span class="c">// "51" 4 — + concatena, - converte</span>
+<span class="f">console</span>.log(Number(<span class="s">'abc'</span>), Number.isNaN(NaN)); <span class="c">// NaN true</span>
+<span class="f">console</span>.log(<span class="n">0.1</span> + <span class="n">0.2</span>);                    <span class="c">// 0.30000000000000004</span>
+<span class="f">console</span>.log(Math.abs(<span class="n">0.1</span> + <span class="n">0.2</span> - <span class="n">0.3</span>) &lt; Number.EPSILON); <span class="c">// true — compare com tolerância</span>
+
+<span class="c">// || trata "falsy" como ausente; ?? só trata null/undefined</span>
+<span class="k">const</span> quantidade = <span class="n">0</span>;
+<span class="f">console</span>.log(quantidade || <span class="n">10</span>, quantidade ?? <span class="n">10</span>);   <span class="c">// 10 0</span>
+
+<span class="c">// Objetos e arrays são copiados por REFERÊNCIA</span>
+<span class="k">const</span> a = [<span class="n">1</span>, <span class="n">2</span>];
+<span class="k">const</span> b = a;                  <span class="c">// mesma referência</span>
+<span class="k">const</span> c = structuredClone(a);   <span class="c">// cópia profunda independente</span>
+b.push(<span class="n">3</span>);
+<span class="f">console</span>.log(a, c);               <span class="c">// [1, 2, 3] [1, 2]</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-13" id="acc-btn-13">
+          <span><span class="num">13</span>A palavra-chave this</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-13" role="region" aria-labelledby="acc-btn-13">
+          <div class="acc-inner">
+            <p>O valor de <code>this</code> depende de <strong>como a função é chamada</strong>, não de onde foi escrita. Em métodos, aponta para o objeto; em chamadas soltas, é <code>undefined</code> (strict mode). <strong>Arrow functions</strong> não têm <code>this</code> próprio — herdam o do escopo externo. Para fixar o contexto, use <code>bind</code>, <code>call</code> ou <code>apply</code>.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>this.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="s">'use strict'</span>; <span class="c">// sem strict mode, "this" solto seria window em vez de undefined</span>
+
+<span class="k">const</span> pessoa = {
+  nome: <span class="s">'Ana'</span>,
+  falar() { <span class="k">return</span> <span class="s">`Oi, sou ${this.nome}`</span>; },          <span class="c">// this = pessoa</span>
+  falarArrow: () =&gt; <span class="k">typeof</span> <span class="k">this</span>,                       <span class="c">// this do escopo externo, NÃO pessoa</span>
+  falarDepois() {
+    <span class="f">setTimeout</span>(() =&gt; <span class="f">console</span>.log(<span class="k">this</span>.nome), <span class="n">100</span>); <span class="c">// arrow preserva this → "Ana"</span>
+  },
+};
+
+<span class="f">console</span>.log(pessoa.falar());             <span class="c">// "Oi, sou Ana"</span>
+
+<span class="k">const</span> solta = pessoa.falar;              <span class="c">// perdeu o contexto!</span>
+<span class="k">try</span> { <span class="f">solta</span>(); } <span class="k">catch</span> (e) { <span class="f">console</span>.log(e.name); } <span class="c">// TypeError (this é undefined)</span>
+
+<span class="k">const</span> presa = pessoa.falar.bind(pessoa);  <span class="c">// this fixo</span>
+<span class="f">console</span>.log(presa());                      <span class="c">// "Oi, sou Ana"</span>
+<span class="f">console</span>.log(pessoa.falar.call({ nome: <span class="s">'Beto'</span> })); <span class="c">// "Oi, sou Beto"</span>
+
+<span class="c">// Em listeners do DOM: função normal → this = elemento; arrow → use e.currentTarget</span>
+document.querySelector(<span class="s">'button'</span>).addEventListener(<span class="s">'click'</span>, <span class="k">function</span> () {
+  <span class="f">console</span>.log(<span class="k">this</span> === document.querySelector(<span class="s">'button'</span>)); <span class="c">// true</span>
+});</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-14" id="acc-btn-14">
+          <span><span class="num">14</span>Operadores Relacionais, Lógicos &amp; Ternário</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-14" role="region" aria-labelledby="acc-btn-14">
+          <div class="acc-inner">
+            <p>Os operadores relacionais (<code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>===</code>, <code>!==</code>) comparam valores. Os lógicos (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>, <code>??</code>) operam com curto-circuito (<em>short-circuit evaluation</em>). O <strong>operador ternário</strong> (<code>condição ? valorSeVerdadeiro : valorSeFalso</code>) é uma expressão condicional compacta ideal para retornos rápidos e renderização condicional.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>operadores.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c">// 1. Operadores Relacionais (sempre use === e !==)</span>
+<span class="k">const</span> idade = <span class="n">20</span>;
+<span class="k">const</span> maiorDeIdade = idade &gt;= <span class="n">18</span>; <span class="c">// true</span>
+<span class="k">const</span> ehIgual = (<span class="s">"10"</span> === <span class="n">10</span>);     <span class="c">// false (tipos diferentes: string vs number)</span>
+
+<span class="c">// 2. Operadores Lógicos e Curto-Circuito</span>
+<span class="k">const</span> temCarteira = <span class="k">true</span>;
+<span class="k">const</span> podeDirigir = maiorDeIdade &amp;&amp; temCarteira; <span class="c">// true (E lógico)</span>
+<span class="k">const</span> temAcesso = podeDirigir || <span class="k">false</span>;          <span class="c">// true (OU lógico)</span>
+<span class="k">const</span> bloqueado = !temAcesso;                   <span class="c">// false (NÃO lógico)</span>
+
+<span class="c">// Curto-circuito avalia apenas o necessário</span>
+<span class="k">const</span> usuario = { nome: <span class="s">"Carlos"</span> };
+usuario &amp;&amp; <span class="f">console</span>.log(<span class="s">`Usuário logado: ${usuario.nome}`</span>);
+
+<span class="c">// 3. Operador Ternário (condicao ? verdadeiro : falso)</span>
+<span class="k">const</span> status = idade &gt;= <span class="n">18</span> ? <span class="s">"Adulto"</span> : <span class="s">"Menor de idade"</span>;
+<span class="f">console</span>.log(status); <span class="c">// "Adulto"</span>
+
+<span class="c">// Ternários aninhados (use com moderação)</span>
+<span class="k">const</span> nota = <span class="n">85</span>;
+<span class="k">const</span> conceito = nota &gt;= <span class="n">90</span> ? <span class="s">"A"</span> : nota &gt;= <span class="n">70</span> ? <span class="s">"B"</span> : <span class="s">"C"</span>;
+<span class="f">console</span>.log(conceito); <span class="c">// "B"</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-15" id="acc-btn-15">
+          <span><span class="num">15</span>Condições &amp; Estruturas de Decisão</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-15" role="region" aria-labelledby="acc-btn-15">
+          <div class="acc-inner">
+            <p>Com <code>if</code>, <code>else if</code> e <code>else</code> você bifurca o fluxo de execução baseado em expressões booleanas. A estrutura <code>switch / case</code> compara valores com igualdade estrita (<code>===</code>) e é excelente para múltiplos estados discretos, inclusive permitindo avaliar expressões com <code>switch (true)</code>.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>condicoes.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c">// 1. if / else if / else</span>
+<span class="k">const</span> hora = <span class="n">14</span>;
+<span class="k">if</span> (hora &lt; <span class="n">12</span>) {
+  <span class="f">console</span>.log(<span class="s">"Bom dia!"</span>);
+} <span class="k">else if</span> (hora &lt; <span class="n">18</span>) {
+  <span class="f">console</span>.log(<span class="s">"Boa tarde!"</span>);
+} <span class="k">else</span> {
+  <span class="f">console</span>.log(<span class="s">"Boa noite!"</span>);
+}
+
+<span class="c">// 2. switch / case tradicional</span>
+<span class="k">const</span> perfil = <span class="s">"admin"</span>;
+<span class="k">switch</span> (perfil) {
+  <span class="k">case</span> <span class="s">"admin"</span>:
+    <span class="f">console</span>.log(<span class="s">"Acesso total concedido"</span>);
+    <span class="k">break</span>;
+  <span class="k">case</span> <span class="s">"editor"</span>:
+    <span class="f">console</span>.log(<span class="s">"Permissão para criar e editar"</span>);
+    <span class="k">break</span>;
+  <span class="k">case</span> <span class="s">"leitor"</span>:
+    <span class="f">console</span>.log(<span class="s">"Permissão apenas de leitura"</span>);
+    <span class="k">break</span>;
+  <span class="k">default</span>:
+    <span class="f">console</span>.log(<span class="s">"Perfil desconhecido"</span>);
+}
+
+<span class="c">// 3. Padrão switch (true) para faixas de valores</span>
+<span class="k">const</span> pontuacao = <span class="n">82</span>;
+<span class="k">switch</span> (<span class="k">true</span>) {
+  <span class="k">case</span> pontuacao &gt;= <span class="n">90</span>:
+    <span class="f">console</span>.log(<span class="s">"Excelente"</span>);
+    <span class="k">break</span>;
+  <span class="k">case</span> pontuacao &gt;= <span class="n">70</span>:
+    <span class="f">console</span>.log(<span class="s">"Aprovado"</span>);
+    <span class="k">break</span>;
+  <span class="k">default</span>:
+    <span class="f">console</span>.log(<span class="s">"Em recuperação"</span>);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-16" id="acc-btn-16">
+          <span><span class="num">16</span>Laços de Repetição (for, while, do-while, for-of)</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-16" role="region" aria-labelledby="acc-btn-16">
+          <div class="acc-inner">
+            <p>Laços iteram sobre blocos de código: <code>for</code> tradicional com contador, <code>while</code> (enquanto condição for verdadeira), <code>do...while</code> (executa ao menos uma vez antes do teste), <code>for...of</code> (percorre valores de iteráveis como Arrays, Maps e Sets) e <code>for...in</code> (percorre chaves enumeráveis de objetos). Use <code>break</code> para interromper e <code>continue</code> para pular para a próxima iteração.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>lacos.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c">// 1. for tradicional</span>
+<span class="k">for</span> (<span class="k">let</span> i = <span class="n">1</span>; i &lt;= <span class="n">3</span>; i++) {
+  <span class="f">console</span>.log(<span class="s">`Contador: ${i}`</span>);
+}
+
+<span class="c">// 2. while e do...while</span>
+<span class="k">let</span> vidas = <span class="n">3</span>;
+<span class="k">while</span> (vidas &gt; <span class="n">0</span>) {
+  <span class="f">console</span>.log(<span class="s">`Restam ${vidas} vidas`</span>);
+  vidas--;
+}
+
+<span class="k">let</span> tentativa = <span class="n">0</span>;
+<span class="k">do</span> {
+  tentativa++;
+  <span class="f">console</span>.log(<span class="s">`Tentativa executada: ${tentativa}`</span>);
+} <span class="k">while</span> (tentativa &lt; <span class="n">1</span>);
+
+<span class="c">// 3. for...of (iteráveis: Array, Set, Map, String)</span>
+<span class="k">const</span> linguagens = [<span class="s">"JavaScript"</span>, <span class="s">"Python"</span>, <span class="s">"Java"</span>];
+<span class="k">for</span> (<span class="k">const</span> lang <span class="k">of</span> linguagens) {
+  <span class="k">if</span> (lang === <span class="s">"Python"</span>) <span class="k">continue</span>; <span class="c">// pula iteração</span>
+  <span class="f">console</span>.log(<span class="s">`Linguagem: ${lang}`</span>);
+}
+
+<span class="c">// 4. for...in (chaves/propriedades de objetos)</span>
+<span class="k">const</span> config = { tema: <span class="s">"escuro"</span>, zoom: <span class="n">100</span>, debug: <span class="k">true</span> };
+<span class="k">for</span> (<span class="k">const</span> chave <span class="k">in</span> config) {
+  <span class="f">console</span>.log(<span class="s">`${chave}: ${config[chave]}`</span>);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-17" id="acc-btn-17">
+          <span><span class="num">17</span>Tratamento de Exceções (try, catch, finally, throw)</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-17" role="region" aria-labelledby="acc-btn-17">
+          <div class="acc-inner">
+            <p>O bloco <code>try...catch...finally</code> impede que exceções não tratadas travem a aplicação. Com <code>throw</code> você dispara exceções (nativas ou classes herdadas de <code>Error</code>), e o bloco <code>finally</code> sempre roda, garantindo liberação de recursos.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>excecoes.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c">// 1. Exceção customizada</span>
+<span class="k">class</span> <span class="f">ValidacaoError</span> <span class="k">extends</span> <span class="f">Error</span> {
+  <span class="k">constructor</span>(mensagem, campo) {
+    <span class="k">super</span>(mensagem);
+    <span class="k">this</span>.name = <span class="s">"ValidacaoError"</span>;
+    <span class="k">this</span>.campo = campo;
+  }
+}
+
+<span class="k">function</span> <span class="f">cadastrarUsuario</span>(dados) {
+  <span class="k">if</span> (!dados.email || !dados.email.includes(<span class="s">"@"</span>)) {
+    <span class="k">throw new</span> <span class="f">ValidacaoError</span>(<span class="s">"E-mail inválido"</span>, <span class="s">"email"</span>);
+  }
+  <span class="k">return</span> { id: <span class="n">1</span>, ...dados };
+}
+
+<span class="c">// 2. Captura e tratamento estruturado</span>
+<span class="k">try</span> {
+  <span class="k">const</span> novoUser = <span class="f">cadastrarUsuario</span>({ nome: <span class="s">"Ana"</span>, email: <span class="s">"invalido"</span> });
+  <span class="f">console</span>.log(novoUser);
+} <span class="k">catch</span> (erro) {
+  <span class="k">if</span> (erro <span class="k">instanceof</span> ValidacaoError) {
+    <span class="f">console</span>.error(<span class="s">`Erro no campo [${erro.campo}]: ${erro.message}`</span>);
+  } <span class="k">else</span> {
+    <span class="f">console</span>.error(<span class="s">"Erro inesperado:"</span>, erro.message);
+  }
+} <span class="k">finally</span> {
+  <span class="f">console</span>.log(<span class="s">"Operação concluída (limpeza de recursos)."</span>);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-18" id="acc-btn-18">
+          <span><span class="num">18</span>Wrappers &amp; Auto-Boxing em Tipos Primitivos</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-18" role="region" aria-labelledby="acc-btn-18">
+          <div class="acc-inner">
+            <p>Em JavaScript, primitivos (<code>string</code>, <code>number</code>, <code>boolean</code>, <code>symbol</code>, <code>bigint</code>) não são objetos. Porém, ao chamar métodos como <code>"texto".toUpperCase()</code> ou <code>(12.34).toFixed(1)</code>, a engine JS realiza temporariamente um <strong>auto-boxing</strong>, envolvendo o valor no objeto wrapper correspondente (<code>new String()</code>, <code>new Number()</code>) e descartando-o logo em seguida. Use as funções construtoras como conversores (ex: <code>String(123)</code>, <code>Number("42")</code>) e nunca com <code>new</code>.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>wrappers.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c">// 1. Primitivo vs Wrapper Object</span>
+<span class="k">const</span> primStr = <span class="s">"javascript"</span>;
+<span class="k">const</span> objStr  = <span class="k">new</span> String(<span class="s">"javascript"</span>); <span class="c">// Evite new String()!</span>
+
+<span class="f">console</span>.log(<span class="k">typeof</span> primStr); <span class="c">// "string"</span>
+<span class="f">console</span>.log(<span class="k">typeof</span> objStr);  <span class="c">// "object"</span>
+<span class="f">console</span>.log(primStr === objStr); <span class="c">// false</span>
+
+<span class="c">// 2. Auto-boxing em ação</span>
+<span class="c">// Ao acessar propriedades, o JS cria o wrapper temporário:</span>
+<span class="f">console</span>.log(primStr.length);          <span class="c">// 10</span>
+<span class="f">console</span>.log(primStr.toUpperCase());   <span class="c">// "JAVASCRIPT"</span>
+
+<span class="c">// 3. Unboxing explícito com .valueOf()</span>
+<span class="k">const</span> primitivo = objStr.valueOf();
+<span class="f">console</span>.log(<span class="k">typeof</span> primitivo); <span class="c">// "string"</span>
+
+<span class="c">// 4. Uso correto de Wrappers como funções de conversão</span>
+<span class="k">const</span> num = Number(<span class="s">"123"</span>);      <span class="c">// 123 (number primitivo)</span>
+<span class="k">const</span> str = String(<span class="k">true</span>);       <span class="c">// "true" (string primitivo)</span>
+<span class="k">const</span> bool = Boolean(<span class="n">1</span>);        <span class="c">// true (boolean primitivo)</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" aria-expanded="false" aria-controls="acc-19" id="acc-btn-19">
+          <span><span class="num">19</span>Classes, Abstração &amp; Métodos em JS</span><span class="chev">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-19" role="region" aria-labelledby="acc-btn-19">
+          <div class="acc-inner">
+            <p>O JavaScript oferece suporte a Classes com construtores (<code>constructor</code>), métodos de instância, métodos estáticos (<code>static</code>), getters/setters e <strong>campos privados reais</strong> com o prefixo <code>#</code>. A <strong>abstração</strong> é alcançada por contratos de classes base que impedem instanciação direta ou forçam subclasses a implementar métodos específicos.</p>
+            <div class="code-wrap">
+              <div class="code-bar"><span>classes_abstracao.js</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c">// Classe base abstrata</span>
+<span class="k">class</span> <span class="f">FormaGeometrica</span> {
+  <span class="k">constructor</span>(nome) {
+    <span class="k">if</span> (<span class="k">new</span>.target === FormaGeometrica) {
+      <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">"Classe abstrata não pode ser instanciada diretamente!"</span>);
+    }
+    <span class="k">this</span>.nome = nome;
+  }
+
+  <span class="c">// Método abstrato que DEVE ser implementado pelas subclasses</span>
+  <span class="f">calcularArea</span>() {
+    <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">"Método abstrato calcularArea() deve ser implementado!"</span>);
+  }
+
+  <span class="c">// Método de instância compartilhado</span>
+  <span class="f">descrever</span>() {
+    <span class="k">return</span> <span class="s">`${this.nome} com área de ${this.calcularArea().toFixed(2)} cm²`</span>;
+  }
+}
+
+<span class="c">// Subclasse concreta com encapsulamento privado (#)</span>
+<span class="k">class</span> <span class="f">Circulo</span> <span class="k">extends</span> <span class="f">FormaGeometrica</span> {
+  #raio; <span class="c">// Campo estritamente privado</span>
+
+  <span class="k">constructor</span>(raio) {
+    <span class="k">super</span>(<span class="s">"Círculo"</span>);
+    <span class="k">this</span>.#raio = raio;
+  }
+
+  <span class="c">// Implementação do método abstrato</span>
+  <span class="f">calcularArea</span>() {
+    <span class="k">return</span> Math.PI * (<span class="k">this</span>.#raio ** <span class="n">2</span>);
+  }
+
+  <span class="c">// Método estático utilitário</span>
+  <span class="k">static</span> <span class="f">criarComDiametro</span>(diametro) {
+    <span class="k">return new</span> <span class="f">Circulo</span>(diametro / <span class="n">2</span>);
+  }
+}
+
+<span class="k">const</span> c1 = Circulo.criarComDiametro(<span class="n">10</span>);
+<span class="f">console</span>.log(c1.descrever()); <span class="c">// "Círculo com área de 78.54 cm²"</span></code></pre>
             </div>
           </div>
         </div>
@@ -1004,9 +1555,10 @@ app.listen(PORTA, () =&gt; <span class="f">console</span>.log(<span class="s">`A
         <h3>JS no Navegador</h3>
         <span class="time">≈ 2–3 meses</span>
         <ul>
-          <li>DOM e seletores</li>
-          <li>Eventos</li>
-          <li>Fetch API e JSON</li>
+          <li>DOM: seletores, criação e manipulação de nós</li>
+          <li>Eventos, bubbling e delegação</li>
+          <li>Web Storage (localStorage) e JSON</li>
+          <li>Fetch API e tratamento de erros</li>
           <li>ES6+ (módulos, destructuring)</li>
           <li>Promises e async/await</li>
         </ul>
@@ -1039,6 +1591,152 @@ app.listen(PORTA, () =&gt; <span class="f">console</span>.log(<span class="s">`A
   </div>
 </section>
 
+<!-- ===== 7B. TYPESCRIPT & NEXT.JS (NOVA SEÇÃO) ===== -->
+<section id="typescript-nextjs" style="background: linear-gradient(135deg, #0a1628 0%, #0f1f3d 100%); padding: 5rem 0;">
+  <div class="container">
+    <div class="section-head" style="text-align:center; margin-bottom: 3rem;">
+      <span class="eyebrow" style="color:#3b82f6;">Evolução Natural do JS</span>
+      <h2 style="color:#e2e8f0;">TypeScript, Next.js &amp; <span style="color:#3b82f6;">Ecossistema Moderno</span></h2>
+      <p style="color:#94a3b8; max-width:640px; margin: 0 auto 1.5rem;">Depois de dominar JavaScript, o próximo passo é TypeScript + Next.js. Estas são as tecnologias mais demandadas no mercado front-end e full-stack em 2024–2025.</p>
+    </div>
+
+    <!-- TypeScript Card -->
+    <div style="background: rgba(49,120,198,0.1); border: 1px solid rgba(49,120,198,0.3); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem;">
+      <div style="display:flex; align-items:center; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <span style="font-size:2rem;">🔷</span>
+        <div>
+          <h3 style="color:#93c5fd; margin:0; font-size:1.3rem;">TypeScript — Tipagem Estática para JS</h3>
+          <p style="color:#64748b; margin:0; font-size:0.85rem;">Superset de JavaScript criado pela Microsoft. Todo JS válido é TypeScript válido.</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div>
+          <h4 style="color:#e2e8f0; font-size:0.9rem; margin:0 0 0.75rem; text-transform:uppercase; letter-spacing:0.05em;">✅ Por que usar TypeScript?</h4>
+          <ul style="color:#94a3b8; font-size:0.88rem; line-height:1.7; padding-left:1.1rem;">
+            <li>Erros de tipo detectados antes de rodar o código</li>
+            <li>Autocomplete inteligente no VS Code (IntelliSense)</li>
+            <li>Documentação viva embutida no código</li>
+            <li>Refatoração segura em projetos grandes</li>
+            <li>Obrigatório na maioria das vagas JS em 2024+</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color:#e2e8f0; font-size:0.9rem; margin:0 0 0.75rem; text-transform:uppercase; letter-spacing:0.05em;">🔑 Conceitos Fundamentais</h4>
+          <ul style="color:#94a3b8; font-size:0.88rem; line-height:1.7; padding-left:1.1rem;">
+            <li><strong style="color:#93c5fd;">Interfaces &amp; Types</strong> — contratos de estrutura</li>
+            <li><strong style="color:#93c5fd;">Generics &lt;T&gt;</strong> — funções/classes reutilizáveis</li>
+            <li><strong style="color:#93c5fd;">Union Types</strong> — <code style="background:rgba(99,102,241,0.2);padding:1px 5px;border-radius:4px;">string | number | null</code></li>
+            <li><strong style="color:#93c5fd;">Utility Types</strong> — Partial, Required, Pick, Omit</li>
+            <li><strong style="color:#93c5fd;">Enums &amp; Literal Types</strong> — valores fixos tipados</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem; background:#050d1a; border-radius:10px; overflow:hidden;">
+        <div style="background:#0d1b2e; padding:0.6rem 1rem; font-family:monospace; font-size:0.78rem; color:#64748b; border-bottom:1px solid #1a2a40;">TypeScript 5.x — Generics &amp; Utility Types</div>
+        <pre style="margin:0; padding:1.25rem; font-family:'Fira Code','Cascadia Code',monospace; font-size:0.84rem; line-height:1.8; color:#e2e8f0; overflow-x:auto;"><code><span style="color:#94a3b8;">// Interface com Generics</span>
+<span style="color:#c084fc;">interface</span> <span style="color:#67e8f9;">ApiResponse</span>&lt;<span style="color:#67e8f9;">T</span>&gt; {
+  <span style="color:#e2e8f0;">data</span>: <span style="color:#67e8f9;">T</span>;
+  <span style="color:#e2e8f0;">status</span>: <span style="color:#fb923c;">number</span>;
+  <span style="color:#e2e8f0;">message</span>: <span style="color:#fb923c;">string</span>;
+}
+
+<span style="color:#94a3b8;">// Union Type + Literal Type</span>
+<span style="color:#c084fc;">type</span> <span style="color:#67e8f9;">Perfil</span> = <span style="color:#86efac;">"admin"</span> | <span style="color:#86efac;">"editor"</span> | <span style="color:#86efac;">"leitor"</span>;
+
+<span style="color:#94a3b8;">// Utility Types: Partial + Omit</span>
+<span style="color:#c084fc;">type</span> <span style="color:#67e8f9;">Usuario</span> = { id: <span style="color:#fb923c;">number</span>; nome: <span style="color:#fb923c;">string</span>; perfil: <span style="color:#67e8f9;">Perfil</span> };
+<span style="color:#c084fc;">type</span> <span style="color:#67e8f9;">CriarUsuario</span> = <span style="color:#67e8f9;">Omit</span>&lt;<span style="color:#67e8f9;">Usuario</span>, <span style="color:#86efac;">"id"</span>&gt;;
+<span style="color:#c084fc;">type</span> <span style="color:#67e8f9;">AtualizarUsuario</span> = <span style="color:#67e8f9;">Partial</span>&lt;<span style="color:#67e8f9;">CriarUsuario</span>&gt;;
+
+<span style="color:#94a3b8;">// Função genérica tipada</span>
+<span style="color:#c084fc;">async function</span> <span style="color:#67e8f9;">buscar</span>&lt;<span style="color:#67e8f9;">T</span>&gt;(<span style="color:#e2e8f0;">url</span>: <span style="color:#fb923c;">string</span>): <span style="color:#fb923c;">Promise</span>&lt;<span style="color:#67e8f9;">ApiResponse</span>&lt;<span style="color:#67e8f9;">T</span>&gt;&gt; {
+  <span style="color:#c084fc;">const</span> <span style="color:#e2e8f0;">res</span> = <span style="color:#c084fc;">await</span> <span style="color:#67e8f9;">fetch</span>(<span style="color:#e2e8f0;">url</span>);
+  <span style="color:#c084fc;">if</span> (!<span style="color:#e2e8f0;">res</span>.ok) <span style="color:#c084fc;">throw new</span> <span style="color:#fb923c;">Error</span>(<span style="color:#e2e8f0;">res</span>.statusText);
+  <span style="color:#c084fc;">return</span> <span style="color:#e2e8f0;">res</span>.<span style="color:#67e8f9;">json</span>();
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Next.js Card -->
+    <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(99,102,241,0.3); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem;">
+      <div style="display:flex; align-items:center; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <span style="font-size:2rem;">▲</span>
+        <div>
+          <h3 style="color:#c4b5fd; margin:0; font-size:1.3rem;">Next.js 14 — React Full-Stack com App Router</h3>
+          <p style="color:#64748b; margin:0; font-size:0.85rem;">O framework React mais popular. Server Components, SSR, SSG, ISR e API Routes em um só lugar.</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(99,102,241,0.2); border-radius:10px; padding:1rem;">
+          <h4 style="color:#a5b4fc; font-size:0.85rem; margin:0 0 0.5rem;">🖥️ Server Components</h4>
+          <p style="color:#64748b; font-size:0.82rem; margin:0; line-height:1.6;">Componentes que rodam no servidor — sem JS no cliente, acesso direto ao banco, melhor SEO e performance.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(99,102,241,0.2); border-radius:10px; padding:1rem;">
+          <h4 style="color:#a5b4fc; font-size:0.85rem; margin:0 0 0.5rem;">⚡ Server Actions</h4>
+          <p style="color:#64748b; font-size:0.82rem; margin:0; line-height:1.6;">Funções assíncronas que rodam no servidor invocadas diretamente do cliente — mutations sem API REST.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(99,102,241,0.2); border-radius:10px; padding:1rem;">
+          <h4 style="color:#a5b4fc; font-size:0.85rem; margin:0 0 0.5rem;">🔄 Rendering Strategies</h4>
+          <p style="color:#64748b; font-size:0.82rem; margin:0; line-height:1.6;"><strong style="color:#a5b4fc;">SSR</strong> por req, <strong style="color:#a5b4fc;">SSG</strong> no build, <strong style="color:#a5b4fc;">ISR</strong> com revalidação periódica.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testes Card -->
+    <div style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.25); border-radius: 16px; padding: 2rem;">
+      <h3 style="color:#6ee7b7; margin:0 0 1rem; font-size:1.2rem;">🧪 Testes em JavaScript/TypeScript — Jest, Vitest e Playwright</h3>
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+        <div>
+          <h4 style="color:#34d399; font-size:0.88rem; margin:0 0 0.5rem;">Unit Tests — Vitest</h4>
+          <ul style="color:#94a3b8; font-size:0.82rem; padding-left:1rem; line-height:1.65; margin:0;">
+            <li>Isola funções e módulos</li>
+            <li>Mocking nativo com <code style="color:#67e8f9;">vi.fn()</code></li>
+            <li>Cobertura com V8/Istanbul</li>
+            <li>Watch mode instantâneo</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color:#34d399; font-size:0.88rem; margin:0 0 0.5rem;">Integration Tests — Supertest</h4>
+          <ul style="color:#94a3b8; font-size:0.82rem; padding-left:1rem; line-height:1.65; margin:0;">
+            <li>Testa rotas HTTP completas</li>
+            <li>Banco de dados real (test env)</li>
+            <li>Fixtures e factories</li>
+            <li>Requests simuladas</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color:#34d399; font-size:0.88rem; margin:0 0 0.5rem;">E2E Tests — Playwright</h4>
+          <ul style="color:#94a3b8; font-size:0.82rem; padding-left:1rem; line-height:1.65; margin:0;">
+            <li>Simula browser real</li>
+            <li>Multi-browser (Chrome, Firefox, Safari)</li>
+            <li>Screenshots e traces</li>
+            <li>Testes de acessibilidade</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem; background:#050d1a; border-radius:10px; overflow:hidden;">
+        <div style="background:#0a130f; padding:0.6rem 1rem; font-family:monospace; font-size:0.78rem; color:#64748b; border-bottom:1px solid #16261d;">Vitest — Teste Unitário Completo</div>
+        <pre style="margin:0; padding:1.25rem; font-family:'Fira Code','Cascadia Code',monospace; font-size:0.84rem; line-height:1.8; color:#e2e8f0; overflow-x:auto;"><code><span style="color:#94a3b8;">// soma.test.ts</span>
+<span style="color:#c084fc;">import</span> { <span style="color:#e2e8f0;">describe</span>, <span style="color:#e2e8f0;">it</span>, <span style="color:#e2e8f0;">expect</span>, <span style="color:#e2e8f0;">beforeEach</span> } <span style="color:#c084fc;">from</span> <span style="color:#86efac;">"vitest"</span>;
+<span style="color:#c084fc;">import</span> { <span style="color:#e2e8f0;">Calculadora</span> } <span style="color:#c084fc;">from</span> <span style="color:#86efac;">"./calculadora"</span>;
+
+<span style="color:#e2e8f0;">describe</span>(<span style="color:#86efac;">"Calculadora"</span>, () => {
+  <span style="color:#c084fc;">let</span> <span style="color:#e2e8f0;">calc</span>: <span style="color:#67e8f9;">Calculadora</span>;
+
+  <span style="color:#e2e8f0;">beforeEach</span>(() => { <span style="color:#e2e8f0;">calc</span> = <span style="color:#c084fc;">new</span> <span style="color:#67e8f9;">Calculadora</span>(); });
+
+  <span style="color:#e2e8f0;">it</span>(<span style="color:#86efac;">"soma dois positivos"</span>, () => {
+    <span style="color:#e2e8f0;">expect</span>(<span style="color:#e2e8f0;">calc</span>.<span style="color:#67e8f9;">somar</span>(<span style="color:#fbbf24;">3</span>, <span style="color:#fbbf24;">4</span>)).<span style="color:#67e8f9;">toBe</span>(<span style="color:#fbbf24;">7</span>);
+  });
+  <span style="color:#e2e8f0;">it</span>(<span style="color:#86efac;">"lança erro ao dividir por zero"</span>, () => {
+    <span style="color:#e2e8f0;">expect</span>(() => <span style="color:#e2e8f0;">calc</span>.<span style="color:#67e8f9;">dividir</span>(<span style="color:#fbbf24;">10</span>, <span style="color:#fbbf24;">0</span>)).<span style="color:#67e8f9;">toThrow</span>(<span style="color:#86efac;">"Divisão por zero"</span>);
+  });
+});</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== 8. RECURSOS ===== -->
 <section id="recursos">
   <div class="container">
@@ -1051,6 +1749,10 @@ app.listen(PORTA, () =&gt; <span class="f">console</span>.log(<span class="s">`A
       <a class="res" href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer">
         <div class="r-icon">📘</div>
         <div><h3>MDN Web Docs</h3><p>A documentação de referência definitiva para JavaScript e APIs web, em português.</p><span class="kind">Documentação</span></div>
+      </a>
+      <a class="res" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Document_Object_Model/Introduction" target="_blank" rel="noopener noreferrer">
+        <div class="r-icon">🌳</div>
+        <div><h3>Introdução ao DOM (MDN)</h3><p>Guia oficial sobre a árvore de nós, seletores, eventos e manipulação de elementos.</p><span class="kind">Documentação</span></div>
       </a>
       <a class="res" href="https://javascript.info/" target="_blank" rel="noopener noreferrer">
         <div class="r-icon">🎯</div>
@@ -1132,6 +1834,47 @@ app.listen(PORTA, () =&gt; <span class="f">console</span>.log(<span class="s">`A
       if (next) { e.preventDefault(); next.focus(); activateTab(next); }
     });
   });
+
+  /* ---------- Navegação rápida: destaque da seção atual ---------- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.subnav a'));
+  var navSections = navLinks.map(function (a) {
+    return document.getElementById(a.getAttribute('href').slice(1));
+  });
+
+  function updateNav() {
+    var header = document.querySelector('.site-header').offsetHeight;
+    var subnav = document.querySelector('.subnav').offsetHeight;
+    var offset = header + subnav + 24;
+    var current = -1;
+    navSections.forEach(function (sec, i) {
+      if (sec && sec.getBoundingClientRect().top <= offset) current = i;
+    });
+    // chegou ao fim da página: marca a última seção
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+      current = navSections.length - 1;
+    }
+    navLinks.forEach(function (a, i) {
+      var on = i === current;
+      a.classList.toggle('active', on);
+      if (on) {
+        a.setAttribute('aria-current', 'true');
+        var bar = a.parentNode;
+        var target = a.offsetLeft - (bar.clientWidth - a.offsetWidth) / 2;
+        if (bar.scrollWidth > bar.clientWidth) bar.scrollLeft = target;
+      } else {
+        a.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  var navTicking = false;
+  window.addEventListener('scroll', function () {
+    if (navTicking) return;
+    navTicking = true;
+    window.requestAnimationFrame(function () { updateNav(); navTicking = false; });
+  }, { passive: true });
+  window.addEventListener('resize', updateNav);
+  updateNav();
 
   /* ---------- Copy buttons ---------- */
   function fallbackCopy(text) {

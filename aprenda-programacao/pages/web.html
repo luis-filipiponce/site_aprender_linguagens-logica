@@ -145,6 +145,52 @@
     .then(<span class="var">r</span> => <span class="var">r</span>.json())
     .then(<span class="var">dados</span> => <span class="fn">renderizarProdutos</span>(<span class="var">dados</span>))
     .catch(<span class="var">err</span> => <span class="fn">console</span>.error(<span class="str">"Erro:"</span>, <span class="var">err</span>));</div>
+
+    <h3>DOM: Árvore, Eventos e Delegação</h3>
+    <p>O <strong>DOM</strong> (Document Object Model) é a representação do HTML como uma árvore de objetos que o JavaScript pode ler e alterar. Eventos "sobem" pelos ancestrais (<em>bubbling</em>), o que permite a <strong>delegação de eventos</strong>: um único listener no elemento pai atende todos os filhos, inclusive os criados depois.</p>
+    <div class="code-block"><span class="cmt">// Seleção, classes e atributos</span>
+<span class="kw">const</span> <span class="var">lista</span> = document.<span class="fn">querySelector</span>(<span class="str">"#tarefas"</span>);
+<span class="kw">const</span> <span class="var">itens</span> = document.<span class="fn">querySelectorAll</span>(<span class="str">"#tarefas li"</span>);
+<span class="var">lista</span>.classList.<span class="fn">toggle</span>(<span class="str">"destaque"</span>);
+<span class="var">lista</span>.dataset.total = <span class="var">itens</span>.length;   <span class="cmt">// atributo data-total</span>
+
+<span class="cmt">// Delegação de eventos: 1 listener para todos os botões "remover"</span>
+<span class="var">lista</span>.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, (<span class="var">e</span>) => {
+    <span class="kw">const</span> <span class="var">btn</span> = <span class="var">e</span>.target.<span class="fn">closest</span>(<span class="str">"button.remover"</span>);
+    <span class="kw">if</span> (<span class="var">btn</span>) <span class="var">btn</span>.<span class="fn">closest</span>(<span class="str">"li"</span>).<span class="fn">remove</span>();
+});
+
+<span class="cmt">// Formulário: cancelar o envio padrão e ler os campos</span>
+document.<span class="fn">querySelector</span>(<span class="str">"#form"</span>).<span class="fn">addEventListener</span>(<span class="str">"submit"</span>, (<span class="var">e</span>) => {
+    <span class="var">e</span>.<span class="fn">preventDefault</span>();
+    <span class="kw">const</span> <span class="var">dados</span> = Object.<span class="fn">fromEntries</span>(<span class="kw">new</span> FormData(<span class="var">e</span>.target));
+    <span class="fn">console</span>.log(<span class="var">dados</span>);
+});
+
+<span class="cmt">// Segurança: textContent trata como texto; innerHTML interpreta HTML (risco de XSS)</span>
+<span class="var">lista</span>.<span class="fn">append</span>(Object.assign(document.<span class="fn">createElement</span>(<span class="str">"li"</span>), { textContent: entradaDoUsuario }));</div>
+
+    <h3>Web Storage e JSON</h3>
+    <p><code>localStorage</code> persiste dados no navegador; <code>sessionStorage</code> vale só para a aba. Guardam apenas strings, por isso usamos JSON. <strong>Nunca</strong> armazene senhas ou tokens sensíveis — qualquer script da página consegue lê-los.</p>
+    <div class="code-block"><span class="cmt">// Salvar e carregar preferências com tratamento de erro</span>
+localStorage.<span class="fn">setItem</span>(<span class="str">"prefs"</span>, JSON.<span class="fn">stringify</span>({ tema: <span class="str">"escuro"</span> }));
+
+<span class="kw">function</span> <span class="fn">carregarPrefs</span>() {
+    <span class="kw">try</span> {
+        <span class="kw">return</span> JSON.<span class="fn">parse</span>(localStorage.<span class="fn">getItem</span>(<span class="str">"prefs"</span>)) ?? { tema: <span class="str">"claro"</span> };
+    } <span class="kw">catch</span> {
+        <span class="kw">return</span> { tema: <span class="str">"claro"</span> };   <span class="cmt">// JSON inválido → valor padrão</span>
+    }
+}
+
+<span class="cmt">// IntersectionObserver: carregar imagens só quando ficam visíveis</span>
+<span class="kw">const</span> <span class="var">obs</span> = <span class="kw">new</span> IntersectionObserver((<span class="var">entradas</span>) => {
+    <span class="var">entradas</span>.<span class="fn">forEach</span>((<span class="var">en</span>) => {
+        <span class="kw">if</span> (<span class="var">en</span>.isIntersecting) { <span class="var">en</span>.target.src = <span class="var">en</span>.target.dataset.src; <span class="var">obs</span>.<span class="fn">unobserve</span>(<span class="var">en</span>.target); }
+    });
+});
+document.<span class="fn">querySelectorAll</span>(<span class="str">"img[data-src]"</span>).<span class="fn">forEach</span>((<span class="var">img</span>) => <span class="var">obs</span>.<span class="fn">observe</span>(<span class="var">img</span>));</div>
+
   </div>
 
   <!-- BACK-END -->
@@ -198,14 +244,208 @@
   <div class="section" id="mobile">
     <div class="section-title"><div class="num-badge num-blue">4</div><h2>Desenvolvimento Mobile</h2></div>
     <div class="card-grid">
-      <div class="card"><h3>📱 Android Nativo (Kotlin)</h3><p>Linguagem oficial do Android desde 2017. Acesso total a todos os recursos do dispositivo. Deploy na Play Store.</p></div>
-      <div class="card"><h3>🍎 iOS Nativo (Swift)</h3><p>Linguagem da Apple desde 2014. Obrigatório para publicar na App Store. Melhor performance no ecossistema Apple.</p></div>
-      <div class="card"><h3>⚛️ React Native</h3><p>Um código JavaScript/TypeScript para Android e iOS. Desenvolvido pelo Meta. Base grande de devs JS no mercado.</p></div>
-      <div class="card"><h3>🐦 Flutter (Dart)</h3><p>Framework do Google. Linguagem Dart. Performance próxima ao nativo. UI consistente em todas as plataformas.</p></div>
+      <div class="card"><h3>📱 Android Nativo (Kotlin)</h3><p>Linguagem oficial do Android desde 2019. Acesso total a todos os recursos do dispositivo. Coroutines para async e null safety embutida. Deploy na Play Store.</p></div>
+      <div class="card"><h3>🍎 iOS Nativo (Swift)</h3><p>Linguagem da Apple desde 2014. Performance máxima no ecossistema Apple. SwiftUI para interfaces declarativas. Obrigatória para App Store.</p></div>
+      <div class="card"><h3>⚛️ React Native</h3><p>Um código TypeScript para Android e iOS. Desenvolvido pelo Meta. Usa componentes nativos reais, não WebView. Expo facilita o início rápido.</p></div>
+      <div class="card"><h3>🐦 Flutter (Dart)</h3><p>Framework do Google. Performance próxima ao nativo. UI consistente em mobile, web e desktop. Widget tree declarativo parecido com React.</p></div>
     </div>
     <div class="info-box">
-      <strong>Cross-platform vs Nativo:</strong> Apps nativos têm melhor performance e integração com o dispositivo. Apps cross-platform (React Native, Flutter) economizam tempo — um time, dois sistemas operacionais.
+      <strong>Cross-platform vs Nativo:</strong> Apps nativos têm melhor performance e acesso a APIs do dispositivo. Apps cross-platform (React Native, Flutter) economizam tempo — um time, dois sistemas operacionais. Para jogos, prefira Unity (C#).
     </div>
+  </div>
+
+  <!-- REACT & FRAMEWORKS FRONT-END -->
+  <div class="section" id="react-frameworks">
+    <div class="section-title"><div class="num-badge num-blue">5</div><h2>⚛️ React e o Ecossistema Front-end Moderno</h2></div>
+    <p>React (Meta, 2013) é a biblioteca mais usada para construir interfaces. Não é um framework completo — mas em torno dele existe um ecossistema rico:</p>
+    <div class="code-block"><span class="cmt">// React + TypeScript — Componente funcional com hooks</span>
+<span class="kw">import</span> { useState, useEffect } <span class="kw">from</span> <span class="str">"react"</span>;
+
+<span class="kw">interface</span> <span class="fn">Tarefa</span> { id: number; titulo: string; feita: boolean; }
+
+<span class="kw">export function</span> <span class="fn">ListaTarefas</span>() {
+  <span class="cmt">// Estado local — re-renderiza quando muda</span>
+  <span class="kw">const</span> [tarefas, setTarefas] = useState&lt;Tarefa[]&gt;([]);
+
+  <span class="cmt">// Efeito colateral — busca dados ao montar o componente</span>
+  useEffect(() =&gt; {
+    fetch(<span class="str">"/api/tarefas"</span>)
+      .then(r =&gt; r.json())
+      .then(setTarefas);
+  }, []); <span class="cmt">// [] = executa só 1x</span>
+
+  <span class="kw">const</span> <span class="fn">marcarFeita</span> = (id: number) =&gt;
+    setTarefas(prev =&gt; prev.map(t =&gt; t.id === id ? { ...t, feita: !t.feita } : t));
+
+  <span class="kw">return</span> (
+    &lt;ul&gt;
+      {tarefas.map(t =&gt; (
+        &lt;li key={t.id} onClick={() =&gt; marcarFeita(t.id)}
+            style={{ textDecoration: t.feita ? <span class="str">"line-through"</span> : <span class="str">"none"</span> }}&gt;
+          {t.titulo}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</span>
+</div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>▲ Next.js 14 — Full-Stack React</h3>
+        <p><strong>App Router</strong> com Server Components (zero JS no cliente). <strong>Server Actions</strong> para mutations sem API REST. SSR, SSG e ISR para máxima performance e SEO. O framework React mais popular em produção.</p>
+      </div>
+      <div class="card">
+        <h3>💚 Vue 3 + Nuxt</h3>
+        <p>Framework progressivo com sintaxe de template intuitiva. <strong>Composition API</strong> parecida com React hooks. Nuxt é o equivalente do Next.js para Vue — SSR e geração estática.</p>
+      </div>
+      <div class="card">
+        <h3>🔥 Svelte + SvelteKit</h3>
+        <p>Compila para JavaScript puro — sem virtual DOM, sem runtime. Código mais conciso e performance excelente. SvelteKit é o framework full-stack oficial.</p>
+      </div>
+      <div class="card">
+        <h3>🌀 TailwindCSS</h3>
+        <p>CSS utility-first — componha estilos com classes diretamente no HTML. Elimina conflitos de CSS, facilita dark mode e responsividade. Adotado por 40%+ dos projetos React em 2024.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRAPHQL & COMUNICAÇÃO AVANÇADA -->
+  <div class="section" id="graphql">
+    <div class="section-title"><div class="num-badge num-blue">6</div><h2>GraphQL vs REST — Evolução das APIs</h2></div>
+    <p>REST é o padrão dominante, mas GraphQL resolve problemas específicos: <em>over-fetching</em> (dados desnecessários) e <em>under-fetching</em> (múltiplas requisições).</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>🔵 REST — O Padrão</h3>
+        <ul style="padding-left:1.2rem; color:var(--muted); font-size:0.9rem; line-height:1.8;">
+          <li>Endpoints fixos: <code>GET /usuarios</code>, <code>POST /pedidos</code></li>
+          <li>Fácil caching com HTTP</li>
+          <li>Amplamente suportado por ferramentas</li>
+          <li>Ideal para APIs simples e públicas</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🟣 GraphQL — A Alternativa Flexível</h3>
+        <ul style="padding-left:1.2rem; color:var(--muted); font-size:0.9rem; line-height:1.8;">
+          <li>Um único endpoint: <code>POST /graphql</code></li>
+          <li>Cliente escolhe exatamente o que receber</li>
+          <li>Evita over/under-fetching</li>
+          <li>Ideal para front-ends complexos e mobile</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="code-block"><span class="cmt"># GraphQL — Query: busca só o que precisa</span>
+query {
+  usuario(id: 1) {
+    nome
+    email
+    pedidos(limit: 5) {
+      id
+      total
+      status
+    }
+  }
+}
+
+<span class="cmt"># Resposta JSON exata — sem campos extras</span>
+{
+  "data": {
+    "usuario": {
+      "nome": "Ana",
+      "email": "ana@email.com",
+      "pedidos": [{ "id": 42, "total": 350.00, "status": "entregue" }]
+    }
+  }
+}</div>
+
+    <div class="info-box">
+      <strong>WebSockets & Server-Sent Events:</strong> Para dados em tempo real (chats, notificações), use <strong>WebSockets</strong> (bidirecional) ou <strong>SSE</strong> (servidor → cliente). Exemplos: Socket.io, Ably, Pusher. GraphQL Subscriptions usa WebSockets por baixo.
+    </div>
+  </div>
+
+  <!-- MICROSSERVIÇOS & CLOUD -->
+  <div class="section" id="microservicos">
+    <div class="section-title"><div class="num-badge num-blue">7</div><h2>☁️ Microsserviços, Cloud & Containers</h2></div>
+    <p>Arquitetura moderna divide a aplicação em serviços independentes, cada um com sua responsabilidade, banco de dados e ciclo de deploy.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>🐋 Docker — Containers</h3>
+        <p>Empacota a aplicação + dependências em uma imagem portátil. <code>docker build</code> → <code>docker run</code>. Docker Compose orquestra múltiplos serviços localmente.</p>
+      </div>
+      <div class="card">
+        <h3>☸️ Kubernetes — Orquestração</h3>
+        <p>Gerencia containers em produção: autoscaling, health checks, rolling updates e service discovery. EKS (AWS), GKE (Google) e AKS (Azure) são as ofertas gerenciadas.</p>
+      </div>
+      <div class="card">
+        <h3>🔀 API Gateway</h3>
+        <p>Ponto de entrada único para todos os microsserviços. Autentica, roteia, faz rate limiting e logging centralizado. Kong, AWS API Gateway, NGINX.</p>
+      </div>
+      <div class="card">
+        <h3>📨 Message Brokers</h3>
+        <p>Kafka (alto volume, streaming), RabbitMQ (filas tradicionais) e SQS (AWS) desacoplam serviços. Produtor não espera pelo consumidor — resiliência natural.</p>
+      </div>
+    </div>
+
+    <div class="code-block"><span class="cmt"># docker-compose.yml — Stack completa local</span>
+version: "3.9"
+services:
+  api:
+    build: ./api
+    ports: ["3000:3000"]
+    environment:
+      DATABASE_URL: postgresql://user:pass@db:5432/app
+    depends_on: [db, redis]
+
+  db:
+    image: postgres:16-alpine
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    environment:
+      POSTGRES_PASSWORD: pass
+
+  redis:
+    image: redis:7-alpine
+
+volumes:
+  pgdata:</div>
+  </div>
+
+  <!-- SEGURANÇA WEB -->
+  <div class="section" id="seguranca-web">
+    <div class="section-title"><div class="num-badge num-blue">8</div><h2>🔒 Segurança Web — OWASP Top 10</h2></div>
+    <p>As 10 vulnerabilidades mais críticas em aplicações web, segundo a OWASP (Open Web Application Security Project):</p>
+    <table>
+      <tr><th>#</th><th>Vulnerabilidade</th><th>Exemplo</th><th>Prevenção</th></tr>
+      <tr><td>1</td><td><strong>Injeção (SQL/NoSQL)</strong></td><td><code>'; DROP TABLE users; --</code></td><td>Queries parametrizadas / ORM</td></tr>
+      <tr><td>2</td><td><strong>Autenticação Quebrada</strong></td><td>Senhas fracas, JWT sem expiração</td><td>bcrypt, tokens curtos, MFA</td></tr>
+      <tr><td>3</td><td><strong>Exposição de Dados Sensíveis</strong></td><td>Senha em log, HTTP sem TLS</td><td>HTTPS, criptografia, vault</td></tr>
+      <tr><td>4</td><td><strong>XSS (Cross-Site Scripting)</strong></td><td><code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code></td><td>Escapar saída, CSP header</td></tr>
+      <tr><td>5</td><td><strong>CSRF</strong></td><td>Formulário malicioso em outro domínio</td><td>Token CSRF, SameSite cookie</td></tr>
+      <tr><td>6</td><td><strong>Dependências Vulneráveis</strong></td><td>npm package com CVE crítico</td><td><code>npm audit</code>, Snyk, Dependabot</td></tr>
+      <tr><td>7</td><td><strong>Erros e Logging Insuficiente</strong></td><td>Stack trace exposto ao usuário</td><td>Logar server-side, erros genéricos</td></tr>
+      <tr><td>8</td><td><strong>SSRF</strong></td><td>Forçar servidor a buscar URL interna</td><td>Validar URLs, blocklist de IPs</td></tr>
+      <tr><td>9</td><td><strong>Controle de Acesso Falho</strong></td><td>Acessar <code>/admin</code> sem autenticação</td><td>RBAC, verificar permissões no servidor</td></tr>
+      <tr><td>10</td><td><strong>Configuração Incorreta</strong></td><td>Headers padrão, debug em produção</td><td>Hardening, Helmet.js, scanners</td></tr>
+    </table>
+
+    <div class="code-block"><span class="cmt">// Node.js — Headers de segurança com Helmet.js</span>
+<span class="kw">import</span> helmet <span class="kw">from</span> <span class="str">"helmet"</span>;
+<span class="kw">import</span> rateLimit <span class="kw">from</span> <span class="str">"express-rate-limit"</span>;
+
+app.use(helmet()); <span class="cmt">// Content-Security-Policy, X-Frame-Options, etc.</span>
+
+<span class="cmt">// Rate limiting — evita brute force e DDoS</span>
+<span class="kw">const</span> limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, <span class="cmt">// 15 minutos</span>
+  max: 100,                 <span class="cmt">// max 100 reqs por IP</span>
+  message: { erro: <span class="str">"Muitas requisições. Tente novamente mais tarde."</span> }
+});
+app.use(<span class="str">"/api/"</span>, limiter);
+
+<span class="cmt">// CORS configurado corretamente (não use '*' em produção)</span>
+app.use(cors({ origin: <span class="str">"https://meusite.com.br"</span>, credentials: <span class="kw">true</span> }));</div>
   </div>
 
 </div>

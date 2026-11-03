@@ -1,0 +1,102 @@
+{
+  "id": 18,
+  "slug": "recursao-recorrencias-teorema-mestre",
+  "badge": "Módulo 18 · Especialização Avançada",
+  "nivel": "Especialista",
+  "titulo": "Recursão Avançada, Relações de Recorrência e Teorema Mestre",
+  "subtitulo": "Pilha de chamadas, recursão de cauda (Tail Recursion), árvores de recursão e o Teorema Mestre de Cormen.",
+  "objetivo": "Dominar a recursão estruturada, provar a corretude recursiva por indução forte, derivar relações de recorrência T(n) = aT(n/b) + f(n) e aplicar os 3 casos do Teorema Mestre.",
+  "introducaoIntuitiva": "Imagine duas salas de espelhos paralelos onde cada espelho reflete o outro em tamanho menor, até que o último espelho atinge um tamanho tão diminuto que para de refletir (Caso Base). A recursão resolve problemas definindo uma solução em termos de instâncias menores de si mesma.",
+  "explicacaoAprofundada": "Recursão é o paradigma onde um algoritmo chama a si mesmo com argumentos estritamente mais próximos de um Caso Base. Na memória, cada chamada aloca um Frame na Pilha de Execução (Call Stack) com custo espacial O(profundidade). Recursão de Cauda (Tail Recursion) ocorre quando a chamada recursiva é a última operação atômica, permitindo que compiladores otimizem o espaço para O(1). Para analisar o tempo T(n) de algoritmos recursivos de divisão e conquista da forma T(n) = aT(n/b) + f(n), utilizamos o TEOREMA MESTRE (Cormen et al.):\n• Caso 1: Se f(n) = O(n^(log_b(a) - ε)), então T(n) = Θ(n^(log_b a)) [O trabalho nas folhas domina].\n• Caso 2: Se f(n) = Θ(n^(log_b a) * log^k n), então T(n) = Θ(n^(log_b a) * log^(k+1) n) [O trabalho é equilibrado entre os níveis].\n• Caso 3: Se f(n) = Ω(n^(log_b(a) + ε)) e af(n/b) <= c f(n) (condição de regularidade), então T(n) = Θ(f(n)) [O trabalho na raiz domina].",
+  "exemplos": {
+    "basico": {
+      "titulo": "Caso Base e Passo Recursivo no Fatorial",
+      "descricao": "FUNÇÃO fat(n): SE n <= 1 RETORNAR 1 (Caso Base) SENÃO RETORNAR n * fat(n - 1) (Passo Indutivo)."
+    },
+    "intermediario": {
+      "titulo": "Transformação de Recursão Tradicional em Tail Recursion",
+      "descricao": "Recursão comum: n * fat(n-1) (precisa esperar a volta). Tail Recursion: fat_tail(n, acumulador=1) -> fat_tail(n-1, acumulador * n), eliminando a retenção de stack."
+    },
+    "avancado": {
+      "titulo": "Aplicação do Teorema Mestre no MergeSort",
+      "descricao": "MergeSort divide em 2 subproblemas de tamanho n/2 e faz merge em O(n): T(n) = 2T(n/2) + O(n). Aqui a=2, b=2, log_b(a) = log_2(2) = 1. Como f(n) = n^1 = Θ(n^(log_b a)), recai no Caso 2 com k=0 -> T(n) = Θ(n log n)."
+    }
+  },
+  "passoAPasso": [
+    "1. Definir explicitamente um ou mais Casos Base que retornam sem fazer chamadas recursivas.",
+    "2. Garantir que todas as chamadas recursivas reduzam o tamanho da entrada estritamente em direção ao Caso Base (Prova de Terminação).",
+    "3. Montar a equação de recorrência T(n) identificando a (número de subproblemas), b (fator de redução da entrada) e f(n) (custo da divisão e combinação).",
+    "4. Calcular o expoente crítico c_crit = log_b(a).",
+    "5. Comparar a taxa de crescimento de f(n) com n^(c_crit) e aplicar o caso correspondente do Teorema Mestre."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Omissão de Caso Base causando estouro de pilha (Stack Overflow)",
+      "correcao": "Todo algoritmo recursivo deve ter condição de parada inevitável."
+    },
+    {
+      "erro": "Aplicar o Teorema Mestre quando a não é constante ou b <= 1",
+      "correcao": "O Teorema Mestre só é válido para a >= 1, b > 1 constantes e f(n) assintoticamente positiva."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Recursão com relações bem fundamentadas e otimização de cauda quando aplicável.",
+    "ruim": "Recursão ingênua sem memoization com complexidade exponencial O(2^n) (ex: Fibonacci recursivo ingênuo)."
+  },
+  "pseudocodigo": "// Exemplo: Busca Binária Recursiva T(n) = T(n/2) + O(1) -> O(log n)\nFUNÇÃO busca_rec(lista, inicio, fim, alvo)\n    SE inicio > fim ENTÃO RETORNAR -1 // Caso Base 1: não encontrado\n    meio <- (inicio + fim) / 2\n    SE lista[meio] == alvo ENTÃO RETORNAR meio // Caso Base 2: encontrado\n    SENÃO SE lista[meio] > alvo ENTÃO\n        RETORNAR busca_rec(lista, inicio, meio - 1, alvo) // Subproblema 1\n    SENÃO\n        RETORNAR busca_rec(lista, meio + 1, fim, alvo) // Subproblema 2\n    FIM_SE\nFIM_FUNÇÃO",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Chamada 1: busca_rec(0, 7)",
+      "estado": "meio = 3, alvo > lista[3]",
+      "obs": "Frame 1 na pilha"
+    },
+    {
+      "passo": 2,
+      "acao": "Chamada 2: busca_rec(4, 7)",
+      "estado": "meio = 5, alvo == lista[5]",
+      "obs": "Frame 2 resolve e desempilha"
+    },
+    {
+      "passo": 3,
+      "acao": "Retorno para o chamador",
+      "estado": "Resultado = 5 (Índice)",
+      "obs": "Desalocação de memória"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex18_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Dada a relação de recorrência T(n) = 4T(n/2) + n², qual é a complexidade assintótica T(n) pelo Teorema Mestre?",
+      "opcoes": [
+        "Θ(n² log n), pois a=4, b=2, log₂ 4 = 2, e f(n) = n² = Θ(n^(log_b a)) (Caso 2 com k=0)",
+        "Θ(n²), pois n² domina",
+        "Θ(n³)",
+        "Θ(log n)"
+      ],
+      "correta": 0,
+      "pista": "Calcule log_b a: log₂ 4 = 2. A função f(n) = n² cresce na mesma taxa que n^(log_b a) = n². Qual caso do Teorema Mestre se aplica?",
+      "justificativa": "Como a=4 e b=2, n^(log₂ 4) = n². Como f(n) = n² = Θ(n²), aplica-se o Caso 2 do Teorema Mestre com k=0, resultando em Θ(n² log n)."
+    }
+  ],
+  "perguntasVerificacao": "Qual a diferença entre o Caso 1 (onde as folhas dominam) e o Caso 3 (onde a raiz domina) no Teorema Mestre?",
+  "keywordsIA": [
+    "recursao",
+    "recorrencia",
+    "teorema_mestre",
+    "caso_base",
+    "tail_recursion",
+    "pilha_execucao",
+    "divisao_conquista",
+    "cormen"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "recursao_infinita",
+      "erro": "Achar que recursão consome tempo igual à iteração sem custo de memória",
+      "explicacao": "Cada chamada recursiva tradicional cria um frame de memória na Call Stack consumindo O(n) de espaço."
+    }
+  ],
+  "explicacaoIdealIA": "Recursão resolve problemas através de subproblemas menores convergindo para um caso base. O Teorema Mestre resolve relações de recorrência comparando o custo de divisão/combinação f(n) com o número de folhas n^(log_b a)."
+}

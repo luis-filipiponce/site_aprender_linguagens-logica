@@ -1,0 +1,97 @@
+{
+  "id": 5,
+  "slug": "variaveis-dados-estado",
+  "badge": "Módulo 5 · Memória & Estado",
+  "nivel": "Iniciante",
+  "titulo": "Variáveis, Tipos de Dados e Estado",
+  "subtitulo": "Espaço de armazenamento abstrato, tipos conceituais, mutabilidade e tabela de rastreamento.",
+  "objetivo": "Compreender variáveis como caixas rotuladas na memória com tipo e valor mutável, dominando a diferença entre atribuição e igualdade.",
+  "introducaoIntuitiva": "Imagine gavetas identificadas com etiquetas: uma gaveta rotulada \"Idade\" só guarda números inteiros; uma gaveta \"Nome\" guarda textos.",
+  "explicacaoAprofundada": "Uma variável é uma abstração para uma posição de memória com nome, tipo e valor. A atribuição (<- ou =) é uma ação de escrita que calcula a expressão da direita e sobrescreve a memória da esquerda.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Atribuição e Sobrescrita",
+      "descricao": "x <- 10; x <- x + 5 (novo x recebe 15)."
+    },
+    "intermediario": {
+      "titulo": "Atribuição vs Comparação",
+      "descricao": "A <- 5 (grava 5) vs A == 5 (compara se é igual a 5)."
+    },
+    "avancado": {
+      "titulo": "Mutação com Tabela de Trace",
+      "descricao": "Rastrear a evolução das variáveis a cada linha de execução."
+    }
+  },
+  "passoAPasso": [
+    "1. Declarar variável e tipo.",
+    "2. Inicializar valor.",
+    "3. Resolver expressão à direita.",
+    "4. Gravar na esquerda."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Confundir x <- x + 1 com igualdade matemática",
+      "correcao": "Em computação é comando de atualização temporal de valor."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Nomes claros e tipos estritamente consistentes.",
+    "ruim": "Reaproveitar variáveis para finalidades diferentes."
+  },
+  "pseudocodigo": "INÍCIO\n    INTEIRO: a, b, total\n    a <- 5\n    b <- 12\n    a <- a + 3\n    total <- a * 2\n    b <- total - a\nFIM",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "a <- 5, b <- 12",
+      "estado": "a=5, b=12, total=?",
+      "obs": "Inicialização"
+    },
+    {
+      "passo": 2,
+      "acao": "a <- a + 3",
+      "estado": "a=8, b=12, total=?",
+      "obs": "Mutação"
+    },
+    {
+      "passo": 3,
+      "acao": "total <- a * 2",
+      "estado": "a=8, b=12, total=16",
+      "obs": "Cálculo"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex5_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Se executarmos: a <- 2; b <- 4; a <- a * b; b <- a + b; qual o valor final de b?",
+      "opcoes": [
+        "8",
+        "12",
+        "16",
+        "6"
+      ],
+      "correta": 1,
+      "pista": "Rastreie: a <- 2 * 4 = 8; depois b <- 8 + 4 = 12!",
+      "justificativa": "No primeiro passo a recebe 8. No segundo passo b recebe 8 + 4 = 12."
+    }
+  ],
+  "perguntasVerificacao": "Por que a atribuição destrói o valor anterior de uma variável?",
+  "keywordsIA": [
+    "variavel",
+    "tipo",
+    "estado",
+    "atribuicao",
+    "memoria",
+    "mutacao",
+    "trace",
+    "sobrescrever"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "igualdade",
+      "erro": "Achar que atribuição é estática",
+      "explicacao": "Atribuição é temporal e mutável."
+    }
+  ],
+  "explicacaoIdealIA": "Variáveis são espaços nomeados na memória que armazenam valores de determinado tipo. O estado muda a cada atribuição."
+}

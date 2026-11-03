@@ -1,0 +1,83 @@
+{
+  "id": 12,
+  "slug": "funcoes-procedimentos",
+  "badge": "Módulo 12 · Modularização",
+  "nivel": "Intermediário",
+  "titulo": "Funções, Procedimentos e Modularização",
+  "subtitulo": "Parâmetros, retorno de valores, escopo local vs global, reaproveitamento e princípio DRY.",
+  "objetivo": "Criar blocos reutilizáveis (funções e procedimentos), dominar passagem de parâmetros e isolamento de escopo.",
+  "introducaoIntuitiva": "Botão de raiz quadrada na calculadora: você passa o número e recebe a resposta sem precisar saber o circuito interno.",
+  "explicacaoAprofundada": "Funções retornam um valor calculado; procedimentos executam ações sem retorno. Variáveis dentro de funções possuem escopo local.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Função Dobro",
+      "descricao": "FUNÇÃO dobro(x): RETORNAR x * 2."
+    },
+    "intermediario": {
+      "titulo": "Função de Validação",
+      "descricao": "FUNÇÃO eh_par(n): RETORNAR n % 2 == 0."
+    },
+    "avancado": {
+      "titulo": "Isolamento de Escopo",
+      "descricao": "Variáveis locais não poluem nem afetam o escopo externo."
+    }
+  },
+  "passoAPasso": [
+    "1. Identificar lógica repetida.",
+    "2. Definir parâmetros e tipo de retorno.",
+    "3. Usar instrução RETORNAR."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Confundir ESCREVER na tela com RETORNAR valor",
+      "correcao": "RETORNAR entrega o dado para a memória do programa."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Funções puras e de responsabilidade única.",
+    "ruim": "Duplicação de blocos de código (violação do DRY)."
+  },
+  "pseudocodigo": "FUNÇÃO imposto(salario) : REAL\n    SE salario > 5000 ENTÃO RETORNAR salario * 0.20 SENÃO RETORNAR salario * 0.10 FIM_SE\nFIM_FUNÇÃO",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "imposto(6000)",
+      "estado": "Retorna 1200.00",
+      "obs": "Valor devolvido"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex12_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Qual a diferença essencial entre Função e Procedimento?",
+      "opcoes": [
+        "Função retorna obrigatoriamente um valor resultante; Procedimento executa ações sem retornar valor.",
+        "Procedimento é mais rápido que Função.",
+        "Funções não aceitam parâmetros.",
+        "Procedimentos só aceitam textos."
+      ],
+      "correta": 0,
+      "pista": "A presença da instrução RETORNAR distingue a função.",
+      "justificativa": "Funções produzem e devolvem um valor utilizável em expressões."
+    }
+  ],
+  "perguntasVerificacao": "Por que o escopo local de variáveis evita efeitos colaterais indesejados?",
+  "keywordsIA": [
+    "funcao",
+    "procedimento",
+    "parametro",
+    "retorno",
+    "escopo",
+    "modularizacao",
+    "dry"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "retorno",
+      "erro": "Achar que imprimir na tela é retornar valor",
+      "explicacao": "Imprimir mostra texto ao usuário; retornar grava na memória do chamador."
+    }
+  ],
+  "explicacaoIdealIA": "Funções são unidades modulares que recebem parâmetros, operam em escopo isolado e retornam resultados computados."
+}

@@ -109,10 +109,23 @@
 
 <span class="cmt">// Destructuring + Spread</span>
 <span class="kw">const</span> { <span class="var">nome</span>, <span class="var">idade</span>, ...<span class="var">resto</span> } = { <span class="var">nome</span>:<span class="str">"Ana"</span>, <span class="var">idade</span>:<span class="num">28</span>, <span class="var">cidade</span>:<span class="str">"SP"</span> };
-<span class="kw">const</span> <span class="var">numeros</span> = [<span class="num">1</span>, <span class="num">2</span>, ...[<span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>]];  <span class="cmt">// [1,2,3,4,5]</span></div>
+<span class="kw">const</span> <span class="var">numeros</span> = [<span class="num">1</span>, <span class="num">2</span>, ...[<span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>]];  <span class="cmt">// [1,2,3,4,5]</span>
+
+<span class="cmt">// DOM + Eventos: manipular a página no navegador</span>
+<span class="kw">const</span> <span class="var">botao</span> = document.<span class="fn">querySelector</span>(<span class="str">"#salvar"</span>);
+<span class="var">botao</span>.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, () => {
+    <span class="kw">const</span> <span class="var">li</span> = document.<span class="fn">createElement</span>(<span class="str">"li"</span>);
+    <span class="var">li</span>.textContent = <span class="str">"Novo item"</span>;      <span class="cmt">// textContent é seguro contra XSS</span>
+    document.<span class="fn">querySelector</span>(<span class="str">"ul"</span>).<span class="fn">append</span>(<span class="var">li</span>);
+    localStorage.<span class="fn">setItem</span>(<span class="str">"ultimo"</span>, JSON.<span class="fn">stringify</span>({ criado: Date.<span class="fn">now</span>() }));
+});
+
+<span class="cmt">// Métodos de array: map / filter / reduce</span>
+<span class="kw">const</span> <span class="var">total</span> = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>].<span class="fn">filter</span>(<span class="var">n</span> => <span class="var">n</span> > <span class="num">10</span>).<span class="fn">reduce</span>((<span class="var">a</span>, <span class="var">n</span>) => <span class="var">a</span> + <span class="var">n</span>, <span class="num">0</span>);  <span class="cmt">// 50</span></div>
         <div class="lang-meta">
           <span><strong>Paradigmas:</strong> OOP, Funcional, Orientado a Eventos, Reativo</span>
           <span><strong>Usos:</strong> Front-end web, Back-end (Node.js), Mobile (React Native), Desktop (Electron)</span>
+          <span><strong>APIs do navegador:</strong> DOM, Eventos, Fetch, Web Storage, IntersectionObserver</span>
           <span><strong>Frameworks:</strong> React, Vue, Angular, Next.js, Express, NestJS</span>
         </div>
       </div>
@@ -242,22 +255,147 @@
 }</div>
   </div>
 
-  <!-- TABELA COMPARATIVA -->
+  <!-- KOTLIN e SWIFT -->
+  <div class="section" id="kotlin-swift">
+    <div class="section-title"><div class="num-badge num-red">7</div><h2>Kotlin & Swift — Mobile Nativo</h2></div>
+    <div class="card-grid">
+      <div class="card">
+        <h3>🤖 Kotlin — Android</h3>
+        <p>Linguagem oficial do Android desde 2019 (substituindo Java). 100% interoperável com Java. Null safety embutida, coroutines para async, e menos código que Java para a mesma tarefa.</p>
+        <div class="code-block"><span class="cmt">// Kotlin — concisão + segurança</span>
+<span class="kw">data class</span> <span class="fn">Usuario</span>(<span class="kw">val</span> <span class="var">nome</span>: String, <span class="kw">val</span> <span class="var">email</span>: String)
+
+<span class="cmt">// Null safety: sem NullPointerException</span>
+<span class="kw">val</span> <span class="var">tamanho</span>: Int? = <span class="kw">null</span>
+<span class="fn">println</span>(<span class="var">tamanho</span>?.<span class="fn">toString</span>() ?: <span class="str">"vazio"</span>)  <span class="cmt">// "vazio"</span>
+
+<span class="cmt">// Coroutines — async/await nativo</span>
+<span class="kw">suspend fun</span> <span class="fn">buscarDados</span>(): List&lt;Usuario&gt; {
+    <span class="kw">return</span> withContext(Dispatchers.IO) {
+        api.<span class="fn">buscarUsuarios</span>()
+    }
+}</div>
+      </div>
+      <div class="card">
+        <h3>🍎 Swift — iOS & macOS</h3>
+        <p>Linguagem da Apple lançada em 2014. Combina performance de C++ com segurança de tipos moderna. Usa ARC (Automatic Reference Counting) sem garbage collector. Obrigatória para App Store.</p>
+        <div class="code-block"><span class="cmt">// Swift — segurança e expressividade</span>
+<span class="kw">struct</span> <span class="fn">Produto</span> {
+    <span class="kw">let</span> <span class="var">nome</span>: String
+    <span class="kw">let</span> <span class="var">preco</span>: Double
+
+    <span class="kw">var</span> <span class="var">precoFormatado</span>: String {
+        String(<span class="fn">format</span>: <span class="str">"R$ %.2f"</span>, <span class="var">preco</span>)
+    }
+}
+
+<span class="cmt">// Optional chaining — como ?. do TypeScript</span>
+<span class="kw">let</span> <span class="var">usuario</span>: String? = <span class="kw">nil</span>
+<span class="fn">print</span>(<span class="var">usuario</span>?.<span class="fn">uppercased</span>() ?? <span class="str">"Anônimo"</span>)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C# e .NET -->
+  <div class="section" id="csharp">
+    <div class="section-title"><div class="num-badge num-red">8</div><h2>C# — A Linguagem da Microsoft e da Unity</h2></div>
+    <div class="lang-card">
+      <div class="lang-header">
+        <span class="lang-name">C# (.NET)</span>
+        <span class="lang-tag">Alto Nível</span><span class="lang-tag">OOP + Funcional</span><span class="lang-tag">Microsoft</span><span class="lang-tag">Cross-platform</span>
+      </div>
+      <div class="lang-body">
+        <p>Criada pela Microsoft em 2000. Roda no <strong>.NET (antigo .NET Core)</strong> — cross-platform e open source. Além do enterprise Windows, C# é a linguagem dos jogos na <strong>Unity</strong> (90% dos jogos indie) e APIs modernas com ASP.NET Core.</p>
+        <div class="code-block"><span class="cmt">// C# moderno — LINQ, records e nullable</span>
+<span class="cmt">// Record — imutável e com igualdade por valor</span>
+<span class="kw">public record</span> <span class="fn">Produto</span>(<span class="kw">int</span> <span class="var">Id</span>, string <span class="var">Nome</span>, <span class="kw">decimal</span> <span class="var">Preco</span>);
+
+<span class="cmt">// LINQ — SQL dentro do C#</span>
+<span class="kw">var</span> <span class="var">produtos</span> = <span class="kw">new</span>[] {
+    <span class="kw">new</span> <span class="fn">Produto</span>(<span class="num">1</span>, <span class="str">"Notebook"</span>, <span class="num">3500</span>m),
+    <span class="kw">new</span> <span class="fn">Produto</span>(<span class="num">2</span>, <span class="str">"Mouse"</span>, <span class="num">89</span>m)
+};
+
+<span class="kw">var</span> <span class="var">caros</span> = <span class="var">produtos</span>
+    .Where(<span class="var">p</span> => <span class="var">p</span>.Preco > <span class="num">100</span>)
+    .OrderBy(<span class="var">p</span> => <span class="var">p</span>.Nome)
+    .Select(<span class="var">p</span> => <span class="var">p</span>.Nome);
+
+<span class="cmt">// Null-conditional e null-coalescing</span>
+string? <span class="var">nome</span> = <span class="kw">null</span>;
+<span class="fn">Console</span>.WriteLine(<span class="var">nome</span>?.<span class="fn">ToUpper</span>() ?? <span class="str">"Desconhecido"</span>);</div>
+        <div class="lang-meta">
+          <span><strong>Usos:</strong> Jogos (Unity), Windows, ASP.NET Core APIs, Blazor (WebAssembly), Azure Functions</span>
+          <span><strong>Frameworks:</strong> ASP.NET Core, Entity Framework, MAUI (cross-platform mobile), Blazor</span>
+          <span><strong>Diferencial:</strong> LINQ, async/await nativo, nullable reference types, records e pattern matching</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABELA COMPARATIVA EXPANDIDA -->
   <div class="section" id="comparativo">
-    <div class="section-title"><div class="num-badge num-red">7</div><h2>Tabela Comparativa</h2></div>
+    <div class="section-title"><div class="num-badge num-red">9</div><h2>Tabela Comparativa Completa</h2></div>
     <table>
-      <tr><th>Linguagem</th><th>Dificuldade</th><th>Velocidade</th><th>Melhor para</th><th>Mercado</th></tr>
-      <tr><td>Python</td><td>⭐ Fácil</td><td>Média</td><td>IA, Data, Scripts, Web</td><td>🔥 Altíssimo</td></tr>
-      <tr><td>JavaScript</td><td>⭐ Fácil/Médio</td><td>Alta (JIT)</td><td>Web completa, Mobile</td><td>🔥 Altíssimo</td></tr>
-      <tr><td>TypeScript</td><td>⭐⭐ Médio</td><td>Alta (JIT)</td><td>Projetos grandes</td><td>🔥 Alto</td></tr>
-      <tr><td>Java</td><td>⭐⭐ Médio</td><td>Alta (JVM)</td><td>Enterprise, Android</td><td>🔥 Alto</td></tr>
-      <tr><td>C#</td><td>⭐⭐ Médio</td><td>Alta (.NET)</td><td>Windows, Unity, Enterprise</td><td>🔥 Alto</td></tr>
-      <tr><td>Go</td><td>⭐⭐ Médio</td><td>Muito alta</td><td>Cloud, Microsserviços</td><td>📈 Crescendo</td></tr>
-      <tr><td>Rust</td><td>⭐⭐⭐ Difícil</td><td>Máxima</td><td>Sistemas, Segurança</td><td>📈 Crescendo</td></tr>
-      <tr><td>C/C++</td><td>⭐⭐⭐ Difícil</td><td>Máxima</td><td>Sistemas, Jogos, Hardware</td><td>Estável</td></tr>
-      <tr><td>Kotlin</td><td>⭐⭐ Médio</td><td>Alta (JVM)</td><td>Android, Back-end</td><td>🔥 Alto</td></tr>
-      <tr><td>Swift</td><td>⭐⭐ Médio</td><td>Muito alta</td><td>iOS, macOS</td><td>Estável (Apple)</td></tr>
+      <tr><th>Linguagem</th><th>Dificuldade</th><th>Velocidade</th><th>Melhor para</th><th>Mercado</th><th>Salário BR (pleno)</th></tr>
+      <tr><td><strong>Python</strong></td><td>⭐ Fácil</td><td>Média</td><td>IA, Data, Scripts, Web</td><td>🔥 Altíssimo</td><td>R$ 8k–22k</td></tr>
+      <tr><td><strong>JavaScript</strong></td><td>⭐ Fácil/Médio</td><td>Alta (JIT)</td><td>Web completa, Mobile</td><td>🔥 Altíssimo</td><td>R$ 7k–18k</td></tr>
+      <tr><td><strong>TypeScript</strong></td><td>⭐⭐ Médio</td><td>Alta (JIT)</td><td>Projetos grandes</td><td>🔥 Alto</td><td>R$ 8k–20k</td></tr>
+      <tr><td><strong>Java</strong></td><td>⭐⭐ Médio</td><td>Alta (JVM)</td><td>Enterprise, Android</td><td>🔥 Alto</td><td>R$ 8k–22k</td></tr>
+      <tr><td><strong>C#</strong></td><td>⭐⭐ Médio</td><td>Alta (.NET)</td><td>Windows, Unity, Enterprise</td><td>🔥 Alto</td><td>R$ 8k–20k</td></tr>
+      <tr><td><strong>Go</strong></td><td>⭐⭐ Médio</td><td>Muito alta</td><td>Cloud, Microsserviços</td><td>📈 Crescendo</td><td>R$ 10k–25k</td></tr>
+      <tr><td><strong>Rust</strong></td><td>⭐⭐⭐ Difícil</td><td>Máxima</td><td>Sistemas, Segurança</td><td>📈 Crescendo</td><td>R$ 12k–30k</td></tr>
+      <tr><td><strong>C/C++</strong></td><td>⭐⭐⭐ Difícil</td><td>Máxima</td><td>Sistemas, Jogos, Hardware</td><td>Estável</td><td>R$ 8k–22k</td></tr>
+      <tr><td><strong>Kotlin</strong></td><td>⭐⭐ Médio</td><td>Alta (JVM)</td><td>Android, Back-end</td><td>🔥 Alto</td><td>R$ 9k–22k</td></tr>
+      <tr><td><strong>Swift</strong></td><td>⭐⭐ Médio</td><td>Muito alta</td><td>iOS, macOS</td><td>Estável (Apple)</td><td>R$ 10k–25k</td></tr>
     </table>
+
+    <div class="info-box" style="margin-top: 1.5rem;">
+      <strong>💡 Qual linguagem escolher?</strong> Não existe "melhor linguagem" — existe a certa para cada contexto. Para iniciantes: Python ou JavaScript. Para mobile Android: Kotlin. Para iOS: Swift. Para sistemas de alta performance: Rust ou C++. Para microsserviços na nuvem: Go. Para jogos e apps Windows: C#. Para tudo que é enterprise Java/Spring: Java.
+    </div>
+  </div>
+
+  <!-- ECOSSISTEMA DE IA (NOVA SEÇÃO) -->
+  <div class="section" id="ia-ecossistema">
+    <div class="section-title"><div class="num-badge num-red">10</div><h2>🤖 Linguagens na IA & Machine Learning</h2></div>
+    <p>Python domina o ecossistema de IA/ML, mas outras linguagens têm papéis importantes na infraestrutura e produção:</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>🐍 Python — Pesquisa e Prototipagem</h3>
+        <p>PyTorch, TensorFlow, Scikit-Learn, Hugging Face, LangChain. A linguagem padrão para treinar modelos, explorar dados e criar pipelines de ML.</p>
+      </div>
+      <div class="card">
+        <h3>⚙️ C++ — Kernels e Inferência</h3>
+        <p>O núcleo do TensorFlow e PyTorch é escrito em C++. ONNX Runtime, TensorRT e operações de GPU são implementadas em C++ por performance máxima.</p>
+      </div>
+      <div class="card">
+        <h3>🦀 Rust — MLOps e Edge</h3>
+        <p>Candle (Hugging Face), Burn e outras libs Rust estão emergindo para inferência em edge devices (IoT, WASM) onde o consumo de memória é crítico.</p>
+      </div>
+      <div class="card">
+        <h3>🐹 Go — Serving & APIs</h3>
+        <p>Servidores de inferência e APIs de ML em produção costumam ser Go ou Rust — alta performance, baixo uso de memória e binários pequenos para deploy em containers.</p>
+      </div>
+    </div>
+    <div class="code-block"><span class="cmt"># Python + PyTorch — Rede Neural Simples (MLP)</span>
+<span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+
+<span class="kw">class</span> <span class="fn">MLP</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, entrada: int, oculta: int, saida: int):
+        <span class="fn">super</span>().<span class="fn">__init__</span>()
+        <span class="var">self</span>.rede = nn.<span class="fn">Sequential</span>(
+            nn.<span class="fn">Linear</span>(entrada, oculta),
+            nn.<span class="fn">ReLU</span>(),          <span class="cmt"># Função de ativação não-linear</span>
+            nn.<span class="fn">Linear</span>(oculta, saida)
+        )
+
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="var">self</span>, x: torch.Tensor) -> torch.Tensor:
+        <span class="kw">return</span> <span class="var">self</span>.rede(x)
+
+<span class="cmt"># Instância: 784 entradas (imagem 28x28), 128 ocultos, 10 saídas (dígitos 0-9)</span>
+<span class="var">modelo</span> = <span class="fn">MLP</span>(<span class="num">784</span>, <span class="num">128</span>, <span class="num">10</span>)
+<span class="fn">print</span>(<span class="var">modelo</span>)  <span class="cmt"># Exibe a arquitetura da rede</span></div>
   </div>
 
 </div>

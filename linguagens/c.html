@@ -527,6 +527,217 @@
           </div></div>
         </div>
 
+        <div class="acc-item">
+          <button class="acc-trigger" type="button" aria-expanded="false"><span>⚖️ Operadores Relacionais, Lógicos &amp; Ternário</span><span class="chev">▼</span></button>
+          <div class="acc-panel"><div class="acc-body">
+            <p>Em C, comparações relacionais (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>) retornam <code>1</code> para verdadeiro e <code>0</code> para falso. Operadores lógicos (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>) utilizam avaliação de curto-circuito. O operador ternário <code>cond ? expr1 : expr2</code> permite avaliações inline eficientes.</p>
+            <div class="code-block"><div class="code-bar"><span>operadores.c</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="p">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;stdbool.h&gt;</span>
+
+<span class="t">int</span> <span class="f">main</span>(<span class="t">void</span>) {
+    <span class="t">int</span> idade = <span class="n">20</span>;
+    <span class="t">bool</span> tem_cnh = <span class="k">true</span>;
+
+    <span class="c">// Relacionais e Lógicos</span>
+    <span class="t">bool</span> pode_dirigir = (idade &gt;= <span class="n">18</span>) &amp;&amp; tem_cnh;
+    <span class="f">printf</span>(<span class="s">"Pode dirigir: %d\n"</span>, pode_dirigir); <span class="c">// 1</span>
+
+    <span class="c">// Curto-circuito: o lado direito não é avaliado se o esquerdo for falso</span>
+    <span class="t">int</span> divisor = <span class="n">0</span>;
+    <span class="k">if</span> (divisor != <span class="n">0</span> &amp;&amp; (<span class="n">100</span> / divisor &gt; <span class="n">2</span>)) {
+        <span class="f">printf</span>(<span class="s">"Divisão segura\n"</span>);
+    }
+
+    <span class="c">// Operador Ternário</span>
+    <span class="k">const char</span> *status = (idade &gt;= <span class="n">18</span>) ? <span class="s">"Maior de idade"</span> : <span class="s">"Menor"</span>;
+    <span class="f">printf</span>(<span class="s">"Status: %s\n"</span>, status);
+    <span class="k">return</span> <span class="n">0</span>;
+}</code></pre></div>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" type="button" aria-expanded="false"><span>🚦 Condições (if, else if, switch/case)</span><span class="chev">▼</span></button>
+          <div class="acc-panel"><div class="acc-body">
+            <p>Controle de fluxo baseado em decisões. O <code>switch</code> em C opera com inteiros ou caracteres e requer <code>break</code> explícito para evitar a queda para o próximo caso (<em>fallthrough</em>).</p>
+            <div class="code-block"><div class="code-bar"><span>condicoes.c</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="p">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+
+<span class="t">int</span> <span class="f">main</span>(<span class="t">void</span>) {
+    <span class="t">char</span> opcao = <span class="s">'B'</span>;
+
+    <span class="c">// switch com tratamento de fallthrough</span>
+    <span class="k">switch</span> (opcao) {
+        <span class="k">case</span> <span class="s">'A'</span>:
+        <span class="k">case</span> <span class="s">'a'</span>:
+            <span class="f">printf</span>(<span class="s">"Opção A selecionada\n"</span>);
+            <span class="k">break</span>;
+        <span class="k">case</span> <span class="s">'B'</span>:
+        <span class="k">case</span> <span class="s">'b'</span>:
+            <span class="f">printf</span>(<span class="s">"Opção B selecionada\n"</span>);
+            <span class="k">break</span>;
+        <span class="k">default</span>:
+            <span class="f">printf</span>(<span class="s">"Opção inválida\n"</span>);
+            <span class="k">break</span>;
+    }
+    <span class="k">return</span> <span class="n">0</span>;
+}</code></pre></div>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" type="button" aria-expanded="false"><span>🔄 Conversão de Tipos (Type Casting &amp; Parsing)</span><span class="chev">▼</span></button>
+          <div class="acc-panel"><div class="acc-body">
+            <p>O <strong>Type Casting</strong> explícito em C tem a forma <code>(tipo)expressao</code>. Funções como <code>strtol</code>, <code>atoi</code> e <code>snprintf</code> convertem com segurança entre texto e números.</p>
+            <div class="code-block"><div class="code-bar"><span>casting.c</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="p">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;stdlib.h&gt;</span>
+
+<span class="t">int</span> <span class="f">main</span>(<span class="t">void</span>) {
+    <span class="t">int</span> a = <span class="n">7</span>, b = <span class="n">2</span>;
+    <span class="c">// Cast explícito para evitar divisão inteira truncada</span>
+    <span class="t">float</span> resultado = (<span class="t">float</span>)a / b; <span class="c">// 3.500000</span>
+    <span class="f">printf</span>(<span class="s">"Divisão: %.1f\n"</span>, resultado);
+
+    <span class="c">// Conversão robusta de String para Long com strtol</span>
+    <span class="k">const char</span> *str = <span class="s">"1024 bytes"</span>;
+    <span class="t">char</span> *endptr;
+    <span class="t">long</span> val = <span class="f">strtol</span>(str, &amp;endptr, <span class="n">10</span>);
+    <span class="f">printf</span>(<span class="s">"Valor convertido: %ld, Restante: '%s'\n"</span>, val, endptr);
+    <span class="k">return</span> <span class="n">0</span>;
+}</code></pre></div>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" type="button" aria-expanded="false"><span>🔁 Laços de Repetição (for, while, do-while)</span><span class="chev">▼</span></button>
+          <div class="acc-panel"><div class="acc-body">
+            <p>C suporta os laços clássicos: <code>for</code> com controle de inicialização, condição e incremento; <code>while</code> para iterações com teste no início; e <code>do-while</code> com garantia de pelo menos uma execução.</p>
+            <div class="code-block"><div class="code-bar"><span>lacos.c</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="p">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+
+<span class="t">int</span> <span class="f">main</span>(<span class="t">void</span>) {
+    <span class="c">// 1. for com break e continue</span>
+    <span class="k">for</span> (<span class="t">int</span> i = <span class="n">1</span>; i &lt;= <span class="n">5</span>; i++) {
+        <span class="k">if</span> (i == <span class="n">2</span>) <span class="k">continue</span>; <span class="c">// pula o 2</span>
+        <span class="k">if</span> (i == <span class="n">5</span>) <span class="k">break</span>;    <span class="c">// encerra</span>
+        <span class="f">printf</span>(<span class="s">"i = %d\n"</span>, i);
+    }
+
+    <span class="c">// 2. while</span>
+    <span class="t">int</span> cont = <span class="n">3</span>;
+    <span class="k">while</span> (cont &gt; <span class="n">0</span>) {
+        cont--;
+    }
+    <span class="k">return</span> <span class="n">0</span>;
+}</code></pre></div>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" type="button" aria-expanded="false"><span>🛡️ Tratamento de Erros &amp; Exceções (errno, setjmp)</span><span class="chev">▼</span></button>
+          <div class="acc-panel"><div class="acc-body">
+            <p>C não possui blocos <code>try/catch</code> nativos. O padrão idiomático consiste em retornar <strong>códigos de erro</strong> (ex: <code>0</code> sucesso, <code>-1</code> falha) e consultar a variável global <code>errno</code> com <code>perror()</code> ou <code>strerror()</code>. Para saltos de exceção não-locais, a biblioteca padrão provê <code>setjmp</code> e <code>longjmp</code>.</p>
+            <div class="code-block"><div class="code-bar"><span>erros.c</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="p">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;errno.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;string.h&gt;</span>
+
+<span class="t">int</span> <span class="f">abrir_configuracao</span>(<span class="k">const char</span> *caminho) {
+    <span class="t">FILE</span> *f = <span class="f">fopen</span>(caminho, <span class="s">"r"</span>);
+    <span class="k">if</span> (!f) {
+        <span class="f">fprintf</span>(stderr, <span class="s">"Erro ao abrir '%s': %s (código %d)\n"</span>,
+                caminho, <span class="f">strerror</span>(errno), errno);
+        <span class="k">return</span> -<span class="n">1</span>; <span class="c">// código de falha</span>
+    }
+    <span class="f">fclose</span>(f);
+    <span class="k">return</span> <span class="n">0</span>;      <span class="c">// sucesso</span>
+}
+
+<span class="t">int</span> <span class="f">main</span>(<span class="t">void</span>) {
+    <span class="k">if</span> (<span class="f">abrir_configuracao</span>(<span class="s">"inexistente.cfg"</span>) != <span class="n">0</span>) {
+        <span class="f">printf</span>(<span class="s">"Tratamento de erro executado com segurança.\n"</span>);
+    }
+    <span class="k">return</span> <span class="n">0</span>;
+}</code></pre></div>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" type="button" aria-expanded="false"><span>🎁 Wrappers &amp; Tipos Opacos em C</span><span class="chev">▼</span></button>
+          <div class="acc-panel"><div class="acc-body">
+            <p>Em C, o padrão <strong>Wrapper</strong> e encapsulamento é atingido definindo <strong>tipos opacos</strong> (<em>Opaque Pointers</em>) e <code>typedef struct</code> para embrulhar primitivos com segurança de tipo e ocultar os detalhes de memória interna dos clientes da biblioteca.</p>
+            <div class="code-block"><div class="code-bar"><span>wrappers.c</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="p">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;stdlib.h&gt;</span>
+
+<span class="c">// Wrapper que encapsula um ponteiro de buffer com seu tamanho</span>
+<span class="k">typedef struct</span> {
+    <span class="t">int</span>    *dados;
+    <span class="t">size_t</span>  capacidade;
+    <span class="t">size_t</span>  tamanho;
+} BufferWrapper;
+
+<span class="t">BufferWrapper</span>* <span class="f">buffer_criar</span>(<span class="t">size_t</span> cap) {
+    <span class="t">BufferWrapper</span> *b = <span class="f">malloc</span>(<span class="k">sizeof</span>(*b));
+    <span class="k">if</span> (!b) <span class="k">return</span> <span class="n">NULL</span>;
+    b-&gt;dados = <span class="f">malloc</span>(cap * <span class="k">sizeof</span>(<span class="t">int</span>));
+    b-&gt;capacidade = cap;
+    b-&gt;tamanho = <span class="n">0</span>;
+    <span class="k">return</span> b;
+}
+
+<span class="t">void</span> <span class="f">buffer_destruir</span>(<span class="t">BufferWrapper</span> *b) {
+    <span class="k">if</span> (b) { <span class="f">free</span>(b-&gt;dados); <span class="f">free</span>(b); }
+}</code></pre></div>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" type="button" aria-expanded="false"><span>🏛️ Abstração, Métodos &amp; Simulação de POO em C</span><span class="chev">▼</span></button>
+          <div class="acc-panel"><div class="acc-body">
+            <p>Embora C seja puramente procedural, grandes sistemas (como o kernel Linux e a biblioteca GTK/GLib) implementam <strong>Orientação a Objetos e Abstração</strong> em C usando <em>ponteiros de função</em> dentro de structs para simular métodos e tabelas virtuais (vtables).</p>
+            <div class="code-block"><div class="code-bar"><span>poo_em_c.c</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="p">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+
+<span class="k">typedef struct</span> Forma Forma;
+
+<span class="c">// Estrutura de métodos (vtable) para abstração</span>
+<span class="k">typedef struct</span> {
+    <span class="t">double</span> (*calcular_area)(<span class="k">const</span> Forma *self);
+    <span class="t">void</span>   (*imprimir)(<span class="k">const</span> Forma *self);
+} FormaVTable;
+
+<span class="k">struct</span> Forma {
+    <span class="k">const</span> FormaVTable *vtable;
+    <span class="t">double</span> dim1, dim2;
+};
+
+<span class="c">// Implementações dos métodos</span>
+<span class="t">static double</span> <span class="f">retangulo_area</span>(<span class="k">const</span> Forma *self) {
+    <span class="k">return</span> self-&gt;dim1 * self-&gt;dim2;
+}
+
+<span class="t">static void</span> <span class="f">retangulo_imprimir</span>(<span class="k">const</span> Forma *self) {
+    <span class="f">printf</span>(<span class="s">"Retângulo [%.1f x %.1f] | Área: %.2f\n"</span>,
+           self-&gt;dim1, self-&gt;dim2, self-&gt;vtable-&gt;calcular_area(self));
+}
+
+<span class="k">static const</span> FormaVTable RetanguloVTable = {
+    .calcular_area = retangulo_area,
+    .imprimir = retangulo_imprimir
+};
+
+<span class="t">int</span> <span class="f">main</span>(<span class="t">void</span>) {
+    <span class="c">// Instanciação com vtable polimórfica</span>
+    Forma ret = { .vtable = &amp;RetanguloVTable, .dim1 = <span class="n">10.0</span>, .dim2 = <span class="n">5.0</span> };
+    ret.vtable-&gt;imprimir(&amp;ret);
+    <span class="k">return</span> <span class="n">0</span>;
+}</code></pre></div>
+          </div></div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -543,6 +754,9 @@
           <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="tab-list">🔗 Linked List</button>
           <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="tab-file">💾 Arquivo Binário</button>
           <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="tab-stack">📚 Pilha (Stack)</button>
+          <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="tab-seguro">🛡️ C Seguro</button>
+          <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="tab-c23">✨ C23</button>
+          <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="tab-makefile">🔨 Makefile + Testes</button>
         </div>
 
         <div class="tab-panel active" id="tab-list" role="tabpanel">
@@ -803,6 +1017,151 @@ Pilha *<span class="f">pilha_criar</span>(<span class="t">size_t</span> capacida
     <span class="f">printf</span>(<span class="s">"\"([)]\"   balanceado? %s\n"</span>, <span class="f">balanceado</span>(<span class="s">"([)]"</span>)   ? <span class="s">"sim"</span> : <span class="s">"não"</span>);
     <span class="k">return</span> <span class="n">0</span>;
 }</code></pre></div>
+        </div>
+
+        <div class="tab-panel" id="tab-seguro" role="tabpanel">
+          <p>Em C, a maior parte das vulnerabilidades graves (CWE-119/787/416) nasce de <strong>buffer overflow</strong>, <strong>use-after-free</strong> e <strong>inteiros que estouram</strong>. Este programa mostra o padrão seguro: validar tamanhos, usar <code>snprintf</code>, checar overflow antes de alocar e anular ponteiros liberados.</p>
+          <div class="code-block"><div class="code-bar"><span>seguro.c</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="p">#include</span> <span class="s">&lt;errno.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;stdint.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;stdlib.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;string.h&gt;</span>
+
+<span class="c">/* ❌ gets(), strcpy(), sprintf() sem limite: NUNCA use.
+   ✅ snprintf sempre recebe o tamanho do destino e termina com '\0'. */</span>
+<span class="t">int</span> <span class="f">montar_saudacao</span>(<span class="t">char</span> *dst, <span class="t">size_t</span> cap, <span class="k">const</span> <span class="t">char</span> *nome) {
+    <span class="t">int</span> n = <span class="f">snprintf</span>(dst, cap, <span class="s">"Olá, %s!"</span>, nome);
+    <span class="k">return</span> (n &gt;= <span class="n">0</span> &amp;&amp; (<span class="t">size_t</span>)n &lt; cap) ? <span class="n">0</span> : -<span class="n">1</span>;   <span class="c">/* -1 = truncado */</span>
+}
+
+<span class="c">/* Multiplicação de tamanhos pode estourar e gerar alocação pequena + escrita grande */</span>
+<span class="t">int32_t</span> *<span class="f">alocar_vetor</span>(<span class="t">size_t</span> n) {
+    <span class="k">if</span> (n &gt; SIZE_MAX / <span class="k">sizeof</span>(<span class="t">int32_t</span>)) { errno = ENOMEM; <span class="k">return</span> NULL; }
+    <span class="k">return</span> <span class="f">calloc</span>(n, <span class="k">sizeof</span>(<span class="t">int32_t</span>));             <span class="c">/* calloc já verifica overflow e zera */</span>
+}
+
+<span class="c">/* Leitura segura de linha: fgets + remoção do '\n' + detecção de truncamento */</span>
+<span class="t">int</span> <span class="f">ler_linha</span>(<span class="t">char</span> *buf, <span class="t">size_t</span> cap) {
+    <span class="k">if</span> (!<span class="f">fgets</span>(buf, (<span class="t">int</span>)cap, stdin)) <span class="k">return</span> -<span class="n">1</span>;
+    <span class="t">size_t</span> len = <span class="f">strcspn</span>(buf, <span class="s">"\n"</span>);
+    <span class="k">if</span> (buf[len] == <span class="s">'\0'</span> &amp;&amp; len == cap - <span class="n">1</span>) <span class="k">return</span> -<span class="n">2</span>;   <span class="c">/* linha maior que o buffer */</span>
+    buf[len] = <span class="s">'\0'</span>;
+    <span class="k">return</span> <span class="n">0</span>;
+}
+
+<span class="t">int</span> <span class="f">main</span>(<span class="t">void</span>) {
+    <span class="t">char</span> msg[<span class="n">32</span>];
+    <span class="k">if</span> (<span class="f">montar_saudacao</span>(msg, <span class="k">sizeof</span> msg, <span class="s">"Ana"</span>) == <span class="n">0</span>) <span class="f">puts</span>(msg);
+
+    <span class="t">int32_t</span> *v = <span class="f">alocar_vetor</span>(<span class="n">1000</span>);
+    <span class="k">if</span> (!v) { <span class="f">perror</span>(<span class="s">"alocar_vetor"</span>); <span class="k">return</span> <span class="n">EXIT_FAILURE</span>; }
+    v[<span class="n">999</span>] = <span class="n">42</span>;                                       <span class="c">/* índice válido: 0..n-1 */</span>
+
+    <span class="f">free</span>(v);
+    v = NULL;      <span class="c">/* evita use-after-free e double-free acidental */</span>
+    <span class="k">return</span> <span class="n">0</span>;
+}
+
+<span class="c">/* Compile com análise dinâmica para ACHAR os bugs antes da produção:
+   gcc -std=c17 -Wall -Wextra -Wpedantic -Wconversion -g -O1 \
+       -fsanitize=address,undefined -fno-omit-frame-pointer seguro.c -o seguro
+   valgrind --leak-check=full ./seguro        (alternativa sem recompilar) */</span></code></pre></div>
+        </div>
+
+        <div class="tab-panel" id="tab-c23" role="tabpanel">
+          <p>O <strong>C23</strong> (ISO/IEC 9899:2024) aproxima C da segurança e da ergonomia modernas: <code>nullptr</code>, <code>constexpr</code>, <code>typeof</code>, <code>bool</code> nativo, <code>#embed</code>, atributos <code>[[...]]</code> e aritmética com verificação de overflow em <code>&lt;stdckdint.h&gt;</code>. Requer GCC 14+ ou Clang 18+ com <code>-std=c23</code>.</p>
+          <div class="code-block"><div class="code-bar"><span>c23.c</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="p">#include</span> <span class="s">&lt;stdckdint.h&gt;</span>   <span class="c">/* C23: ckd_add, ckd_sub, ckd_mul */</span>
+<span class="p">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;stdlib.h&gt;</span>
+
+<span class="c">/* constexpr de verdade em C: constante de compilação tipada (antes: #define) */</span>
+<span class="k">constexpr</span> <span class="t">int</span> LIMITE = <span class="n">1024</span>;
+
+<span class="c">/* [[nodiscard]]: o compilador avisa se o chamador ignorar o retorno */</span>
+[[nodiscard]] <span class="t">bool</span> <span class="f">somar_seguro</span>(<span class="t">int</span> a, <span class="t">int</span> b, <span class="t">int</span> *out) {
+    <span class="k">return</span> !<span class="f">ckd_add</span>(out, a, b);     <span class="c">/* ckd_* retorna true se HOUVE overflow */</span>
+}
+
+<span class="c">/* typeof: macros genéricas sem avaliar o argumento duas vezes */</span>
+<span class="p">#define</span> MAXIMO(a, b) ({ <span class="k">typeof</span>(a) _a = (a); <span class="k">typeof</span>(b) _b = (b); _a &gt; _b ? _a : _b; })
+
+<span class="c">/* #embed: incorpora um arquivo binário no executável em tempo de compilação */</span>
+<span class="k">static</span> <span class="k">const</span> <span class="t">unsigned char</span> LOGO[] = {
+<span class="p">#embed</span> <span class="s">"logo.png"</span>
+};
+
+<span class="t">int</span> <span class="f">main</span>(<span class="t">void</span>) {
+    <span class="t">int</span> r;
+    <span class="k">if</span> (!<span class="f">somar_seguro</span>(<span class="n">2147483647</span>, <span class="n">1</span>, &amp;r))
+        <span class="f">puts</span>(<span class="s">"overflow detectado — nada de comportamento indefinido!"</span>);
+
+    <span class="t">char</span> *p = nullptr;          <span class="c">/* C23: nullptr tem tipo próprio (nullptr_t) */</span>
+    <span class="k">if</span> (!p) <span class="f">printf</span>(<span class="s">"limite=%d maior=%d logo=%zu bytes\n"</span>, LIMITE, <span class="f">MAXIMO</span>(<span class="n">3</span>, <span class="n">7</span>), <span class="k">sizeof</span> LOGO);
+    <span class="k">return</span> <span class="n">0</span>;
+}
+<span class="c">/* gcc-14 -std=c23 -Wall -Wextra c23.c   |   clang-18 -std=c23 c23.c */</span></code></pre></div>
+        </div>
+
+        <div class="tab-panel" id="tab-makefile" role="tabpanel">
+          <p>Um <code>Makefile</code> profissional compila só o que mudou, gera dependências automaticamente, separa build de depuração/release e roda testes. Para testes unitários simples, uma micro-biblioteca de <code>assert</code> basta.</p>
+          <div class="code-block"><div class="code-bar"><span>Makefile + teste.c</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code><span class="c"># ─── Makefile ────────────────────────────────────────────────────</span>
+CC      ?= gcc
+CFLAGS  := -std=c17 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -MMD -MP
+BUILD   ?= debug
+
+ifeq ($(BUILD),debug)
+  CFLAGS += -g -O0 -fsanitize=address,undefined -fno-omit-frame-pointer
+  LDFLAGS += -fsanitize=address,undefined
+else
+  CFLAGS += -O2 -DNDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-strong
+endif
+
+SRC  := $(wildcard src/*.c)
+OBJ  := $(SRC:src/%.c=build/%.o)
+
+all: build/app
+
+build/app: $(OBJ)
+	$(CC) $(LDFLAGS) $^ -o $@
+
+build/%.o: src/%.c | build
+	$(CC) $(CFLAGS) -c $&lt; -o $@
+
+build:
+	mkdir -p build
+
+test: build/app tests/teste
+	./tests/teste
+
+tests/teste: tests/teste.c src/lista.c
+	$(CC) $(CFLAGS) -Isrc $^ -o $@
+
+clean:
+	rm -rf build tests/teste
+
+-include $(OBJ:.o=.d)       <span class="c"># dependências de headers geradas por -MMD</span>
+.PHONY: all test clean
+
+<span class="c">/* ─── tests/teste.c: mini-framework em 6 linhas ───────────────── */</span>
+<span class="p">#include</span> <span class="s">&lt;assert.h&gt;</span>
+<span class="p">#include</span> <span class="s">&lt;stdio.h&gt;</span>
+<span class="p">#include</span> <span class="s">"lista.h"</span>
+
+<span class="p">#define</span> TESTE(nome) <span class="k">static</span> <span class="t">void</span> nome(<span class="t">void</span>)
+<span class="p">#define</span> RODAR(nome) do { nome(); <span class="f">printf</span>(<span class="s">"[ok] %s\n"</span>, #nome); } while (<span class="n">0</span>)
+
+TESTE(inserir_aumenta_tamanho) {
+    Lista l; <span class="f">lista_init</span>(&amp;l);
+    <span class="f">lista_inserir_inicio</span>(&amp;l, <span class="n">10</span>);
+    <span class="f">assert</span>(l.tamanho == <span class="n">1</span>);
+    <span class="f">lista_destruir</span>(&amp;l);
+}
+
+<span class="t">int</span> <span class="f">main</span>(<span class="t">void</span>) { RODAR(inserir_aumenta_tamanho); <span class="k">return</span> <span class="n">0</span>; }
+<span class="c">/* make test BUILD=debug  → ASan/UBSan acusam leaks e acessos inválidos */</span></code></pre></div>
         </div>
       </div>
     </div>

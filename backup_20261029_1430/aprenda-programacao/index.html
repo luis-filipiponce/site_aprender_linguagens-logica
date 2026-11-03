@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aprenda Programação — Do Zero ao Profissional</title>
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/home.css"/>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="scroll-bar" style="position:fixed;top:0;left:0;height:3px;width:0;background:var(--blue);z-index:2000;transition:width .1s;"></div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="logo" href="index.html">&#60;<span>code</span>/&#62; Aprenda Prog.</a>
+  <a class="nav-link" href="index.html">Home</a>
+  <a class="nav-link" href="pages/logica.html">Lógica</a>
+  <a class="nav-link" href="pages/algoritmos.html">Algoritmos</a>
+  <a class="nav-link" href="pages/estruturas.html">Estruturas</a>
+  <a class="nav-link" href="pages/linguagens.html">Linguagens</a>
+  <a class="nav-link" href="pages/paradigmas.html">Paradigmas</a>
+  <a class="nav-link" href="pages/web.html">Web</a>
+  <a class="nav-link" href="pages/banco.html">Banco de Dados</a>
+  <a class="nav-link" href="pages/carreira.html">Carreira</a>
+  <button class="nav-toggle" id="nav-toggle">&#9776;</button>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <h1>🖥️ Aprenda Programação — Do Zero ao Profissional</h1>
+    <p>Um guia completo, interativo e estruturado para aprender a programar do absoluto início. Cada seção cobre um pilar fundamental com teoria, exemplos de código reais e exercícios práticos.</p>
+    <div class="badge-row">
+      <span class="badge badge-blue">9 Módulos</span>
+      <span class="badge badge-purple">+50 Exemplos de Código</span>
+      <span class="badge badge-green">Lógica ao Avançado</span>
+      <span class="badge badge-orange">Linguagens Globais</span>
+      <span class="badge badge-red">Carreira Dev</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-strip">
+    <div class="stat-item"><span class="stat-val">9</span><div class="stat-lbl">Módulos</div></div>
+    <div class="stat-item"><span class="stat-val">700+</span><div class="stat-lbl">Linguagens existem</div></div>
+    <div class="stat-item"><span class="stat-val">12</span><div class="stat-lbl">Meses para júnior</div></div>
+    <div class="stat-item"><span class="stat-val">∞</span><div class="stat-lbl">Possibilidades</div></div>
+  </div>
+
+  <!-- CAMPO DE REDIRECIONAMENTO NA MESMA PÁGINA PARA O CURSO DE LÓGICA PURA (22 MÓDULOS) -->
+  <div style="margin-bottom: 25px; background: rgba(99, 102, 241, 0.08); border: 2px solid #6366f1; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;">
+    <div>
+      <strong style="color: #4f46e5; font-size: 1.1rem;">🧠 Curso Completo de Lógica de Programação Pura & Ciência da Computação</strong>
+      <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: #475569;">
+        Aprenda a raciocinar, modelar invariantes, calcular complexidade com o Teorema Mestre e receba análises da tutora IA para suas próprias palavras.
+      </p>
+    </div>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+      <select id="home-quick-select-modulo" style="flex: 1; min-width: 250px; padding: 0.65rem 1rem; border-radius: 8px; border: 1px solid #cbd5e1; background: #fff; font-size: 0.9rem; font-weight: 600;">
+        <option value="1">Módulo 1: Fundamentos do Pensamento Lógico & Argumentos</option>
+        <option value="2">Módulo 2: Resolução de Problemas (Pólya)</option>
+        <option value="3">Módulo 3: Algoritmos e Sequência Lógica</option>
+        <option value="4">Módulo 4: Entradas, Processamento e Saídas (E/P/S)</option>
+        <option value="5">Módulo 5: Variáveis, Dados e Estado (Trace Table)</option>
+        <option value="6">Módulo 6: Operadores e Expressões</option>
+        <option value="7">Módulo 7: Lógica Proposicional & Tabelas-Verdade</option>
+        <option value="8">Módulo 8: Estruturas Condicionais & Decisão</option>
+        <option value="9">Módulo 9: Repetição, Laços & Invariantes</option>
+        <option value="10">Módulo 10: Fluxogramas & Representação Visual</option>
+        <option value="11">Módulo 11: Decomposição & Abstração</option>
+        <option value="12">Módulo 12: Funções & Modularização</option>
+        <option value="13">Módulo 13: Validação, Testes & Depuração</option>
+        <option value="14">Módulo 14: Correção & Lógica de Hoare</option>
+        <option value="15">Módulo 15: Complexidade & Notação Big O</option>
+        <option value="16">Módulo 16: Raciocínio Lógico Avançado</option>
+        <option value="17">Módulo 17: Desafios Integradores</option>
+        <option value="18">Módulo 18: Estruturas de Dados Abstratas (Pilhas, Filas, Grafos)</option>
+        <option value="19">Módulo 19: Recursão & Teorema Mestre</option>
+        <option value="20">Módulo 20: Paradigmas (Gulosos, Backtracking, DP)</option>
+        <option value="21">Módulo 21: Computabilidade & Máquinas de Turing</option>
+        <option value="22">Módulo 22: Complexidade P vs NP & NP-Completos</option>
+      </select>
+      <button onclick="window.location.href='../curso-logica.html?modulo=' + document.getElementById('home-quick-select-modulo').value" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #fff; padding: 0.65rem 1.25rem; border-radius: 8px; border: none; font-weight: 700; font-size: 0.9rem; cursor: pointer; white-space: nowrap;">
+        ⚡ Acessar Módulo (Na Mesma Página) →
+      </button>
+    </div>
+  </div>
+
+  <!-- CARDS GRID -->
+  <h2 style="font-size:18px;font-weight:700;margin-bottom:20px;">📚 Escolha seu módulo</h2>
+  <div class="home-grid">
+
+    <a class="home-card" href="pages/logica.html">
+      <div class="home-card-icon icon-purple">🧠</div>
+      <h3>Lógica de Programação</h3>
+      <p>Variáveis, tipos de dados, condicionais, loops e funções. A base de tudo antes de qualquer linguagem.</p>
+      <span class="card-link">Estudar →</span>
+    </a>
+
+    <a class="home-card" href="pages/algoritmos.html">
+      <div class="home-card-icon icon-green">⚙️</div>
+      <h3>Algoritmos</h3>
+      <p>Fluxogramas, busca linear e binária, ordenação, Big O Notation. Pense antes de codificar.</p>
+      <span class="card-link">Estudar →</span>
+    </a>
+
+    <a class="home-card" href="pages/estruturas.html">
+      <div class="home-card-icon icon-orange">🗂️</div>
+      <h3>Estruturas de Dados</h3>
+      <p>Arrays, pilhas, filas, árvores, hash tables, grafos. Organizar para resolver eficientemente.</p>
+      <span class="card-link">Estudar →</span>
+    </a>
+
+    <a class="home-card" href="pages/linguagens.html">
+      <div class="home-card-icon icon-red">💬</div>
+      <h3>Linguagens Globais</h3>
+      <p>Python, JavaScript, Java, C/C++, Go, Rust, SQL e mais. Com exemplos de código reais.</p>
+      <span class="card-link">Estudar →</span>
+    </a>
+
+    <a class="home-card" href="pages/paradigmas.html">
+      <div class="home-card-icon icon-teal">🎯</div>
+      <h3>Paradigmas</h3>
+      <p>Imperativo, OOP (4 pilares), Funcional, Declarativo. Formas de pensar em código.</p>
+      <span class="card-link">Estudar →</span>
+    </a>
+
+    <a class="home-card" href="pages/web.html">
+      <div class="home-card-icon icon-blue">🌐</div>
+      <h3>Web, Back-end & Mobile</h3>
+      <p>Como a web funciona, HTML/CSS/JS, APIs REST, frameworks e desenvolvimento mobile.</p>
+      <span class="card-link">Estudar →</span>
+    </a>
+
+    <a class="home-card" href="pages/banco.html">
+      <div class="home-card-icon icon-dark">🗄️</div>
+      <h3>Banco de Dados</h3>
+      <p>SQL completo, NoSQL, ACID, normalização, índices e ORMs. Dados são a alma do software.</p>
+      <span class="card-link">Estudar →</span>
+    </a>
+
+    <a class="home-card" href="pages/devops.html">
+      <div class="home-card-icon icon-gray">🔧</div>
+      <h3>Git, DevOps & Boas Práticas</h3>
+      <p>Git, SOLID, testes, Docker, Cloud e CI/CD. Como profissionais trabalham no dia a dia.</p>
+      <span class="card-link">Estudar →</span>
+    </a>
+
+    <a class="home-card" href="pages/carreira.html">
+      <div class="home-card-icon icon-yellow">🚀</div>
+      <h3>Roadmap de Carreira</h3>
+      <p>Cronograma de 12 meses, caminhos profissionais, portfólio e como entrar no mercado.</p>
+      <span class="card-link">Estudar →</span>
+    </a>
+
+  </div>
+
+  <!-- ROADMAP RÁPIDO -->
+  <div class="section" style="margin-top:48px;">
+    <div class="section-title">
+      <div class="num-badge num-blue">→</div>
+      <h2>Por onde começar?</h2>
+    </div>
+    <div class="roadmap-strip">
+      <div class="road-item">
+        <div class="road-dot" style="background:var(--purple);"></div>
+        <div class="road-body">
+          <strong>Semana 1–4 — Lógica de Programação</strong>
+          <p>Não pule essa etapa. Lógica é o alicerce. Sem ela, qualquer linguagem vira decoreba.</p>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-dot" style="background:var(--green);"></div>
+        <div class="road-body">
+          <strong>Semana 5–8 — Algoritmos + Estruturas de Dados</strong>
+          <p>Aprenda a pensar como um computador. Como organizar e buscar dados eficientemente.</p>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-dot" style="background:var(--orange);"></div>
+        <div class="road-body">
+          <strong>Mês 3–4 — Primeira Linguagem (Python recomendado)</strong>
+          <p>Implemente os algoritmos que você aprendeu. Faça projetos pequenos e concretos.</p>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-dot" style="background:var(--blue);"></div>
+        <div class="road-body">
+          <strong>Mês 5–6 — Web + Banco de Dados</strong>
+          <p>HTML, CSS, JavaScript, SQL. Crie sua primeira aplicação web completa com banco.</p>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-dot" style="background:var(--red);"></div>
+        <div class="road-body">
+          <strong>Mês 7–12 — Especialização + Portfólio + Mercado</strong>
+          <p>Escolha uma área (front-end, back-end, mobile, dados). Construa projetos reais. Candidate-se.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box green">
+    <strong>💡 Dica de ouro:</strong> Escreva código todos os dias, mesmo que por 30 minutos. Consistência supera intensidade. Todo grande desenvolvedor começou exatamente onde você está agora.
+  </div>
+
+</div>
+
+<footer>
+  <p>Aprenda Programação — Do Zero ao Profissional &nbsp;|&nbsp; Made with IBM Bob</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

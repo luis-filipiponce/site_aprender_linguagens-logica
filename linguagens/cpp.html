@@ -972,6 +972,218 @@ std::<span class="ty">unique_ptr</span>&lt;<span class="ty">Shape</span>&gt; s =
         </div>
       </div>
 
+      <!-- Operadores -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>⚖️ &nbsp;Operadores, Spaceship (<code>&lt;=&gt;</code>) &amp; Ternário</span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>Além dos operadores lógicos (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>) e do operador ternário (<code>cond ? a : b</code>), o C++20 introduziu o <strong>Three-Way Comparison Operator</strong> (conhecido como <strong>Spaceship Operator</strong> <code>&lt;=&gt;</code>), que gera automaticamente os 6 operadores relacionais (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>).</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="pp">#include &lt;compare&gt;
+#include &lt;iostream&gt;</span>
+
+<span class="kw">struct</span> <span class="ty">Ponto</span> {
+    <span class="kw">int</span> x, y;
+    <span class="cm">// Spaceship operator padrão (C++20): compara membro a membro</span>
+    <span class="kw">auto</span> <span class="kw">operator</span>&lt;=&gt;(<span class="kw">const</span> <span class="ty">Ponto</span>&amp;) <span class="kw">const</span> = <span class="kw">default</span>;
+};
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="ty">Ponto</span> p1{<span class="nm">1</span>, <span class="nm">2</span>}, p2{<span class="nm">1</span>, <span class="nm">3</span>};
+    <span class="kw">bool</span> menor = (p1 &lt; p2);  <span class="cm">// true gerado automaticamente</span>
+    <span class="kw">bool</span> igual = (p1 == p2); <span class="cm">// false</span>
+
+    <span class="cm">// Operador ternário</span>
+    <span class="kw">const char</span>* msg = (p1 &lt; p2) ? <span class="st">"p1 vem antes"</span> : <span class="st">"p2 vem antes"</span>;
+    std::cout &lt;&lt; msg &lt;&lt; <span class="st">"\n"</span>;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Condições & if constexpr -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🚦 &nbsp;Condições, <code>if</code> com Inicializador &amp; <code>if constexpr</code></span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>O C++17 trouxe <code>if</code> com inicializador integrado para limitar o escopo de variáveis. Já o <code>if constexpr</code> avalia a condição em <strong>tempo de compilação</strong>, descartando o ramo não utilizado sem gerar código de máquina.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="pp">#include &lt;map&gt;
+#include &lt;type_traits&gt;</span>
+
+<span class="cm">// 1. if com inicializador local (C++17)</span>
+std::<span class="ty">map</span>&lt;<span class="kw">int</span>, std::<span class="ty">string</span>&gt; usuarios{{<span class="nm">1</span>, <span class="st">"Ana"</span>}};
+<span class="kw">if</span> (<span class="kw">auto</span> it = usuarios.<span class="fn">find</span>(<span class="nm">1</span>); it != usuarios.<span class="fn">end</span>()) {
+    std::cout &lt;&lt; <span class="st">"Encontrado: "</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="st">"\n"</span>;
+}
+
+<span class="cm">// 2. if constexpr: compilado condicionalmente em compile-time</span>
+<span class="kw">template</span>&lt;<span class="kw">typename</span> T&gt;
+<span class="kw">auto</span> <span class="fn">processarValor</span>(T valor) {
+    <span class="kw">if constexpr</span> (std::is_pointer_v&lt;T&gt;) {
+        <span class="kw">return</span> *valor; <span class="cm">// só compila se for ponteiro</span>
+    } <span class="kw">else</span> {
+        <span class="kw">return</span> valor;
+    }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conversão de Tipos (Castings Modernos) -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🔄 &nbsp;Conversão de Tipos — <code>static_cast</code>, <code>dynamic_cast</code></span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>C++ desaconselha casts de estilo C <code>(tipo)x</code> em favor de 4 operadores explícitos e seguros: <code>static_cast</code> (conversões bem definidas em compile-time), <code>dynamic_cast</code> (downcasting seguro em tempo de execução com RTTI), <code>const_cast</code> (remover constância) e <code>reinterpret_cast</code> (reinterpretação bruta de bits).</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="kw">double</span> pi = <span class="nm">3.14159</span>;
+<span class="kw">int</span> piInt = <span class="kw">static_cast</span>&lt;<span class="kw">int</span>&gt;(pi); <span class="cm">// seguro e explícito</span>
+
+<span class="cm">// dynamic_cast em hierarquia polimórfica</span>
+<span class="kw">class</span> <span class="ty">Base</span> { <span class="kw">public</span>: <span class="kw">virtual</span> ~<span class="ty">Base</span>() = <span class="kw">default</span>; };
+<span class="kw">class</span> <span class="ty">Derivada</span> : <span class="kw">public</span> <span class="ty">Base</span> { <span class="kw">public</span>: <span class="kw">void</span> <span class="fn">acao</span>() {} };
+
+<span class="ty">Base</span>* b = <span class="kw">new</span> <span class="ty">Derivada</span>();
+<span class="kw">if</span> (<span class="ty">Derivada</span>* d = <span class="kw">dynamic_cast</span>&lt;<span class="ty">Derivada</span>*&gt;(b)) {
+    d-&gt;<span class="fn">acao</span>(); <span class="cm">// verificado com sucesso em runtime</span>
+}
+<span class="kw">delete</span> b;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Laços de Repetição -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🔁 &nbsp;Laços de Repetição &amp; Range-based <code>for</code></span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>O <strong>range-based for</strong> (<code>for (auto&amp;&amp; item : container)</code>) é a forma idiomática e segura de percorrer coleções da STL sem perigo de erros de índice fora do limite (out-of-bounds).</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="pp">#include &lt;vector&gt;
+#include &lt;iostream&gt;</span>
+
+std::<span class="ty">vector</span>&lt;std::<span class="ty">string</span>&gt; stacks = {<span class="st">"C++"</span>, <span class="st">"Rust"</span>, <span class="st">"Go"</span>};
+
+<span class="cm">// Range-for com referência constante (sem cópia)</span>
+<span class="kw">for</span> (<span class="kw">const auto</span>&amp; item : stacks) {
+    std::cout &lt;&lt; item &lt;&lt; <span class="st">" "</span>;
+}
+
+<span class="cm">// Range-for com modificação</span>
+<span class="kw">for</span> (<span class="kw">auto</span>&amp; item : stacks) {
+    item += <span class="st">" 2024"</span>;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exceções & std::expected -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🛡️ &nbsp;Tratamento de Exceções &amp; <code>std::expected</code> (C++23)</span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>C++ suporta o bloco tradicional <code>try / catch / throw</code> com garantia de RAII (destrutores rodam automaticamente no desenrolar da pilha). Para código de altíssima performance onde exceções são desativadas (como em Game Dev), o C++23 introduziu <code>std::expected&lt;T, E&gt;</code> para erros do tipo monadic.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="pp">#include &lt;expected&gt;
+#include &lt;string&gt;</span>
+
+<span class="cm">// C++23 std::expected: retorna o valor ou o erro de forma explícita</span>
+std::<span class="ty">expected</span>&lt;<span class="kw">double</span>, std::<span class="ty">string</span>&gt; <span class="fn">dividir</span>(<span class="kw">double</span> a, <span class="kw">double</span> b) <span class="kw">noexcept</span> {
+    <span class="kw">if</span> (b == <span class="nm">0.0</span>) <span class="kw">return</span> std::<span class="fn">unexpected</span>(<span class="st">"Divisão por zero!"</span>);
+    <span class="kw">return</span> a / b;
+}
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="kw">auto</span> res = <span class="fn">dividir</span>(<span class="nm">10.0</span>, <span class="nm">2.0</span>);
+    <span class="kw">if</span> (res) {
+        std::cout &lt;&lt; <span class="st">"Resultado: "</span> &lt;&lt; *res &lt;&lt; <span class="st">"\n"</span>;
+    } <span class="kw">else</span> {
+        std::cerr &lt;&lt; <span class="st">"Erro: "</span> &lt;&lt; res.<span class="fn">error</span>() &lt;&lt; <span class="st">"\n"</span>;
+    }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wrappers em C++ -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <span>🎁 &nbsp;Wrappers Modernos — <code>std::optional</code>, <code>std::reference_wrapper</code></span>
+          <span class="acc-arrow">▾</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-content">
+            <p>O padrão de tipos embrulho (Wrappers) em C++ moderno é provido por tipos utilitários da STL como <code>std::optional&lt;T&gt;</code> (embrulha um valor ou estado vazio <code>std::nullopt</code> sem alocação de heap), <code>std::variant&lt;Ts...&gt;</code> (união tipada segura) e <code>std::reference_wrapper&lt;T&gt;</code> (permite guardar referências em containers STL).</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">C++</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+              </div>
+              <pre><span class="pp">#include &lt;optional&gt;
+#include &lt;functional&gt;
+#include &lt;vector&gt;</span>
+
+<span class="cm">// Wrapper de valor opcional</span>
+std::<span class="ty">optional</span>&lt;std::<span class="ty">string</span>&gt; <span class="fn">buscarUsuario</span>(<span class="kw">int</span> id) {
+    <span class="kw">if</span> (id == <span class="nm">1</span>) <span class="kw">return</span> <span class="st">"Luis Ponce"</span>;
+    <span class="kw">return</span> std::<span class="nm">nullopt</span>; <span class="cm">// ausente sem usar ponteiro nulo</span>
+}
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="kw">auto</span> user = <span class="fn">buscarUsuario</span>(<span class="nm">1</span>);
+    std::cout &lt;&lt; user.<span class="fn">value_or</span>(<span class="st">"Desconhecido"</span>) &lt;&lt; <span class="st">"\n"</span>;
+
+    <span class="cm">// reference_wrapper em container STL</span>
+    <span class="kw">int</span> x = <span class="nm">10</span>, y = <span class="nm">20</span>;
+    std::<span class="ty">vector</span>&lt;std::<span class="ty">reference_wrapper</span>&lt;<span class="kw">int</span>&gt;&gt; refs = {x, y};
+    refs[<span class="nm">0</span>].<span class="fn">get</span>() = <span class="nm">99</span>; <span class="cm">// altera x diretamente!</span>
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -987,6 +1199,9 @@ std::<span class="ty">unique_ptr</span>&lt;<span class="ty">Shape</span>&gt; s =
       <button class="tab-btn active" onclick="switchTab(0)">1 — RAII &amp; unique_ptr</button>
       <button class="tab-btn" onclick="switchTab(1)">2 — C++20 Concepts</button>
       <button class="tab-btn" onclick="switchTab(2)">3 — Thread Pool</button>
+      <button class="tab-btn" onclick="switchTab(3)">4 — Ranges, format &amp; expected</button>
+      <button class="tab-btn" onclick="switchTab(4)">5 — jthread &amp; latch</button>
+      <button class="tab-btn" onclick="switchTab(5)">6 — CMake, Sanitizers &amp; Catch2</button>
     </div>
 
     <!-- Tab 0 -->
@@ -1153,6 +1368,189 @@ std::<span class="ty">unique_ptr</span>&lt;<span class="ty">Shape</span>&gt; s =
 } <span class="cm">// pool destruído → workers finalizam</span></pre>
       </div>
     </div>
+    <!-- Tab 3 -->
+    <div class="tab-panel" id="tab-3">
+      <p class="tab-desc">C++20/23 deixou o código mais declarativo: <code>std::ranges</code> com projeções e pipelines lazy, <code>std::format</code>/<code>std::println</code> com segurança de tipos e <code>std::expected</code> com operações monádicas para erros sem exceções.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">C++23 — Ranges, format &amp; expected</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+        </div>
+        <pre><span class="pp">#include &lt;algorithm&gt;
+#include &lt;expected&gt;
+#include &lt;print&gt;      // C++23: std::println (GCC 14+, Clang 18+, MSVC 19.37+)
+#include &lt;ranges&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;</span>
+
+<span class="kw">struct</span> <span class="ty">Produto</span> { std::<span class="ty">string</span> nome; <span class="kw">double</span> preco; <span class="kw">int</span> estoque; };
+<span class="kw">enum class</span> <span class="ty">Erro</span> { PrecoInvalido, EstoqueNegativo };
+
+<span class="cm">// std::expected&lt;T,E&gt;: valor OU erro tipado, sem exceção e sem códigos mágicos</span>
+std::<span class="ty">expected</span>&lt;<span class="ty">Produto</span>, <span class="ty">Erro</span>&gt; <span class="fn">criar</span>(std::<span class="ty">string</span> nome, <span class="kw">double</span> preco, <span class="kw">int</span> estoque) {
+    <span class="kw">if</span> (preco &lt;= <span class="nm">0</span>)   <span class="kw">return</span> std::<span class="fn">unexpected</span>(<span class="ty">Erro</span>::PrecoInvalido);
+    <span class="kw">if</span> (estoque &lt; <span class="nm">0</span>) <span class="kw">return</span> std::<span class="fn">unexpected</span>(<span class="ty">Erro</span>::EstoqueNegativo);
+    <span class="kw">return</span> <span class="ty">Produto</span>{std::<span class="fn">move</span>(nome), preco, estoque};
+}
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    std::<span class="ty">vector</span>&lt;<span class="ty">Produto</span>&gt; catalogo = {
+        {<span class="st">"Teclado"</span>, <span class="nm">250.0</span>, <span class="nm">12</span>}, {<span class="st">"Mouse"</span>, <span class="nm">90.0</span>, <span class="nm">0</span>},
+        {<span class="st">"Monitor"</span>, <span class="nm">1400.0</span>, <span class="nm">4</span>}, {<span class="st">"Webcam"</span>, <span class="nm">320.0</span>, <span class="nm">7</span>},
+    };
+
+    <span class="kw">namespace</span> rv = std::views;
+
+    <span class="cm">// Pipeline lazy: nada é calculado até a iteração; sem vetores temporários</span>
+    <span class="kw">auto</span> promo = catalogo
+        | rv::<span class="fn">filter</span>([](<span class="kw">const</span> <span class="ty">Produto</span>&amp; p) { <span class="kw">return</span> p.estoque &gt; <span class="nm">0</span>; })
+        | rv::<span class="fn">transform</span>([](<span class="kw">const</span> <span class="ty">Produto</span>&amp; p) { <span class="kw">return</span> p.preco * <span class="nm">0.9</span>; })
+        | rv::<span class="fn">take</span>(<span class="nm">3</span>);
+    <span class="kw">for</span> (<span class="kw">double</span> v : promo) std::<span class="fn">println</span>(<span class="st">"Promoção: R$ {:&gt;8.2f}"</span>, v);
+
+    <span class="cm">// Ordenação por projeção: sem escrever comparador</span>
+    std::ranges::<span class="fn">sort</span>(catalogo, {}, &amp;<span class="ty">Produto</span>::preco);
+    <span class="kw">for</span> (<span class="kw">const</span> <span class="kw">auto</span>&amp; [nome, preco, _] : catalogo)      <span class="cm">// structured bindings (C++17)</span>
+        std::<span class="fn">println</span>(<span class="st">"{:&lt;10} R$ {:&gt;8.2f}"</span>, nome, preco);
+
+    <span class="cm">// Encadeamento monádico: sem if aninhado</span>
+    <span class="kw">auto</span> r = <span class="fn">criar</span>(<span class="st">"Headset"</span>, <span class="nm">199.9</span>, <span class="nm">3</span>)
+        .<span class="fn">transform</span>([](<span class="ty">Produto</span> p) { p.preco *= <span class="nm">1.1</span>; <span class="kw">return</span> p; })
+        .<span class="fn">transform</span>([](<span class="kw">const</span> <span class="ty">Produto</span>&amp; p) { <span class="kw">return</span> std::<span class="fn">format</span>(<span class="st">"{} -&gt; R$ {:.2f}"</span>, p.nome, p.preco); });
+
+    <span class="kw">if</span> (r) std::<span class="fn">println</span>(<span class="st">"{}"</span>, *r);
+    <span class="kw">else</span>   std::<span class="fn">println</span>(<span class="st">"Falha: código {}"</span>, <span class="kw">static_cast</span>&lt;<span class="kw">int</span>&gt;(r.<span class="fn">error</span>()));
+}</pre>
+      </div>
+    </div>
+
+    <!-- Tab 4 -->
+    <div class="tab-panel" id="tab-4">
+      <p class="tab-desc">Concorrência moderna sem armadilhas: <code>std::jthread</code> faz <em>join</em> automático e suporta cancelamento cooperativo via <code>std::stop_token</code>; <code>std::latch</code> sincroniza etapas e <code>std::scoped_lock</code> evita deadlock ao travar vários mutexes.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">C++20 — jthread, stop_token &amp; latch</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+        </div>
+        <pre><span class="pp">#include &lt;atomic&gt;
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;latch&gt;
+#include &lt;mutex&gt;
+#include &lt;syncstream&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;</span>
+
+<span class="kw">using namespace</span> std::chrono_literals;
+
+<span class="kw">struct</span> <span class="ty">Conta</span> { std::<span class="ty">mutex</span> m; <span class="kw">long</span> saldo = <span class="nm">0</span>; };
+
+<span class="cm">// scoped_lock trava os DOIS mutexes de forma atômica: sem deadlock por ordem de aquisição</span>
+<span class="kw">void</span> <span class="fn">transferir</span>(<span class="ty">Conta</span>&amp; de, <span class="ty">Conta</span>&amp; para, <span class="kw">long</span> valor) {
+    std::<span class="ty">scoped_lock</span> lk(de.m, para.m);
+    de.saldo   -= valor;
+    para.saldo += valor;
+}
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    <span class="cm">// 1) Cancelamento cooperativo: stop_token é injetado automaticamente</span>
+    std::<span class="ty">atomic</span>&lt;<span class="kw">int</span>&gt; ciclos{<span class="nm">0</span>};
+    {
+        std::<span class="ty">jthread</span> worker([&amp;](std::<span class="ty">stop_token</span> st) {
+            <span class="kw">while</span> (!st.<span class="fn">stop_requested</span>()) {
+                ++ciclos;
+                std::this_thread::<span class="fn">sleep_for</span>(<span class="nm">10</span>ms);
+            }
+            std::<span class="ty">osyncstream</span>(std::cout) &lt;&lt; <span class="st">"worker encerrado de forma limpa\n"</span>;
+        });
+        std::this_thread::<span class="fn">sleep_for</span>(<span class="nm">100</span>ms);
+        worker.<span class="fn">request_stop</span>();
+    }   <span class="cm">// destrutor do jthread: request_stop() + join() — nunca esquece o join</span>
+
+    <span class="cm">// 2) latch: barreira de uso único — espera N tarefas concluírem</span>
+    <span class="kw">constexpr</span> <span class="kw">int</span> N = <span class="nm">4</span>;
+    std::<span class="ty">latch</span> prontos{N};
+    std::<span class="ty">atomic</span>&lt;<span class="kw">long</span>&gt; total{<span class="nm">0</span>};
+    std::<span class="ty">vector</span>&lt;std::<span class="ty">jthread</span>&gt; pool;
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">1</span>; i &lt;= N; ++i)
+        pool.<span class="fn">emplace_back</span>([&amp;, i] { total += i * <span class="nm">100</span>; prontos.<span class="fn">count_down</span>(); });
+    prontos.<span class="fn">wait</span>();                              <span class="cm">// bloqueia até count == 0</span>
+
+    <span class="ty">Conta</span> a, b; a.saldo = <span class="nm">1000</span>;
+    <span class="fn">transferir</span>(a, b, <span class="nm">250</span>);
+    std::<span class="ty">osyncstream</span>(std::cout) &lt;&lt; <span class="st">"total="</span> &lt;&lt; total &lt;&lt; <span class="st">" a="</span> &lt;&lt; a.saldo &lt;&lt; <span class="st">" b="</span> &lt;&lt; b.saldo &lt;&lt; <span class="st">'\n'</span>;
+}
+<span class="cm">// Compile com: g++ -std=c++20 -pthread -O2 main.cpp</span></pre>
+      </div>
+    </div>
+
+    <!-- Tab 5 -->
+    <div class="tab-panel" id="tab-5">
+      <p class="tab-desc">Projeto profissional: <strong>CMake</strong> com avisos tratados como erro, <strong>sanitizers</strong> (ASan/UBSan) para achar bugs de memória e comportamento indefinido, e testes automatizados com <strong>Catch2</strong> via <code>ctest</code>.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">CMake + Sanitizers + Catch2</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+        </div>
+        <pre><span class="cm"># ─── CMakeLists.txt ───────────────────────────────────────────────</span>
+cmake_minimum_required(VERSION 3.28)
+project(loja LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)            <span class="cm"># -std=c++23, não gnu++23 (portável)</span>
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)    <span class="cm"># alimenta clangd e clang-tidy</span>
+
+add_library(loja_core src/produto.cpp)
+target_include_directories(loja_core PUBLIC include)
+target_compile_options(loja_core PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Werror)
+
+<span class="cm"># Sanitizers: cmake -B build -DSANITIZE=ON  (ASan e TSan NÃO podem ser combinados)</span>
+option(SANITIZE "Habilita ASan + UBSan" OFF)
+if(SANITIZE)
+  target_compile_options(loja_core PUBLIC -fsanitize=address,undefined -fno-omit-frame-pointer)
+  target_link_options(loja_core PUBLIC -fsanitize=address,undefined)
+endif()
+
+<span class="cm"># Testes com Catch2 (use a tag estável mais recente)</span>
+include(FetchContent)
+FetchContent_Declare(Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG        v3.7.1)
+FetchContent_MakeAvailable(Catch2)
+
+enable_testing()
+add_executable(testes tests/produto_test.cpp)
+target_link_libraries(testes PRIVATE loja_core Catch2::Catch2WithMain)
+include(CTest)
+include(Catch)
+catch_discover_tests(testes)
+
+<span class="cm">// ─── tests/produto_test.cpp ──────────────────────────────────────</span>
+<span class="pp">#include &lt;catch2/catch_test_macros.hpp&gt;
+#include "produto.hpp"</span>
+
+<span class="fn">TEST_CASE</span>(<span class="st">"criar rejeita preço inválido"</span>, <span class="st">"[produto]"</span>) {
+    <span class="kw">auto</span> r = <span class="fn">criar</span>(<span class="st">"Teclado"</span>, -<span class="nm">1.0</span>, <span class="nm">5</span>);
+    <span class="fn">REQUIRE_FALSE</span>(r.<span class="fn">has_value</span>());
+    <span class="fn">REQUIRE</span>(r.<span class="fn">error</span>() == <span class="ty">Erro</span>::PrecoInvalido);
+}
+
+<span class="fn">TEST_CASE</span>(<span class="st">"criar aceita dados válidos"</span>, <span class="st">"[produto]"</span>) {
+    <span class="kw">auto</span> r = <span class="fn">criar</span>(<span class="st">"Mouse"</span>, <span class="nm">90.0</span>, <span class="nm">2</span>);
+    <span class="fn">REQUIRE</span>(r.<span class="fn">has_value</span>());
+    <span class="fn">REQUIRE</span>(r-&gt;nome == <span class="st">"Mouse"</span>);
+}
+
+<span class="cm"># ─── Fluxo diário ─────────────────────────────────────────────────</span>
+<span class="cm"># cmake -B build -DSANITIZE=ON -DCMAKE_BUILD_TYPE=Debug</span>
+<span class="cm"># cmake --build build -j</span>
+<span class="cm"># ctest --test-dir build --output-on-failure</span>
+<span class="cm"># clang-tidy -p build src/*.cpp   # análise estática (bugprone-*, modernize-*)</span></pre>
+      </div>
+    </div>
+
+
 
   </section>
 

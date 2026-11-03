@@ -680,6 +680,135 @@ composer dump-autoload
           </div>
         </div>
 
+        <!-- 7 -->
+        <div class="acc-item">
+          <button class="acc-header">
+            Operadores Relacionais, Lógicos, Spaceship &amp; Ternário
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>PHP oferece operadores estritos (<code>===</code>, <code>!==</code>) e não estritos. O operador <strong>Spaceship</strong> (<code>$a &lt;=&gt; $b</code>) retorna <code>-1</code>, <code>0</code> ou <code>1</code>. Além do operador ternário tradicional <code>cond ? a : b</code>, o PHP inclui o <strong>Elvis operator</strong> (<code>$a ?: $b</code>) e o <strong>Null Coalescing</strong> (<code>$a ?? $b</code>).</p>
+            <div class="code-wrap">
+              <button class="copy-btn">Copiar</button>
+              <pre><code><span class="cm">&lt;?php</span>
+<span class="var">$a</span> = <span class="num">10</span>;
+<span class="var">$b</span> = <span class="num">20</span>;
+
+<span class="cm">// 1. Spaceship operator &lt;=&gt;</span>
+<span class="var">$comparacao</span> = <span class="var">$a</span> &lt;=&gt; <span class="var">$b</span>; <span class="cm">// -1 (porque $a &lt; $b)</span>
+
+<span class="cm">// 2. Operadores Lógicos</span>
+<span class="var">$ehValido</span> = (<span class="var">$a</span> &gt; <span class="num">5</span>) &amp;&amp; (<span class="var">$b</span> &lt; <span class="num">30</span>); <span class="cm">// true</span>
+
+<span class="cm">// 3. Operador Ternário e Elvis</span>
+<span class="var">$status</span> = (<span class="var">$a</span> &gt;= <span class="num">18</span>) ? <span class="str">'Maior'</span> : <span class="str">'Menor'</span>;
+<span class="var">$nome</span>   = <span class="var">$_GET</span>[<span class="str">'nome'</span>] ?? <span class="str">'Visitante'</span>; <span class="cm">// Null coalescing</span>
+<span class="var">$apelido</span> = <span class="var">$apelidoInformado</span> ?: <span class="str">'Sem apelido'</span>; <span class="cm">// Elvis</span></code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="acc-item">
+          <button class="acc-header">
+            Conversão de Tipos (Type Casting &amp; Juggling)
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>O PHP possui coerção automática (<em>type juggling</em>) e <strong>casting explícito</strong> usando <code>(int)</code>, <code>(float)</code>, <code>(string)</code>, <code>(bool)</code>, <code>(array)</code> ou <code>(object)</code>. Funções como <code>intval()</code>, <code>strval()</code> e <code>boolval()</code> também estão disponíveis.</p>
+            <div class="code-wrap">
+              <button class="copy-btn">Copiar</button>
+              <pre><code><span class="cm">&lt;?php</span>
+<span class="cm">// 1. Type Casting Explícito</span>
+<span class="var">$strValor</span> = <span class="str">"125.80"</span>;
+<span class="var">$intValor</span> = (<span class="kw">int</span>) <span class="var">$strValor</span>;   <span class="cm">// 125</span>
+<span class="var">$fltValor</span> = (<span class="kw">float</span>) <span class="var">$strValor</span>; <span class="cm">// 125.8</span>
+
+<span class="cm">// 2. Casting para Array e Objeto</span>
+<span class="var">$configObj</span> = (<span class="kw">object</span>) [<span class="str">'app'</span> =&gt; <span class="str">'PonceApp'</span>, <span class="str">'versao'</span> =&gt; <span class="num">1</span>];
+<span class="kw">echo</span> <span class="var">$configObj</span>-&gt;app; <span class="cm">// "PonceApp"</span>
+
+<span class="cm">// 3. Conversão para Booleano</span>
+<span class="var">$ativo</span> = (<span class="kw">bool</span>) <span class="num">1</span>; <span class="cm">// true (0, "", [], null são false)</span></code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="acc-item">
+          <button class="acc-header">
+            Laços de Repetição (foreach, for, while, do-while)
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>O laço <code>foreach</code> é a estrutura mais poderosa do PHP para percorrer arrays indexados e associativos (chave =&gt; valor). <code>for</code>, <code>while</code> e <code>do-while</code> completam os mecanismos de iteração.</p>
+            <div class="code-wrap">
+              <button class="copy-btn">Copiar</button>
+              <pre><code><span class="cm">&lt;?php</span>
+<span class="var">$equipe</span> = [
+    <span class="str">'admin'</span> =&gt; <span class="str">'Luis Ponce'</span>,
+    <span class="str">'dev'</span>   =&gt; <span class="str">'Ana Clara'</span>,
+    <span class="str">'qa'</span>    =&gt; <span class="str">'Carlos Dev'</span>,
+];
+
+<span class="cm">// 1. foreach com chave e valor</span>
+<span class="kw">foreach</span> (<span class="var">$equipe</span> <span class="kw">as</span> <span class="var">$cargo</span> =&gt; <span class="var">$nome</span>) {
+    <span class="kw">if</span> (<span class="var">$cargo</span> === <span class="str">'qa'</span>) <span class="kw">continue</span>; <span class="cm">// pula iteração</span>
+    <span class="kw">echo</span> <span class="str">"Cargo: <span class="var">$cargo</span> | Nome: <span class="var">$nome</span>\n"</span>;
+}
+
+<span class="cm">// 2. for tradicional</span>
+<span class="kw">for</span> (<span class="var">$i</span> = <span class="num">1</span>; <span class="var">$i</span> &lt;= <span class="num">3</span>; <span class="var">$i</span>++) {
+    <span class="cm">// iterações numeradas</span>
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="acc-item">
+          <button class="acc-header">
+            Wrappers, Value Objects &amp; Backed Enums
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>Em PHP, <strong>Wrappers</strong> são implementados através de <em>Value Objects</em> (classes imutáveis que encapsulam primitivos e aplicam validações de domínio), <em>Backed Enums</em> (PHP 8.1+) e wrappers de estruturas como <code>\ArrayObject</code>.</p>
+            <div class="code-wrap">
+              <button class="copy-btn">Copiar</button>
+              <pre><code><span class="cm">&lt;?php</span>
+<span class="cm">// 1. Backed Enum Wrapper (PHP 8.1+)</span>
+<span class="kw">enum</span> <span class="cls">StatusPedido</span>: <span class="kw">string</span> {
+    <span class="kw">case</span> <span class="cls">Pendente</span> = <span class="str">'P'</span>;
+    <span class="kw">case</span> <span class="cls">Pago</span>     = <span class="str">'A'</span>;
+    <span class="kw">case</span> <span class="cls">Cancelado</span> = <span class="str">'C'</span>;
+
+    <span class="kw">public function</span> <span class="fn">label</span>(): <span class="kw">string</span> {
+        <span class="kw">return match</span>(<span class="var">$this</span>) {
+            <span class="cls">self</span>::<span class="cls">Pendente</span> =&gt; <span class="str">'Aguardando Pagamento'</span>,
+            <span class="cls">self</span>::<span class="cls">Pago</span>     =&gt; <span class="str">'Aprovado'</span>,
+            <span class="cls">self</span>::<span class="cls">Cancelado</span> =&gt; <span class="str">'Cancelado'</span>,
+        };
+    }
+}
+
+<span class="cm">// 2. Value Object Wrapper Imutável</span>
+<span class="kw">final readonly class</span> <span class="cls">Email</span> {
+    <span class="kw">public string</span> <span class="var">$valor</span>;
+
+    <span class="kw">public function</span> <span class="fn">__construct</span>(<span class="kw">string</span> <span class="var">$email</span>) {
+        <span class="kw">if</span> (!<span class="fn">filter_var</span>(<span class="var">$email</span>, FILTER_VALIDATE_EMAIL)) {
+            <span class="kw">throw new</span> <span class="cls">\InvalidArgumentException</span>(<span class="str">"E-mail inválido: <span class="var">$email</span>"</span>);
+        }
+        <span class="var">$this</span>-&gt;valor = <span class="var">$email</span>;
+    }
+}
+
+<span class="var">$emailWrapper</span> = <span class="kw">new</span> <span class="cls">Email</span>(<span class="str">'luis@ponce.dev'</span>);
+<span class="kw">echo</span> <span class="var">$emailWrapper</span>-&gt;valor;</code></pre>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1113,6 +1242,262 @@ composer dump-autoload
       </div>
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════════
+       PHP MODERNO (8.1 – 8.4)
+  ════════════════════════════════════════════ -->
+  <section id="php-moderno">
+    <div class="container">
+      <h2>🚀 PHP <span>Moderno</span> (8.1 – 8.4)</h2>
+      <p style="color:var(--muted);margin-bottom:20px;">Enums, readonly, match, Fibers, tipagem forte, property hooks e testes com Pest — o PHP de hoje não é o PHP de 2010.</p>
+
+      <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="pm1">Enums &amp; Readonly</button>
+        <button class="tab-btn" data-tab="pm2">match &amp; Tipagem</button>
+        <button class="tab-btn" data-tab="pm3">PDO Seguro</button>
+        <button class="tab-btn" data-tab="pm4">Fibers &amp; 8.4</button>
+        <button class="tab-btn" data-tab="pm5">Testes com Pest</button>
+      </div>
+
+      <div class="tab-panel active" id="pm1">
+        <p><strong>Enums</strong> (8.1) substituem constantes soltas por tipos fechados e seguros. <strong>readonly</strong> (8.1) e <strong>readonly class</strong> (8.2) garantem imutabilidade. <strong>Constructor promotion</strong> elimina boilerplate.</p>
+        <div class="code-wrap">
+          <button class="copy-btn">Copiar</button>
+          <pre><code><span class="cm">&lt;?php</span>
+<span class="kw">declare</span>(strict_types=<span class="num">1</span>);
+
+<span class="cm">// Enum com valor e método (backed enum)</span>
+<span class="kw">enum</span> <span class="cls">StatusPedido</span>: <span class="cls">string</span>
+{
+    <span class="kw">case</span> Pendente = <span class="str">'pendente'</span>;
+    <span class="kw">case</span> Pago     = <span class="str">'pago'</span>;
+    <span class="kw">case</span> Enviado  = <span class="str">'enviado'</span>;
+    <span class="kw">case</span> Cancelado = <span class="str">'cancelado'</span>;
+
+    <span class="kw">public function</span> <span class="fn">podeCancelar</span>(): <span class="cls">bool</span>
+    {
+        <span class="kw">return</span> <span class="kw">match</span>(<span class="var">$this</span>) {
+            <span class="kw">self</span>::Pendente, <span class="kw">self</span>::Pago => <span class="kw">true</span>,
+            <span class="kw">default</span>                  => <span class="kw">false</span>,
+        };
+    }
+}
+
+<span class="cm">// readonly class (8.2): todas as propriedades são imutáveis</span>
+<span class="kw">final readonly class</span> <span class="cls">Pedido</span>
+{
+    <span class="cm">// Constructor promotion: declara e atribui em um só lugar</span>
+    <span class="kw">public function</span> <span class="fn">__construct</span>(
+        <span class="kw">public</span> <span class="cls">int</span> <span class="var">$id</span>,
+        <span class="kw">public</span> <span class="cls">string</span> <span class="var">$cliente</span>,
+        <span class="kw">public</span> <span class="cls">float</span> <span class="var">$total</span>,
+        <span class="kw">public</span> <span class="cls">StatusPedido</span> <span class="var">$status</span> = <span class="cls">StatusPedido</span>::Pendente,
+    ) {
+        <span class="kw">if</span> (<span class="var">$total</span> &lt; <span class="num">0</span>) {
+            <span class="kw">throw new</span> <span class="cls">InvalidArgumentException</span>(<span class="str">'Total não pode ser negativo'</span>);
+        }
+    }
+
+    <span class="cm">// "Wither": retorna uma NOVA instância (imutabilidade)</span>
+    <span class="kw">public function</span> <span class="fn">comStatus</span>(<span class="cls">StatusPedido</span> <span class="var">$novo</span>): <span class="kw">static</span>
+    {
+        <span class="kw">return new</span> <span class="kw">static</span>(<span class="var">$this</span>->id, <span class="var">$this</span>->cliente, <span class="var">$this</span>->total, <span class="var">$novo</span>);
+    }
+}
+
+<span class="var">$p</span> = <span class="kw">new</span> <span class="cls">Pedido</span>(<span class="num">1</span>, <span class="str">'Ana'</span>, <span class="num">250.0</span>);
+<span class="var">$pago</span> = <span class="var">$p</span>->comStatus(<span class="cls">StatusPedido</span>::Pago);
+<span class="fn">var_dump</span>(<span class="var">$pago</span>->status->podeCancelar()); <span class="cm">// bool(true)</span>
+<span class="fn">var_dump</span>(<span class="cls">StatusPedido</span>::tryFrom(<span class="str">'inexistente'</span>)); <span class="cm">// NULL (sem exceção)</span></code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="pm2">
+        <p><strong>match</strong> é uma expressão estrita (usa <code>===</code>, sem fall-through). Combine com <strong>union types</strong>, <strong>named arguments</strong>, <strong>nullsafe operator</strong> e <strong>first-class callable syntax</strong> para um código mais expressivo e seguro.</p>
+        <div class="code-wrap">
+          <button class="copy-btn">Copiar</button>
+          <pre><code><span class="cm">&lt;?php</span>
+<span class="kw">declare</span>(strict_types=<span class="num">1</span>);
+
+<span class="cm">// match: expressão, comparação estrita, lança UnhandledMatchError se nada casar</span>
+<span class="kw">function</span> <span class="fn">classificarIdade</span>(<span class="cls">int</span> <span class="var">$idade</span>): <span class="cls">string</span>
+{
+    <span class="kw">return match</span>(<span class="kw">true</span>) {
+        <span class="var">$idade</span> &lt; <span class="num">0</span>   => <span class="kw">throw new</span> <span class="cls">InvalidArgumentException</span>(<span class="str">'Idade inválida'</span>),
+        <span class="var">$idade</span> &lt; <span class="num">12</span>  => <span class="str">'Criança'</span>,
+        <span class="var">$idade</span> &lt; <span class="num">18</span>  => <span class="str">'Adolescente'</span>,
+        <span class="var">$idade</span> &lt; <span class="num">60</span>  => <span class="str">'Adulto'</span>,
+        <span class="kw">default</span>     => <span class="str">'Idoso'</span>,
+    };
+}
+
+<span class="cm">// Union types + named arguments</span>
+<span class="kw">function</span> <span class="fn">formatarValor</span>(<span class="cls">int</span>|<span class="cls">float</span> <span class="var">$valor</span>, <span class="cls">string</span> <span class="var">$moeda</span> = <span class="str">'BRL'</span>, <span class="cls">int</span> <span class="var">$casas</span> = <span class="num">2</span>): <span class="cls">string</span>
+{
+    <span class="kw">return</span> <span class="fn">sprintf</span>(<span class="str">'%s %s'</span>, <span class="var">$moeda</span>, <span class="fn">number_format</span>(<span class="var">$valor</span>, <span class="var">$casas</span>, <span class="str">','</span>, <span class="str">'.'</span>));
+}
+<span class="fn">echo</span> <span class="fn">formatarValor</span>(<span class="num">1234.5</span>, casas: <span class="num">1</span>); <span class="cm">// BRL 1.234,5</span>
+
+<span class="cm">// Nullsafe operator: encadeia sem if aninhado</span>
+<span class="var">$pais</span> = <span class="var">$usuario</span>?->endereco?->cidade?->pais ?? <span class="str">'Desconhecido'</span>;
+
+<span class="cm">// First-class callable syntax (8.1)</span>
+<span class="var">$tamanhos</span> = <span class="fn">array_map</span>(<span class="fn">strlen</span>(...), [<span class="str">'php'</span>, <span class="str">'rust'</span>, <span class="str">'go'</span>]); <span class="cm">// [3, 4, 2]</span>
+
+<span class="cm">// PHP 8.3: json_validate() valida sem decodificar (economiza memória)</span>
+<span class="kw">if</span> (<span class="fn">json_validate</span>(<span class="var">$entrada</span>)) {
+    <span class="var">$dados</span> = <span class="fn">json_decode</span>(<span class="var">$entrada</span>, associative: <span class="kw">true</span>, flags: <span class="cls">JSON_THROW_ON_ERROR</span>);
+}
+
+<span class="cm">// PHP 8.3: atributo #[\Override] evita erros de herança</span>
+<span class="kw">class</span> <span class="cls">Base</span>  { <span class="kw">public function</span> <span class="fn">salvar</span>(): <span class="cls">void</span> {} }
+<span class="kw">class</span> <span class="cls">Filha</span> <span class="kw">extends</span> <span class="cls">Base</span> {
+    #[\<span class="cls">Override</span>]
+    <span class="kw">public function</span> <span class="fn">salvar</span>(): <span class="cls">void</span> {} <span class="cm">// erro de compilação se Base::salvar não existir</span>
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="pm3">
+        <p>Segurança não é opcional. Use sempre <strong>prepared statements</strong> (previnem SQL Injection), <strong>password_hash</strong> com Argon2id/bcrypt, escape de saída com <code>htmlspecialchars</code> e <strong>credenciais via variáveis de ambiente</strong> — nunca no código.</p>
+        <div class="code-wrap">
+          <button class="copy-btn">Copiar</button>
+          <pre><code><span class="cm">&lt;?php</span>
+<span class="kw">declare</span>(strict_types=<span class="num">1</span>);
+
+<span class="cm">// Credenciais SEMPRE vindas do ambiente (nunca hardcoded)</span>
+<span class="var">$dsn</span>  = <span class="fn">getenv</span>(<span class="str">'DB_DSN'</span>)  ?: <span class="kw">throw new</span> <span class="cls">RuntimeException</span>(<span class="str">'DB_DSN ausente'</span>);
+<span class="var">$user</span> = <span class="fn">getenv</span>(<span class="str">'DB_USER'</span>) ?: <span class="kw">throw new</span> <span class="cls">RuntimeException</span>(<span class="str">'DB_USER ausente'</span>);
+<span class="var">$pass</span> = <span class="fn">getenv</span>(<span class="str">'DB_PASS'</span>) ?: <span class="kw">throw new</span> <span class="cls">RuntimeException</span>(<span class="str">'DB_PASS ausente'</span>);
+
+<span class="var">$pdo</span> = <span class="kw">new</span> <span class="cls">PDO</span>(<span class="var">$dsn</span>, <span class="var">$user</span>, <span class="var">$pass</span>, [
+    <span class="cls">PDO</span>::ATTR_ERRMODE            => <span class="cls">PDO</span>::ERRMODE_EXCEPTION,
+    <span class="cls">PDO</span>::ATTR_DEFAULT_FETCH_MODE => <span class="cls">PDO</span>::FETCH_ASSOC,
+    <span class="cls">PDO</span>::ATTR_EMULATE_PREPARES   => <span class="kw">false</span>, <span class="cm">// prepared statements reais</span>
+]);
+
+<span class="cm">// ❌ VULNERÁVEL: "SELECT * FROM users WHERE email = '$email'"</span>
+<span class="cm">// ✅ SEGURO: parâmetros nomeados</span>
+<span class="kw">function</span> <span class="fn">buscarPorEmail</span>(<span class="cls">PDO</span> <span class="var">$pdo</span>, <span class="cls">string</span> <span class="var">$email</span>): ?<span class="cls">array</span>
+{
+    <span class="kw">if</span> (!<span class="fn">filter_var</span>(<span class="var">$email</span>, <span class="cls">FILTER_VALIDATE_EMAIL</span>)) {
+        <span class="kw">return null</span>; <span class="cm">// validação por allowlist/formato</span>
+    }
+    <span class="var">$stmt</span> = <span class="var">$pdo</span>->prepare(<span class="str">'SELECT id, nome, email FROM usuarios WHERE email = :email'</span>);
+    <span class="var">$stmt</span>->execute([<span class="str">'email'</span> => <span class="var">$email</span>]);
+    <span class="kw">return</span> <span class="var">$stmt</span>->fetch() ?: <span class="kw">null</span>;
+}
+
+<span class="cm">// Cadastro: hash forte de senha (nunca MD5/SHA1)</span>
+<span class="kw">function</span> <span class="fn">cadastrar</span>(<span class="cls">PDO</span> <span class="var">$pdo</span>, <span class="cls">string</span> <span class="var">$nome</span>, <span class="cls">string</span> <span class="var">$email</span>, <span class="cls">string</span> <span class="var">$senha</span>): <span class="cls">void</span>
+{
+    <span class="var">$hash</span> = <span class="fn">password_hash</span>(<span class="var">$senha</span>, <span class="cls">PASSWORD_ARGON2ID</span>);
+    <span class="var">$pdo</span>->prepare(<span class="str">'INSERT INTO usuarios (nome, email, senha_hash) VALUES (:n, :e, :h)'</span>)
+        ->execute([<span class="str">'n'</span> => <span class="var">$nome</span>, <span class="str">'e'</span> => <span class="var">$email</span>, <span class="str">'h'</span> => <span class="var">$hash</span>]);
+}
+
+<span class="cm">// Login: comparação segura + rehash automático se o algoritmo evoluir</span>
+<span class="kw">function</span> <span class="fn">autenticar</span>(<span class="cls">string</span> <span class="var">$senha</span>, <span class="cls">string</span> <span class="var">$hashSalvo</span>): <span class="cls">bool</span>
+{
+    <span class="kw">return</span> <span class="fn">password_verify</span>(<span class="var">$senha</span>, <span class="var">$hashSalvo</span>);
+}
+
+<span class="cm">// Saída HTML: sempre escapar conforme o contexto (previne XSS)</span>
+<span class="fn">echo</span> <span class="fn">htmlspecialchars</span>(<span class="var">$nome</span>, <span class="cls">ENT_QUOTES</span> | <span class="cls">ENT_SUBSTITUTE</span>, <span class="str">'UTF-8'</span>);</code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="pm4">
+        <p><strong>Fibers</strong> (8.1) trazem concorrência cooperativa nativa — base de bibliotecas como Revolt, ReactPHP e Amp. O <strong>PHP 8.4</strong> adiciona <strong>property hooks</strong> e <strong>visibilidade assimétrica</strong>, reduzindo getters/setters a quase zero.</p>
+        <div class="code-wrap">
+          <button class="copy-btn">Copiar</button>
+          <pre><code><span class="cm">&lt;?php</span>
+<span class="cm">// ─── Fibers (PHP 8.1+): pausar e retomar execução ─────────────</span>
+<span class="var">$fiber</span> = <span class="kw">new</span> <span class="cls">Fiber</span>(<span class="kw">function</span> (<span class="cls">string</span> <span class="var">$nome</span>): <span class="cls">string</span> {
+    <span class="fn">echo</span> <span class="str">"Iniciando tarefa de $nome\n"</span>;
+    <span class="var">$recebido</span> = <span class="cls">Fiber</span>::suspend(<span class="str">'pausado'</span>);   <span class="cm">// devolve controle ao chamador</span>
+    <span class="fn">echo</span> <span class="str">"Retomado com: $recebido\n"</span>;
+    <span class="kw">return</span> <span class="str">"concluído: $nome"</span>;
+});
+
+<span class="var">$status</span> = <span class="var">$fiber</span>->start(<span class="str">'Relatório'</span>);  <span class="cm">// "pausado"</span>
+<span class="var">$fiber</span>->resume(<span class="str">'dados prontos'</span>);        <span class="cm">// retoma de onde parou</span>
+<span class="fn">echo</span> <span class="var">$fiber</span>->getReturn();                <span class="cm">// concluído: Relatório</span>
+
+<span class="cm">// ─── PHP 8.4: property hooks + visibilidade assimétrica ───────</span>
+<span class="kw">class</span> <span class="cls">Usuario</span>
+{
+    <span class="cm">// Hook de set: normaliza automaticamente</span>
+    <span class="kw">public</span> <span class="cls">string</span> <span class="var">$email</span> {
+        <span class="kw">set</span> => <span class="fn">strtolower</span>(<span class="fn">trim</span>(<span class="var">$value</span>));
+    }
+
+    <span class="cm">// Propriedade virtual (calculada), sem armazenamento</span>
+    <span class="kw">public string</span> <span class="var">$nomeCompleto</span> {
+        <span class="kw">get</span> => <span class="var">$this</span>->nome . <span class="str">' '</span> . <span class="var">$this</span>->sobrenome;
+    }
+
+    <span class="cm">// Visibilidade assimétrica: lê publicamente, escreve só internamente</span>
+    <span class="kw">public private</span>(<span class="kw">set</span>) <span class="cls">int</span> <span class="var">$visitas</span> = <span class="num">0</span>;
+
+    <span class="kw">public function</span> <span class="fn">__construct</span>(
+        <span class="kw">public</span> <span class="cls">string</span> <span class="var">$nome</span>,
+        <span class="kw">public</span> <span class="cls">string</span> <span class="var">$sobrenome</span>,
+        <span class="cls">string</span> <span class="var">$email</span>,
+    ) { <span class="var">$this</span>->email = <span class="var">$email</span>; }
+
+    <span class="kw">public function</span> <span class="fn">registrarVisita</span>(): <span class="cls">void</span> { <span class="var">$this</span>->visitas++; }
+}
+
+<span class="var">$u</span> = <span class="kw">new</span> <span class="cls">Usuario</span>(<span class="str">'Ana'</span>, <span class="str">'Silva'</span>, <span class="str">'  ANA@Exemplo.COM '</span>);
+<span class="fn">echo</span> <span class="var">$u</span>->email;        <span class="cm">// ana@exemplo.com</span>
+<span class="fn">echo</span> <span class="var">$u</span>->nomeCompleto; <span class="cm">// Ana Silva</span>
+<span class="cm">// $u->visitas = 10;   // Erro: set é privado</span></code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="pm5">
+        <p><strong>Pest</strong> é o framework de testes moderno do PHP (sobre PHPUnit), com sintaxe fluente e expectativas encadeadas. Combine com <strong>PHPStan</strong> (análise estática) e <strong>Composer scripts</strong> para um pipeline de qualidade.</p>
+        <div class="code-wrap">
+          <button class="copy-btn">Copiar</button>
+          <pre><code><span class="cm">&lt;?php</span>
+<span class="cm">// tests/PedidoTest.php — rodar com: ./vendor/bin/pest</span>
+<span class="kw">use</span> App\Pedido;
+<span class="kw">use</span> App\StatusPedido;
+
+<span class="fn">it</span>(<span class="str">'cria um pedido com status pendente por padrão'</span>, <span class="kw">function</span> () {
+    <span class="var">$pedido</span> = <span class="kw">new</span> <span class="cls">Pedido</span>(<span class="num">1</span>, <span class="str">'Ana'</span>, <span class="num">100.0</span>);
+
+    <span class="fn">expect</span>(<span class="var">$pedido</span>->status)->toBe(<span class="cls">StatusPedido</span>::Pendente)
+        ->and(<span class="var">$pedido</span>->total)->toBe(<span class="num">100.0</span>);
+});
+
+<span class="fn">it</span>(<span class="str">'rejeita total negativo'</span>, <span class="kw">function</span> () {
+    <span class="kw">new</span> <span class="cls">Pedido</span>(<span class="num">1</span>, <span class="str">'Ana'</span>, -<span class="num">5.0</span>);
+})->throws(<span class="cls">InvalidArgumentException</span>::class, <span class="str">'Total não pode ser negativo'</span>);
+
+<span class="cm">// Dataset: roda o mesmo teste com vários cenários</span>
+<span class="fn">it</span>(<span class="str">'só permite cancelar pedidos pendentes ou pagos'</span>, <span class="kw">function</span> (<span class="cls">StatusPedido</span> <span class="var">$status</span>, <span class="cls">bool</span> <span class="var">$esperado</span>) {
+    <span class="fn">expect</span>(<span class="var">$status</span>->podeCancelar())->toBe(<span class="var">$esperado</span>);
+})->with([
+    [<span class="cls">StatusPedido</span>::Pendente,  <span class="kw">true</span>],
+    [<span class="cls">StatusPedido</span>::Pago,      <span class="kw">true</span>],
+    [<span class="cls">StatusPedido</span>::Enviado,   <span class="kw">false</span>],
+    [<span class="cls">StatusPedido</span>::Cancelado, <span class="kw">false</span>],
+]);
+
+<span class="cm">// composer.json — scripts de qualidade</span>
+<span class="cm">// "scripts": {</span>
+<span class="cm">//   "test": "pest",</span>
+<span class="cm">//   "stan": "phpstan analyse src --level=9",</span>
+<span class="cm">//   "check": ["@stan", "@test"]</span>
+<span class="cm">// }</span></code></pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
 
   <!-- ══════════════════════════════════════════
        RECURSOS

@@ -1,0 +1,83 @@
+{
+  "id": 13,
+  "slug": "validacao-testes-depuracao",
+  "badge": "Módulo 13 · Qualidade & Testes",
+  "nivel": "Intermediário",
+  "titulo": "Validação, Testes e Depuração Lógica",
+  "subtitulo": "Particionamento de equivalência, análise de valor limite, contraexemplos e busca de causa-raiz.",
+  "objetivo": "Dominar criação de casos de teste sistemáticos, análise de valores limites e técnicas de depuração.",
+  "introducaoIntuitiva": "Engenheiro que projeta uma ponte a testa sob tempestade com carga máxima, não apenas em dia de sol.",
+  "explicacaoAprofundada": "Testes de Caixa-Preta: Partição de Equivalência e Análise de Valores Limites. Depuração é a localização da causa-raiz do defeito.",
+  "exemplos": {
+    "basico": {
+      "titulo": "Contraexemplo",
+      "descricao": "SE nota > 6 Aprovado. Aluno com 6.0 é reprovado por erro de operador (> vs >=)."
+    },
+    "intermediario": {
+      "titulo": "Divisão por Zero Oculta",
+      "descricao": "Calcular velocidade = d / t sem checar se t > 0."
+    },
+    "avancado": {
+      "titulo": "Valores Limites",
+      "descricao": "Testar -0.1, 0.0, 0.1, 9.9, 10.0, 10.1 em notas escolares."
+    }
+  },
+  "passoAPasso": [
+    "1. Matriz de testes.",
+    "2. Casos normais, limites e inválidos.",
+    "3. Confrontar saída obtida com esperada."
+  ],
+  "errosComuns": [
+    {
+      "erro": "Testar apenas com dados que dão certo",
+      "correcao": "O objetivo do teste é tentar quebrar a solução procurando contraexemplos."
+    }
+  ],
+  "comparacaoSolucoes": {
+    "boa": "Casos cobrindo fronteiras e classes de equivalência.",
+    "ruim": "Testar com 1 único valor arbitrário."
+  },
+  "pseudocodigo": "SE a + b > c E a + c > b E b + c > a ENTÃO \"Triângulo Válido\" SENÃO \"Inválido\" FIM_SE",
+  "traceData": [
+    {
+      "passo": 1,
+      "acao": "Teste limites",
+      "estado": "Fronteiras validadas",
+      "obs": "Passou"
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "ex13_1",
+      "tipo": "multipla_escolha",
+      "enunciado": "Para validar notas de 0 a 10, quais entradas aplicam a Análise de Valores Limites?",
+      "opcoes": [
+        "5, 6, 7",
+        "-0.1, 0.0, 0.1, 9.9, 10.0, 10.1",
+        "1, 2, 3",
+        "Apenas 10"
+      ],
+      "correta": 1,
+      "pista": "Testar imediatamente antes, no ponto e logo após cada fronteira válida.",
+      "justificativa": "Valores limites testam com rigor as bordas do domínio de entrada."
+    }
+  ],
+  "perguntasVerificacao": "Por que encontrar um único contraexemplo refuta a correção de um algoritmo?",
+  "keywordsIA": [
+    "testes",
+    "depuracao",
+    "validacao",
+    "fronteira",
+    "contraexemplo",
+    "causa_raiz",
+    "limite"
+  ],
+  "misconceptionsIA": [
+    {
+      "termo": "teste",
+      "erro": "Achar que testes provam a ausência total de erros",
+      "explicacao": "Testes revelam a presença de defeitos, mas não cobrem infinitos casos."
+    }
+  ],
+  "explicacaoIdealIA": "Testar é submeter o algoritmo a casos normais e limites para localizar e corrigir defeitos conceituais na causa-raiz."
+}
