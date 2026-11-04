@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TBL — Aprendizagem Baseada em Equipes — Ponce Metodologias &amp; Dev</title>
+<meta name="description" content="Aprenda TBL (Team-Based Learning): origem, como aplicar passo a passo, modelos prontos, quando usar e roadmap.">
+<style>
+:root {
+  --accent: #0d9488;
+  --accent-dark: #0a766d;
+  --accent-light: #62b9b2;
+  --accent-soft: rgba(13, 148, 136, 0.12);
+  --accent-border: rgba(13, 148, 136, 0.35);
+  --bg: #0b1120;
+  --bg-2: #0f172a;
+  --surface: #131c31;
+  --surface-2: #1a2540;
+  --border: #243252;
+  --text: #e6ebf5;
+  --muted: #9aa8c4;
+  --code-bg: #0a0f1d;
+  --header-h: 64px;
+  --radius: 14px;
+  --font: -apple-system, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img, svg { max-width: 100%; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 .5em; }
+p { margin: 0 0 1em; }
+code.inline {
+  font-family: var(--mono);
+  font-size: .88em;
+  background: var(--accent-soft);
+  color: var(--accent-light);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+  background: rgba(11, 17, 32, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+.logo:hover { text-decoration: none; color: var(--accent); }
+.header-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--accent);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: .9rem;
+  white-space: nowrap;
+  transition: background .2s, color .2s;
+}
+.btn-back:hover { background: var(--accent); color: #0b1120; font-weight: 700; text-decoration: none; }
+
+/* ---------- Sub navigation ---------- */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 50;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  margin-top: var(--header-h);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.subnav ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 1100px;
+  display: flex;
+  gap: 4px;
+}
+.subnav a {
+  display: block;
+  padding: 12px 14px;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.subnav a:hover { color: var(--text); text-decoration: none; border-bottom-color: var(--accent); }
+
+/* ---------- Layout ---------- */
+main { display: block; }
+section { padding: 72px 24px; }
+section:nth-of-type(even) { background: var(--bg-2); }
+.container { max-width: 1000px; margin: 0 auto; }
+.section-head { text-align: center; margin-bottom: 44px; }
+.section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.section-head h2::after {
+  content: "";
+  display: block;
+  width: 56px; height: 4px;
+  margin: 14px auto 0;
+  border-radius: 4px;
+  background: var(--accent);
+}
+.section-head p { color: var(--muted); max-width: 640px; margin: 14px auto 0; }
+
+/* ---------- Hero ---------- */
+.hero {
+  text-align: center;
+  padding: 96px 24px 88px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(13, 148, 136,.22), transparent 60%),
+    var(--bg);
+}
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-light);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 4.5rem);
+  margin: 22px 0 16px;
+  letter-spacing: -.02em;
+}
+.hero .subtitle {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  color: var(--muted);
+  font-size: 1.12rem;
+}
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+.stat {
+  padding: 12px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-width: 170px;
+}
+.stat strong { display: block; color: var(--accent); font-size: 1.15rem; }
+.stat span { color: var(--muted); font-size: .85rem; }
+
+/* ---------- Timeline ---------- */
+.timeline { position: relative; max-width: 760px; margin: 0 auto; padding-left: 8px; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 49px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(var(--accent), var(--border));
+}
+.tl-item { position: relative; display: flex; gap: 24px; margin-bottom: 28px; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-year {
+  flex: 0 0 82px;
+  height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent);
+  color: #0b1120;
+  font-weight: 800;
+  font-size: .9rem;
+  border-radius: 999px;
+  z-index: 1;
+  box-shadow: 0 0 0 5px var(--bg-2);
+}
+.tl-body {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+}
+.tl-body h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.tl-body p { margin: 0; color: var(--muted); font-size: .94rem; }
+
+/* ---------- Cards ---------- */
+.grid { display: grid; gap: 20px; }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 22px;
+  transition: transform .2s, border-color .2s;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.card .icon {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  background: var(--accent-soft);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.card h3 { font-size: 1.1rem; }
+.card p { color: var(--muted); font-size: .92rem; margin-bottom: 14px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  padding: 3px 10px;
+  font-size: .78rem;
+  font-weight: 600;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: #9ed4cf;
+}
+
+/* ---------- Code blocks ---------- */
+.code-block {
+  position: relative;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 14px 0 4px;
+}
+.code-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 8px 16px;
+  background: #0e1628;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: .78rem;
+  color: var(--muted);
+}
+.code-bar .dots { display: flex; gap: 6px; margin-right: 12px; }
+.code-bar .dots i { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; display: block; }
+.code-bar .dots i:nth-child(2) { background: #f59e0b; }
+.code-bar .dots i:nth-child(3) { background: #22c55e; }
+.code-bar .left { display: flex; align-items: center; }
+.copy-btn {
+  font-family: var(--font);
+  font-size: .78rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.copy-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+.copy-btn.copied { background: #16a34a; border-color: #16a34a; color: #fff; }
+.code-block pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: .86rem;
+  line-height: 1.65;
+  tab-size: 4;
+  color: #d6deeb;
+}
+.code-block code { font-family: inherit; }
+.kw  { color: #c792ea; font-weight: 600; }
+.fn  { color: #82aaff; font-weight: 600; }
+.str { color: #ecc48d; }
+.cmt { color: #637777; font-style: italic; }
+.var { color: #7fdbca; }
+.num { color: #f78c6c; }
+.typ { color: #ffcb6b; }
+
+/* ---------- Accordion ---------- */
+.accordion { max-width: 820px; margin: 0 auto; display: grid; gap: 12px; }
+.acc-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.acc-item.open { border-color: var(--accent); }
+.acc-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.acc-btn:hover { background: var(--surface-2); }
+.acc-btn:focus-visible, .tab-btn:focus-visible, .copy-btn:focus-visible, .btn-back:focus-visible, .logo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.acc-btn .chev {
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  transition: transform .3s;
+}
+.acc-item.open .chev { transform: rotate(180deg); }
+.acc-panel { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+.acc-inner { padding: 0 22px 22px; }
+.acc-inner p { color: var(--muted); font-size: .94rem; margin-bottom: 0; }
+
+/* ---------- Tabs ---------- */
+.tabs { max-width: 900px; margin: 0 auto; }
+.tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+.tab-btn {
+  font-family: var(--font);
+  font-size: .92rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.tab-btn:hover { color: var(--text); border-color: var(--accent); }
+.tab-btn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #0b1120; font-weight: 700; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.tab-panel > p { color: var(--muted); font-size: .94rem; }
+
+/* ---------- Market ---------- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+table { width: 100%; border-collapse: collapse; min-width: 480px; background: var(--surface); }
+th, td { padding: 14px 20px; text-align: left; }
+th { background: var(--surface-2); font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+td { border-top: 1px solid var(--border); }
+td.salary { color: var(--accent); font-weight: 700; white-space: nowrap; }
+.market-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 24px; }
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.panel h3 { font-size: 1.05rem; margin-bottom: 14px; }
+.panel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.panel li { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .94rem; }
+.panel li::before {
+  content: "";
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  flex: 0 0 auto;
+}
+.panel li strong { color: var(--text); }
+.note { color: var(--muted); font-size: .8rem; text-align: center; margin-top: 16px; }
+
+/* ---------- Roadmap ---------- */
+.roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; position: relative; }
+.step {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 24px 20px 22px;
+}
+.step .num-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #0b1120;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.step h3 { font-size: 1.05rem; margin-bottom: 2px; }
+.step .phase { color: var(--accent); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.step ul { margin: 12px 0 0; padding-left: 18px; color: var(--muted); font-size: .92rem; }
+.step ul li { margin-bottom: 4px; }
+.step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -18px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  text-align: center;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 1.1rem;
+  z-index: 2;
+}
+
+/* ---------- Resources ---------- */
+.resource {
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+}
+.resource:hover { text-decoration: none; }
+.resource .link { margin-top: auto; color: var(--accent); font-weight: 600; font-size: .88rem; word-break: break-all; }
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--code-bg);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .step:not(:last-child)::after { display: none; }
+}
+@media (max-width: 720px) {
+  :root { --header-h: 56px; }
+  .site-header { padding: 0 12px; }
+  .logo { font-size: .85rem; }
+  .header-title { display: none; }
+  section { padding: 52px 16px; }
+  .hero { padding: 64px 16px 56px; }
+  .timeline::before { left: 41px; }
+  .tl-item { gap: 14px; }
+  .tl-year { flex-basis: 68px; font-size: .8rem; }
+  .code-block pre { font-size: .78rem; padding: 14px; }
+  th, td { padding: 12px 14px; }
+}
+@media (max-width: 420px) {
+  .logo { font-size: .76rem; }
+  .btn-back { padding: 7px 12px; font-size: .82rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+  <div class="header-title">👥 TBL</div>
+  <a class="btn-back" href="../index.html#metodologias-ativas">← Voltar</a>
+</header>
+
+<nav class="subnav" aria-label="Navegação da página">
+  <ul>
+    <li><a href="#hero">Início</a></li>
+    <li><a href="#origem">Origem</a></li>
+    <li><a href="#por-que-usar">Por que usar</a></li>
+    <li><a href="#principios">Princípios</a></li>
+    <li><a href="#como-aplicar">Como aplicar</a></li>
+    <li><a href="#preparacao">Preparação</a></li>
+    <li><a href="#exemplos">Exemplos</a></li>
+    <li><a href="#plano">Plano completo</a></li>
+    <li><a href="#avaliacao">Avaliação</a></li>
+    <li><a href="#quando-usar">Quando usar</a></li>
+    <li><a href="#variacoes">Variações</a></li>
+    <li><a href="#erros">Erros comuns</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#glossario">Glossário</a></li>
+    <li><a href="#recursos">Recursos</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- 1. HERO -->
+<section id="hero" class="hero">
+  <div class="container">
+    <span class="badge">Metodologia Ativa / Equipes</span>
+    <h1>👥 TBL</h1>
+    <p class="subtitle">Equipes fixas estudam antes da aula, são testadas individualmente e depois em grupo, e passam o resto do tempo aplicando o conteúdo em problemas desafiadores. Funciona muito bem em turmas grandes.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <strong>1970s</strong>
+        <span>Criado por Larry Michaelsen</span>
+      </div>
+      <div class="stat">
+        <strong>4-7</strong>
+        <span>Pessoas por equipe</span>
+      </div>
+      <div class="stat">
+        <strong>Alto</strong>
+        <span>Engajamento</span>
+      </div>
+      <div class="stat">
+        <strong>Médio</strong>
+        <span>Preparo do professor</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. ORIGEM -->
+<section id="origem">
+  <div class="container">
+    <div class="section-head">
+      <h2>Origem &amp; Evolução</h2>
+      <p>Nasceu da necessidade de ensinar turmas grandes sem abrir mão da discussão em pequenos grupos.</p>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-year">1970s</div>
+        <div class="tl-body">
+          <h3>Larry Michaelsen e a turma grande</h3>
+          <p>Ao ensinar turmas numerosas na universidade, Michaelsen desenvolve um método em que equipes permanentes trabalham juntas durante todo o curso.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2002</div>
+        <div class="tl-body">
+          <h3>Livro de referência</h3>
+          <p>Michaelsen, Knight e Fink publicam o livro que organiza o TBL e o difunde pelo mundo acadêmico.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2000s</div>
+        <div class="tl-body">
+          <h3>Expansão para a saúde</h3>
+          <p>Cursos de medicina, enfermagem e outras áreas adotam o método pela facilidade de aplicar em turmas grandes.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">Hoje</div>
+        <div class="tl-body">
+          <h3>TBL presencial e híbrido</h3>
+          <p>Usado com cartões de resposta, formulários online e problemas aplicados a casos reais de cada área.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. POR QUE USAR -->
+<section id="por-que-usar">
+  <div class="container">
+    <div class="section-head">
+      <h2>Por Que Usar TBL?</h2>
+      <p>Garante que todos cheguem preparados e transforma a discussão em equipe no centro da aula.</p>
+    </div>
+    <div class="grid grid-4">
+
+      <div class="card">
+        <div class="icon">📖</div>
+        <h3>Estudo prévio garantido</h3>
+        <p>O teste inicial dá motivo para estudar antes da aula, e não apenas durante.</p>
+        <div class="tags"><span class="tag">Responsabilidade</span><span class="tag">Preparação</span></div>
+      </div>
+
+      <div class="card">
+        <div class="icon">💬</div>
+        <h3>Discussão de qualidade</h3>
+        <p>Ao defender sua resposta no teste em equipe, o aluno explica e aprende com os colegas.</p>
+        <div class="tags"><span class="tag">Debate</span><span class="tag">Argumentação</span></div>
+      </div>
+
+      <div class="card">
+        <div class="icon">📏</div>
+        <h3>Funciona em turmas grandes</h3>
+        <p>Um professor consegue conduzir dezenas de alunos divididos em equipes.</p>
+        <div class="tags"><span class="tag">Escala</span><span class="tag">Eficiência</span></div>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>Feedback imediato</h3>
+        <p>As equipes sabem na hora se acertaram e onde estão as dúvidas.</p>
+        <div class="tags"><span class="tag">iRAT/tRAT</span><span class="tag">Correção rápida</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3b. PRINCÍPIOS -->
+<section id="principios">
+  <div class="container">
+    <div class="section-head">
+      <h2>Princípios Fundamentais</h2>
+      <p>As ideias centrais que sustentam a metodologia. Se você respeitar estas, o resto se ajusta.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="icon">👥</div>
+        <h3>Equipes bem formadas e permanentes</h3>
+        <p>As equipes são montadas pelo professor, com diversidade de experiências, e permanecem juntas durante todo o módulo.</p>
+      </div>
+      <div class="card">
+        <div class="icon">✅</div>
+        <h3>Responsabilização</h3>
+        <p>Cada aluno responde pelo seu estudo prévio (teste individual) e pela contribuição à equipe (avaliação entre pares).</p>
+      </div>
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>Feedback frequente e imediato</h3>
+        <p>O aluno sabe na hora se acertou. Cartões de raspar ou formulários dão o resultado em segundos.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🧠</div>
+        <h3>Atividades bem desenhadas (4S)</h3>
+        <p>Problema Significativo, mesmo problema para todos, escolha Específica e relato Simultâneo das respostas.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📣</div>
+        <h3>Direito de apelação</h3>
+        <p>Se uma equipe discordar de uma questão, pode apresentar um argumento por escrito, baseado no material estudado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. COMO APLICAR -->
+<section id="como-aplicar">
+  <div class="container">
+    <div class="section-head">
+      <h2>Como Aplicar, Passo a Passo</h2>
+      <p>Clique em cada etapa para ver o que fazer, em linguagem direta.</p>
+    </div>
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-1" id="acc-btn-1">
+          <span>1. Forme equipes fixas e diversas</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-1" role="region" aria-labelledby="acc-btn-1">
+          <div class="acc-inner">
+            <p>Monte equipes de 4 a 7 pessoas misturando níveis de experiência. Mantenha as mesmas equipes até o fim do módulo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-2" id="acc-btn-2">
+          <span>2. Preparação individual</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-2" role="region" aria-labelledby="acc-btn-2">
+          <div class="acc-inner">
+            <p>Indique um material curto (leitura ou vídeo) e um foco claro de estudo antes da aula.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-3" id="acc-btn-3">
+          <span>3. Teste individual (iRAT)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-3" role="region" aria-labelledby="acc-btn-3">
+          <div class="acc-inner">
+            <p>No início da aula, cada aluno responde sozinho a 5 a 10 questões de múltipla escolha sobre o material.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-4" id="acc-btn-4">
+          <span>4. Teste em equipe (tRAT)</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-4" role="region" aria-labelledby="acc-btn-4">
+          <div class="acc-inner">
+            <p>As mesmas questões, agora em equipe, com um único gabarito. A discussão para chegar ao consenso é a parte mais valiosa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-5" id="acc-btn-5">
+          <span>5. Esclarecimento</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-5" role="region" aria-labelledby="acc-btn-5">
+          <div class="acc-inner">
+            <p>Explique só as questões em que as equipes mais erraram. Não repita tudo o que já foi estudado.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-6" id="acc-btn-6">
+          <span>6. Problema de aplicação</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-6" role="region" aria-labelledby="acc-btn-6">
+          <div class="acc-inner">
+            <p>Todas as equipes resolvem o mesmo problema desafiador e revelam suas respostas ao mesmo tempo para comparar e debater.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4b. PREPARAÇÃO -->
+<section id="preparacao">
+  <div class="container">
+    <div class="section-head">
+      <h2>Preparação: Antes de Começar</h2>
+      <p>Um checklist objetivo do que decidir e do que separar antes da primeira aula.</p>
+    </div>
+    <div class="market-grid">
+      <div class="panel">
+        <h3>📝 Checklist de planejamento</h3>
+        <ul>
+          <li>Divida o conteúdo em módulos de 1 a 2 semanas, cada um com uma sequência completa.</li>
+          <li>Monte as equipes misturando níveis de experiência. Evite deixar amigos juntos por padrão.</li>
+          <li>Selecione o material de estudo prévio e deixe claros os objetivos do módulo.</li>
+          <li>Escreva de 8 a 10 questões de múltipla escolha que exijam compreensão.</li>
+          <li>Prepare um problema de aplicação que atenda aos 4S.</li>
+          <li>Defina o modelo de avaliação entre pares e quando será aplicado.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>🧰 Materiais necessários</h3>
+        <ul>
+          <li>Testes impressos (um por aluno) e o mesmo teste para a equipe.</li>
+          <li>Cartões de resposta A, B, C, D para o relato simultâneo.</li>
+          <li>Cartões de raspar ou formulário com correção automática (opcional).</li>
+          <li>Ficha de apelação por escrito.</li>
+          <li>Ficha de avaliação entre pares.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. EXEMPLOS -->
+<section id="exemplos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Exemplos Prontos para Usar</h2>
+      <p>Modelos que você pode copiar e adaptar para a sua turma ou estudo.</p>
+    </div>
+    <div class="tabs">
+      <div class="tab-list" role="tablist" aria-label="Exemplos práticos de TBL">
+        <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-1" id="tab-btn-1">Teste de preparação</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-2" id="tab-btn-2" tabindex="-1">Problema de aplicação (4S)</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-3" id="tab-btn-3" tabindex="-1">Roteiro de 90 minutos</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-1" role="tabpanel" aria-labelledby="tab-btn-1">
+        <p>Questões que exigem raciocínio, não decoreba.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>irat-modelo.txt</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code>Questão 1. Qual estrutura é mais adequada para guardar as notas de
+uma turma, associando cada aluno à sua nota?
+  A) Lista
+  B) Dicionário
+  C) Tupla
+  D) Conjunto
+
+Resposta no teste individual: ___   Resposta da equipe: ___
+Dica: escreva alternativas erradas que sejam plausíveis.</code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-2" role="tabpanel" aria-labelledby="tab-btn-2">
+        <p>Os "4S": problema Significativo, mesmo problema para todos, escolha Específica e relato Simultâneo.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>problema-4s.txt</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code>Problema: Uma loja precisa registrar o estoque de 500 produtos e
+buscar rápido pelo código de barras.
+
+Tarefa da equipe:
+  1. Escolha UMA estrutura de dados (escolha específica).
+  2. Justifique em uma frase.
+  3. Mostre a escolha ao mesmo tempo que as outras equipes
+     (relato simultâneo), levantando um cartão A, B ou C.</code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-3" role="tabpanel" aria-labelledby="tab-btn-3">
+        <p>Uma aula completa de TBL.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>roteiro-90min.txt</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code>00:00 - 00:15  iRAT: teste individual
+00:15 - 00:35  tRAT: teste em equipe e consenso
+00:35 - 00:50  Esclarecimento das questões mais erradas
+00:50 - 01:25  Problema de aplicação e relato simultâneo
+01:25 - 01:30  Fechamento e orientação do próximo estudo</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5b. PLANO COMPLETO -->
+<section id="plano">
+  <div class="container">
+    <div class="section-head">
+      <h2>Plano Completo, Pronto para Copiar</h2>
+      <p>Um exemplo detalhado, com tempos e passos, que você pode adaptar ao seu tema.</p>
+    </div>
+    <div class="code-block">
+      <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>plano-modulo-tbl.txt</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code>MÓDULO TBL: Estruturas de dados (2 semanas)
+
+ANTES DA AULA (individual, 45 a 60 min)
+  Ler o capítulo sobre listas, dicionários e conjuntos.
+  Objetivo: saber quando usar cada estrutura.
+
+AULA 1 (90 min)
+  00:00 - 00:15  iRAT: teste individual (10 questões)
+  00:15 - 00:40  tRAT: teste em equipe, um gabarito, debate
+  00:40 - 00:50  Apelações (por escrito) e esclarecimentos
+  00:50 - 01:25  Problema de aplicação 1
+  01:25 - 01:30  Fechamento
+
+AULA 2 (90 min)
+  Problemas de aplicação 2 e 3, com complexidade crescente
+  Relato simultâneo: todas as equipes mostram o cartão ao mesmo tempo
+  Fechamento: avaliação entre pares do módulo
+
+PONTUAÇÃO SUGERIDA
+  iRAT 30%  |  tRAT 30%  |  Aplicação 20%  |  Pares 20%</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- 5c. AVALIAÇÃO -->
+<section id="avaliacao">
+  <div class="container">
+    <div class="section-head">
+      <h2>Como Avaliar</h2>
+      <p>Critérios, evidências e perguntas-guia para medir se o aprendizado aconteceu.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>O que avaliar</th><th>Evidência</th><th>Pergunta-guia</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Preparação individual</strong></td><td>Nota do teste individual (iRAT)</td><td>Quantas questões acertou sozinho?</td></tr>
+          <tr><td><strong>Aprendizado em equipe</strong></td><td>Nota do teste em equipe (tRAT)</td><td>O grupo chegou ao consenso e acertou mais que a média individual?</td></tr>
+          <tr><td><strong>Aplicação</strong></td><td>Qualidade da resposta ao problema</td><td>A equipe escolheu bem e justificou a decisão?</td></tr>
+          <tr><td><strong>Contribuição</strong></td><td>Avaliação entre pares</td><td>Cada integrante preparou-se e ajudou o grupo?</td></tr>
+          <tr><td><strong>Evolução</strong></td><td>Comparar iRAT e tRAT ao longo dos módulos</td><td>O desempenho individual melhora com o tempo?</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 6. QUANDO USAR -->
+<section id="quando-usar">
+  <div class="container">
+    <div class="section-head">
+      <h2>Quando Usar &amp; Cuidados</h2>
+      <p>Saiba escolher o momento certo e evitar os erros mais comuns.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspecto</th><th>Nível</th><th>Observação</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Tamanho da turma</strong></td><td class="salary">Médio/grande</td><td>É onde o TBL mais se destaca.</td></tr>
+          <tr><td><strong>Preparo do professor</strong></td><td class="salary">Médio</td><td>Exige testes e problemas bem elaborados.</td></tr>
+          <tr><td><strong>Engajamento dos alunos</strong></td><td class="salary">Alto</td><td>A responsabilidade com a equipe motiva o estudo.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="market-grid">
+      <div class="panel">
+        <h3>✅ Use quando</h3>
+        <ul>
+          <li>A turma é grande.</li>
+          <li>Você quer garantir que todos estudem antes da aula.</li>
+          <li>Há conteúdo que gera debate e dúvidas.</li>
+          <li>É possível manter as mesmas equipes por um período.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>⚠️ Evite</h3>
+        <ul>
+          <li>Testes fáceis demais: sem dúvida, não há debate.</li>
+          <li>Trocar as equipes a cada aula.</li>
+          <li>Explicar tudo de novo depois do teste.</li>
+          <li>Problemas de aplicação com resposta óbvia.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6b. VARIAÇÕES -->
+<section id="variacoes">
+  <div class="container">
+    <div class="section-head">
+      <h2>Variações da Metodologia</h2>
+      <p>Formas de adaptar o método ao seu tempo, ao seu público e aos recursos disponíveis.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="icon">📝</div>
+        <h3>TBL com formulários online</h3>
+        <p>Os testes são respondidos em uma plataforma, que corrige e mostra o resultado na hora.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔁</div>
+        <h3>TBL compacto</h3>
+        <p>Uma sequência reduzida (teste em equipe e um problema de aplicação) para aulas de 50 minutos.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🌐</div>
+        <h3>TBL híbrido</h3>
+        <p>O estudo prévio e o teste individual acontecem online, e a parte em equipe, presencialmente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6c. ERROS COMUNS -->
+<section id="erros">
+  <div class="container">
+    <div class="section-head">
+      <h2>Erros Comuns e Como Corrigir</h2>
+      <p>Problemas que aparecem com frequência, suas causas e a correção mais simples.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Problema</th><th>Causa provável</th><th>Como corrigir</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Ninguém estuda antes</strong></td><td>O teste não vale nota ou a consequência é baixa</td><td>Dê peso real ao iRAT e comunique isso no início do módulo</td></tr>
+          <tr><td><strong>Teste em equipe sem discussão</strong></td><td>As questões são fáceis demais</td><td>Escreva questões que exijam interpretação e tenham alternativas plausíveis</td></tr>
+          <tr><td><strong>Equipes desiguais</strong></td><td>Formação feita pelos próprios alunos</td><td>Monte as equipes distribuindo experiência e habilidades</td></tr>
+          <tr><td><strong>Problema de aplicação com resposta óbvia</strong></td><td>Não atende aos 4S</td><td>Peça uma decisão específica entre alternativas defensáveis</td></tr>
+          <tr><td><strong>Aula vira palestra depois do teste</strong></td><td>Tentar reexplicar tudo</td><td>Esclareça só o que as equipes mais erraram</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 7. ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-head">
+      <h2>Roadmap de Implantação</h2>
+      <p>Um caminho simples para sair do zero e dominar TBL com segurança.</p>
+    </div>
+    <div class="roadmap">
+
+      <div class="step">
+        <span class="num-badge">1</span>
+        <div class="phase">Fase 1</div>
+        <h3>Preparar</h3>
+        <ul>
+          <li>Escolher o módulo</li>
+          <li>Selecionar o material</li>
+          <li>Escrever as questões do teste</li>
+          <li>Montar as equipes</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">2</span>
+        <div class="phase">Fase 2</div>
+        <h3>Primeira aula</h3>
+        <ul>
+          <li>Explicar as regras</li>
+          <li>Aplicar iRAT e tRAT</li>
+          <li>Esclarecer dúvidas</li>
+          <li>Propor um problema simples</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">3</span>
+        <div class="phase">Fase 3</div>
+        <h3>Rotina</h3>
+        <ul>
+          <li>Repetir o ciclo por módulo</li>
+          <li>Aumentar a dificuldade</li>
+          <li>Acompanhar o desempenho</li>
+          <li>Dar feedback às equipes</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">4</span>
+        <div class="phase">Fase 4</div>
+        <h3>Aperfeiçoar</h3>
+        <ul>
+          <li>Coletar opinião da turma</li>
+          <li>Ajustar o tamanho das equipes</li>
+          <li>Melhorar as questões</li>
+          <li>Documentar o que funcionou</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7b. FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head">
+      <h2>Perguntas Frequentes</h2>
+      <p>Dúvidas que quase todo mundo tem ao começar.</p>
+    </div>
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f1" id="acc-btn-f1">
+          <span>Qual é o tamanho ideal da equipe?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f1" role="region" aria-labelledby="acc-btn-f1">
+          <div class="acc-inner">
+            <p>Entre 5 e 7 pessoas é o recomendado na literatura, pois garante diversidade de opiniões. Equipes menores também funcionam, mas com menos variedade.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f2" id="acc-btn-f2">
+          <span>Posso usar TBL com uma turma pequena?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f2" role="region" aria-labelledby="acc-btn-f2">
+          <div class="acc-inner">
+            <p>Sim. O método foi pensado para turmas grandes, mas o ciclo de preparação, teste e aplicação funciona bem com qualquer tamanho.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f3" id="acc-btn-f3">
+          <span>Como dar feedback imediato sem cartões de raspar?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f3" role="region" aria-labelledby="acc-btn-f3">
+          <div class="acc-inner">
+            <p>Use um gabarito projetado após cada questão, formulário com correção automática ou cartões simples com letras e correção coletiva.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f4" id="acc-btn-f4">
+          <span>O que é a apelação?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f4" role="region" aria-labelledby="acc-btn-f4">
+          <div class="acc-inner">
+            <p>É a oportunidade de a equipe contestar uma questão por escrito, citando o material estudado. Estimula a leitura atenta e a argumentação.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f5" id="acc-btn-f5">
+          <span>Como funciona a avaliação entre pares?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f5" role="region" aria-labelledby="acc-btn-f5">
+          <div class="acc-inner">
+            <p>Cada aluno distribui pontos aos colegas conforme a contribuição. A pontuação final mistura a nota da equipe com essa avaliação.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f6" id="acc-btn-f6">
+          <span>E se os alunos reclamarem das equipes fixas?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f6" role="region" aria-labelledby="acc-btn-f6">
+          <div class="acc-inner">
+            <p>Explique que equipes permanentes criam confiança e melhoram o desempenho. Use a avaliação entre pares para tratar problemas de participação.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7c. GLOSSÁRIO -->
+<section id="glossario">
+  <div class="container">
+    <div class="section-head">
+      <h2>Glossário Rápido</h2>
+      <p>Termos que aparecem nesta metodologia, explicados em uma linha.</p>
+    </div>
+    <div class="grid grid-4">
+      <div class="card">
+        <h3>iRAT</h3>
+        <p>Individual Readiness Assurance Test: teste individual de preparação.</p>
+      </div>
+      <div class="card">
+        <h3>tRAT</h3>
+        <p>Team Readiness Assurance Test: o mesmo teste feito em equipe.</p>
+      </div>
+      <div class="card">
+        <h3>4S</h3>
+        <p>Significant problem, Same problem, Specific choice, Simultaneous report.</p>
+      </div>
+      <div class="card">
+        <h3>Apelação</h3>
+        <p>Contestação escrita de uma questão do teste.</p>
+      </div>
+      <div class="card">
+        <h3>Avaliação entre pares</h3>
+        <p>Nota dada aos colegas sobre a contribuição ao grupo.</p>
+      </div>
+      <div class="card">
+        <h3>Relato simultâneo</h3>
+        <p>Todas as equipes revelam a resposta ao mesmo tempo.</p>
+      </div>
+      <div class="card">
+        <h3>Equipe permanente</h3>
+        <p>Grupo que se mantém por todo o módulo ou curso.</p>
+      </div>
+      <div class="card">
+        <h3>IF-AT</h3>
+        <p>Cartão de raspar que dá retorno imediato sobre a resposta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. RECURSOS -->
+<section id="recursos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Recursos &amp; Outras Metodologias</h2>
+      <p>Fontes para se aprofundar e os guias das demais metodologias do portal.</p>
+    </div>
+    <div class="grid grid-3">
+
+      <a class="card resource" href="https://www.teambasedlearning.org/" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🌐</div>
+        <h3>Team-Based Learning Collaborative</h3>
+        <p>Comunidade e materiais oficiais sobre o TBL.</p>
+        <span class="link">www.teambasedlearning.org →</span>
+      </a>
+
+      <a class="card resource" href="https://en.wikipedia.org/wiki/Team-based_learning" target="_blank" rel="noopener noreferrer">
+        <div class="icon">📚</div>
+        <h3>Team-based learning (Wikipedia)</h3>
+        <p>Visão geral do método e de suas etapas.</p>
+        <span class="link">en.wikipedia.org/wiki/Team-based_learning →</span>
+      </a>
+
+      <a class="card resource" href="pbl.html">
+        <div class="icon">🏗️</div>
+        <h3>PBL — Aprendizagem Baseada em Projetos</h3>
+        <p>Investigar um problema real e entregar um produto final.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="sala-invertida.html">
+        <div class="icon">🔄</div>
+        <h3>Sala de Aula Invertida</h3>
+        <p>Teoria em casa, prática em sala com ajuda.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="peer-instruction.html">
+        <div class="icon">💬</div>
+        <h3>Peer Instruction — Instrução por Pares</h3>
+        <p>Pergunta conceitual, votação e debate entre colegas.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="estudo-de-caso.html">
+        <div class="icon">📂</div>
+        <h3>Estudo de Caso</h3>
+        <p>Analisar uma situação real e decidir com justificativa.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="gamificacao.html">
+        <div class="icon">🎮</div>
+        <h3>Gamificação</h3>
+        <p>Mecânicas de jogos para aumentar motivação e persistência.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="design-thinking.html">
+        <div class="icon">💡</div>
+        <h3>Design Thinking</h3>
+        <p>Empatia, ideação, protótipo e teste centrados nas pessoas.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="steam-maker.html">
+        <div class="icon">🔬</div>
+        <h3>STEAM & Cultura Maker</h3>
+        <p>Aprender construindo, unindo ciência, tecnologia, engenharia, artes e matemática.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p style="margin:0">© 2025 Ponce Metodologias &amp; Dev</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Accordion ---------- */
+  document.querySelectorAll('.acc-item').forEach(function (item) {
+    var btn = item.querySelector('.acc-btn');
+    var panel = item.querySelector('.acc-panel');
+    btn.addEventListener('click', function () {
+      var open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+    });
+  });
+
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.acc-item.open .acc-panel').forEach(function (p) {
+      p.style.maxHeight = p.scrollHeight + 'px';
+    });
+  });
+
+  /* ---------- Tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+  function activate(tab) {
+    tabs.forEach(function (t) {
+      var selected = t === tab;
+      t.setAttribute('aria-selected', selected ? 'true' : 'false');
+      t.tabIndex = selected ? 0 : -1;
+      var panelId = t.getAttribute('aria-controls');
+      var panel = document.getElementById(panelId);
+      if (panel) {
+        panel.classList.toggle('active', selected);
+      }
+    });
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { activate(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (next) { e.preventDefault(); activate(next); next.focus(); }
+    });
+  });
+
+  /* ---------- Copy button ---------- */
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.closest('.code-block').querySelector('code').textContent;
+      var done = function (ok) {
+        btn.textContent = ok ? 'Copiado!' : 'Falhou';
+        btn.classList.toggle('copied', ok);
+        setTimeout(function () {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 1800);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(
+          function () { done(true); },
+          function () { done(fallbackCopy(code)); }
+        );
+      } else {
+        done(fallbackCopy(code));
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

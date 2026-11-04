@@ -1,10 +1,10 @@
-﻿/**
+/**
  * ============================================================================
- * SERVICE WORKER â€” SUPORTE OFFLINE PWA (PONCE METODOLOGIAS & LÃ“GICA PURA)
+ * SERVICE WORKER — SUPORTE OFFLINE PWA (PONCE METODOLOGIAS & LÓGICA PURA)
  * ============================================================================
  */
 
-const CACHE_NAME = 'ponce-logica-v6';
+const CACHE_NAME = 'ponce-logica-v11';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -20,7 +20,26 @@ const ASSETS_TO_CACHE = [
   './js/app.js',
   './js/curso-logica.js',
   './js/curso-logica-dados.js',
-  './js/curso-logica-extras.js'
+  './js/curso-logica-extras.js',
+  './linguagens/python.html',
+  './linguagens/javascript.html',
+  './linguagens/java.html',
+  './linguagens/c.html',
+  './linguagens/cpp.html',
+  './linguagens/cobol.html',
+  './linguagens/html-css.html',
+  './linguagens/sql.html',
+  './linguagens/php.html',
+  './linguagens/banco-de-dados.html',
+  './linguagens/rust-go.html',
+  './metodologias/pbl.html',
+  './metodologias/tbl.html',
+  './metodologias/sala-invertida.html',
+  './metodologias/peer-instruction.html',
+  './metodologias/estudo-de-caso.html',
+  './metodologias/gamificacao.html',
+  './metodologias/design-thinking.html',
+  './metodologias/steam-maker.html'
 ];
 
 self.addEventListener('install', (event) => {
@@ -59,7 +78,7 @@ self.addEventListener('fetch', (event) => {
         });
         return networkResponse;
       }).catch(() => {
-        // Fallback offline se for navegaÃ§Ã£o HTML
+        // Fallback offline se for navegação HTML
         if (event.request.headers.get('accept')?.includes('text/html')) {
           return caches.match('./curso-logica.html') || caches.match('./index.html');
         }

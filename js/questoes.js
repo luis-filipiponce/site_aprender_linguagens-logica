@@ -633,5 +633,10 @@
     renderizarNivel(NIVEIS.indexOf(hash) >= 0 ? hash : "iniciante");
   }
 
-  document.addEventListener("DOMContentLoaded", iniciar);
+  document.addEventListener("DOMContentLoaded", function () {
+    iniciar();
+    if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+      navigator.serviceWorker.register('./sw.js').catch(function () {});
+    }
+  });
 })();

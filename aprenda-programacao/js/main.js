@@ -2,7 +2,67 @@
 //  APRENDA PROGRAMAÇÃO — JS GLOBAL
 // =============================================
 
+// ---- Theme Management (Dark Mode) ----
+function getPreferredTheme() {
+  const saved = localStorage.getItem('aprenda_prog_theme');
+  if (saved === 'dark' || saved === 'light') return saved;
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function updateThemeUI(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const toggleBtn = document.getElementById('theme-toggle-btn');
+  if (toggleBtn) {
+    const icon = toggleBtn.querySelector('.theme-toggle-icon');
+    const text = toggleBtn.querySelector('.theme-toggle-text');
+    if (theme === 'dark') {
+      if (icon) icon.textContent = '☀️';
+      if (text) text.textContent = 'Modo Claro';
+      toggleBtn.setAttribute('title', 'Alternar para Modo Claro');
+      toggleBtn.setAttribute('aria-label', 'Alternar para Modo Claro');
+    } else {
+      if (icon) icon.textContent = '🌙';
+      if (text) text.textContent = 'Modo Escuro';
+      toggleBtn.setAttribute('title', 'Alternar para Modo Escuro');
+      toggleBtn.setAttribute('aria-label', 'Alternar para Modo Escuro');
+    }
+  }
+}
+
+function initTheme() {
+  const currentTheme = getPreferredTheme();
+  updateThemeUI(currentTheme);
+
+  const toggleBtn = document.getElementById('theme-toggle-btn');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const activeTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('aprenda_prog_theme', nextTheme);
+      updateThemeUI(nextTheme);
+    });
+  }
+
+  // Listen for OS theme preference changes
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('aprenda_prog_theme')) {
+        updateThemeUI(e.matches ? 'dark' : 'light');
+      }
+    });
+  }
+}
+
+// Run theme check immediately
+(function() {
+  const t = getPreferredTheme();
+  document.documentElement.setAttribute('data-theme', t);
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
+
+  // Initialize Theme
+  initTheme();
 
   // ---- Active nav link ----
   const links = document.querySelectorAll('nav a.nav-link');

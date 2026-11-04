@@ -5,12 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Curso Completo de Lógica de Programação Pura — Ponce Metodologias</title>
   <meta name="description" content="Curso aprofundado, progressivo e interativo de Lógica de Programação Pura e Ciência da Computação com 22 módulos, Teorema Mestre, Programação Dinâmica, Lógica de Hoare, Máquinas de Turing e Inteligência Artificial que avalia suas próprias palavras."/>
+  <meta name="theme-color" content="#6366f1"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%23ffffff'>🧠</text></svg>"/>
+
+  <!-- Open Graph / Redes Sociais -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Curso Completo de Lógica de Programação Pura (22 Módulos)"/>
+  <meta property="og:description" content="Formação rigorosa com 22 módulos, Teorema Mestre, Programação Dinâmica, Lógica de Hoare e Tutora IA."/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Curso de Lógica de Programação Pura — Ponce Metodologias"/>
+  <meta name="twitter:description" content="22 Módulos progressivos com Tutora IA e avaliação cognitiva."/>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Curso Completo de Lógica de Programação Pura e Ciência da Computação",
+    "description": "Formação avançada com 22 módulos progressivos cobrindo fundamentos do raciocínio lógico, invariantes, complexidade Big-O, Teorema Mestre e métodos formais.",
+    "provider": {
+      "@type": "EducationalOrganization",
+      "name": "Ponce Metodologias & Dev",
+      "sameAs": "https://ponce.dev.br/"
+    },
+    "hasCourseInstance": {
+      "@type": "CourseInstance",
+      "courseMode": "Online",
+      "courseWorkload": "PT80H"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/curso-logica.css"/>
-  <link rel="stylesheet" href="css/interfaces.css"/>
   <link rel="stylesheet" href="css/questoes.css"/>
 </head>
 <body>
+
+  <!-- Link de Acessibilidade: Pular para o Conteúdo Principal -->
+  <a href="#curso-dashboard" class="skip-link">Pular para o conteúdo do curso</a>
 
   <!-- Barra de Progresso de Leitura Superior -->
   <div id="scroll-indicator"></div>
@@ -52,46 +87,6 @@
           <a href="#biblioteca-referencias" class="nav-link">Referências</a>
         </nav>
         <button class="nav-scroll-arrow right" id="nav-scroll-right" aria-label="Rolar para direita" title="Rolar para direita">›</button>
-      </div>
-
-      <!-- SELETOR DE MÚLTIPLAS INTERFACES -->
-      <div class="interface-switcher-wrap" id="interface-switcher-wrap">
-        <button class="interface-switcher-btn" id="interface-switcher-btn" title="Escolha o visual / layout da página">
-          <span>🎨</span>
-          <span id="interface-current-label">Interface 1 (Clássica)</span>
-          <span style="font-size:0.75rem;">▼</span>
-        </button>
-        <div class="interface-dropdown-menu" id="interface-dropdown-menu">
-          <div class="interface-dropdown-header">Escolha seu Modo de Leitura</div>
-          <button class="interface-opt-item" onclick="setAppInterface('1')">
-            <span class="interface-opt-icon">🏛️</span>
-            <div>
-              <div class="interface-opt-title">Interface 1 — Clássica Glassmorphism</div>
-              <div class="interface-opt-desc">Layout completo, cartões estilizados e visual enciclopédico.</div>
-            </div>
-          </button>
-          <button class="interface-opt-item" onclick="setAppInterface('2')">
-            <span class="interface-opt-icon">📖</span>
-            <div>
-              <div class="interface-opt-title">Interface 2 — Foco Zen & Leitura Limpa</div>
-              <div class="interface-opt-desc">Design editorial arejado, sem bordas pesadas, ideal para estudo longo.</div>
-            </div>
-          </button>
-          <button class="interface-opt-item" onclick="setAppInterface('3')">
-            <span class="interface-opt-icon">📊</span>
-            <div>
-              <div class="interface-opt-title">Interface 3 — Dashboard Modular</div>
-              <div class="interface-opt-desc">Visual compacto em grid analítico, focado em métricas e progresso.</div>
-            </div>
-          </button>
-          <button class="interface-opt-item" onclick="setAppInterface('4')">
-            <span class="interface-opt-icon">💻</span>
-            <div>
-              <div class="interface-opt-title">Interface 4 — Dev IDE / Cyber Dark</div>
-              <div class="interface-opt-desc">Tema técnico de alta imersão com fontes mono e contrastes nítidos.</div>
-            </div>
-          </button>
-        </div>
       </div>
 
       <button class="btn-icon" id="theme-toggle-btn" title="Alternar Modo Claro / Escuro">🌙</button>
@@ -137,10 +132,22 @@
 
         <!-- PAINEL / DASHBOARD DE PROGRESSO -->
         <div class="curso-dashboard-card" id="curso-dashboard">
-          <div class="dashboard-header">
+          <div class="dashboard-header" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
             <div class="dashboard-title-group">
               <h3><span>📊</span> Painel de Evolução & Domínio do Aluno</h3>
               <p>Acompanhamento cognitivo multidimensional baseado nas suas explicações e exercícios.</p>
+            </div>
+            <!-- Ações de Backup e Certificado -->
+            <div class="dashboard-backup-actions" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              <button class="btn btn-outline" style="font-size:0.8rem; padding:0.35rem 0.75rem;" onclick="CursoLogicaApp.exportarProgresso()" title="Baixar arquivo JSON com seu histórico e notas">
+                💾 Exportar Progresso
+              </button>
+              <button class="btn btn-outline" style="font-size:0.8rem; padding:0.35rem 0.75rem;" onclick="CursoLogicaApp.importarProgressoPrompt()" title="Restaurar progresso a partir de arquivo JSON">
+                📂 Importar Progresso
+              </button>
+              <button class="btn btn-primary" style="font-size:0.8rem; padding:0.35rem 0.75rem; background:var(--grad-primary); border:none; color:#fff;" onclick="CursoLogicaApp.emitirCertificado()" title="Gerar Certificado de Conclusão e Horas">
+                🎓 Certificado
+              </button>
             </div>
           </div>
 
@@ -265,54 +272,18 @@
   <script src="js/curso-logica-extras.js"></script>
   <script src="js/curso-logica.js"></script>
   <script>
-    // Theme toggle
+    // Tema claro / escuro (mesma chave do site principal)
     const themeBtn = document.getElementById('theme-toggle-btn');
+    const applyTheme = (theme) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      if (themeBtn) themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    };
+    applyTheme(localStorage.getItem('edumet-theme') === 'dark' ? 'dark' : 'light');
     if (themeBtn) {
       themeBtn.addEventListener('click', () => {
-        const doc = document.documentElement;
-        const cur = doc.getAttribute('data-theme') || 'light';
-        const next = cur === 'light' ? 'dark' : 'light';
-        doc.setAttribute('data-theme', next);
-        themeBtn.textContent = next === 'dark' ? '☀️' : '🌙';
-      });
-    }
-
-    // Sistema de Múltiplas Interfaces (1 a 4)
-    const interfaceLabels = {
-      '1': 'Interface 1 (Clássica)',
-      '2': 'Interface 2 (Foco Zen)',
-      '3': 'Interface 3 (Dashboard)',
-      '4': 'Interface 4 (Dev IDE)'
-    };
-
-    function setAppInterface(num) {
-      const doc = document.documentElement;
-      doc.setAttribute('data-interface', num);
-      localStorage.setItem('ponce_selected_interface', num);
-      const lbl = document.getElementById('interface-current-label');
-      if (lbl) lbl.textContent = interfaceLabels[num] || `Interface ${num}`;
-      
-      const menu = document.getElementById('interface-dropdown-menu');
-      if (menu) menu.classList.remove('show');
-    }
-
-    // Inicializar interface salva
-    const savedInterface = localStorage.getItem('ponce_selected_interface') || '1';
-    setAppInterface(savedInterface);
-
-    // Toggle menu dropdown de interfaces
-    const switcherBtn = document.getElementById('interface-switcher-btn');
-    const dropdownMenu = document.getElementById('interface-dropdown-menu');
-    if (switcherBtn && dropdownMenu) {
-      switcherBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        dropdownMenu.classList.toggle('show');
-      });
-
-      document.addEventListener('click', (e) => {
-        if (!switcherBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-          dropdownMenu.classList.remove('show');
-        }
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        localStorage.setItem('edumet-theme', next);
       });
     }
 

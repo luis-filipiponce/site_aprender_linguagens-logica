@@ -17,7 +17,25 @@ document.addEventListener("DOMContentLoaded", () => {
   initBackToTop();
   initFeynmanTool();
   initNavDragToScroll();
+  registerServiceWorker();
 });
+
+// ────────────────────────────────────────────────────────────────────────────
+// REGISTRO DE SERVICE WORKER PWA (OFFLINE CACHING)
+// ────────────────────────────────────────────────────────────────────────────
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => {
+          console.log('✅ [PWA] Service Worker registrado com sucesso no escopo:', reg.scope);
+        })
+        .catch(err => {
+          console.warn('⚠️ [PWA] Falha ao registrar Service Worker:', err);
+        });
+    });
+  }
+}
 
 // ────────────────────────────────────────────────────────────────────────────
 // NAVEGAÇÃO HORIZONTAL COM ARRASTE (DRAG TO SCROLL & SETAS)
@@ -153,7 +171,20 @@ const methodologiesData = [
       "Pode gerar frustração se a mediação do professor for insuficiente.",
       "Demanda mais tempo de execução comparado a aulas expositivas."
     ],
-    example: "Alunos do ensino médio criam um plano de mobilidade urbana sustentável para o bairro da escola, integrando física, matemática e geografia com apresentação para vereadores locais."
+    example: "Alunos do ensino médio criam um plano de mobilidade urbana sustentável para o bairro da escola, integrando física, matemática e geografia com apresentação para vereadores locais.",
+    history: "As raízes estão no pragmatismo de John Dewey ('aprender fazendo') e no 'Método de Projetos' de Kilpatrick (1918). Na versão moderna, o Buck Institute for Education (hoje PBLWorks) definiu os elementos do PBL de alta qualidade.",
+    whenToUse: "Quando há tempo para um trabalho prolongado e o objetivo é integrar conteúdos e habilidades, como colaboração, pesquisa e comunicação, em um produto real.",
+    programmingUse: "Construir um sistema completo (por exemplo, um app de controle de estoque para uma instituição local), passando por requisitos, código, testes e apresentação ao 'cliente'.",
+    tips: [
+      "Divida o projeto em marcos semanais com entregas intermediárias.",
+      "Compartilhe a rubrica de avaliação desde o primeiro dia.",
+      "Convide um público real (cliente ou comunidade) para a apresentação final."
+    ],
+    mistakes: [
+      "Confundir projeto com uma 'atividade de aplicação' feita só ao final do conteúdo.",
+      "Deixar as equipes sem checkpoints de acompanhamento."
+    ],
+    readMore: { label: "O que é PBL (PBLWorks)", url: "https://www.pblworks.org/what-is-pbl" }
   },
   {
     id: "tbl",
@@ -184,7 +215,20 @@ const methodologiesData = [
       "Requer elaboração rigorosa de questões de teste e cenários de aplicação.",
       "Equipes disfuncionais exigem mediação inicial de convivência."
     ],
-    example: "Em uma aula de Farmacologia, equipes recebem um caso clínico complexo com interações medicamentosas e devem escolher simultaneamente o protocolo ideal justificando sua decisão."
+    example: "Em uma aula de Farmacologia, equipes recebem um caso clínico complexo com interações medicamentosas e devem escolher simultaneamente o protocolo ideal justificando sua decisão.",
+    history: "Larry Michaelsen desenvolveu o TBL nos anos 1970 na Universidade de Oklahoma para lidar com turmas de administração cada vez maiores, sem perder a interação entre os alunos. Depois foi amplamente adotado em cursos da área da saúde.",
+    whenToUse: "Em turmas grandes onde se quer garantir estudo prévio e discussões de qualidade, com conteúdo que permita decisões comparáveis entre equipes.",
+    programmingUse: "Equipes estudam previamente a documentação de uma linguagem, fazem o teste individual e em grupo e depois resolvem juntas o mesmo problema de modelagem ou refatoração.",
+    tips: [
+      "Mantenha as equipes fixas (cerca de 5 a 7 pessoas) durante todo o curso.",
+      "Inclua avaliação entre pares para reduzir o 'carona' no grupo.",
+      "Faça o relato simultâneo das equipes para estimular debate real."
+    ],
+    mistakes: [
+      "Trocar a composição das equipes com frequência.",
+      "Elaborar testes fáceis demais, que não geram discussão."
+    ],
+    readMore: { label: "Visitar a Team-Based Learning Collaborative", url: "https://www.teambasedlearning.org/" }
   },
   {
     id: "sala-invertida",
@@ -215,7 +259,20 @@ const methodologiesData = [
       "Risco de alunos não realizarem o estudo prévio.",
       "Exige acesso a tecnologias e internet fora do ambiente escolar."
     ],
-    example: "Alunos assistem a 2 vídeos de 7 minutos sobre Reações Químicas Redox em casa e passam toda a aula no laboratório realizando experimentos práticos e analisando resultados."
+    example: "Alunos assistem a 2 vídeos de 7 minutos sobre Reações Químicas Redox em casa e passam toda a aula no laboratório realizando experimentos práticos e analisando resultados.",
+    history: "Jonathan Bergmann e Aaron Sams, professores de Química no Colorado, gravaram suas aulas em 2007 para alunos ausentes e perceberam que o tempo em sala rendia mais com atividades práticas. A rede Flipped Learning Network difundiu o modelo.",
+    whenToUse: "Quando o conteúdo teórico pode ser estudado de forma autônoma e o tempo presencial rende mais com prática guiada e dúvidas.",
+    programmingUse: "O aluno assiste a um vídeo curto sobre laços de repetição em casa e, em aula, resolve desafios de código em pares com a ajuda do professor.",
+    tips: [
+      "Mantenha vídeos curtos (5 a 10 minutos) e com um objetivo único.",
+      "Aplique um quiz rápido no início da aula para checar quem estudou.",
+      "Tenha um plano para alunos que não fizeram a tarefa prévia."
+    ],
+    mistakes: [
+      "Apenas passar a palestra para vídeo, sem mudar o que se faz em sala.",
+      "Ignorar a desigualdade de acesso à internet e a dispositivos."
+    ],
+    readMore: { label: "Definição oficial de Flipped Learning", url: "https://flippedlearning.org/definition-of-flipped-learning/" }
   },
   {
     id: "peer-instruction",
@@ -246,7 +303,20 @@ const methodologiesData = [
       "Questões conceituais precisam ser muito bem formuladas (distratores plausíveis).",
       "Não funciona bem se mais de 80% já acertarem de primeira ou se menos de 30% entenderem."
     ],
-    example: "Em aula de Física, o professor pergunta o que acontece com a aceleração de um elevador quando o cabo rompe. Os alunos votam, debatem entre si e a taxa de acerto salta de 42% para 88%."
+    example: "Em aula de Física, o professor pergunta o que acontece com a aceleração de um elevador quando o cabo rompe. Os alunos votam, debatem entre si e a taxa de acerto salta de 42% para 88%.",
+    history: "Eric Mazur, professor de Física em Harvard, percebeu no início dos anos 1990 que seus alunos resolviam contas, mas não entendiam os conceitos. Criou o método para atacar esse problema, e estudos publicados mostraram ganhos consistentes de aprendizagem conceitual.",
+    whenToUse: "Em aulas expositivas grandes, para verificar compreensão conceitual e corrigir concepções erradas em tempo real.",
+    programmingUse: "Mostrar um trecho de código e perguntar 'qual será a saída?' (por exemplo, sobre escopo de variáveis ou passagem por referência), com votação e debate antes da explicação.",
+    tips: [
+      "Use distratores que reflitam equívocos reais dos alunos.",
+      "Só abra a discussão se o acerto estiver entre 30% e 70%.",
+      "Use cartões coloridos ou apps de votação para manter o anonimato."
+    ],
+    mistakes: [
+      "Revelar a resposta antes da primeira votação.",
+      "Fazer perguntas que dependem de memorização, não de raciocínio."
+    ],
+    readMore: { label: "Saiba mais sobre Peer Instruction", url: "https://en.wikipedia.org/wiki/Peer_instruction" }
   },
   {
     id: "estudo-de-caso",
@@ -277,7 +347,20 @@ const methodologiesData = [
       "Casos desatualizados ou fictícios demais perdem o engajamento.",
       "O professor precisa ter habilidade na mediação socrática sem dar respostas prontas."
     ],
-    example: "Turma de Direito e Gestão analisa a crise de relações públicas e recall de uma montadora automobilística para formular pareceres jurídicos e estratégias de compliance."
+    example: "Turma de Direito e Gestão analisa a crise de relações públicas e recall de uma montadora automobilística para formular pareceres jurídicos e estratégias de compliance.",
+    history: "Introduzido na Harvard Law School por Christopher Langdell (1870) e difundido pela Harvard Business School a partir de 1920. Hoje é base do ensino em Direito, Administração e Medicina.",
+    whenToUse: "Quando não existe resposta única e o aluno precisa ponderar variáveis, riscos e dilemas éticos antes de decidir.",
+    programmingUse: "Analisar incidentes reais, como uma falha de segurança ou uma queda de produção, discutindo causas, decisões de arquitetura e lições (post-mortem).",
+    tips: [
+      "Escolha casos recentes, com dados reais e dilemas genuínos.",
+      "Conduza com perguntas socráticas em vez de entregar respostas.",
+      "Peça que cada grupo defenda uma decisão e a justifique com dados."
+    ],
+    mistakes: [
+      "Procurar a 'resposta certa' em vez de discutir alternativas.",
+      "Entregar casos longos sem orientar a leitura prévia."
+    ],
+    readMore: { label: "Saiba mais sobre o Método do Caso", url: "https://en.wikipedia.org/wiki/Case_method" }
   },
   {
     id: "gamificacao",
@@ -308,7 +391,20 @@ const methodologiesData = [
       "Risco de hiperfocar em recompensas extrínsecas (pontos) em detrimento do aprendizado real.",
       "Competitividade tóxica se o design focar apenas em rankings individuais."
     ],
-    example: "Uma gincana de programação onde cada bug corrigido concede 'pontos de cura' para salvar um servidor fictício de um ataque cibernético."
+    example: "Uma gincana de programação onde cada bug corrigido concede 'pontos de cura' para salvar um servidor fictício de um ataque cibernético.",
+    history: "O termo 'gamification' foi cunhado por Nick Pelling em 2002 e ganhou força a partir de 2010. Karl Kapp sistematizou seu uso educacional, apoiado na Teoria do Fluxo de Mihály Csíkszentmihályi e na Teoria da Autodeterminação.",
+    whenToUse: "Para tarefas repetitivas que exigem prática (sintaxe, exercícios), turmas desmotivadas ou conteúdos com progressão clara em níveis.",
+    programmingUse: "Desafios com níveis de dificuldade crescente, badges por conceito dominado (loops, funções, recursão) e missões de correção de bugs em equipe.",
+    tips: [
+      "Priorize mecânicas de progresso e maestria, não apenas rankings.",
+      "Permita tentar de novo sem penalidade para reduzir o medo do erro.",
+      "Feche sempre com um debriefing ligando o jogo ao conteúdo aprendido."
+    ],
+    mistakes: [
+      "Adicionar pontos sem propósito pedagógico (pontificação vazia).",
+      "Usar apenas rankings individuais, que desmotivam quem está atrás."
+    ],
+    readMore: { label: "Saiba mais sobre Gamificação", url: "https://en.wikipedia.org/wiki/Gamification_of_learning" }
   },
   {
     id: "design-thinking",
@@ -339,7 +435,20 @@ const methodologiesData = [
       "Pode gerar ansiedade em alunos acostumados a respostas binárias (certo/errado).",
       "Requer materiais diversificados para prototipagem rápida."
     ],
-    example: "Estudantes entrevistam alunos cadeirantes da escola e prototipam rampas de acesso inteligentes e sinalização tátil inclusiva."
+    example: "Estudantes entrevistam alunos cadeirantes da escola e prototipam rampas de acesso inteligentes e sinalização tátil inclusiva.",
+    history: "Surgiu na Universidade de Stanford nos anos 1960-70 e foi popularizado pela IDEO e por David Kelley. Em 2005 a d.school de Stanford consolidou o processo de cinco etapas hoje usado em escolas e empresas.",
+    whenToUse: "Quando o problema é mal definido e exige empatia com o usuário: criação de produtos, projetos sociais e desafios interdisciplinares.",
+    programmingUse: "Usar as etapas para criar um app: entrevistar usuários, definir a dor principal, esboçar telas no papel, montar um protótipo clicável e testar antes de escrever código.",
+    tips: [
+      "Dedique tempo real à fase de empatia: entrevistas curtas valem mais que suposições.",
+      "Proíba críticas durante o brainstorming para gerar quantidade de ideias.",
+      "Prototipe com papel e fita adesiva antes de usar tecnologia."
+    ],
+    mistakes: [
+      "Pular direto para a solução sem entender o usuário.",
+      "Considerar o processo linear, quando na prática se itera entre as etapas."
+    ],
+    readMore: { label: "Conhecer a d.school de Stanford", url: "https://dschool.stanford.edu/" }
   },
   {
     id: "steam-maker",
@@ -370,7 +479,20 @@ const methodologiesData = [
       "Pode exigir espaço físico adequado (laboratório maker / oficina) e insumos.",
       "Demanda gestão atenta de segurança no manuseio de ferramentas."
     ],
-    example: "Construção de uma estação meteorológica automatizada com Arduino, sensores de umidade e display LCD reciclado para monitorar a horta escolar."
+    example: "Construção de uma estação meteorológica automatizada com Arduino, sensores de umidade e display LCD reciclado para monitorar a horta escolar.",
+    history: "Seymour Papert (MIT) criou o Construcionismo nos anos 1980 e a linguagem Logo, defendendo que aprendemos melhor ao construir objetos significativos. O termo STEM surgiu na NSF (anos 1990) e Georgette Yakman acrescentou as Artes em 2006, formando o STEAM.",
+    whenToUse: "Quando o objetivo é materializar conceitos abstratos, integrar várias disciplinas ou desenvolver pensamento computacional com projetos tangíveis.",
+    programmingUse: "Programar Arduino, micro:bit ou Raspberry Pi para controlar sensores, LEDs e motores. O erro físico (o LED não acende) torna o debug visível e concreto.",
+    tips: [
+      "Comece com projetos de baixo custo e materiais reciclados antes de investir em kits caros.",
+      "Exija um diário de bordo (fotos, esquemas e erros) como evidência de aprendizagem.",
+      "Defina regras de segurança antes de liberar ferramentas ou eletrônica."
+    ],
+    mistakes: [
+      "Valorizar apenas o produto final e ignorar o processo de tentativa e erro.",
+      "Tratar as Artes como mero enfeite, sem integração real ao projeto."
+    ],
+    readMore: { label: "Saiba mais sobre STEAM", url: "https://en.wikipedia.org/wiki/STEAM_fields" }
   }
 ];
 
@@ -709,10 +831,13 @@ function initSearch() {
   }
 }
 
+let spotlightLastActiveElement = null;
+
 function openSpotlight() {
   const modal = document.getElementById("spotlight-search-modal");
   const input = document.getElementById("spotlight-input-field");
   if (!modal) return;
+  spotlightLastActiveElement = document.activeElement;
   modal.classList.add("active");
   if (input) {
     input.value = "";
@@ -723,7 +848,12 @@ function openSpotlight() {
 
 function closeSpotlight() {
   const modal = document.getElementById("spotlight-search-modal");
-  if (modal) modal.classList.remove("active");
+  if (modal) {
+    modal.classList.remove("active");
+    if (spotlightLastActiveElement && typeof spotlightLastActiveElement.focus === 'function') {
+      spotlightLastActiveElement.focus();
+    }
+  }
 }
 
 function toggleSpotlight() {
@@ -884,6 +1014,15 @@ window.openMethodModal = function(id) {
       <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.3rem;"><em>Origem / Autores:</em> ${method.author}</p>
     </div>
 
+    <h4>📜 Origem e Contexto Histórico</h4>
+    <p class="modal-info-text">${method.history}</p>
+
+    <h4>🧭 Quando Usar</h4>
+    <p class="modal-info-text">${method.whenToUse}</p>
+
+    <h4>💻 Aplicação no Ensino de Programação</h4>
+    <p class="modal-info-text">${method.programmingUse}</p>
+
     <h4>📋 Roteiro Passo a Passo de Execução</h4>
     <ol class="modal-steps-list">
       ${method.steps.map(s => `<li>${s}</li>`).join("")}
@@ -909,6 +1048,21 @@ window.openMethodModal = function(id) {
       ${method.example}
     </div>
 
+    <div class="pros-cons-grid">
+      <div class="pro-box">
+        <h5>💡 Dicas de Aplicação</h5>
+        <ul>
+          ${method.tips.map(t => `<li>${t}</li>`).join("")}
+        </ul>
+      </div>
+      <div class="con-box">
+        <h5>🚫 Erros Comuns a Evitar</h5>
+        <ul>
+          ${method.mistakes.map(m => `<li>${m}</li>`).join("")}
+        </ul>
+      </div>
+    </div>
+
     <h4 style="margin-top: 1.25rem;">📊 Ficha Técnica Rápida</h4>
     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; margin-top: 0.5rem;">
       <div style="background:var(--bg-main); padding:0.6rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
@@ -920,6 +1074,11 @@ window.openMethodModal = function(id) {
       <div style="background:var(--bg-main); padding:0.6rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
         <small style="color:var(--text-light);">Nível Cognitivo Bloom:</small><br><strong>${method.cognitiveLevel}</strong>
       </div>
+    </div>
+
+    <div class="modal-readmore">
+      <p>Quer se aprofundar? Acesse uma fonte externa de referência (abre em nova aba):</p>
+      <a class="btn btn-primary" href="${method.readMore.url}" target="_blank" rel="noopener noreferrer">🔗 ${method.readMore.label} ↗</a>
     </div>
   `;
 
@@ -3013,4 +3172,315 @@ document.addEventListener('DOMContentLoaded', function () {
   if (panel) {
     showLogicaTopic('seq');
   }
+});
+
+/* ==========================================================================
+   SANDBOX INTERATIVO & PROJETOS PRÁTICOS (ENGINE)
+   ========================================================================== */
+
+const sandboxPresets = {
+  javascript: {
+    title: "⚡ JavaScript ES6+ (Manipulação de Arrays & Funções)",
+    code: `// ⚡ Sandbox JavaScript Moderno
+// Experimente alterar os dados e clique em 'Executar Código'
+
+const desenvolvedores = [
+  { nome: "Ana", nivel: "Junior", linguagem: "JavaScript", salario: 4500 },
+  { nome: "Bruno", nivel: "Pleno", linguagem: "Python", salario: 7800 },
+  { nome: "Carla", nivel: "Senior", linguagem: "TypeScript", salario: 13000 },
+  { nome: "Diego", nivel: "Junior", linguagem: "Rust", salario: 5200 },
+];
+
+console.log("=== RELATÓRIO DE ENGENHARIA ===");
+
+// 1. Filtrar desenvolvedores juniors
+const juniors = desenvolvedores.filter(dev => dev.nivel === "Junior");
+console.log("👥 Desenvolvedores Juniors:", juniors.map(d => d.nome).join(", "));
+
+// 2. Mapear aumento salarial de 10%
+const comAumento = desenvolvedores.map(dev => ({
+  nome: dev.nome,
+  novoSalario: +(dev.salario * 1.10).toFixed(2)
+}));
+console.log("📈 Salários com aumento (+10%):", JSON.stringify(comAumento, null, 2));
+
+// 3. Somar folha salarial total com reduce
+const folhaTotal = desenvolvedores.reduce((total, dev) => total + dev.salario, 0);
+console.log("💰 Folha Salarial Total: R$", folhaTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 }));
+`
+  },
+  pseudocode: {
+    title: "🧠 Pseudocódigo & Algoritmos (com Trace de Passos)",
+    code: `// 🧠 Simulação de Algoritmo com Rastreamento de Estado
+// Este código simula a execução de um algoritmo passo a passo:
+
+function buscaLinearComTrace(lista, alvo) {
+  console.log("🚀 Iniciando Busca Linear para o alvo:", alvo);
+  console.log("📦 Lista de entrada:", JSON.stringify(lista));
+  
+  let comparacoes = 0;
+  let encontradoEm = -1;
+
+  for (let i = 0; i < lista.length; i++) {
+    comparacoes++;
+    console.log(\`🔍 [Passo \${comparacoes}] Comparando índice \${i}: valor \${lista[i]} == \${alvo} ?\`);
+    
+    if (lista[i] === alvo) {
+      encontradoEm = i;
+      console.log(\`✅ Sucesso! Elemento \${alvo} encontrado na posição (índice) \${i}!\`);
+      break;
+    }
+  }
+
+  if (encontradoEm === -1) {
+    console.log(\`❌ Elemento \${alvo} não encontrado após \${comparacoes} comparações.\`);
+  }
+
+  return { encontradoEm, totalComparacoes: comparacoes };
+}
+
+const numeros = [12, 45, 78, 23, 56, 89, 90];
+const resultado = buscaLinearComTrace(numeros, 56);
+console.log("📊 Resumo final:", JSON.stringify(resultado));
+`
+  },
+  datastructures: {
+    title: "📊 Estruturas de Dados (Pilha LIFO & Fila FIFO)",
+    code: `// 📊 Implementação de Pilha (Stack) e Fila (Queue)
+
+class Pilha {
+  constructor() { this.itens = []; }
+  push(elemento) { this.itens.push(elemento); console.log(\`📥 [Pilha] Empilhou: \${elemento}\`); }
+  pop() {
+    if (this.isEmpty()) return console.log("⚠️ Pilha Vazia!");
+    const removido = this.itens.pop();
+    console.log(\`📤 [Pilha] Desempilhou (LIFO): \${removido}\`);
+    return removido;
+  }
+  peek() { return this.itens[this.itens.length - 1]; }
+  isEmpty() { return this.itens.length === 0; }
+  print() { console.log("📚 Estado da Pilha (Topo -> Base):", [...this.itens].reverse().join(" -> ")); }
+}
+
+const historicoBrowser = new Pilha();
+historicoBrowser.push("1. google.com");
+historicoBrowser.push("2. github.com");
+historicoBrowser.push("3. stackoverflow.com");
+historicoBrowser.print();
+
+console.log("🔙 Usuário clicou em 'Voltar':");
+historicoBrowser.pop();
+historicoBrowser.print();
+`
+  },
+  binarysearch: {
+    title: "🔍 Busca Binária em O(log n)",
+    code: `// 🔍 Busca Binária Eficiente em O(log n)
+
+function buscaBinaria(arr, alvo) {
+  let inicio = 0;
+  let fim = arr.length - 1;
+  let iteracao = 0;
+
+  console.log("🔢 Array Ordenado:", JSON.stringify(arr));
+  console.log("🎯 Buscando valor:", alvo);
+
+  while (inicio <= fim) {
+    iteracao++;
+    const meio = Math.floor((inicio + fim) / 2);
+    const chute = arr[meio];
+
+    console.log(\`⏱️ [Iteração \${iteracao}] Intervalo [\${inicio}..\${fim}] | Meio = \${meio} (Valor = \${chute})\`);
+
+    if (chute === alvo) {
+      console.log(\`🎯 Encontrado no índice \${meio} com apenas \${iteracao} iterações!\`);
+      return meio;
+    }
+
+    if (chute > alvo) {
+      console.log(\`  ↳ \${chute} > \${alvo} (Descartando metade direita)\`);
+      fim = meio - 1;
+    } else {
+      console.log(\`  ↳ \${chute} < \${alvo} (Descartando metade esquerda)\`);
+      inicio = meio + 1;
+    }
+  }
+
+  console.log("❌ Elemento não encontrado no array.");
+  return -1;
+}
+
+const listaOrdenada = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91];
+buscaBinaria(listaOrdenada, 23);
+`
+  },
+  recursion: {
+    title: "🔁 Recursão com Caso Base e Pilha de Chamadas",
+    code: `// 🔁 Recursão: Fatorial e Sequência de Fibonacci
+
+function fatorialComLog(n, profundidade = 0) {
+  const ident = "  ".repeat(profundidade);
+  console.log(\`\${ident}➡️ fat(\${n}) chamada\`);
+
+  // Caso Base
+  if (n <= 1) {
+    console.log(\`\${ident}🛑 Caso Base alcançado: fat(\${n}) = 1\`);
+    return 1;
+  }
+
+  // Passo Recursivo
+  const resultadoParcial = fatorialComLog(n - 1, profundidade + 1);
+  const total = n * resultadoParcial;
+  console.log(\`\${ident}⬅️ Retornando: \${n} * fat(\${n-1}) = \${total}\`);
+  return total;
+}
+
+console.log("=== CÁLCULO DE FATORIAL RECURSIVO ===");
+const res = fatorialComLog(4);
+console.log("🎉 Resultado final de 4! =", res);
+`
+  }
+};
+
+function initInteractiveSandbox() {
+  const presetSelect = document.getElementById("sandbox-preset-select");
+  const editor = document.getElementById("sandbox-code-editor");
+  const runBtn = document.getElementById("sandbox-run-btn");
+  const resetBtn = document.getElementById("sandbox-reset-btn");
+  const clearBtn = document.getElementById("sandbox-clear-btn");
+  const copyBtn = document.getElementById("sandbox-copy-btn");
+  const terminal = document.getElementById("sandbox-terminal-output");
+  const timeBadge = document.getElementById("sandbox-time-badge");
+  const varsTableBody = document.getElementById("sandbox-vars-tbody");
+
+  if (!editor || !runBtn || !terminal) return;
+
+  // Carregar preset inicial
+  function loadPreset(key) {
+    if (sandboxPresets[key]) {
+      editor.value = sandboxPresets[key].code;
+    }
+  }
+
+  if (presetSelect) {
+    presetSelect.addEventListener("change", (e) => {
+      loadPreset(e.target.value);
+    });
+    loadPreset(presetSelect.value || "javascript");
+  }
+
+  // Executar código
+  runBtn.addEventListener("click", () => {
+    const code = editor.value;
+    terminal.innerHTML = "";
+    if (varsTableBody) varsTableBody.innerHTML = "";
+
+    const logs = [];
+    const startTime = performance.now();
+
+    const customConsole = {
+      log: (...args) => {
+        const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
+        logs.push({ type: 'log', text: msg });
+      },
+      warn: (...args) => {
+        const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+        logs.push({ type: 'warn', text: msg });
+      },
+      error: (...args) => {
+        const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+        logs.push({ type: 'error', text: msg });
+      }
+    };
+
+    try {
+      const runner = new Function("console", code);
+      runner(customConsole);
+      const endTime = performance.now();
+      const elapsed = (endTime - startTime).toFixed(2);
+
+      if (timeBadge) timeBadge.textContent = `${elapsed} ms`;
+
+      if (logs.length === 0) {
+        terminal.innerHTML = `<span class="term-success">✅ Código executado com sucesso em ${elapsed}ms (nenhum console.log disparado).</span>`;
+      } else {
+        terminal.innerHTML = logs.map(l => {
+          if (l.type === 'error') return `<span class="term-error">❌ ${escapeHtml(l.text)}</span>`;
+          if (l.type === 'warn') return `<span class="term-warn">⚠️ ${escapeHtml(l.text)}</span>`;
+          return `<span class="term-log">${escapeHtml(l.text)}</span>`;
+        }).join("\n");
+      }
+
+      // Tenta extrair variáveis simples para o inspetor
+      if (varsTableBody) {
+        try {
+          const varRegex = /(?:let|const|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
+          let match;
+          const varNames = [];
+          while ((match = varRegex.exec(code)) !== null) {
+            if (!varNames.includes(match[1])) varNames.push(match[1]);
+          }
+
+          if (varNames.length > 0) {
+            const inspectCode = code + `\nreturn { ${varNames.map(v => `${v}: typeof ${v} !== 'undefined' ? ${v} : undefined`).join(', ')} };`;
+            const inspectRunner = new Function(inspectCode);
+            const inspectedVars = inspectRunner();
+
+            varsTableBody.innerHTML = Object.entries(inspectedVars).map(([k, v]) => {
+              const type = Array.isArray(v) ? 'array' : typeof v;
+              const valStr = typeof v === 'object' ? JSON.stringify(v) : String(v);
+              return `<tr><td><strong>${escapeHtml(k)}</strong></td><td><span class="badge" style="font-size:0.72rem;">${type}</span></td><td><code>${escapeHtml(valStr)}</code></td></tr>`;
+            }).join('');
+          }
+        } catch (_) {
+          // inspetor opcional
+        }
+      }
+
+    } catch (err) {
+      const endTime = performance.now();
+      const elapsed = (endTime - startTime).toFixed(2);
+      if (timeBadge) timeBadge.textContent = `${elapsed} ms`;
+      terminal.innerHTML = `<span class="term-error">❌ Erro de Sintaxe / Execução:\n${escapeHtml(err.message)}</span>`;
+    }
+  });
+
+  resetBtn?.addEventListener("click", () => {
+    if (presetSelect) loadPreset(presetSelect.value);
+  });
+
+  clearBtn?.addEventListener("click", () => {
+    terminal.innerHTML = `<span style="color:#64748b;">Terminal limpo. Pressione 'Executar Código' para rodar...</span>`;
+    if (varsTableBody) varsTableBody.innerHTML = "";
+    if (timeBadge) timeBadge.textContent = "0.00 ms";
+  });
+
+  copyBtn?.addEventListener("click", () => {
+    navigator.clipboard.writeText(editor.value).then(() => {
+      const original = copyBtn.textContent;
+      copyBtn.textContent = "✅ Copiado!";
+      setTimeout(() => copyBtn.textContent = original, 2000);
+    });
+  });
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+window.switchProjectTab = function(tabId) {
+  const tabs = document.querySelectorAll(".project-tab-btn");
+  const panes = document.querySelectorAll(".project-pane");
+
+  tabs.forEach(t => t.classList.remove("active"));
+  panes.forEach(p => p.classList.remove("active"));
+
+  document.querySelector(`[data-project-tab="${tabId}"]`)?.classList.add("active");
+  document.getElementById(tabId)?.classList.add("active");
+};
+
+// Inicialização automática
+document.addEventListener("DOMContentLoaded", () => {
+  initInteractiveSandbox();
 });

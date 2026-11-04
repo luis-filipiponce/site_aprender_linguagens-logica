@@ -42,6 +42,16 @@
 .icon-gray   { background: #f2f4f6; }
 .icon-yellow { background: #fffde7; }
 
+[data-theme="dark"] .icon-blue   { background: rgba(88,166,255,0.18); }
+[data-theme="dark"] .icon-purple { background: rgba(188,140,255,0.18); }
+[data-theme="dark"] .icon-green  { background: rgba(63,185,80,0.18); }
+[data-theme="dark"] .icon-orange { background: rgba(210,153,34,0.18); }
+[data-theme="dark"] .icon-red    { background: rgba(248,81,73,0.18); }
+[data-theme="dark"] .icon-teal   { background: rgba(57,197,207,0.18); }
+[data-theme="dark"] .icon-dark   { background: rgba(255,255,255,0.1); }
+[data-theme="dark"] .icon-gray   { background: rgba(255,255,255,0.08); }
+[data-theme="dark"] .icon-yellow { background: rgba(210,153,34,0.18); }
+
 .home-card h3 {
   font-size: 14.5px;
   font-weight: 700;

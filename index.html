@@ -5,11 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ponce Metodologias & Dev — Enciclopédia de Ensino, Lógica e Programação</title>
   <meta name="description" content="Guia completo com metodologias ativas de ensino, neurociência, Taxonomia de Bloom e ensinamentos aprofundados de Linguagens de Programação (Python, JS, Java, C, C++, COBOL, HTML, SQL, Rust, Go) com lógica prévia detalhada para cada uma."/>
+  <meta name="theme-color" content="#6366f1"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%23ffffff'>🧠</text></svg>"/>
+
+  <!-- Open Graph / Redes Sociais -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Ponce Metodologias & Dev — Enciclopédia de Ensino, Lógica e Programação"/>
+  <meta property="og:description" content="Guia completo com metodologias ativas, neurociência, Taxonomia de Bloom, 12 linguagens de programação e IA Tutora."/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Ponce Metodologias & Dev — Enciclopédia de Ensino e Programação"/>
+  <meta name="twitter:description" content="Guia completo de metodologias ativas, Lógica Pura e Linguagens de Programação."/>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Ponce Metodologias & Dev",
+    "description": "Portal educacional dedicado ao ensino ativo de Lógica de Programação, Ciência da Computação e Engenharia de Software.",
+    "url": "https://ponce.dev.br/",
+    "knowsAbout": ["Lógica de Programação", "Ciência da Computação", "Python", "JavaScript", "Java", "C", "C++", "COBOL", "Rust", "Go", "TypeScript", "DevOps"]
+  }
+  </script>
+
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/curso-logica.css"/>
   <link rel="stylesheet" href="css/interfaces.css"/>
 </head>
 <body>
+
+  <!-- Link de Acessibilidade: Pular para o Conteúdo Principal -->
+  <a href="#hero" class="skip-link">Pular para o conteúdo principal</a>
 
   <!-- Barra de Progresso de Leitura Superior -->
   <div id="scroll-indicator"></div>
@@ -46,10 +74,12 @@
         <button class="nav-scroll-arrow left" id="nav-scroll-left" aria-label="Rolar para esquerda" title="Rolar para esquerda">‹</button>
         <nav class="nav-links" id="header-nav-links">
           <a href="curso-logica.html" class="nav-link" style="background:var(--grad-primary); color:#fff; font-weight:700; padding:0.4rem 0.85rem; border-radius:8px;">🚀 Curso de Lógica Pura</a>
+          <a href="#projetos-praticos" class="nav-link" style="background:rgba(16,185,129,0.15); color:var(--accent-green); font-weight:700; border:1px solid rgba(16,185,129,0.3); border-radius:8px;">🚀 Projetos Práticos</a>
+          <a href="#sandbox-interativo" class="nav-link">💻 Code Sandbox</a>
           <a href="#linguagens-programacao" class="nav-link">Linguagens & Lógica</a>
           <a href="#lang-typescript" class="nav-link">🔷 TypeScript & Node</a>
           <a href="#ia-machine-learning" class="nav-link">🤖 IA & ML</a>
-          <a href="#devops-engenharia" class="nav-link">🛠️ DevOps</a>
+          <a href="#devops-engenharia" class="nav-link">🛠️ DevOps & Docker</a>
           <a href="#github-git" class="nav-link">🐙 Git & GitHub</a>
           <a href="#comparador-sintaxe" class="nav-link">Comparador</a>
           <a href="#metodologias-ativas" class="nav-link">Metodologias</a>
@@ -182,24 +212,35 @@
       </div>
 
       <div>
-        <div class="sidebar-group-title">🤖 IA, DevOps & Engenharia</div>
+        <div class="sidebar-group-title">🚀 Portfólio & Ferramentas Reais</div>
         <ul class="sidebar-menu">
           <li class="sidebar-item">
-            <a href="#ia-machine-learning">
-              <span>🤖</span> IA & Machine Learning
-              <span class="sidebar-badge" style="background:var(--grad-primary);color:#fff;">Novo</span>
+            <a href="#projetos-praticos" style="background:rgba(16,185,129,0.08); border-left:3px solid var(--accent-green);">
+              <span>🚀</span> <strong>Projetos Práticos (Build a Project)</strong>
+              <span class="sidebar-badge" style="background:var(--accent-green);color:#fff;">4 Projetos</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#sandbox-interativo">
+              <span>💻</span> <strong>Sandbox & Terminal Interativo</strong>
+              <span class="sidebar-badge" style="background:var(--grad-primary);color:#fff;">Live Code</span>
             </a>
           </li>
           <li class="sidebar-item">
             <a href="#devops-engenharia">
-              <span>🛠️</span> DevOps & Docker & SOLID
+              <span>🛠️</span> DevOps, Docker & Deploy
               <span class="sidebar-badge" style="background:var(--grad-primary);color:#fff;">Novo</span>
             </a>
           </li>
           <li class="sidebar-item">
             <a href="#github-git">
-              <span>🐙</span> Git & GitHub (Comandos Úteis)
+              <span>🐙</span> Git & GitHub (Conflitos & PRs)
               <span class="sidebar-badge" style="background:var(--grad-primary);color:#fff;">Novo</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#ia-machine-learning">
+              <span>🤖</span> IA & Machine Learning
             </a>
           </li>
         </ul>
@@ -4357,29 +4398,65 @@ tabuada.forEach(linha => console.log(linha));
         <span class="var">uses</span>: <span class="str">codecov/codecov-action@v4</span></code></pre>
           </div>
 
-          <div class="topic-divider"><span>Padrões Arquiteturais Modernos</span></div>
+          <div class="topic-divider"><span>Docker Compose — Orquestração Local Multi-Serviços</span></div>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang-label">docker-compose.yml — Aplicação Node.js + Banco PostgreSQL + Admin</span>
+              <button class="copy-code-btn">Copiar Código</button>
+            </div>
+            <pre><code><span class="cmt"># docker-compose.yml — Sobe aplicação completa e banco com um único comando</span>
+<span class="var">version</span>: <span class="str">'3.8'</span>
+
+<span class="var">services</span>:
+  <span class="var">app</span>:
+    <span class="var">build</span>: <span class="str">.</span>
+    <span class="var">ports</span>:
+      - <span class="str">"3000:3000"</span>
+    <span class="var">environment</span>:
+      - <span class="var">NODE_ENV</span>=development
+      - <span class="var">DATABASE_URL</span>=postgres://devuser:devpass@postgres:5432/appdb
+    <span class="var">depends_on</span>:
+      - <span class="var">postgres</span>
+    <span class="var">restart</span>: <span class="str">unless-stopped</span>
+
+  <span class="var">postgres</span>:
+    <span class="var">image</span>: <span class="typ">postgres:16-alpine</span>
+    <span class="var">ports</span>:
+      - <span class="str">"5432:5432"</span>
+    <span class="var">environment</span>:
+      - <span class="var">POSTGRES_USER</span>=devuser
+      - <span class="var">POSTGRES_PASSWORD</span>=devpass
+      - <span class="var">POSTGRES_DB</span>=appdb
+    <span class="var">volumes</span>:
+      - <span class="str">pgdata:/var/lib/postgresql/data</span>
+
+<span class="var">volumes</span>:
+  <span class="var">pgdata</span>:</code></pre>
+          </div>
+
+          <div class="topic-divider"><span>Padrões Arquiteturais & Guia de Deploy em Nuvem</span></div>
           <div class="lang-topic-grid">
             <div class="deep-box">
               <h4>🏗️ Arquitetura Hexagonal (Ports & Adapters)</h4>
               <p>Isola o domínio de negócio de dependências externas (banco, HTTP, filas). O núcleo define <strong>ports</strong> (interfaces) e os <strong>adapters</strong> implementam os detalhes. Facilita testes unitários sem mocks de banco.</p>
             </div>
             <div class="deep-box">
-              <h4>📨 Mensageria & Event-Driven</h4>
-              <p>Kafka, RabbitMQ e SQS desacoplam produtores e consumidores. <strong>Event Sourcing:</strong> armazena a sequência de eventos em vez do estado final. <strong>CQRS:</strong> separa as operações de leitura (Query) e escrita (Command).</p>
+              <h4>☁️ Guia de Deploy do Zero à Produção</h4>
+              <p><strong>Front-end:</strong> Vercel / Netlify / Cloudflare Pages (deploy automático via push na branch <code>main</code>). <strong>Back-end:</strong> Render / Railway / Fly.io (contêineres com HTTPS nativo e variáveis de ambiente configuradas no painel).</p>
             </div>
             <div class="deep-box">
               <h4>🔍 Observabilidade — Os 3 Pilares</h4>
-              <p><strong>Métricas:</strong> Prometheus + Grafana (latência, taxa de erros, saturação). <strong>Logs:</strong> ELK Stack ou Loki (logs estruturados em JSON). <strong>Traces:</strong> OpenTelemetry + Jaeger (rastreamento de requests entre microsserviços).</p>
+              <p><strong>Métricas:</strong> Prometheus + Grafana (latência, taxa de erros, saturação). <strong>Logs:</strong> Logs estruturados em JSON com rastreamento por <code>correlation_id</code>. <strong>Traces:</strong> OpenTelemetry para mapear requisições distribuídas.</p>
             </div>
           </div>
 
           <div class="best-practice-box">
-            <h5>✅ Regras de Ouro do DevOps</h5>
+            <h5>✅ Regras de Ouro do DevOps & Engenharia de Produção</h5>
             <ul>
               <li><strong>Infraestrutura como Código (IaC):</strong> Use Terraform ou Pulumi para versionar e reprovisionar toda a infraestrutura de cloud de forma declarativa.</li>
               <li><strong>Segredos nunca no código:</strong> Use variáveis de ambiente ou vaults (HashiCorp Vault, AWS Secrets Manager). Nunca faça commit de <code>.env</code> com credenciais reais.</li>
-              <li><strong>Feature Flags:</strong> Separe deploy de release. Implante código desativado em produção e ative para % dos usuários sem novo deploy (LaunchDarkly, Unleash).</li>
-              <li><strong>Teste em produção responsavelmente:</strong> Canary Releases e Blue/Green Deployments minimizam o raio de impacto de bugs, permitindo rollback instantâneo.</li>
+              <li><strong>Health Checks e Graceful Shutdown:</strong> Toda aplicação em produção deve responder a <code>/healthz</code> e capturar sinais <code>SIGTERM</code> para fechar conexões de banco sem derrubar requisições ativas.</li>
+              <li><strong>Feature Flags:</strong> Separe deploy de release. Implante código desativado em produção e ative para % dos usuários sem novo deploy.</li>
             </ul>
           </div>
         </div>
@@ -4538,6 +4615,53 @@ tabuada.forEach(linha => console.log(linha));
 <span class="fn">gh issue list</span></code></pre>
           </div>
 
+          <div class="topic-divider"><span>7. Como Resolver Conflitos de Merge Passo a Passo</span></div>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang-label">Guia Prático — Anatomia e Resolução de Conflitos no Git</span>
+              <button class="copy-code-btn">Copiar Código</button>
+            </div>
+            <pre><code><span class="cmt"># 1. Quando ocorre um conflito ao rodar 'git merge' ou 'git pull':</span>
+<span class="cmt"># O Git pausa o merge e marca os arquivos conflitantes com delimitadores:</span>
+
+<span class="str">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+<span class="kw">const</span> apiUrl = <span class="str">"https://api.producao.com/v1"</span>; <span class="cmt">// Sua alteração atual na branch local</span>
+<span class="str">=======</span>
+<span class="kw">const</span> apiUrl = <span class="str">"https://api.novo-gateway.com/v2"</span>; <span class="cmt">// Alteração que veio da outra branch</span>
+<span class="str">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/novo-gateway</span>
+
+<span class="cmt"># 2. Como resolver:</span>
+<span class="cmt"># - Abra o arquivo no editor, escolha a versão correta (ou combine as duas) e apague os marcadores (&lt;&lt;&lt;, ===, &gt;&gt;&gt;)</span>
+<span class="cmt"># - Salve o arquivo e marque como resolvido:</span>
+<span class="fn">git add</span> nome-do-arquivo.js
+<span class="fn">git commit</span> -m <span class="str">"fix: resolve conflito de URL da API"</span>
+
+<span class="cmt"># Se precisar desistir do merge e voltar ao estado seguro anterior:</span>
+<span class="fn">git merge</span> --abort</code></pre>
+          </div>
+
+          <div class="topic-divider"><span>8. Comandos Salva-Vidas no Dia a Dia</span></div>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang-label">Terminal / Bash — Comandos Avançados de Recuperação e Produtividade</span>
+              <button class="copy-code-btn">Copiar Código</button>
+            </div>
+            <pre><code><span class="cmt"># Corrigir a mensagem ou arquivos do ÚLTIMO commit (sem criar novo commit)</span>
+<span class="fn">git commit</span> --amend -m <span class="str">"feat: mensagem corrigida"</span>
+
+<span class="cmt"># Desfazer o último commit mantendo todas as alterações salvas nos arquivos (safe)</span>
+<span class="fn">git reset</span> --soft HEAD~1
+
+<span class="cmt"># Puxar apenas UM commit específico de outra branch para a sua</span>
+<span class="fn">git cherry-pick</span> a1b2c3d
+
+<span class="cmt"># Reverter um commit público criando um novo commit com o inverso (seguro para equipes)</span>
+<span class="fn">git revert</span> a1b2c3d
+
+<span class="cmt"># Ver diferenças exatas linha por linha antes de commitar</span>
+<span class="fn">git diff</span></code></pre>
+          </div>
+
           <div class="topic-divider"><span>Boas Práticas e Padrões Essenciais</span></div>
           <div class="lang-topic-grid">
             <div class="deep-box">
@@ -4545,12 +4669,12 @@ tabuada.forEach(linha => console.log(linha));
               <p>Mantenha um histórico limpo e padronizado: <code>feat:</code> (nova feature), <code>fix:</code> (correção de bug), <code>docs:</code> (documentação), <code>refactor:</code> (refatoração), <code>test:</code> (testes) e <code>chore:</code> (tarefas e dependências).</p>
             </div>
             <div class="deep-box">
-              <h4>🚫 Arquivo .gitignore</h4>
-              <p>Nunca envie dependências e arquivos de ambiente para o GitHub. Inclua sempre no <code>.gitignore</code>: <code>node_modules/</code>, <code>.env</code>, <code>dist/</code>, arquivos de logs e chaves privadas.</p>
+              <h4>🔀 Pull Requests Profissionais</h4>
+              <p>Descreva o <strong>Porquê</strong> e o <strong>Como</strong> da mudança, anexe prints se houver alteração de interface, vincule a issue (ex: <code>Closes #42</code>) e solicite review antes do merge.</p>
             </div>
             <div class="deep-box">
-              <h4>🔒 Segurança e Credenciais</h4>
-              <p>Nunca faça commit de senhas, tokens de API ou credenciais de banco. Se uma chave for exposta acidentalmente, revogue-a imediatamente e altere o histórico usando ferramentas seguras.</p>
+              <h4>🚫 Arquivo .gitignore & Segurança</h4>
+              <p>Nunca envie dependências ou credenciais. Inclua sempre: <code>node_modules/</code>, <code>.env</code>, <code>dist/</code>, <code>*.pem</code> e chaves de API.</p>
             </div>
           </div>
 
@@ -4604,6 +4728,510 @@ tabuada.forEach(linha => console.log(linha));
       </section>
 
       <!-- ====================================================================
+           4E. CODE SANDBOX & TERMINAL INTERATIVO NO NAVEGADOR
+           ==================================================================== -->
+      <section class="content-section" id="sandbox-interativo">
+        <div class="section-header">
+          <span class="section-badge badge-blue">Ambiente de Execução em Tempo Real</span>
+          <h2 class="section-title">💻 Code Sandbox & Terminal Interativo</h2>
+          <p class="section-desc">
+            Escreva, execute e depure algoritmos, estruturas de dados e código JavaScript/Lógica diretamente no navegador. Veja a saída do console, o tempo de execução e o estado das variáveis em tempo real sem precisar instalar nada localmente.
+          </p>
+        </div>
+
+        <div class="sandbox-card">
+          <div class="sandbox-toolbar">
+            <div class="sandbox-presets-wrap">
+              <label for="sandbox-preset-select" style="font-weight:700; font-size:0.9rem; color:var(--text-main);">
+                Selecione o Exemplo / Preset:
+              </label>
+              <select id="sandbox-preset-select" class="form-control" style="font-weight:600; min-width:320px;">
+                <option value="javascript">⚡ JavaScript ES6+ (Arrays, Filter & Map)</option>
+                <option value="pseudocode">🧠 Pseudocódigo & Algoritmos (com Trace de Passos)</option>
+                <option value="datastructures">📊 Estruturas de Dados (Pilha LIFO & Fila FIFO)</option>
+                <option value="binarysearch">🔍 Busca Binária em O(log n)</option>
+                <option value="recursion">🔁 Recursão com Caso Base e Call Stack</option>
+              </select>
+            </div>
+
+            <div class="sandbox-actions">
+              <button class="btn btn-primary" id="sandbox-run-btn">
+                ▶️ Executar Código
+              </button>
+              <button class="btn btn-outline" id="sandbox-reset-btn" title="Restaurar o código original do preset">
+                🔄 Resetar
+              </button>
+              <button class="btn btn-outline" id="sandbox-copy-btn" title="Copiar código do editor">
+                📋 Copiar
+              </button>
+              <button class="btn btn-outline" id="sandbox-clear-btn" title="Limpar saída do terminal">
+                🧹 Limpar
+              </button>
+            </div>
+          </div>
+
+          <div class="sandbox-editor-grid">
+            <!-- Coluna 1: Editor de Código -->
+            <div>
+              <div class="editor-pane-header">
+                <span style="font-size:0.82rem; font-weight:800; text-transform:uppercase; color:var(--text-light); letter-spacing:0.05em;">
+                  📝 Editor de Código (JavaScript / Lógica):
+                </span>
+                <span style="font-size:0.75rem; color:var(--text-muted);">Edite o código livremente abaixo</span>
+              </div>
+              <textarea id="sandbox-code-editor" class="runner-editor" style="min-height: 280px; font-size:0.88rem; line-height:1.7;" spellcheck="false"></textarea>
+            </div>
+
+            <!-- Coluna 2: Terminal Output & Live Variables Watcher -->
+            <div>
+              <div class="editor-pane-header">
+                <span style="font-size:0.82rem; font-weight:800; text-transform:uppercase; color:var(--text-light); letter-spacing:0.05em;">
+                  🖥️ Terminal Output (stdout / stderr):
+                </span>
+                <span style="font-size:0.75rem; color:var(--primary); font-weight:700;">
+                  ⏱️ Tempo: <span id="sandbox-time-badge">0.00 ms</span>
+                </span>
+              </div>
+
+              <div class="terminal-window">
+                <div class="terminal-header">
+                  <div class="terminal-dots">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                  </div>
+                  <span>bash — node v20 sandbox</span>
+                  <span>UTF-8</span>
+                </div>
+                <div class="terminal-body" id="sandbox-terminal-output">Clique em '▶️ Executar Código' acima para rodar a simulação...</div>
+              </div>
+
+              <!-- Inspetor de Variáveis Declaradas -->
+              <div style="margin-top:1rem;">
+                <div style="font-size:0.8rem; font-weight:800; text-transform:uppercase; color:var(--text-light); margin-bottom:0.4rem;">
+                  🔍 Inspetor de Estado de Variáveis:
+                </div>
+                <div style="max-height:160px; overflow-y:auto; border:1px solid var(--border-color); border-radius:var(--radius-sm);">
+                  <table class="vars-inspector-table">
+                    <thead>
+                      <tr>
+                        <th>Variável</th>
+                        <th>Tipo</th>
+                        <th>Valor Inspecionado</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sandbox-vars-tbody">
+                      <tr>
+                        <td colspan="3" style="text-align:center; color:#64748b;">Execute o código para inspecionar variáveis declaradas</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           4F. PROJETOS PRÁTICOS DO MUNDO REAL (BUILD A PROJECT)
+           ==================================================================== -->
+      <section class="content-section" id="projetos-praticos">
+        <div class="section-header">
+          <span class="section-badge badge-green">Engenharia Prática & Portfólio</span>
+          <h2 class="section-title">🚀 Projetos Práticos Passo a Passo (Build a Project)</h2>
+          <p class="section-desc">
+            Construa aplicações reais do mundo real para o seu portfólio no GitHub. Cada projeto inclui arquitetura, diagrama, estrutura de arquivos, código-fonte completo comentado e checklist de publicação.
+          </p>
+        </div>
+
+        <!-- Abas dos 4 Projetos -->
+        <div class="project-tabs-nav">
+          <button class="project-tab-btn active" data-project-tab="proj-api-rest" onclick="switchProjectTab('proj-api-rest')">
+            📦 Projeto 1: API RESTful com Node.js, JWT & SQLite
+          </button>
+          <button class="project-tab-btn" data-project-tab="proj-kanban-fullstack" onclick="switchProjectTab('proj-kanban-fullstack')">
+            📋 Projeto 2: Task Manager & Kanban Full-Stack
+          </button>
+          <button class="project-tab-btn" data-project-tab="proj-python-cli" onclick="switchProjectTab('proj-python-cli')">
+            🐍 Projeto 3: CLI Tool & Analisador de Logs em Python
+          </button>
+          <button class="project-tab-btn" data-project-tab="proj-solid-finance" onclick="switchProjectTab('proj-solid-finance')">
+            💳 Projeto 4: Sistema de Controle Financeiro & SOLID
+          </button>
+        </div>
+
+        <!-- PROJETO 1: API RESTful -->
+        <div class="project-pane active" id="proj-api-rest">
+          <div class="project-meta-grid">
+            <div class="project-meta-item">
+              <label>Tecnologias</label>
+              <strong>Node.js, Express, JWT, SQLite/Prisma, Jest</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Dificuldade</label>
+              <strong style="color:var(--accent-green);">Iniciante / Intermediário</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Tempo Estimado</label>
+              <strong>3 a 5 horas</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Tipo de Aplicação</label>
+              <strong>Back-End Web / Microsserviço REST</strong>
+            </div>
+          </div>
+
+          <div class="project-step-card">
+            <div class="project-step-header">
+              <div class="project-step-num">1</div>
+              <div>
+                <h3 style="margin:0; font-size:1.15rem;">Visão Geral, Arquitetura & Estrutura de Pastas</h3>
+                <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Uma API REST completa com autenticação por token JWT, hash de senhas com bcrypt e operações CRUD seguras de tarefas.</p>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top:1rem;">
+              <div class="code-header">
+                <span class="code-lang-label">Estrutura de Pastas do Projeto</span>
+                <button class="copy-code-btn">Copiar Código</button>
+              </div>
+              <pre><code>api-tarefas-rest/
+├── src/
+│   ├── config/          # Conexão com banco e segredos JWT
+│   │   └── database.js
+│   ├── middlewares/     # Validação e autenticação de tokens
+│   │   └── authMiddleware.js
+│   ├── controllers/     # Regras de negócio das rotas
+│   │   ├── authController.js
+│   │   └── taskController.js
+│   ├── routes/          # Definição dos endpoints REST
+│   │   ├── authRoutes.js
+│   │   └── taskRoutes.js
+│   ├── app.js           # Configuração do Express e CORS
+│   └── server.js        # Inicialização do servidor HTTP
+├── tests/
+│   └── tasks.test.js    # Testes automatizados com Supertest
+├── .env.example
+├── .gitignore
+├── package.json
+└── README.md</code></pre>
+            </div>
+          </div>
+
+          <div class="project-step-card">
+            <div class="project-step-header">
+              <div class="project-step-num">2</div>
+              <div>
+                <h3 style="margin:0; font-size:1.15rem;">Código do Servidor & Rotas da API (CRUD + Auth)</h3>
+                <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Implementação do middleware de segurança JWT e dos controladores de rotas.</p>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang-label">src/app.js — Servidor Express com Rotas Protegidas</span>
+                <button class="copy-code-btn">Copiar Código</button>
+              </div>
+              <pre><code><span class="kw">import</span> express <span class="kw">from</span> <span class="str">"express"</span>;
+<span class="kw">import</span> jwt <span class="kw">from</span> <span class="str">"jsonwebtoken"</span>;
+
+<span class="kw">const</span> app = <span class="fn">express</span>();
+app.<span class="fn">use</span>(express.<span class="fn">json</span>());
+
+<span class="kw">const</span> JWT_SECRET = process.env.JWT_SECRET || <span class="str">"chave_secreta_desenvolvimento_123"</span>;
+
+<span class="cmt">// Banco de dados em memória (para demonstração)</span>
+<span class="kw">const</span> usuarios = [];
+<span class="kw">const</span> tarefas = [];
+
+<span class="cmt">// ── 1. Rota de Registro e Login (Gera JWT) ──────────────────────────</span>
+app.<span class="fn">post</span>(<span class="str">"/api/auth/login"</span>, (req, res) => {
+  <span class="kw">const</span> { email, senha } = req.body;
+  <span class="kw">if</span> (!email || !senha) {
+    <span class="kw">return</span> res.<span class="fn">status</span>(<span class="num">400</span>).<span class="fn">json</span>({ erro: <span class="str">"Email e senha são obrigatórios"</span> });
+  }
+
+  <span class="cmt">// Gera token com payload do usuário e expiração em 2 horas</span>
+  <span class="kw">const</span> token = jwt.<span class="fn">sign</span>({ email, id: <span class="num">1</span> }, JWT_SECRET, { expiresIn: <span class="str">"2h"</span> });
+  <span class="kw">return</span> res.<span class="fn">json</span>({ mensagem: <span class="str">"Autenticado com sucesso"</span>, token });
+});
+
+<span class="cmt">// ── 2. Middleware de Proteção de Rotas com JWT ──────────────────────</span>
+<span class="kw">function</span> <span class="fn">autenticarToken</span>(req, res, next) {
+  <span class="kw">const</span> authHeader = req.headers[<span class="str">"authorization"</span>];
+  <span class="kw">const</span> token = authHeader && authHeader.<span class="fn">split</span>(<span class="str">" "</span>)[<span class="num">1</span>]; <span class="cmt">// Formato: Bearer TOKEN</span>
+
+  <span class="kw">if</span> (!token) <span class="kw">return</span> res.<span class="fn">status</span>(<span class="num">401</span>).<span class="fn">json</span>({ erro: <span class="str">"Token de acesso ausente"</span> });
+
+  jwt.<span class="fn">verify</span>(token, JWT_SECRET, (err, usuario) => {
+    <span class="kw">if</span> (err) <span class="kw">return</span> res.<span class="fn">status</span>(<span class="num">403</span>).<span class="fn">json</span>({ erro: <span class="str">"Token inválido ou expirado"</span> });
+    req.usuario = usuario;
+    <span class="fn">next</span>();
+  });
+}
+
+<span class="cmt">// ── 3. Rotas CRUD de Tarefas Protegidas ─────────────────────────────</span>
+app.<span class="fn">get</span>(<span class="str">"/api/tarefas"</span>, autenticarToken, (req, res) => {
+  res.<span class="fn">json</span>(tarefas);
+});
+
+app.<span class="fn">post</span>(<span class="str">"/api/tarefas"</span>, autenticarToken, (req, res) => {
+  <span class="kw">const</span> { titulo, descricao } = req.body;
+  <span class="kw">if</span> (!titulo) <span class="kw">return</span> res.<span class="fn">status</span>(<span class="num">400</span>).<span class="fn">json</span>({ erro: <span class="str">"Título é obrigatório"</span> });
+
+  <span class="kw">const</span> novaTarefa = {
+    id: Date.<span class="fn">now</span>(),
+    titulo,
+    descricao: descricao || <span class="str">""</span>,
+    concluida: <span class="kw">false</span>,
+    criadaPor: req.usuario.email
+  };
+  tarefas.<span class="fn">push</span>(novaTarefa);
+  res.<span class="fn">status</span>(<span class="num">201</span>).<span class="fn">json</span>(novaTarefa);
+});
+
+<span class="kw">export default</span> app;</code></pre>
+            </div>
+          </div>
+
+          <div class="project-step-card">
+            <div class="project-step-header">
+              <div class="project-step-num">3</div>
+              <div>
+                <h3 style="margin:0; font-size:1.15rem;">Checklist para Publicar no GitHub e Deploy</h3>
+              </div>
+            </div>
+            <ul class="project-checklist">
+              <li><input type="checkbox"/> Crie um <code>README.md</code> com badges, instruções de <code>npm install</code> e <code>npm test</code>.</li>
+              <li><input type="checkbox"/> Inclua exemplos de requisições cURL ou arquivo de coleção Insomnia/Postman.</li>
+              <li><input type="checkbox"/> Configure o deploy gratuito no <strong>Render</strong> ou <strong>Railway</strong> adicionando a variável <code>JWT_SECRET</code>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- PROJETO 2: Task Manager & Kanban Full-Stack -->
+        <div class="project-pane" id="proj-kanban-fullstack">
+          <div class="project-meta-grid">
+            <div class="project-meta-item">
+              <label>Tecnologias</label>
+              <strong>HTML5 Semântico, CSS3 Flexbox/Grid, Vanilla JS (ES6+), LocalStorage API</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Dificuldade</label>
+              <strong style="color:var(--accent-green);">Iniciante / Intermediário</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Tempo Estimado</label>
+              <strong>4 a 6 horas</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Tipo de Aplicação</label>
+              <strong>Front-End SPA / Gestão de Produtividade</strong>
+            </div>
+          </div>
+
+          <div class="project-step-card">
+            <div class="project-step-header">
+              <div class="project-step-num">1</div>
+              <div>
+                <h3 style="margin:0; font-size:1.15rem;">Arquitetura Modular em JavaScript Puro</h3>
+                <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Um quadro Kanban interativo com 3 colunas (A Fazer, Em Progresso, Concluído), persistência em LocalStorage e manipulação limpa do DOM.</p>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang-label">kanban.js — Lógica de Estado e Renderização Reativa</span>
+                <button class="copy-code-btn">Copiar Código</button>
+              </div>
+              <pre><code><span class="cmt">// Estado inicial persistido no navegador</span>
+<span class="kw">let</span> tarefasKanban = JSON.<span class="fn">parse</span>(localStorage.<span class="fn">getItem</span>(<span class="str">"kanban_tarefas"</span>)) || [
+  { id: <span class="num">1</span>, titulo: <span class="str">"Estudar Lógica de Programação"</span>, coluna: <span class="str">"todo"</span> },
+  { id: <span class="num">2</span>, titulo: <span class="str">"Construir API com Express"</span>, coluna: <span class="str">"in_progress"</span> },
+  { id: <span class="num">3</span>, titulo: <span class="str">"Configurar Git e GitHub"</span>, coluna: <span class="str">"done"</span> }
+];
+
+<span class="kw">function</span> <span class="fn">salvarNoStorage</span>() {
+  localStorage.<span class="fn">setItem</span>(<span class="str">"kanban_tarefas"</span>, JSON.<span class="fn">stringify</span>(tarefasKanban));
+}
+
+<span class="kw">function</span> <span class="fn">adicionarTarefa</span>(titulo, coluna = <span class="str">"todo"</span>) {
+  <span class="kw">const</span> nova = { id: Date.<span class="fn">now</span>(), titulo, coluna };
+  tarefasKanban.<span class="fn">push</span>(nova);
+  <span class="fn">salvarNoStorage</span>();
+  <span class="fn">renderizarQuadro</span>();
+}
+
+<span class="kw">function</span> <span class="fn">moverTarefa</span>(id, novaColuna) {
+  <span class="kw">const</span> tarefa = tarefasKanban.<span class="fn">find</span>(t => t.id === id);
+  <span class="kw">if</span> (tarefa) {
+    tarefa.coluna = novaColuna;
+    <span class="fn">salvarNoStorage</span>();
+    <span class="fn">renderizarQuadro</span>();
+  }
+}
+
+<span class="kw">function</span> <span class="fn">excluirTarefa</span>(id) {
+  tarefasKanban = tarefasKanban.<span class="fn">filter</span>(t => t.id !== id);
+  <span class="fn">salvarNoStorage</span>();
+  <span class="fn">renderizarQuadro</span>();
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJETO 3: CLI Tool em Python -->
+        <div class="project-pane" id="proj-python-cli">
+          <div class="project-meta-grid">
+            <div class="project-meta-item">
+              <label>Tecnologias</label>
+              <strong>Python 3.12, Argparse, Regex (re), JSON/CSV, Unittest</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Dificuldade</label>
+              <strong style="color:var(--primary);">Intermediário</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Tempo Estimado</label>
+              <strong>2 a 4 horas</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Tipo de Aplicação</label>
+              <strong>CLI / Script de Automação & DevOps</strong>
+            </div>
+          </div>
+
+          <div class="project-step-card">
+            <div class="project-step-header">
+              <div class="project-step-num">1</div>
+              <div>
+                <h3 style="margin:0; font-size:1.15rem;">Analisador de Logs de Servidor Web (Nginx/Apache)</h3>
+                <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Script de linha de comando que lê arquivos de log, agrupa códigos HTTP (404, 500, 200), calcula IPs mais frequentes e gera relatório JSON.</p>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang-label">log_analyzer.py — CLI em Python com Argparse</span>
+                <button class="copy-code-btn">Copiar Código</button>
+              </div>
+              <pre><code><span class="cmt">#!/usr/bin/env python3</span>
+<span class="kw">import</span> argparse
+<span class="kw">import</span> re
+<span class="kw">import</span> json
+<span class="kw">from</span> collections <span class="kw">import</span> Counter
+
+<span class="kw">def</span> <span class="fn">analisar_logs</span>(caminho_arquivo):
+    <span class="cmt"># Padrão de linha de log: IP - - [Data] "MÉTODO /ROTA HTTP" STATUS BYTES</span>
+    padrao = re.compile(<span class="str">r'^(\d+\.\d+\.\d+\.\d+).*?"[A-Z]+ (.*?) HTTP.*?" (\d{3})'</span>)
+    
+    ips = Counter()
+    status_codes = Counter()
+    rotas = Counter()
+
+    <span class="kw">with</span> open(caminho_arquivo, <span class="str">'r'</span>, encoding=<span class="str">'utf-8'</span>) <span class="kw">as</span> f:
+        <span class="kw">for</span> linha <span class="kw">in</span> f:
+            match = padrao.search(linha)
+            <span class="kw">if</span> match:
+                ip, rota, status = match.groups()
+                ips[ip] += <span class="num">1</span>
+                rotas[rota] += <span class="num">1</span>
+                status_codes[status] += <span class="num">1</span>
+
+    relatorio = {
+        <span class="str">"total_requisicoes"</span>: sum(status_codes.values()),
+        <span class="str">"status_http"</span>: dict(status_codes),
+        <span class="str">"top_5_ips"</span>: ips.most_common(<span class="num">5</span>),
+        <span class="str">"top_5_rotas"</span>: rotas.most_common(<span class="num">5</span>)
+    }
+    <span class="kw">return</span> relatorio
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    parser = argparse.ArgumentParser(description=<span class="str">"Analisador de Logs de Servidor"</span>)
+    parser.add_argument(<span class="str">"arquivo"</span>, help=<span class="str">"Caminho do arquivo .log"</span>)
+    parser.add_argument(<span class="str">"--json"</span>, action=<span class="str">"store_true"</span>, help=<span class="str">"Exportar em formato JSON"</span>)
+    
+    args = parser.parse_args()
+    resultado = analisar_logs(args.arquivo)
+    print(json.dumps(resultado, indent=<span class="num">2</span>, ensure_ascii=<span class="kw">False</span>))</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJETO 4: Sistema Financeiro & SOLID -->
+        <div class="project-pane" id="proj-solid-finance">
+          <div class="project-meta-grid">
+            <div class="project-meta-item">
+              <label>Tecnologias</label>
+              <strong>TypeScript, Princípios SOLID, POO, Injeção de Dependência, Vitest</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Dificuldade</label>
+              <strong style="color:var(--accent-rose);">Avançado</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Tempo Estimado</label>
+              <strong>5 a 8 horas</strong>
+            </div>
+            <div class="project-meta-item">
+              <label>Tipo de Aplicação</label>
+              <strong>Core Domain / Sistema de Cobrança e Faturamento</strong>
+            </div>
+          </div>
+
+          <div class="project-step-card">
+            <div class="project-step-header">
+              <div class="project-step-num">1</div>
+              <div>
+                <h3 style="margin:0; font-size:1.15rem;">Design de Domínio com Princípios SOLID</h3>
+                <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Implementação de processamento de pagamentos desacoplado, aplicando o Princípio da Responsabilidade Única (SRP) e Inversão de Dependência (DIP).</p>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang-label">ProcessadorPagamento.ts — Aplicação do Princípio Aberto/Fechado (OCP)</span>
+                <button class="copy-code-btn">Copiar Código</button>
+              </div>
+              <pre><code><span class="cmt">// 1. Interface que define o contrato do Gateway de Pagamento (DIP)</span>
+<span class="kw">export interface</span> <span class="typ">IGatewayPagamento</span> {
+  <span class="fn">processar</span>(valorCentavos: <span class="typ">number</span>): <span class="typ">Promise</span><{ sucesso: <span class="typ">boolean</span>; transacaoId: <span class="typ">string</span> }>;
+}
+
+<span class="cmt">// 2. Implementações concretas de gateways (OCP: novos gateways não alteram a classe de serviço)</span>
+<span class="kw">export class</span> <span class="typ">GatewayPix</span> <span class="kw">implements</span> <span class="typ">IGatewayPagamento</span> {
+  <span class="kw">async</span> <span class="fn">processar</span>(valor: <span class="typ">number</span>) {
+    console.<span class="fn">log</span>(<span class="str">`Gerando QR Code Pix para R$ \${(valor/100).toFixed(2)}`</span>);
+    <span class="kw">return</span> { sucesso: <span class="kw">true</span>, transacaoId: <span class="str">`pix_\${Date.now()}`</span> };
+  }
+}
+
+<span class="kw">export class</span> <span class="typ">GatewayCartao</span> <span class="kw">implements</span> <span class="typ">IGatewayPagamento</span> {
+  <span class="kw">async</span> <span class="fn">processar</span>(valor: <span class="typ">number</span>) {
+    console.<span class="fn">log</span>(<span class="str">`Autorizando transação no cartão: R$ \${(valor/100).toFixed(2)}`</span>);
+    <span class="kw">return</span> { sucesso: <span class="kw">true</span>, transacaoId: <span class="str">`cc_\${Date.now()}`</span> };
+  }
+}
+
+<span class="cmt">// 3. Caso de Uso de Faturamento (Injeção de Dependência)</span>
+<span class="kw">export class</span> <span class="typ">ServicoFaturamento</span> {
+  <span class="kw">constructor</span>(<span class="kw">private readonly</span> gateway: <span class="typ">IGatewayPagamento</span>) {}
+
+  <span class="kw">async</span> <span class="fn">fecharPedido</span>(clienteId: <span class="typ">string</span>, totalCentavos: <span class="typ">number</span>) {
+    <span class="kw">const</span> resultado = <span class="kw">await</span> <span class="kw">this</span>.gateway.<span class="fn">processar</span>(totalCentavos);
+    <span class="kw">if</span> (!resultado.sucesso) {
+      <span class="kw">throw new</span> Error(<span class="str">"Falha ao processar pagamento"</span>);
+    }
+    <span class="kw">return</span> { pedidoId: Date.<span class="fn">now</span>(), status: <span class="str">"PAGO"</span>, comprovante: resultado.transacaoId };
+  }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
            5. METODOLOGIAS ATIVAS DE ENSINO
            ==================================================================== -->
       <section class="content-section" id="metodologias-ativas">
@@ -4622,7 +5250,7 @@ tabuada.forEach(linha => console.log(linha));
             <h3 class="card-title">PBL (Project-Based Learning)</h3>
             <div class="card-origin">Kilpatrick & Dewey (1918)</div>
             <p class="card-summary">Investigação aprofundada em torno de uma pergunta motriz complexa do mundo real com artefato autêntico.</p>
-            <div class="card-actions"><button class="btn-card-details" onclick="openMethodModal('pbl')">📖 Ver Roteiro Completo →</button></div>
+            <div class="card-actions"><a class="lang-more-btn" href="metodologias/pbl.html">📖 Guia Completo →</a></div>
           </div>
 
           <!-- TBL -->
@@ -4631,7 +5259,7 @@ tabuada.forEach(linha => console.log(linha));
             <h3 class="card-title">TBL (Team-Based Learning)</h3>
             <div class="card-origin">Dr. Larry Michaelsen (1970s)</div>
             <p class="card-summary">Garantia de preparação prévia (iRAT/tRAT) e tarefas de aplicação complexas (4Ss) em grupos permanentes.</p>
-            <div class="card-actions"><button class="btn-card-details" onclick="openMethodModal('tbl')">📖 Ver Roteiro Completo →</button></div>
+            <div class="card-actions"><a class="lang-more-btn" href="metodologias/tbl.html">📖 Guia Completo →</a></div>
           </div>
 
           <!-- Sala Invertida -->
@@ -4640,7 +5268,7 @@ tabuada.forEach(linha => console.log(linha));
             <h3 class="card-title">Sala de Aula Invertida</h3>
             <div class="card-origin">Bergmann & Sams (2007)</div>
             <p class="card-summary">Teoria prévia no ritmo do aluno em casa, liberando o tempo presencial para práticas de alta complexidade.</p>
-            <div class="card-actions"><button class="btn-card-details" onclick="openMethodModal('sala-invertida')">📖 Ver Roteiro Completo →</button></div>
+            <div class="card-actions"><a class="lang-more-btn" href="metodologias/sala-invertida.html">📖 Guia Completo →</a></div>
           </div>
 
           <!-- Peer Instruction -->
@@ -4649,7 +5277,43 @@ tabuada.forEach(linha => console.log(linha));
             <h3 class="card-title">Peer Instruction (Pares)</h3>
             <div class="card-origin">Eric Mazur - Harvard (1991)</div>
             <p class="card-summary">Exposições curtas com ConcepTests. Se o acerto fica entre 30-70%, os alunos debatem entre si para convencer o colega.</p>
-            <div class="card-actions"><button class="btn-card-details" onclick="openMethodModal('peer-instruction')">📖 Ver Roteiro Completo →</button></div>
+            <div class="card-actions"><a class="lang-more-btn" href="metodologias/peer-instruction.html">📖 Guia Completo →</a></div>
+          </div>
+
+          <!-- Estudo de Caso -->
+          <div class="method-card" style="--card-accent: #16a34a; --card-accent-light: #f0fdf4;">
+            <div class="card-top"><div class="card-icon">📂</div><span class="card-category">Análise</span></div>
+            <h3 class="card-title">Estudo de Caso</h3>
+            <div class="card-origin">Harvard Business School (1920s)</div>
+            <p class="card-summary">Análise de situações reais ou simuladas para ponderar variáveis, debater dilemas e decidir com fundamentação.</p>
+            <div class="card-actions"><a class="lang-more-btn" href="metodologias/estudo-de-caso.html">📖 Guia Completo →</a></div>
+          </div>
+
+          <!-- Gamificação -->
+          <div class="method-card" style="--card-accent: #e11d48; --card-accent-light: #fff1f2;">
+            <div class="card-top"><div class="card-icon">🎮</div><span class="card-category">Lúdico</span></div>
+            <h3 class="card-title">Gamificação</h3>
+            <div class="card-origin">Nick Pelling (2002) / Karl Kapp</div>
+            <p class="card-summary">Mecânicas de jogos aplicadas ao aprendizado para elevar motivação, persistência e redução do medo do erro.</p>
+            <div class="card-actions"><a class="lang-more-btn" href="metodologias/gamificacao.html">📖 Guia Completo →</a></div>
+          </div>
+
+          <!-- Design Thinking -->
+          <div class="method-card" style="--card-accent: #d97706; --card-accent-light: #fffbeb;">
+            <div class="card-top"><div class="card-icon">💡</div><span class="card-category">Inovação</span></div>
+            <h3 class="card-title">Design Thinking</h3>
+            <div class="card-origin">d.school Stanford / David Kelley</div>
+            <p class="card-summary">Empatia, definição, ideação, prototipagem e teste para criar soluções centradas nas pessoas.</p>
+            <div class="card-actions"><a class="lang-more-btn" href="metodologias/design-thinking.html">📖 Guia Completo →</a></div>
+          </div>
+
+          <!-- STEAM & Maker -->
+          <div class="method-card" style="--card-accent: #0284c7; --card-accent-light: #f0f9ff;">
+            <div class="card-top"><div class="card-icon">🔬</div><span class="card-category">Mão na Massa</span></div>
+            <h3 class="card-title">STEAM & Cultura Maker</h3>
+            <div class="card-origin">Yakman & Papert (Construcionismo)</div>
+            <p class="card-summary">Integração de Ciência, Tecnologia, Engenharia, Artes e Matemática através da construção de projetos reais.</p>
+            <div class="card-actions"><a class="lang-more-btn" href="metodologias/steam-maker.html">📖 Guia Completo →</a></div>
           </div>
         </div>
       </section>
@@ -4789,6 +5453,7 @@ tabuada.forEach(linha => console.log(linha));
           <div class="quiz-box" id="quiz-step-container"></div>
         </div>
       </section>
+
       <!-- ====================================================================
            ARENA DE TESTES UNITÁRIOS & DESAFIOS DE CÓDIGO
            ==================================================================== -->
@@ -4846,7 +5511,6 @@ tabuada.forEach(linha => console.log(linha));
           <div id="exam-quiz-container"></div>
         </div>
       </section>
-
 
       <!-- ====================================================================
            9. MATRIZ COMPARATIVA GERAL
@@ -5055,6 +5719,7 @@ tabuada.forEach(linha => console.log(linha));
           </div>
         </div>
       </section>
+
 
     </main>
   </div>

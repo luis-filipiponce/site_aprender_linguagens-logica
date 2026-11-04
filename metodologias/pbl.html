@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PBL — Aprendizagem Baseada em Projetos — Ponce Metodologias &amp; Dev</title>
+<meta name="description" content="Aprenda PBL (Aprendizagem Baseada em Projetos): origem, como aplicar passo a passo, modelos prontos, quando usar e roadmap.">
+<style>
+:root {
+  --accent: #2563eb;
+  --accent-dark: #1e4fbc;
+  --accent-light: #719af2;
+  --accent-soft: rgba(37, 99, 235, 0.12);
+  --accent-border: rgba(37, 99, 235, 0.35);
+  --bg: #0b1120;
+  --bg-2: #0f172a;
+  --surface: #131c31;
+  --surface-2: #1a2540;
+  --border: #243252;
+  --text: #e6ebf5;
+  --muted: #9aa8c4;
+  --code-bg: #0a0f1d;
+  --header-h: 64px;
+  --radius: 14px;
+  --font: -apple-system, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img, svg { max-width: 100%; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 .5em; }
+p { margin: 0 0 1em; }
+code.inline {
+  font-family: var(--mono);
+  font-size: .88em;
+  background: var(--accent-soft);
+  color: var(--accent-light);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+  background: rgba(11, 17, 32, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+.logo:hover { text-decoration: none; color: var(--accent); }
+.header-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--accent);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: .9rem;
+  white-space: nowrap;
+  transition: background .2s, color .2s;
+}
+.btn-back:hover { background: var(--accent); color: #0b1120; font-weight: 700; text-decoration: none; }
+
+/* ---------- Sub navigation ---------- */
+.subnav {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 50;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  margin-top: var(--header-h);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.subnav ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 1100px;
+  display: flex;
+  gap: 4px;
+}
+.subnav a {
+  display: block;
+  padding: 12px 14px;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.subnav a:hover { color: var(--text); text-decoration: none; border-bottom-color: var(--accent); }
+
+/* ---------- Layout ---------- */
+main { display: block; }
+section { padding: 72px 24px; }
+section:nth-of-type(even) { background: var(--bg-2); }
+.container { max-width: 1000px; margin: 0 auto; }
+.section-head { text-align: center; margin-bottom: 44px; }
+.section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.section-head h2::after {
+  content: "";
+  display: block;
+  width: 56px; height: 4px;
+  margin: 14px auto 0;
+  border-radius: 4px;
+  background: var(--accent);
+}
+.section-head p { color: var(--muted); max-width: 640px; margin: 14px auto 0; }
+
+/* ---------- Hero ---------- */
+.hero {
+  text-align: center;
+  padding: 96px 24px 88px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(37, 99, 235,.22), transparent 60%),
+    var(--bg);
+}
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-light);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 4.5rem);
+  margin: 22px 0 16px;
+  letter-spacing: -.02em;
+}
+.hero .subtitle {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  color: var(--muted);
+  font-size: 1.12rem;
+}
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+.stat {
+  padding: 12px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-width: 170px;
+}
+.stat strong { display: block; color: var(--accent); font-size: 1.15rem; }
+.stat span { color: var(--muted); font-size: .85rem; }
+
+/* ---------- Timeline ---------- */
+.timeline { position: relative; max-width: 760px; margin: 0 auto; padding-left: 8px; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 49px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(var(--accent), var(--border));
+}
+.tl-item { position: relative; display: flex; gap: 24px; margin-bottom: 28px; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-year {
+  flex: 0 0 82px;
+  height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent);
+  color: #0b1120;
+  font-weight: 800;
+  font-size: .9rem;
+  border-radius: 999px;
+  z-index: 1;
+  box-shadow: 0 0 0 5px var(--bg-2);
+}
+.tl-body {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+}
+.tl-body h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.tl-body p { margin: 0; color: var(--muted); font-size: .94rem; }
+
+/* ---------- Cards ---------- */
+.grid { display: grid; gap: 20px; }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 22px;
+  transition: transform .2s, border-color .2s;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.card .icon {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  background: var(--accent-soft);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.card h3 { font-size: 1.1rem; }
+.card p { color: var(--muted); font-size: .92rem; margin-bottom: 14px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  padding: 3px 10px;
+  font-size: .78rem;
+  font-weight: 600;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: #a8c1f7;
+}
+
+/* ---------- Code blocks ---------- */
+.code-block {
+  position: relative;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 14px 0 4px;
+}
+.code-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 8px 16px;
+  background: #0e1628;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: .78rem;
+  color: var(--muted);
+}
+.code-bar .dots { display: flex; gap: 6px; margin-right: 12px; }
+.code-bar .dots i { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; display: block; }
+.code-bar .dots i:nth-child(2) { background: #f59e0b; }
+.code-bar .dots i:nth-child(3) { background: #22c55e; }
+.code-bar .left { display: flex; align-items: center; }
+.copy-btn {
+  font-family: var(--font);
+  font-size: .78rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.copy-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+.copy-btn.copied { background: #16a34a; border-color: #16a34a; color: #fff; }
+.code-block pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: .86rem;
+  line-height: 1.65;
+  tab-size: 4;
+  color: #d6deeb;
+}
+.code-block code { font-family: inherit; }
+.kw  { color: #c792ea; font-weight: 600; }
+.fn  { color: #82aaff; font-weight: 600; }
+.str { color: #ecc48d; }
+.cmt { color: #637777; font-style: italic; }
+.var { color: #7fdbca; }
+.num { color: #f78c6c; }
+.typ { color: #ffcb6b; }
+
+/* ---------- Accordion ---------- */
+.accordion { max-width: 820px; margin: 0 auto; display: grid; gap: 12px; }
+.acc-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.acc-item.open { border-color: var(--accent); }
+.acc-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.acc-btn:hover { background: var(--surface-2); }
+.acc-btn:focus-visible, .tab-btn:focus-visible, .copy-btn:focus-visible, .btn-back:focus-visible, .logo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.acc-btn .chev {
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  transition: transform .3s;
+}
+.acc-item.open .chev { transform: rotate(180deg); }
+.acc-panel { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+.acc-inner { padding: 0 22px 22px; }
+.acc-inner p { color: var(--muted); font-size: .94rem; margin-bottom: 0; }
+
+/* ---------- Tabs ---------- */
+.tabs { max-width: 900px; margin: 0 auto; }
+.tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+.tab-btn {
+  font-family: var(--font);
+  font-size: .92rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.tab-btn:hover { color: var(--text); border-color: var(--accent); }
+.tab-btn[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #0b1120; font-weight: 700; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.tab-panel > p { color: var(--muted); font-size: .94rem; }
+
+/* ---------- Market ---------- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+table { width: 100%; border-collapse: collapse; min-width: 480px; background: var(--surface); }
+th, td { padding: 14px 20px; text-align: left; }
+th { background: var(--surface-2); font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+td { border-top: 1px solid var(--border); }
+td.salary { color: var(--accent); font-weight: 700; white-space: nowrap; }
+.market-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 24px; }
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.panel h3 { font-size: 1.05rem; margin-bottom: 14px; }
+.panel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.panel li { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .94rem; }
+.panel li::before {
+  content: "";
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  flex: 0 0 auto;
+}
+.panel li strong { color: var(--text); }
+.note { color: var(--muted); font-size: .8rem; text-align: center; margin-top: 16px; }
+
+/* ---------- Roadmap ---------- */
+.roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; position: relative; }
+.step {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 24px 20px 22px;
+}
+.step .num-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #0b1120;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.step h3 { font-size: 1.05rem; margin-bottom: 2px; }
+.step .phase { color: var(--accent); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.step ul { margin: 12px 0 0; padding-left: 18px; color: var(--muted); font-size: .92rem; }
+.step ul li { margin-bottom: 4px; }
+.step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -18px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  text-align: center;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 1.1rem;
+  z-index: 2;
+}
+
+/* ---------- Resources ---------- */
+.resource {
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+}
+.resource:hover { text-decoration: none; }
+.resource .link { margin-top: auto; color: var(--accent); font-weight: 600; font-size: .88rem; word-break: break-all; }
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--code-bg);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .step:not(:last-child)::after { display: none; }
+}
+@media (max-width: 720px) {
+  :root { --header-h: 56px; }
+  .site-header { padding: 0 12px; }
+  .logo { font-size: .85rem; }
+  .header-title { display: none; }
+  section { padding: 52px 16px; }
+  .hero { padding: 64px 16px 56px; }
+  .timeline::before { left: 41px; }
+  .tl-item { gap: 14px; }
+  .tl-year { flex-basis: 68px; font-size: .8rem; }
+  .code-block pre { font-size: .78rem; padding: 14px; }
+  th, td { padding: 12px 14px; }
+}
+@media (max-width: 420px) {
+  .logo { font-size: .76rem; }
+  .btn-back { padding: 7px 12px; font-size: .82rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+  <div class="header-title">🏗️ PBL</div>
+  <a class="btn-back" href="../index.html#metodologias-ativas">← Voltar</a>
+</header>
+
+<nav class="subnav" aria-label="Navegação da página">
+  <ul>
+    <li><a href="#hero">Início</a></li>
+    <li><a href="#origem">Origem</a></li>
+    <li><a href="#por-que-usar">Por que usar</a></li>
+    <li><a href="#principios">Princípios</a></li>
+    <li><a href="#como-aplicar">Como aplicar</a></li>
+    <li><a href="#preparacao">Preparação</a></li>
+    <li><a href="#exemplos">Exemplos</a></li>
+    <li><a href="#plano">Plano completo</a></li>
+    <li><a href="#avaliacao">Avaliação</a></li>
+    <li><a href="#quando-usar">Quando usar</a></li>
+    <li><a href="#variacoes">Variações</a></li>
+    <li><a href="#erros">Erros comuns</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#glossario">Glossário</a></li>
+    <li><a href="#recursos">Recursos</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- 1. HERO -->
+<section id="hero" class="hero">
+  <div class="container">
+    <span class="badge">Metodologia Ativa / Projetos</span>
+    <h1>🏗️ PBL</h1>
+    <p class="subtitle">Os alunos aprendem enquanto constroem a resposta para uma pergunta real. Em vez de estudar o conteúdo e só depois aplicar, o conhecimento nasce do próprio projeto, com prazos, feedback e uma entrega pública.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <strong>1918</strong>
+        <span>Método de Projetos (Kilpatrick)</span>
+      </div>
+      <div class="stat">
+        <strong>2-6 sem</strong>
+        <span>Duração típica de um projeto</span>
+      </div>
+      <div class="stat">
+        <strong>Alto</strong>
+        <span>Engajamento</span>
+      </div>
+      <div class="stat">
+        <strong>Médio/alto</strong>
+        <span>Preparo do professor</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. ORIGEM -->
+<section id="origem">
+  <div class="container">
+    <div class="section-head">
+      <h2>Origem &amp; Evolução</h2>
+      <p>De uma ideia filosófica de "aprender fazendo" a um método estruturado usado em escolas e universidades.</p>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-year">1916</div>
+        <div class="tl-body">
+          <h3>Aprender fazendo (John Dewey)</h3>
+          <p>Dewey defende que o aprendizado vem da experiência e da resolução de problemas reais, e não da memorização passiva.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1918</div>
+        <div class="tl-body">
+          <h3>The Project Method (William Kilpatrick)</h3>
+          <p>Kilpatrick formaliza o trabalho com projetos em sala de aula, centrado no interesse e na iniciativa do aluno.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">1969</div>
+        <div class="tl-body">
+          <h3>Aprendizagem baseada em problemas</h3>
+          <p>A escola de medicina da McMaster University adota casos clínicos como ponto de partida do estudo, influenciando o ensino superior.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">Hoje</div>
+        <div class="tl-body">
+          <h3>PBL com projetos autênticos</h3>
+          <p>Organizações como a PBLWorks sistematizaram o método em escolas, com pergunta motriz, voz do aluno, feedback e apresentação pública.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. POR QUE USAR -->
+<section id="por-que-usar">
+  <div class="container">
+    <div class="section-head">
+      <h2>Por Que Usar PBL?</h2>
+      <p>Um método que integra conteúdos e habilidades em uma única entrega e prepara para o trabalho real.</p>
+    </div>
+    <div class="grid grid-4">
+
+      <div class="card">
+        <div class="icon">🎯</div>
+        <h3>Sentido e propósito</h3>
+        <p>O aluno entende para que serve o que aprende, porque o conteúdo resolve um problema real.</p>
+        <div class="tags"><span class="tag">Motivação</span><span class="tag">Contexto real</span></div>
+      </div>
+
+      <div class="card">
+        <div class="icon">🧩</div>
+        <h3>Integra disciplinas</h3>
+        <p>Um mesmo projeto pode unir pesquisa, escrita, matemática, tecnologia e comunicação.</p>
+        <div class="tags"><span class="tag">Interdisciplinar</span><span class="tag">Competências</span></div>
+      </div>
+
+      <div class="card">
+        <div class="icon">🤝</div>
+        <h3>Trabalho em equipe</h3>
+        <p>Dividir tarefas, negociar e cumprir prazos são habilidades treinadas na prática.</p>
+        <div class="tags"><span class="tag">Colaboração</span><span class="tag">Autonomia</span></div>
+      </div>
+
+      <div class="card">
+        <div class="icon">🏆</div>
+        <h3>Portfólio concreto</h3>
+        <p>O produto final vira evidência de aprendizagem para mostrar a outras pessoas.</p>
+        <div class="tags"><span class="tag">Entrega</span><span class="tag">Apresentação</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3b. PRINCÍPIOS -->
+<section id="principios">
+  <div class="container">
+    <div class="section-head">
+      <h2>Princípios Fundamentais</h2>
+      <p>As ideias centrais que sustentam a metodologia. Se você respeitar estas, o resto se ajusta.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="icon">❓</div>
+        <h3>Problema ou pergunta desafiadora</h3>
+        <p>O projeto parte de uma pergunta aberta, que não pode ser respondida com uma busca rápida. Ela dá direção a tudo o que vem depois.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔎</div>
+        <h3>Investigação prolongada</h3>
+        <p>Os alunos pesquisam, testam hipóteses e voltam a perguntar ao longo de semanas, e não em uma única aula.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🌍</div>
+        <h3>Autenticidade</h3>
+        <p>O problema, o público ou o produto têm ligação com o mundo real, como a escola, o bairro ou uma empresa.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🗳️</div>
+        <h3>Voz e escolha do aluno</h3>
+        <p>A equipe decide parte do caminho: o tema específico, a forma de apresentar, a divisão do trabalho.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🪞</div>
+        <h3>Reflexão</h3>
+        <p>Em momentos combinados, o grupo pensa sobre o que aprendeu e sobre como trabalhou.</p>
+      </div>
+      <div class="card">
+        <div class="icon">✏️</div>
+        <h3>Crítica e revisão</h3>
+        <p>Há rodadas de feedback de colegas e do professor, e o produto é melhorado a partir delas.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📣</div>
+        <h3>Produto público</h3>
+        <p>O resultado é mostrado a pessoas além da sala, o que aumenta o capricho e o senso de responsabilidade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. COMO APLICAR -->
+<section id="como-aplicar">
+  <div class="container">
+    <div class="section-head">
+      <h2>Como Aplicar, Passo a Passo</h2>
+      <p>Clique em cada etapa para ver o que fazer, em linguagem direta.</p>
+    </div>
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-1" id="acc-btn-1">
+          <span>1. Defina a pergunta motriz</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-1" role="region" aria-labelledby="acc-btn-1">
+          <div class="acc-inner">
+            <p>Escreva uma pergunta aberta e interessante, como "como ajudar a escola a controlar o estoque do lanche?". Ela deve exigir pesquisa e não ter resposta pronta.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-2" id="acc-btn-2">
+          <span>2. Combine o produto e a rubrica</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-2" role="region" aria-labelledby="acc-btn-2">
+          <div class="acc-inner">
+            <p>Antes de começar, diga o que será entregue e como será avaliado. Uma rubrica com 4 critérios simples (conteúdo, processo, qualidade, apresentação) já resolve.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-3" id="acc-btn-3">
+          <span>3. Planeje com a equipe</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-3" role="region" aria-labelledby="acc-btn-3">
+          <div class="acc-inner">
+            <p>Cada equipe divide tarefas, escolhe responsáveis e marca prazos intermediários. Um quadro com "A fazer / Fazendo / Feito" ajuda a acompanhar.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-4" id="acc-btn-4">
+          <span>4. Pesquise e construa com checkpoints</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-4" role="region" aria-labelledby="acc-btn-4">
+          <div class="acc-inner">
+            <p>Reserve 10 minutos por semana para ver o andamento de cada equipe. O feedback durante o caminho vale mais que a nota no final.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-5" id="acc-btn-5">
+          <span>5. Apresente a um público real</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-5" role="region" aria-labelledby="acc-btn-5">
+          <div class="acc-inner">
+            <p>Mostre o resultado a pessoas além do professor: outra turma, a direção, a comunidade. Isso eleva o capricho e o sentido do trabalho.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-6" id="acc-btn-6">
+          <span>6. Reflita sobre o processo</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-6" role="region" aria-labelledby="acc-btn-6">
+          <div class="acc-inner">
+            <p>Feche com perguntas: o que deu certo, o que mudaria, o que aprendeu sobre trabalhar em equipe. A reflexão consolida o aprendizado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4b. PREPARAÇÃO -->
+<section id="preparacao">
+  <div class="container">
+    <div class="section-head">
+      <h2>Preparação: Antes de Começar</h2>
+      <p>Um checklist objetivo do que decidir e do que separar antes da primeira aula.</p>
+    </div>
+    <div class="market-grid">
+      <div class="panel">
+        <h3>📝 Checklist de planejamento</h3>
+        <ul>
+          <li>Escolha um tema ligado ao currículo e a um problema que a turma reconheça.</li>
+          <li>Escreva a pergunta motriz e teste: ela pode ser respondida com uma pesquisa de 5 minutos? Se sim, reformule.</li>
+          <li>Defina o produto final e o público que vai vê-lo.</li>
+          <li>Monte a rubrica com 4 critérios e distribua no primeiro dia.</li>
+          <li>Marque no calendário os checkpoints semanais e a data da apresentação.</li>
+          <li>Combine as regras de trabalho em equipe e como serão resolvidos os conflitos.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>🧰 Materiais necessários</h3>
+        <ul>
+          <li>Quadro de tarefas (A fazer, Fazendo, Feito) em papel ou digital.</li>
+          <li>Modelo de planejamento do projeto, com tarefas, responsáveis e datas.</li>
+          <li>Rubrica impressa para cada equipe.</li>
+          <li>Ficha de reflexão semanal de 3 perguntas.</li>
+          <li>Local e convidados para a apresentação final.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. EXEMPLOS -->
+<section id="exemplos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Exemplos Prontos para Usar</h2>
+      <p>Modelos que você pode copiar e adaptar para a sua turma ou estudo.</p>
+    </div>
+    <div class="tabs">
+      <div class="tab-list" role="tablist" aria-label="Exemplos práticos de PBL">
+        <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-1" id="tab-btn-1">Modelo de pergunta</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-2" id="tab-btn-2" tabindex="-1">Rubrica simples</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-3" id="tab-btn-3" tabindex="-1">Cronograma de 4 semanas</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-1" role="tabpanel" aria-labelledby="tab-btn-1">
+        <p>Boas perguntas motrizes são abertas, reais e ligadas ao conteúdo. Use este modelo.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>pergunta-motriz.txt</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code>Modelo: "Como podemos [ação] para [público] de modo que [resultado]?"
+
+Exemplos:
+- Como podemos organizar o empréstimo de livros da biblioteca para
+  que nenhum livro se perca?
+- Como podemos reduzir o desperdício de água na escola
+  e provar a economia com números?
+- Como podemos criar um guia de estudo que ajude os alunos do
+  1o ano a entender lógica de programação?</code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-2" role="tabpanel" aria-labelledby="tab-btn-2">
+        <p>Quatro critérios, quatro níveis. Entregue aos alunos no primeiro dia.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>rubrica.txt</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code>Critério            | 1 (iniciando) | 2 (em progresso) | 3 (atende) | 4 (excede)
+--------------------|---------------|------------------|------------|-----------
+Conteúdo            |               |                  |            |
+Processo e equipe   |               |                  |            |
+Qualidade do produto|               |                  |            |
+Apresentação        |               |                  |            |
+
+Dica: descreva em uma frase o que significa cada nível
+em cada critério, antes de o projeto começar.</code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-3" role="tabpanel" aria-labelledby="tab-btn-3">
+        <p>Um projeto curto para a primeira experiência com PBL.</p>
+        <div class="code-block">
+          <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>cronograma.txt</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code>Semana 1 - Lançamento: pergunta motriz, formação das equipes, rubrica
+Semana 2 - Pesquisa e planejamento: requisitos, tarefas e responsáveis
+Semana 3 - Construção: protótipo funcionando + checkpoint de feedback
+Semana 4 - Ajustes, apresentação pública e reflexão final
+
+Checkpoint semanal (10 min por equipe):
+  1. O que já está pronto?
+  2. O que está travando?
+  3. Qual é o próximo passo até o próximo encontro?</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5b. PLANO COMPLETO -->
+<section id="plano">
+  <div class="container">
+    <div class="section-head">
+      <h2>Plano Completo, Pronto para Copiar</h2>
+      <p>Um exemplo detalhado, com tempos e passos, que você pode adaptar ao seu tema.</p>
+    </div>
+    <div class="code-block">
+      <div class="code-bar"><span class="left"><span class="dots"><i></i><i></i><i></i></span>plano-projeto-4-semanas.txt</span><button class="copy-btn" type="button">Copiar</button></div>
+<pre><code>PROJETO: Sistema de empréstimos da biblioteca (4 semanas, 2 aulas/semana)
+
+PERGUNTA MOTRIZ
+  Como podemos organizar o empréstimo de livros da biblioteca
+  para que nenhum livro se perca e todos saibam o que está disponível?
+
+SEMANA 1 - Lançamento
+  Aula 1: apresentar o desafio, entrevistar a bibliotecária (convidada),
+          formar equipes de 4 e entregar a rubrica
+  Aula 2: levantar requisitos (o que o sistema precisa fazer?)
+
+SEMANA 2 - Planejamento e primeiros passos
+  Aula 3: desenhar o modelo de dados (livro, aluno, empréstimo)
+  Aula 4: construir o cadastro de livros | CHECKPOINT 1
+
+SEMANA 3 - Construção
+  Aula 5: construir o registro de empréstimos e devoluções
+  Aula 6: avisos de atraso, revisão entre equipes | CHECKPOINT 2
+
+SEMANA 4 - Entrega
+  Aula 7: ajustes finais a partir do feedback e ensaio
+  Aula 8: apresentação à bibliotecária e à direção + reflexão final
+
+CHECKPOINT (10 min por equipe):
+  O que está pronto? O que travou? Qual é o próximo passo?</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- 5c. AVALIAÇÃO -->
+<section id="avaliacao">
+  <div class="container">
+    <div class="section-head">
+      <h2>Como Avaliar</h2>
+      <p>Critérios, evidências e perguntas-guia para medir se o aprendizado aconteceu.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>O que avaliar</th><th>Evidência</th><th>Pergunta-guia</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Conteúdo</strong></td><td>Rubrica sobre os conceitos usados no projeto</td><td>O modelo de dados representa corretamente livros, alunos e empréstimos?</td></tr>
+          <tr><td><strong>Processo</strong></td><td>Registros dos checkpoints e quadro de tarefas</td><td>A equipe cumpriu prazos intermediários e ajustou o plano quando precisou?</td></tr>
+          <tr><td><strong>Colaboração</strong></td><td>Autoavaliação e avaliação entre pares</td><td>Cada integrante contribuiu e ouviu os colegas?</td></tr>
+          <tr><td><strong>Produto e apresentação</strong></td><td>Rubrica aplicada pelo professor e pelo público</td><td>O produto resolve o problema e a apresentação é clara?</td></tr>
+          <tr><td><strong>Reflexão</strong></td><td>Texto curto ou conversa final</td><td>O aluno identifica o que aprendeu e o que faria diferente?</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 6. QUANDO USAR -->
+<section id="quando-usar">
+  <div class="container">
+    <div class="section-head">
+      <h2>Quando Usar &amp; Cuidados</h2>
+      <p>Saiba escolher o momento certo e evitar os erros mais comuns.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspecto</th><th>Nível</th><th>Observação</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Tempo disponível</strong></td><td class="salary">Médio/alto</td><td>Funciona melhor com 2 semanas ou mais.</td></tr>
+          <tr><td><strong>Preparo do professor</strong></td><td class="salary">Médio/alto</td><td>Exige pergunta, rubrica e acompanhamento semanal.</td></tr>
+          <tr><td><strong>Engajamento dos alunos</strong></td><td class="salary">Muito alto</td><td>Cresce quando o problema é real e há público.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="market-grid">
+      <div class="panel">
+        <h3>✅ Use quando</h3>
+        <ul>
+          <li>Há tempo para um trabalho prolongado.</li>
+          <li>Você quer integrar conteúdos e habilidades.</li>
+          <li>O problema pode ser ligado à realidade dos alunos.</li>
+          <li>Há como apresentar o resultado a um público.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>⚠️ Evite</h3>
+        <ul>
+          <li>Projeto sem pergunta clara nem critérios de avaliação.</li>
+          <li>Deixar as equipes sozinhas até a data da entrega.</li>
+          <li>Avaliar só o produto final e ignorar o processo.</li>
+          <li>Começar por um projeto grande demais.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6b. VARIAÇÕES -->
+<section id="variacoes">
+  <div class="container">
+    <div class="section-head">
+      <h2>Variações da Metodologia</h2>
+      <p>Formas de adaptar o método ao seu tempo, ao seu público e aos recursos disponíveis.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="icon">⏱️</div>
+        <h3>Mini projeto de 1 a 2 semanas</h3>
+        <p>Boa forma de começar. Tem pergunta, produto e apresentação, mas em escala reduzida.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🧩</div>
+        <h3>Projeto interdisciplinar</h3>
+        <p>Dois ou mais professores compartilham a pergunta motriz, e cada um avalia a parte da sua área.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🤝</div>
+        <h3>Projeto com parceiro externo</h3>
+        <p>Uma empresa, ONG ou órgão público apresenta o problema real e recebe o resultado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6c. ERROS COMUNS -->
+<section id="erros">
+  <div class="container">
+    <div class="section-head">
+      <h2>Erros Comuns e Como Corrigir</h2>
+      <p>Problemas que aparecem com frequência, suas causas e a correção mais simples.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Problema</th><th>Causa provável</th><th>Como corrigir</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Projeto vira só uma pesquisa com cartaz</strong></td><td>A pergunta é fechada e o produto não tem público</td><td>Reescreva a pergunta de forma aberta e defina quem usará o resultado</td></tr>
+          <tr><td><strong>Equipes se perdem no meio do caminho</strong></td><td>Não há checkpoints nem prazos intermediários</td><td>Marque um checkpoint por semana, de 10 minutos por equipe</td></tr>
+          <tr><td><strong>Só um aluno trabalha</strong></td><td>Tarefas e papéis não estão definidos</td><td>Atribua responsabilidades por escrito e use avaliação entre pares</td></tr>
+          <tr><td><strong>Nota injusta no final</strong></td><td>Critérios surgem apenas na entrega</td><td>Combine a rubrica no primeiro dia e use-a nos feedbacks</td></tr>
+          <tr><td><strong>Falta de tempo para tudo</strong></td><td>O projeto é grande demais para o período</td><td>Reduza o escopo do produto e mantenha o foco na pergunta</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 7. ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-head">
+      <h2>Roadmap de Implantação</h2>
+      <p>Um caminho simples para sair do zero e dominar PBL com segurança.</p>
+    </div>
+    <div class="roadmap">
+
+      <div class="step">
+        <span class="num-badge">1</span>
+        <div class="phase">Fase 1</div>
+        <h3>Preparar</h3>
+        <ul>
+          <li>Escolher um tema da turma</li>
+          <li>Escrever a pergunta motriz</li>
+          <li>Definir o produto final</li>
+          <li>Montar a rubrica</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">2</span>
+        <div class="phase">Fase 2</div>
+        <h3>Lançar</h3>
+        <ul>
+          <li>Apresentar o desafio</li>
+          <li>Formar equipes</li>
+          <li>Dividir tarefas</li>
+          <li>Marcar checkpoints</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">3</span>
+        <div class="phase">Fase 3</div>
+        <h3>Acompanhar</h3>
+        <ul>
+          <li>Checkpoint semanal</li>
+          <li>Feedback curto e prático</li>
+          <li>Ajustar prazos</li>
+          <li>Registrar evidências</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="num-badge">4</span>
+        <div class="phase">Fase 4</div>
+        <h3>Fechar</h3>
+        <ul>
+          <li>Apresentação pública</li>
+          <li>Avaliar com a rubrica</li>
+          <li>Reflexão da turma</li>
+          <li>Ajustar para o próximo projeto</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7b. FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head">
+      <h2>Perguntas Frequentes</h2>
+      <p>Dúvidas que quase todo mundo tem ao começar.</p>
+    </div>
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f1" id="acc-btn-f1">
+          <span>Qual a diferença entre PBL e "fazer um trabalho"?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f1" role="region" aria-labelledby="acc-btn-f1">
+          <div class="acc-inner">
+            <p>No PBL o projeto é o veículo do aprendizado: parte de uma pergunta aberta, tem investigação prolongada, feedback no caminho e produto público. Um trabalho comum costuma ser a tarefa feita depois que o conteúdo foi ensinado.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f2" id="acc-btn-f2">
+          <span>Preciso ensinar o conteúdo antes?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f2" role="region" aria-labelledby="acc-btn-f2">
+          <div class="acc-inner">
+            <p>Não necessariamente. Você pode ensinar o conteúdo durante o projeto, em mini-aulas, quando as equipes precisarem dele. Isso se chama aprender "na hora certa".</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f3" id="acc-btn-f3">
+          <span>Como avaliar cada aluno em um trabalho em equipe?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f3" role="region" aria-labelledby="acc-btn-f3">
+          <div class="acc-inner">
+            <p>Combine avaliação do produto pela rubrica com avaliação individual: registros de tarefas, autoavaliação, avaliação entre pares e uma pergunta individual sobre o conteúdo.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f4" id="acc-btn-f4">
+          <span>PBL funciona com turmas grandes?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f4" role="region" aria-labelledby="acc-btn-f4">
+          <div class="acc-inner">
+            <p>Funciona, desde que haja equipes bem organizadas, checkpoints curtos e rubrica clara. Considere dividir os checkpoints em grupos de equipes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f5" id="acc-btn-f5">
+          <span>Quanto tempo deve durar um projeto?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f5" role="region" aria-labelledby="acc-btn-f5">
+          <div class="acc-inner">
+            <p>Pode ir de 1 semana a um semestre. Para a primeira experiência, de 2 a 4 semanas é um bom tamanho.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" type="button" aria-expanded="false" aria-controls="acc-f6" id="acc-btn-f6">
+          <span>O que fazer quando uma equipe trava?</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="acc-panel" id="acc-f6" role="region" aria-labelledby="acc-btn-f6">
+          <div class="acc-inner">
+            <p>Faça perguntas em vez de dar a solução: o que já tentaram? O que descobriram? Qual é o menor próximo passo?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7c. GLOSSÁRIO -->
+<section id="glossario">
+  <div class="container">
+    <div class="section-head">
+      <h2>Glossário Rápido</h2>
+      <p>Termos que aparecem nesta metodologia, explicados em uma linha.</p>
+    </div>
+    <div class="grid grid-4">
+      <div class="card">
+        <h3>Pergunta motriz</h3>
+        <p>Pergunta aberta que orienta todo o projeto.</p>
+      </div>
+      <div class="card">
+        <h3>Rubrica</h3>
+        <p>Quadro que descreve o que se espera em cada nível de qualidade.</p>
+      </div>
+      <div class="card">
+        <h3>Checkpoint</h3>
+        <p>Momento curto de acompanhamento com a equipe.</p>
+      </div>
+      <div class="card">
+        <h3>Produto final</h3>
+        <p>Resultado concreto entregue ao final do projeto.</p>
+      </div>
+      <div class="card">
+        <h3>Voz e escolha</h3>
+        <p>Espaço para o aluno decidir parte do caminho.</p>
+      </div>
+      <div class="card">
+        <h3>Crítica e revisão</h3>
+        <p>Ciclos de feedback seguidos de melhorias.</p>
+      </div>
+      <div class="card">
+        <h3>Autenticidade</h3>
+        <p>Ligação do projeto com o mundo real.</p>
+      </div>
+      <div class="card">
+        <h3>Aprendizagem baseada em problemas</h3>
+        <p>Variação que parte de um problema, comum em cursos de saúde.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. RECURSOS -->
+<section id="recursos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Recursos &amp; Outras Metodologias</h2>
+      <p>Fontes para se aprofundar e os guias das demais metodologias do portal.</p>
+    </div>
+    <div class="grid grid-3">
+
+      <a class="card resource" href="https://www.pblworks.org/what-is-pbl" target="_blank" rel="noopener noreferrer">
+        <div class="icon">🌐</div>
+        <h3>PBLWorks — O que é PBL</h3>
+        <p>Material de referência sobre o modelo de Aprendizagem Baseada em Projetos de alta qualidade.</p>
+        <span class="link">www.pblworks.org/what-is-pbl →</span>
+      </a>
+
+      <a class="card resource" href="https://en.wikipedia.org/wiki/Project-based_learning" target="_blank" rel="noopener noreferrer">
+        <div class="icon">📚</div>
+        <h3>Project-based learning (Wikipedia)</h3>
+        <p>Visão geral do conceito, histórico e variações do método.</p>
+        <span class="link">en.wikipedia.org/wiki/Project-based_learning →</span>
+      </a>
+
+      <a class="card resource" href="tbl.html">
+        <div class="icon">👥</div>
+        <h3>TBL — Aprendizagem Baseada em Equipes</h3>
+        <p>Estudo prévio, teste individual e em equipe e aplicação em problemas.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="sala-invertida.html">
+        <div class="icon">🔄</div>
+        <h3>Sala de Aula Invertida</h3>
+        <p>Teoria em casa, prática em sala com ajuda.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="peer-instruction.html">
+        <div class="icon">💬</div>
+        <h3>Peer Instruction — Instrução por Pares</h3>
+        <p>Pergunta conceitual, votação e debate entre colegas.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="estudo-de-caso.html">
+        <div class="icon">📂</div>
+        <h3>Estudo de Caso</h3>
+        <p>Analisar uma situação real e decidir com justificativa.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="gamificacao.html">
+        <div class="icon">🎮</div>
+        <h3>Gamificação</h3>
+        <p>Mecânicas de jogos para aumentar motivação e persistência.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="design-thinking.html">
+        <div class="icon">💡</div>
+        <h3>Design Thinking</h3>
+        <p>Empatia, ideação, protótipo e teste centrados nas pessoas.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+
+      <a class="card resource" href="steam-maker.html">
+        <div class="icon">🔬</div>
+        <h3>STEAM & Cultura Maker</h3>
+        <p>Aprender construindo, unindo ciência, tecnologia, engenharia, artes e matemática.</p>
+        <span class="link">Abrir guia →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p style="margin:0">© 2025 Ponce Metodologias &amp; Dev</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Accordion ---------- */
+  document.querySelectorAll('.acc-item').forEach(function (item) {
+    var btn = item.querySelector('.acc-btn');
+    var panel = item.querySelector('.acc-panel');
+    btn.addEventListener('click', function () {
+      var open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+    });
+  });
+
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.acc-item.open .acc-panel').forEach(function (p) {
+      p.style.maxHeight = p.scrollHeight + 'px';
+    });
+  });
+
+  /* ---------- Tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+  function activate(tab) {
+    tabs.forEach(function (t) {
+      var selected = t === tab;
+      t.setAttribute('aria-selected', selected ? 'true' : 'false');
+      t.tabIndex = selected ? 0 : -1;
+      var panelId = t.getAttribute('aria-controls');
+      var panel = document.getElementById(panelId);
+      if (panel) {
+        panel.classList.toggle('active', selected);
+      }
+    });
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { activate(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (next) { e.preventDefault(); activate(next); next.focus(); }
+    });
+  });
+
+  /* ---------- Copy button ---------- */
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.closest('.code-block').querySelector('code').textContent;
+      var done = function (ok) {
+        btn.textContent = ok ? 'Copiado!' : 'Falhou';
+        btn.classList.toggle('copied', ok);
+        setTimeout(function () {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 1800);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(
+          function () { done(true); },
+          function () { done(fallbackCopy(code)); }
+        );
+      } else {
+        done(fallbackCopy(code));
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

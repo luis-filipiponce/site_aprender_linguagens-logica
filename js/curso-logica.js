@@ -1031,6 +1031,122 @@
       `;
     },
 
+    exportarProgresso: function () {
+      try {
+        const progresso = StorageManager.carregarProgresso();
+        const historico = StorageManager.carregarHistorico();
+        const dadosExport = {
+          versao: '1.0',
+          dataExportacao: new Date().toISOString(),
+          curso: 'Curso Completo de Lógica de Programação Pura',
+          progresso,
+          historico
+        };
+        const blob = new Blob([JSON.stringify(dadosExport, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `progresso-logica-ponce-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        alert('Erro ao exportar progresso: ' + err.message);
+      }
+    },
+
+    importarProgressoPrompt: function () {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json,application/json';
+      input.onchange = (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const data = JSON.parse(event.target.result);
+            if (data && data.progresso && typeof data.progresso === 'object') {
+              localStorage.setItem('ponce_curso_logica_progresso', JSON.stringify(data.progresso));
+              if (data.historico) {
+                localStorage.setItem('ponce_curso_logica_historico', JSON.stringify(data.historico));
+              }
+              alert('🎉 Progresso importado com sucesso!');
+              renderizarDashboard();
+              renderizarListaModulos();
+              renderizarModuloDetalhe();
+            } else {
+              alert('⚠️ Arquivo JSON inválido ou não reconhecido.');
+            }
+          } catch (parseErr) {
+            alert('❌ Erro ao ler arquivo JSON: ' + parseErr.message);
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    },
+
+    emitirCertificado: function () {
+      const prog = StorageManager.carregarProgresso();
+      const concluidos = Object.values(prog).filter(p => p.status === 'Concluído').length;
+      const notas = Object.values(prog).map(p => p.nota || 0).filter(n => n > 0);
+      const media = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length).toFixed(1) : 0;
+      
+      const nomeAluno = prompt('Digite seu Nome Completo para constar no Certificado:', 'Estudante de Lógica Pura');
+      if (!nomeAluno) return;
+
+      const hashVerificacao = 'PONCE-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-' + Date.now().toString(36).toUpperCase();
+      const dataHoje = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+      let modalCert = document.getElementById('ponce-modal-certificado');
+      if (!modalCert) {
+        modalCert = document.createElement('div');
+        modalCert.id = 'ponce-modal-certificado';
+        modalCert.className = 'modal-overlay active';
+        document.body.appendChild(modalCert);
+      } else {
+        modalCert.classList.add('active');
+      }
+
+      modalCert.innerHTML = `
+        <div class="modal-container" style="max-width:850px; background:#ffffff; color:#0f172a; padding:2.5rem; border:4px double #6366f1; border-radius:12px; box-shadow:0 25px 50px rgba(0,0,0,0.25);">
+          <div style="text-align:right;">
+            <button onclick="document.getElementById('ponce-modal-certificado').classList.remove('active')" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+          </div>
+          <div id="certificado-print-area" style="text-align:center; padding:1rem;">
+            <div style="font-size:2.8rem; margin-bottom:0.5rem;">🎓</div>
+            <h2 style="font-size:1.8rem; letter-spacing:2px; text-transform:uppercase; color:#312e81; margin-bottom:0.5rem;">CERTIFICADO DE MESTRIA EM LÓGICA PURA</h2>
+            <p style="font-size:1rem; color:#64748b; margin-bottom:2rem;">PONCE METODOLOGIAS & DESENVOLVIMENTO DE SOFTWARE</p>
+            
+            <p style="font-size:1.15rem; line-height:1.8; margin-bottom:1.5rem;">
+              Certificamos para os devidos fins acadêmicos e profissionais que<br>
+              <strong style="font-size:1.6rem; color:#4338ca; border-bottom:2px solid #818cf8; padding-bottom:0.2rem; display:inline-block; margin:0.5rem 0;">${nomeAluno}</strong><br>
+              concluiu com êxito a formação rigorosa e progressiva de <strong>Lógica de Programação Pura & Fundamentos de Ciência da Computação</strong>, totalizando <strong>80 horas de estudos teóricos, provas de correção formal e práticas algorítmicas</strong>.
+            </p>
+
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin:1.5rem 0; font-size:0.9rem;">
+              <div><strong>Módulos Praticados:</strong><br>${concluidos} de 22 Módulos</div>
+              <div><strong>Desempenho Cognitivo:</strong><br>${media > 0 ? media + '/10' : 'Formativo'}</div>
+              <div><strong>Carga Horária:</strong><br>80 Horas</div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2.5rem; font-size:0.85rem; color:#64748b; border-top:1px solid #cbd5e1; padding-top:1.25rem;">
+              <div><strong>Data de Emissão:</strong><br>${dataHoje}</div>
+              <div style="text-align:center;"><strong>Coordenação Pedagógica:</strong><br>Ponce Metodologias & Dev</div>
+              <div style="text-align:right;"><strong>Autenticidade / Hash:</strong><br><code>${hashVerificacao}</code></div>
+            </div>
+          </div>
+          
+          <div style="margin-top:2rem; display:flex; justify-content:flex-end; gap:1rem;">
+            <button class="btn btn-outline" onclick="document.getElementById('ponce-modal-certificado').classList.remove('active')">Fechar</button>
+            <button class="btn btn-primary" onclick="window.print()" style="background:#4f46e5; color:#fff; border:none; padding:0.6rem 1.25rem; border-radius:8px; font-weight:700; cursor:pointer;">🖨️ Imprimir / Salvar PDF</button>
+          </div>
+        </div>
+      `;
+    },
+
     _MODULOS: MODULOS_LOGICA,
     _IATutor: IATutorEngine,
     _Storage: StorageManager,
@@ -1042,6 +1158,11 @@
       const container = document.getElementById('curso-logica-pura-app');
       if (container) {
         global.CursoLogicaApp.init();
+      }
+
+      // Registro do Service Worker
+      if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
       }
     });
   }
