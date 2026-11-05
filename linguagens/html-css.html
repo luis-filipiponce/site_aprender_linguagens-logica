@@ -410,9 +410,12 @@ footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--bor
 <body>
 
 <header class="site-header">
-  <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+  <a class="logo" href="../index.html" title="Ponce Lógica e Metodologias Dev">🎓 Ponce Lógica &amp; Metodologias Dev</a>
   <div class="header-title">📄 HTML5 &amp; CSS3</div>
-  <a class="btn-back" href="../index.html">← Voltar</a>
+  <div class="header-actions" style="display:flex;gap:8px;align-items:center;">
+    <a class="btn-back" href="../index.html" onclick="if(window.history.length>1){window.history.back();return false;}" title="Voltar um passo para trás">← Voltar</a>
+    <a class="btn-back" href="../index.html" title="Ponce Lógica e Metodologias Dev (Início)">🏠 Início</a>
+  </div>
 </header>
 
 <nav class="subnav" aria-label="Seções da página">
@@ -1034,5 +1037,6 @@ li:nth-child(odd)         { background: #f3f3f3; }
   onScroll();
 })();
 </script>
+  <script src="../js/acesso-rapido.js" defer></script>
 </body>
 </html>

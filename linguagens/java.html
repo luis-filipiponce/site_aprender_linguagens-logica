@@ -245,9 +245,12 @@
 
 <header>
   <div class="header-inner">
-    <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+    <a class="logo" href="../index.html" title="Ponce Lógica e Metodologias Dev">🎓 Ponce Lógica &amp; Metodologias Dev</a>
     <span class="header-title">☕ Java</span>
-    <a class="btn-back" href="../index.html">← Voltar</a>
+    <div class="header-actions" style="display:flex;gap:8px;align-items:center;">
+      <a class="btn-back" href="../index.html" onclick="if(window.history.length>1){window.history.back();return false;}" title="Voltar um passo para trás">← Voltar</a>
+      <a class="btn-back" href="../index.html" title="Ponce Lógica e Metodologias Dev (Início)">🏠 Início</a>
+    </div>
   </div>
 </header>
 
@@ -1195,5 +1198,6 @@ System.out.println(p.isGrande());    <span class="c">// true</span></code></pre>
     });
   });
 </script>
+  <script src="../js/acesso-rapido.js" defer></script>
 </body>
 </html>

@@ -293,6 +293,12 @@
               <span>📚</span> Glossário
             </a>
           </li>
+          <li class="sidebar-item">
+            <a href="#sobre-criador" style="background:rgba(99,102,241,0.08); border-left:3px solid var(--primary);">
+              <span>👨‍💻</span> <strong>Sobre o Criador</strong>
+              <span class="sidebar-badge" style="background:var(--grad-primary);color:#fff;">Autor</span>
+            </a>
+          </li>
         </ul>
       </div>
 
@@ -802,6 +808,86 @@ FIM</div>
             </div>
           </div>
 
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR PYTHON -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">🐍</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — Python</h4>
+                <p class="junior-guide-subtitle">Setup profissional, pegadinhas de entrevista técnica, ideias de portfólio de alto impacto e como debugar sem pânico</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>Runtime:</strong> Python 3.12+ (baixe de python.org ou via <code>winget install Python.Python.3.12</code>).</li>
+                    <li><strong>VS Code:</strong> Extensões essenciais: <code>Python</code>, <code>Pylance</code> e <code>Ruff</code> (linter e formatter ultrarrápido).</li>
+                    <li><strong>Ambiente Virtual:</strong> Sempre isole dependências: <code>python -m venv .venv</code> e ative no terminal (<code>.venv\Scripts\activate</code> no Windows ou <code>source .venv/bin/activate</code> no Linux/macOS).</li>
+                    <li><strong>Gerenciador Moderno:</strong> Conheça <code>uv</code> (Astral) ou <code>poetry</code> para lock files seguros em projetos reais.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. Qual a diferença entre <code>is</code> e <code>==</code>?</p>
+                    <p class="junior-qa-a"><code>==</code> compara igualdade de <strong>conteúdo/valor</strong>; <code>is</code> checa identidade de <strong>endereço de memória</strong> (se apontam para o mesmo objeto no heap).</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. O que são <code>*args</code> e <code>**kwargs</code>?</p>
+                    <p class="junior-qa-a"><code>*args</code> recebe múltiplos argumentos posicionais em uma tupla; <code>**kwargs</code> recebe argumentos nomeados (chave=valor) em um dicionário.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. O que acontece com argumento padrão mutável?</p>
+                    <p class="junior-qa-a"><code>def func(lista=[])</code> compartilha a mesma lista entre todas as invocações. A regra correta é usar <code>lista=None</code> e inicializar dentro da função.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. API RESTful com FastAPI + SQLite + Pytest</p>
+                    <p class="junior-project-desc">CRUD completo de controle financeiro com schemas Pydantic, hashing seguro de senhas (bcrypt), banco relacional com SQLAlchemy e 100% de testes unitários automatizados.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. Pipeline de Coleta de Dados + Dashboard Streamlit</p>
+                    <p class="junior-project-desc">Web scraper assíncrono (Playwright/BeautifulSoup) que monitora vagas de emprego ou produtos, salva em banco SQLite e plota gráficos analíticos interativos.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>TypeError: can only concatenate str to str</code>: Tentativa de somar texto com número. Converta explicitamente: <code>str(valor)</code> ou use f-strings <code>f"{valor}"</code>.</li>
+                    <li><code>IndexError: list index out of range</code>: Índice além do limite (<code>len(lista) - 1</code>). Use <code>for item in lista:</code> ou acerte o range.</li>
+                    <li><code>ModuleNotFoundError</code>: Pacote não instalado no venv ativo. Verifique se o terminal está no ambiente virtual correto antes de rodar <code>pip install</code>.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="topic-divider"><span>Linha do Tempo</span></div>
           <!-- LINHA DO TEMPO PYTHON -->
           <div class="timeline-section">
@@ -1102,6 +1188,86 @@ console.log(`Total com desconto: R$ ${total.toFixed(2)}`);
             </div>
           </div>
 
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR JAVASCRIPT -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">🌐</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — JavaScript</h4>
+                <p class="junior-guide-subtitle">Setup web moderno, conceitos fundamentais do Event Loop, projetos para encantar recrutadores e técnicas de depuração no navegador</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>Node.js LTS:</strong> Instale via <code>nvm</code> (Node Version Manager) ou do site nodejs.org.</li>
+                    <li><strong>VS Code:</strong> Extensões indispensáveis: <code>ESLint</code>, <code>Prettier - Code formatter</code> e <code>Live Server</code>.</li>
+                    <li><strong>Execução com Live Reload:</strong> Em Node 18+, use o comando nativo <code>node --watch index.js</code> para reiniciar automaticamente ao salvar o arquivo.</li>
+                    <li><strong>Gerenciador de Pacotes:</strong> Aprenda comandos do <code>npm</code> (ou <code>pnpm</code> para installs ultrarrápidos e economia de disco).</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. Qual a diferença entre <code>var</code>, <code>let</code> e <code>const</code>?</p>
+                    <p class="junior-qa-a"><code>var</code> tem escopo de função e sofre <em>hoisting</em> com <code>undefined</code>. <code>let</code> e <code>const</code> têm escopo de bloco e permanecem na <em>Temporal Dead Zone</em> até serem declaradas. <code>const</code> impede reatribuição de referência.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. O que é um Closure?</p>
+                    <p class="junior-qa-a">É quando uma função interna "lembra" e acessa as variáveis de seu escopo léxico externo, mesmo após a função externa já ter concluído sua execução.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. O que é o Event Loop e Microtasks vs Macrotasks?</p>
+                    <p class="junior-qa-a">JS é single-thread. Call Stack executa síncrono. Microtasks (<code>Promise.then</code>, <code>queueMicrotask</code>) têm prioridade máxima e rodam antes das Macrotasks (<code>setTimeout</code>, <code>setInterval</code>).</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. Kanban Board Interativo (Vanilla JS + LocalStorage)</p>
+                    <p class="junior-project-desc">Construído em JS puro usando HTML5 Drag and Drop API, persistência em LocalStorage, filtros em tempo real e acessibilidade por teclado (sem frameworks, provando domínio da DOM).</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. Dashboard de Cripto/Finanças com Consumo de API</p>
+                    <p class="junior-project-desc">Aplicação que consome API pública com <code>fetch</code> e <code>async/await</code>, tratamento de estados (loading, erro, vazio), debounce no input de pesquisa e gráficos com Chart.js.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>Cannot read properties of undefined (reading 'x')</code>: Acessou propriedade de objeto nulo/indefinido. Use <strong>Optional Chaining</strong>: <code>usuario?.perfil?.nome</code>.</li>
+                    <li><code>Uncaught ReferenceError: x is not defined</code>: Variável chamada fora de escopo ou antes de sua declaração com <code>let/const</code>.</li>
+                    <li><code>CORS error (Cross-Origin Request)</code>: Bloqueio do navegador ao fazer fetch para domínio diferente sem headers liberados. Use proxy ou configure o backend com headers adequados.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="topic-divider"><span>Linha do Tempo</span></div>
           <!-- LINHA DO TEMPO JS -->
           <div class="timeline-section">
@@ -1335,6 +1501,86 @@ FIM</div>
                   <div class="road-step road-beginner">🌱 Iniciante — Types básicos, interfaces, functions tipadas, tsconfig</div>
                   <div class="road-step road-inter">📈 Intermediário — Generics, Utility Types, Express + TypeScript, Prisma ORM</div>
                   <div class="road-step road-advanced">🚀 Avançado — NestJS, DI, CQRS, microsserviços, testes e2e com Supertest</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR TYPESCRIPT & NODE -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">🔷</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — TypeScript & Node.js</h4>
+                <p class="junior-guide-subtitle">Setup corporativo com tipagem estrita, perguntas frequentes em entrevistas técnicas, arquitetura de APIs e boas práticas de tipagem</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>Node.js LTS:</strong> Com <code>npm</code> ou <code>pnpm</code>.</li>
+                    <li><strong>VS Code:</strong> Extensão <code>Pretty TypeScript Errors</code> (transforma erros de tipo longos em explicações visuais claras) e <code>TypeScript and JavaScript Language Features</code>.</li>
+                    <li><strong>Início Rápido:</strong> <code>npm init -y && npm i -D typescript @types/node tsx</code>.</li>
+                    <li><strong>Executar sem build manual:</strong> <code>npx tsx src/index.ts</code> (execução direta e ultraveloz).</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. Qual a diferença entre <code>any</code> e <code>unknown</code>?</p>
+                    <p class="junior-qa-a"><code>any</code> desativa toda a checagem do compilador. <code>unknown</code> é o tipo seguro: você é obrigado a fazer narrowing (<code>typeof</code>, <code>instanceof</code> ou validação) antes de usar o valor.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. Qual a diferença entre <code>type</code> e <code>interface</code>?</p>
+                    <p class="junior-qa-a"><code>interface</code> suporta <em>declaration merging</em> e extensão múltipla (ótima para POO e contratos públicos). <code>type</code> permite uniões (<code>|</code>), tuplas e aliases de primitivos.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. Para que servem Generics (<code>&lt;T&gt;</code>)?</p>
+                    <p class="junior-qa-a">Permitem criar funções e classes reutilizáveis que funcionam com múltiplos tipos, mantendo a inferência estática e a segurança de tipos sem recorrer ao <code>any</code>.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. API RESTful com Node.js + Fastify/Express + Prisma + Zod</p>
+                    <p class="junior-project-desc">Sistema de agendamento ou e-commerce com validação automática de entrada usando Zod (inferindo tipos TS), banco PostgreSQL/SQLite via Prisma ORM e documentação Swagger.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. CLI Interativa de Automação com TypeScript (Commander.js + Chalk)</p>
+                    <p class="junior-project-desc">Ferramenta de terminal tipada que automatiza a criação de projetos, geração de componentes ou consulta de clima e cotações com feedback colorido no console.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>Property 'x' does not exist on type 'y'</code>: Verifique se o tipo possui o campo opcional (<code>x?: string</code>) ou faça um Type Guard: <code>if ('x' in obj) { ... }</code>.</li>
+                    <li><code>Type 'null' is not assignable to type 'string'</code>: <code>strictNullChecks</code> está ativado (ótimo!). Trate o caso nulo com valor padrão (<code>nome ?? 'Visitante'</code>).</li>
+                    <li><code>Cannot find module 'x' or its corresponding type declarations</code>: Instale os tipos da comunidade: <code>npm i -D @types/x</code>.</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -1584,6 +1830,86 @@ System.out.printf("Área total: %.2f%n", soma); // ~102.54</pre></div>
                   <div class="road-step road-beginner">🌱 Iniciante — Classes, herança, encapsulamento, coleções, exceções</div>
                   <div class="road-step road-inter">📈 Intermediário — Streams API, Generics, Spring Boot, JPA/Hibernate</div>
                   <div class="road-step road-advanced">🚀 Avançado — Microsserviços, Kafka, GraalVM nativo, arquitetura hexagonal</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR JAVA -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">☕</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — Java</h4>
+                <p class="junior-guide-subtitle">Setup corporativo com JDK 21 e Maven/Gradle, perguntas fundamentais de POO em entrevistas, projetos com Spring Boot e resolução de NPEs</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>JDK Recomendado:</strong> JDK 21 LTS (Eclipse Temurin / Adoptium ou Oracle).</li>
+                    <li><strong>IDE:</strong> IntelliJ IDEA Community (padrão de produtividade no mercado) ou VS Code com <code>Extension Pack for Java</code>.</li>
+                    <li><strong>Ferramenta de Build:</strong> <strong>Maven</strong> (arquivo <code>pom.xml</code>) ou <strong>Gradle</strong> (<code>build.gradle</code>).</li>
+                    <li><strong>Start rápido:</strong> Inicie projetos Spring Boot facilmente em <code>start.spring.io</code> adicionando <em>Spring Web</em>, <em>Spring Data JPA</em> e <em>H2 Database</em>.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. Qual a diferença entre <code>==</code> e <code>equals()</code>?</p>
+                    <p class="junior-qa-a"><code>==</code> compara a referência de memória dos objetos. <code>equals()</code> compara a igualdade lógica dos conteúdos (sempre deve ser implementado junto com <code>hashCode()</code>).</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. O que são os 4 Pilares da POO?</p>
+                    <p class="junior-qa-a"><strong>Abstração</strong> (modelar o essencial), <strong>Encapsulamento</strong> (proteger estado interno via getters/setters/records), <strong>Herança</strong> (reuso estrutural) e <strong>Polimorfismo</strong> (múltiplas formas de executar uma interface/método).</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. O que são Java Records (Java 16+)?</p>
+                    <p class="junior-qa-a">Classes imutáveis compactas (<code>public record UsuarioDTO(Long id, String nome) {}</code>) que geram construtor, getters, <code>equals</code>, <code>hashCode</code> e <code>toString</code> automaticamente.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. API Bancária / Pagamentos com Spring Boot 3 + PostgreSQL</p>
+                    <p class="junior-project-desc">Transferências atômicas com <code>@Transactional</code>, migrações de banco com Flyway, validação de DTOs com Bean Validation (<code>@NotNull</code>, <code>@Positive</code>) e testes com JUnit 5 + Mockito.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. Microsserviço de Notificações com Spring Boot + RabbitMQ/Kafka</p>
+                    <p class="junior-project-desc">Consumo assíncrono de eventos de mensageria, tratamento de retry/dead-letter queues e integração com envio de e-mails em background.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>NullPointerException (NPE)</code>: Tentou chamar método em variável <code>null</code>. Use <code>Optional&lt;T&gt;</code>, <code>Objects.requireNonNull()</code> ou inicialize os objetos antes do uso.</li>
+                    <li><code>LazyInitializationException</code> (Hibernate): Tentativa de acessar coleção Lazy com a sessão de banco já fechada. Use <code>JOIN FETCH</code> no repositório Spring Data.</li>
+                    <li><code>ClassNotFoundException / NoClassDefFoundError</code>: Dependência faltando no <code>pom.xml</code> ou falha no download do repositório Maven. Rode <code>./mvnw clean install -U</code>.</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -1894,6 +2220,86 @@ int main() {
             </div>
           </div>
 
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR C -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">⚙️</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — Linguagem C</h4>
+                <p class="junior-guide-subtitle">Setup com GCC/Clang, domínio de ponteiros e memória, projetos de sistemas operacionais e como usar Valgrind e GDB para caçar vazamentos</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>Compilador:</strong> <code>GCC</code> ou <code>Clang</code> (via MinGW-w64 no Windows ou <code>sudo apt install build-essential</code> no Linux).</li>
+                    <li><strong>VS Code:</strong> Extensões: <code>C/C++</code> (Microsoft), <code>C/C++ Extension Pack</code> e <code>CMake Tools</code>.</li>
+                    <li><strong>Flags de Compilação Segura:</strong> Sempre compile com: <code>gcc -Wall -Wextra -Werror -std=c17 main.c -o app</code> para não ignorar nenhum warning.</li>
+                    <li><strong>Análise de Memória:</strong> No Linux/WSL, use o <strong>Valgrind</strong>: <code>valgrind --leak-check=full ./app</code> para detectar vazamentos.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. Qual a diferença entre ponteiro e endereço (<code>*</code> vs <code>&amp;</code>)?</p>
+                    <p class="junior-qa-a"><code>&amp;x</code> extrai o endereço físico de memória onde <code>x</code> reside. <code>*ptr</code> é a derreferenciação: acessa ou modifica o valor guardado no endereço apontado por <code>ptr</code>.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. Qual a diferença entre alocação na Stack vs Heap?</p>
+                    <p class="junior-qa-a"><strong>Stack:</strong> automática, rápida, gerenciada pelo compilador (liberada ao sair da função). <strong>Heap:</strong> dinâmica (via <code>malloc</code>/<code>calloc</code>), flexível, mas exige <code>free()</code> manual para evitar memory leak.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. O que é um Buffer Overflow e como evitar?</p>
+                    <p class="junior-qa-a">Gravar além do tamanho alocado do array, corrompendo a memória adjacente. Evite funções inseguras como <code>gets()</code> ou <code>strcpy()</code>; use <code>fgets()</code> e <code>strncpy()</code>/<code>snprintf()</code> limitando bytes.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. Estruturas de Dados Dinâmicas do Zero em C</p>
+                    <p class="junior-project-desc">Implementação de Lista Duplamente Encadeada, Fila, Pilha e Árvore AVL balanceada com alocação dinâmica, relatório de testes unitários e 0 bytes vazados no Valgrind.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. Mini Shell / Prompt de Comandos POSIX</p>
+                    <p class="junior-project-desc">Interpretador de comandos que executa programas usando <code>fork()</code>, <code>execvp()</code> e <code>waitpid()</code>, suportando redirecionamento de entrada/saída (<code>&gt;</code>, <code>&lt;</code>) e pipes (<code>|</code>).</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>Segmentation Fault (SIGSEGV)</code>: Acessou endereço inválido (ponteiro <code>NULL</code>, lixo de memória ou fora do array). Depure com o <code>gdb ./app</code> e rode <code>backtrace</code>.</li>
+                    <li><code>Memory Leak (definitely lost)</code>: Deixou de chamar <code>free(ptr)</code> para ponteiros alocados com <code>malloc</code>. Regra: todo <code>malloc</code> precisa de um <code>free</code> correspondente.</li>
+                    <li><code>Undefined Behavior (UB)</code>: Ler variável não inicializada ou acessar memória após <code>free()</code> (Dangling Pointer). Sempre defina <code>ptr = NULL;</code> logo após o <code>free(ptr);</code>.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="topic-divider"><span>Linha do Tempo</span></div>
           <!-- LINHA DO TEMPO C -->
           <div class="timeline-section">
@@ -2195,6 +2601,86 @@ Stats&lt;T&gt; estatisticas(std::vector&lt;T&gt; v) {
                   <div class="road-step road-beginner">🌱 Iniciante — OOP básica, STL (vector, map, string), I/O</div>
                   <div class="road-step road-inter">📈 Intermediário — Smart pointers, templates, concorrência (std::thread)</div>
                   <div class="road-step road-advanced">🚀 Avançado — Metaprogramação TMP, SIMD, profiling com perf/Valgrind</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR C++ -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">🚀</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — C++ Moderno</h4>
+                <p class="junior-guide-subtitle">Setup moderno com CMake e C++20, domínio de RAII e Smart Pointers, projetos em games/engines e resolução de Double Free</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>Compilador Moderno:</strong> <code>g++ 12+</code> ou <code>clang++ 15+</code> com suporte a <strong>C++20/C++23</strong>.</li>
+                    <li><strong>Build System Padrão:</strong> <strong>CMake</strong> (arquivo <code>CMakeLists.txt</code>). Evite compilar múltiplos arquivos na mão.</li>
+                    <li><strong>VS Code:</strong> Extensões: <code>C/C++</code>, <code>CMake Tools</code> e <code>clangd</code> (para autocompletion rápido).</li>
+                    <li><strong>Gerenciador de Dependências:</strong> <strong>vcpkg</strong> (Microsoft) ou <strong>Conan</strong> para instalar bibliotecas externas em 1 comando.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. O que é o princípio RAII?</p>
+                    <p class="junior-qa-a"><em>Resource Acquisition Is Initialization:</em> Recursos são alocados no construtor e desalocados automaticamente no destrutor quando o objeto sai de escopo (evita <code>delete</code> manual).</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. <code>std::unique_ptr</code> vs <code>std::shared_ptr</code>?</p>
+                    <p class="junior-qa-a"><code>unique_ptr</code> possui posse exclusiva sem custo extra de runtime (apenas movível com <code>std::move</code>). <code>shared_ptr</code> usa contagem atômica de referências para múltiplos donos.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. O que é Move Semantics e <code>std::move</code>?</p>
+                    <p class="junior-qa-a">Permite transferir os ponteiros internos de dados de um objeto temporário para outro, eliminando cópias profundas e custosas de buffers de memória.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. Jogo 2D Arcade com Raylib ou SFML em C++20</p>
+                    <p class="junior-project-desc">Implementação de Space Invaders ou Pong com arquitetura orientada a componentes, gerenciamento de entidades com <code>std::unique_ptr</code> e detecção de colisões vetorial.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. Mini Motor de Renderização de Áudio ou Parser BMP</p>
+                    <p class="junior-project-desc">Leitura e aplicação de filtros em imagens bitmap ou síntese de ondas sonoras utilizando threads modernas (<code>std::jthread</code>) e STL.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>double free or corruption</code>: Chamou <code>delete</code> duas vezes no mesmo ponteiro. Migre para <code>std::make_unique</code> para gerenciar ciclo de vida com RAII.</li>
+                    <li><code>Use After Free</code>: Acessou um ponteiro que já foi desalocado. Evite ponteiros brutos (raw pointers) sem dono claro.</li>
+                    <li><code>Undefined Reference to vtable</code>: Declarou método virtual sem implementar seu corpo no <code>.cpp</code> ou faltou o destrutor virtual na classe base.</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -2517,6 +3003,86 @@ PROCEDURE DIVISION.
             </div>
           </div>
 
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR COBOL -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">🏛️</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — COBOL & Mainframe</h4>
+                <p class="junior-guide-subtitle">Setup local com GnuCOBOL, oportunidades no setor bancário, projetos de processamento batch e como entender PIC clauses e arquivos indexados</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>Compilador Gratuito:</strong> <strong>GnuCOBOL</strong> (instalável via <code>winget install GnuCOBOL</code> no Windows ou <code>sudo apt install gnucobol</code> no Linux).</li>
+                    <li><strong>VS Code:</strong> Extensões: <code>COBOL</code> (BitLang) e <code>IBM Z Open Editor</code> para syntax highlighting e navegação.</li>
+                    <li><strong>Compilar e Rodar em 1 comando:</strong> <code>cobc -x -free programa.cob &amp;&amp; ./programa</code> (a flag <code>-free</code> libera o formato de colunas).</li>
+                    <li><strong>Treinamento Gratuito:</strong> Participe do programa <em>IBM Z Xplore</em> (plataforma gratuita da IBM com acesso a mainframe real).</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. Quais as 4 divisões obrigatórias em COBOL?</p>
+                    <p class="junior-qa-a"><code>IDENTIFICATION DIVISION</code> (metadados), <code>ENVIRONMENT DIVISION</code> (mapeamento físico de arquivos), <code>DATA DIVISION</code> (declaração de variáveis) e <code>PROCEDURE DIVISION</code> (lógica executável).</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. O que significa a cláusula <code>PIC</code> (Picture)?</p>
+                    <p class="junior-qa-a">Define o tipo e tamanho do dado: <code>PIC 9(5)</code> (5 dígitos inteiros), <code>PIC X(30)</code> (30 caracteres alfanuméricos) e <code>PIC 9(7)V99</code> (número com 2 casas decimais implícitas).</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. O que é um Copybook e para que serve?</p>
+                    <p class="junior-qa-a">Arquivo externo reutilizável (importado com <code>COPY nome.cpy</code>) que padroniza layouts de registros de dados entre múltiplos programas batch e online.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. Processador de Folha de Pagamento em Lote (Batch)</p>
+                    <p class="junior-project-desc">Programa que lê arquivo sequencial de funcionários, calcula descontos de INSS/IRRF com precisão financeira decimal e grava relatório analítico formatado.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. Sistema de Contas Bancárias com Subprogramas (CALL)</p>
+                    <p class="junior-project-desc">Arquitetura modular em COBOL com programas de Depósito, Saque e Consulta de Saldo se comunicando via <code>CALL ... USING LINKAGE SECTION</code>.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>ON SIZE ERROR</code>: O resultado do cálculo excedeu a quantidade de dígitos reservada na <code>PIC</code>. Adicione a cláusula <code>ON SIZE ERROR</code> para tratar o overflow.</li>
+                    <li><code>File Status 35</code>: Arquivo não encontrado no caminho especificado na <code>ASSIGN TO</code> da <code>ENVIRONMENT DIVISION</code>.</li>
+                    <li><code>Subscript Out of Range</code>: Tentou acessar índice de tabela (<code>OCCURS</code>) maior que o definido ou com valor zero (índices em COBOL iniciam em 1!).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="topic-divider"><span>Linha do Tempo</span></div>
           <!-- LINHA DO TEMPO COBOL -->
           <div class="timeline-section">
@@ -2795,6 +3361,86 @@ PROCEDURE DIVISION.
                   <div class="road-step road-beginner">🌱 Iniciante — Tags semânticas, Box Model, seletores CSS, Flexbox</div>
                   <div class="road-step road-inter">📈 Intermediário — CSS Grid, variáveis CSS, animações, responsividade</div>
                   <div class="road-step road-advanced">🚀 Avançado — CSS-in-JS, Tailwind CSS, acessibilidade WCAG, Design Systems</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR HTML5 & CSS3 -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">🎨</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — HTML5 & CSS3</h4>
+                <p class="junior-guide-subtitle">Setup de front-end responsivo, acessibilidade (WCAG), perguntas de layout em entrevistas e como resolver overflow e bugs de especificidade</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>Navegador &amp; DevTools:</strong> Chrome/Firefox com F12 aberto na aba <em>Elements/Inspector</em> e modo de simulação de dispositivos móveis.</li>
+                    <li><strong>VS Code:</strong> Extensões: <code>Live Server</code>, <code>Auto Rename Tag</code> e <code>Tailwind CSS IntelliSense</code>.</li>
+                    <li><strong>Reset CSS Moderno:</strong> Comece todo CSS com <code>*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }</code>.</li>
+                    <li><strong>Meta Viewport:</strong> Nunca esqueça <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code> no <code>&lt;head&gt;</code>.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. Qual a diferença entre Flexbox e CSS Grid?</p>
+                    <p class="junior-qa-a"><strong>Flexbox:</strong> unidimensional (distribui em linha OU coluna — perfeito para componentes, navbars e alinhamentos). <strong>CSS Grid:</strong> bidimensional (controla linhas E colunas simultaneamente — perfeito para páginas inteiras).</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. Como funciona a Especificidade do CSS?</p>
+                    <p class="junior-qa-a">Ordem de peso na cascata: <code>!important</code> &gt; Estilo inline (<code>style=""</code>) &gt; IDs (<code>#id</code>) &gt; Classes/Pseudo-classes (<code>.btn:hover</code>) &gt; Tags (<code>div</code>, <code>p</code>).</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. O que é HTML Semântico e por que importa?</p>
+                    <p class="junior-qa-a">Uso das tags corretas (<code>&lt;main&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;button&gt;</code>) em vez de <code>&lt;div&gt;</code> genéricas. Garante acessibilidade (leitores de tela / WCAG) e melhora SEO no Google.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. Landing Page Responsiva com Dark/Light Mode e Variáveis CSS</p>
+                    <p class="junior-project-desc">Layout mobile-first com transições suaves, variáveis CSS personalizáveis, formulário com validação nativa HTML5 e pontuação 100 no Google Lighthouse.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. Dashboard Administrativo Completo com CSS Grid</p>
+                    <p class="junior-project-desc">Sidebar retrátil, cards flexíveis, tabelas com scroll horizontal em telas pequenas e micro-animações em botões e gráficos.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>Scroll horizontal indesejado no mobile</code>: Algum elemento tem <code>width</code> fixo em pixels ou margem extrapolando. Adicione <code>max-width: 100%</code> em imagens e vídeos.</li>
+                    <li><code>Elemento não centraliza com margin: auto</code>: Falta definir uma largura (<code>width</code> ou <code>max-width</code>) ou o elemento é <code>display: inline</code>.</li>
+                    <li><code>z-index não funciona</code>: O elemento precisa ter um <code>position</code> diferente de <code>static</code> (ex: <code>position: relative</code>) para criar um contexto de empilhamento.</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -3079,6 +3725,85 @@ ORDER BY total_gasto DESC;</pre></div>
                   <div class="road-step road-beginner">🌱 Iniciante — SELECT, WHERE, ORDER BY, INSERT, UPDATE, DELETE</div>
                   <div class="road-step road-inter">📈 Intermediário — JOINs, GROUP BY, HAVING, subqueries, CTEs</div>
                   <div class="road-step road-advanced">🚀 Avançado — Window Functions, índices, plano de execução, particionamento</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR SQL -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">🗄️</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — SQL & Modelagem</h4>
+                <p class="junior-guide-subtitle">Setup rápido com PostgreSQL e DBeaver, perguntas clássicas de JOIN em entrevistas, projetos com queries analíticas e otimização de índices</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>SGBD Recomendado:</strong> <strong>PostgreSQL</strong> (padrão de mercado para novos projetos) ou <strong>SQLite</strong> para testes rápidos.</li>
+                    <li><strong>GUI Universal:</strong> <strong>DBeaver Community</strong> (suporta Postgres, MySQL, Oracle, SQLite) ou extensão <code>SQLTools</code> no VS Code.</li>
+                    <li><strong>Subir Banco Local em 5s com Docker:</strong> <code>docker run --name pg-dev -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:alpine</code>.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. <code>INNER JOIN</code> vs <code>LEFT JOIN</code>?</p>
+                    <p class="junior-qa-a"><code>INNER JOIN</code> traz apenas registros com correspondência exata em ambas as tabelas. <code>LEFT JOIN</code> preserva todos os registros da tabela da esquerda, preenchendo com <code>NULL</code> onde não houver correspondência na direita.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. Qual a diferença entre <code>WHERE</code> e <code>HAVING</code>?</p>
+                    <p class="junior-qa-a"><code>WHERE</code> filtra linhas individuais <em>antes</em> do agrupamento (<code>GROUP BY</code>). <code>HAVING</code> filtra o resultado agregado <em>após</em> o agrupamento (ex: <code>HAVING COUNT(*) &gt; 5</code>).</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. O que é um Índice e quando NÃO usá-lo?</p>
+                    <p class="junior-qa-a">Estrutura B-Tree que acelera <code>SELECT</code> de O(n) para O(log n). Porém, cada índice deixa <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code> mais lentos porque a árvore de índices precisa ser rebalanceada a cada escrita.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. Esquema de E-commerce Normalizado (3FN) com Triggers e Views</p>
+                    <p class="junior-project-desc">Modelagem de Clientes, Pedidos, Itens, Estoque e Pagamentos. Criação de Triggers para log de auditoria de preços e Views para relatório gerencial de faturamento mensal.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. Relatório Analítico Avançado com Window Functions</p>
+                    <p class="junior-project-desc">Scripts SQL utilizando <code>ROW_NUMBER()</code>, <code>RANK()</code> e <code>LAG()/LEAD()</code> para calcular crescimento percentual de vendas mês a mês sem loops procedurais.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>duplicate key value violates unique constraint</code>: Tentativa de inserir registro com email/CPF ou chave primária já existente. Use <code>ON CONFLICT (email) DO NOTHING</code> (Upsert).</li>
+                    <li><code>column "x" must appear in the GROUP BY clause</code>: Toda coluna no <code>SELECT</code> que não seja função agregada (<code>SUM</code>, <code>COUNT</code>) DEVE estar no <code>GROUP BY</code>.</li>
+                    <li><code>Cartesian Product (Slow Query)</code>: Esqueceu a condição <code>ON tabela1.id = tabela2.fk_id</code> no JOIN, gerando multiplicação massiva de linhas.</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -3402,6 +4127,86 @@ class UsuarioRepository {
             </div>
           </div>
 
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR PHP -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">🐘</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — PHP 8+ Moderno & Laravel</h4>
+                <p class="junior-guide-subtitle">Setup profissional com Composer e Laravel 11, perguntas de arquitetura web em entrevistas e prevenção de SQL Injection e XSS</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>PHP 8.3+:</strong> Instalado via <code>Laragon</code> (Windows), <code>Homebrew</code> (Mac) ou <code>Docker/Ubuntu</code>.</li>
+                    <li><strong>Gerenciador de Pacotes:</strong> <strong>Composer</strong> (obrigatório: baixa pacotes e gera o autoload PSR-4).</li>
+                    <li><strong>Servidor Local Imediato:</strong> <code>php -S 127.0.0.1:8000</code> na pasta do projeto.</li>
+                    <li><strong>Framework Líder:</strong> <strong>Laravel 11</strong> (crie com <code>composer create-project laravel/laravel meu-app</code>).</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. O que há de moderno no PHP 8+?</p>
+                    <p class="junior-qa-a">Tipos de união (<code>int|float</code>), Named Arguments, <em>Constructor Property Promotion</em> (declara e inicializa propriedades no próprio construtor), <em>Match expressions</em> e Enums nativos.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. Como prevenir SQL Injection em PHP?</p>
+                    <p class="junior-qa-a">Nunca concatene variáveis em strings SQL. Use sempre <strong>PDO com Prepared Statements</strong> (<code>$stmt-&gt;execute([':id' =&gt; $id])</code>) ou ORM como Eloquent.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. O que são as PSRs (PHP Standard Recommendations)?</p>
+                    <p class="junior-qa-a">Padrões oficiais da comunidade: PSR-4 (Autoloading de classes por namespace), PSR-12 (Guia de estilo de código) e PSR-7 (Interfaces de Mensagens HTTP).</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. SaaS / Portal de Cursos com Laravel 11 + SQLite/Postgres</p>
+                    <p class="junior-project-desc">Autenticação completa com Laravel Breeze, upload de arquivos, controle de permissões (Roles/Policies) e testes com Pest PHP.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. API RESTful com PHP Puro e PDO (Padrão MVC + Injeção de Dependência)</p>
+                    <p class="junior-project-desc">Construída sem frameworks para demonstrar domínio de PSR-4, roteamento HTTP manual, conexão PDO singleton e tratamento centralizado de exceções JSON.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>Call to a member function on null</code>: Tentativa de invocar método em variável nula. Use o operador Nullsafe: <code>$cliente?-&gt;getEndereco()?-&gt;getCidade()</code>.</li>
+                    <li><code>Class not found (PSR-4 Autoload)</code>: O namespace não bate com o caminho das pastas ou falta rodar <code>composer dump-autoload</code>.</li>
+                    <li><code>Headers already sent</code>: Ocorreu output de HTML ou espaço em branco antes de <code>header()</code> ou <code>session_start()</code>.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="topic-divider"><span>Linha do Tempo</span></div>
           <!-- LINHA DO TEMPO PHP -->
           <div class="timeline-section">
@@ -3720,6 +4525,85 @@ WHERE posicao = 1;</pre></div>
             </div>
           </div>
 
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR BANCO DE DADOS & NOSQL -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">💾</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — Banco de Dados & NoSQL</h4>
+                <p class="junior-guide-subtitle">Arquitetura SQL vs NoSQL, Teorema CAP, estratégias de Cache com Redis e como evitar gargalos de performance e Deadlocks</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>PostgreSQL Local:</strong> <code>docker run --name pg -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres</code>.</li>
+                    <li><strong>Redis (Cache):</strong> <code>docker run --name redis -p 6379:6379 -d redis:alpine</code> (essencial para sessões e cache rápido).</li>
+                    <li><strong>MongoDB (NoSQL Documentos):</strong> <code>docker run --name mongo -p 27017:27017 -d mongo</code> com <strong>MongoDB Compass</strong> para visualização.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. ACID (SQL) vs BASE (NoSQL)?</p>
+                    <p class="junior-qa-a"><strong>ACID:</strong> Atomicidade, Consistência, Isolamento e Durabilidade (foco em integridade estrita). <strong>BASE:</strong> Basic Availability, Soft-state, Eventual consistency (foco em disponibilidade e escala horizontal).</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. O que é o Teorema CAP?</p>
+                    <p class="junior-qa-a">Em sistemas distribuídos, só é possível garantir no máximo duas das 3 propriedades: <strong>Consistência</strong>, <strong>Disponibilidade</strong> e <strong>Tolerância a Partições de Rede</strong>.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. O que é o padrão Cache-Aside com Redis?</p>
+                    <p class="junior-qa-a">A aplicação consulta o Redis primeiro. Se houver *hit*, retorna em 1ms. Se houver *miss*, busca no Postgres, salva no Redis com tempo de expiração (TTL) e devolve a resposta.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. Sistema Híbrido: Postgres (Transacional) + Redis (Cache &amp; Rate Limiter)</p>
+                    <p class="junior-project-desc">API com limitação de requisições por IP usando Redis e persistência com consistência transacional no PostgreSQL com pool de conexões otimizado.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. Catálogo NoSQL com MongoDB + Agregações Analíticas</p>
+                    <p class="junior-project-desc">Modelagem de produtos com atributos variáveis em documentos JSON, pipeline de agregação (<code>$group</code>, <code>$match</code>, <code>$sort</code>) e índices de texto para busca rápida.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>Deadlock detected</code>: Duas transações concorrentes tentaram bloquear as mesmas tabelas em ordem inversa. Mantenha transações curtas e acesse tabelas na mesma ordem.</li>
+                    <li><code>Too many connections</code>: Esgotamento do limite de conexões do banco. Configure um Connection Pool (ex: HikariCP em Java, Prisma em Node, PgBouncer em Postgres).</li>
+                    <li><code>Slow Query (Full Table Scan)</code>: Query sem índice nas colunas do <code>WHERE</code> ou <code>JOIN</code>. Rode <code>EXPLAIN ANALYZE</code> e adicione índice B-Tree na coluna filtrada.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="topic-divider"><span>Linha do Tempo</span></div>
           <!-- LINHA DO TEMPO BANCO DE DADOS -->
           <div class="timeline-section">
@@ -4008,6 +4892,85 @@ func contarPalavras(texto string) map[string]int {
                   <div class="road-step road-beginner">🌱 Iniciante — Tipos, ownership (Rust) / goroutines básicas (Go)</div>
                   <div class="road-step road-inter">📈 Intermediário — Traits/lifetimes (Rust) / interfaces/channels (Go)</div>
                   <div class="road-step road-advanced">🚀 Avançado — async Rust (Tokio), microsserviços Go, WebAssembly com Rust</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-divider"><span>Guia do Dev Júnior</span></div>
+          <!-- GUIA JÚNIOR RUST & GO -->
+          <div class="junior-guide-block">
+            <div class="junior-guide-header">
+              <div class="junior-guide-icon">🦀🐹</div>
+              <div>
+                <h4 class="junior-guide-title">🎓 Guia do Dev Júnior & Estudante — Rust & Go</h4>
+                <p class="junior-guide-subtitle">Setup moderno com Cargo e Go Modules, concorrência com Goroutines e Channels, segurança de memória com Ownership e resolução de conflitos de Borrow Checker</p>
+              </div>
+            </div>
+            <div class="junior-guide-grid">
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🛠️ Setup Mínimo do Júnior</h5>
+                  <span class="junior-badge badge-setup">Ambiente</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><strong>Rust:</strong> Instale via <code>rustup.rs</code>. Use <code>cargo new app && cd app && cargo run</code>. Extensão VS Code: <code>rust-analyzer</code>.</li>
+                    <li><strong>Go:</strong> Baixe de <code>go.dev</code>. Inicie com <code>go mod init app && go run main.go</code>. Extensão VS Code: <code>Go</code> (Google).</li>
+                    <li><strong>Linter &amp; Formatter:</strong> Rust tem <code>cargo clippy</code> e <code>cargo fmt</code> embutidos; Go tem <code>go fmt</code> e <code>golangci-lint</code> nativos.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">💡 Perguntas de Entrevista Técnica</h5>
+                  <span class="junior-badge badge-interview">Estágio & Jr</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">1. Rust: Como funciona o Ownership e Borrowing?</p>
+                    <p class="junior-qa-a">Cada dado tem 1 dono único. Quando o dono sai de escopo, a memória é liberada. Você pode ter <em>múltiplas referências imutáveis</em> (<code>&amp;T</code>) OU <em>uma única mutável</em> (<code>&amp;mut T</code>) por vez, prevenindo data races em compilação.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">2. Go: Goroutines vs Threads do Sistema Operacional?</p>
+                    <p class="junior-qa-a">Threads do SO pesam ~1MB e exigem troca de contexto no kernel. Goroutines começam com apenas ~2KB no runtime do Go (Green Threads), permitindo executar centenas de milhares em paralelo.</p>
+                  </div>
+                  <div class="junior-qa-item">
+                    <p class="junior-qa-q">3. Go: Canais (Channels) e Select?</p>
+                    <p class="junior-qa-a">Permitem sincronizar e trocar dados entre goroutines com segurança sem travas manuais (mutex). Filosofia: <em>"Não se comunique compartilhando memória; compartilhe memória comunicando"</em>.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🚀 Projetos de Portfólio Júnior</h5>
+                  <span class="junior-badge badge-portfolio">GitHub Ready</span>
+                </div>
+                <div class="junior-card-content">
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">1. Go: Microsserviço de Alta Performance com Gin/Fiber ou net/http Nativo</p>
+                    <p class="junior-project-desc">API com processamento paralelo de webhooks, rate limiting com Goroutines e channels, métricas Prometheus e testes de carga.</p>
+                  </div>
+                  <div class="junior-project-item">
+                    <p class="junior-project-title">2. Rust: Utilitário de Linha de Comando (CLI) para Análise de Logs</p>
+                    <p class="junior-project-desc">CLI veloz com <code>clap</code> e processamento multithread paralelo usando <code>rayon</code>, processando gigabytes de logs em milissegundos sem alocações extras.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="junior-card">
+                <div class="junior-card-head">
+                  <h5 class="junior-card-title">🔍 Debug & Erros Típicos</h5>
+                  <span class="junior-badge badge-debug">Soluções Rápidas</span>
+                </div>
+                <div class="junior-card-content">
+                  <ul>
+                    <li><code>Rust: cannot borrow as mutable more than once</code>: Duas variáveis tentando alterar o mesmo recurso ao mesmo tempo. Use escopos com <code>{ }</code> para liberar o primeiro borrow antes do segundo.</li>
+                    <li><code>Go: fatal error: all goroutines are asleep - deadlock!</code>: Goroutines esperando ler de um canal que ninguém vai alimentar. Lembre-se de fechar o canal com <code>close(ch)</code> ou alimentar em goroutine separada.</li>
+                    <li><code>Go: Nil Pointer Dereference</code>: Tentativa de acessar método em struct ponteiro <code>nil</code>. Verifique sempre com <code>if err != nil</code> ou <code>if obj != nil</code>.</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -5844,6 +6807,100 @@ app.<span class="fn">post</span>(<span class="str">"/api/tarefas"</span>, autent
         </div>
       </section>
 
+      <!-- ====================================================================
+           11. SOBRE O CRIADOR DO SITE
+           ==================================================================== -->
+      <section class="content-section" id="sobre-criador">
+        <div class="section-header">
+          <span class="section-badge badge-blue">Autor & Idealizador</span>
+          <h2 class="section-title">👨‍💻 Sobre o Criador do Projeto</h2>
+          <p class="section-desc">
+            Conheça quem idealizou e desenvolveu este portal educacional focado em lógica, programação e pedagogia ativa.
+          </p>
+        </div>
+
+        <div class="creator-profile-card">
+          <div class="creator-header-layout">
+            <div class="creator-avatar-wrapper">
+              <div class="creator-avatar">
+                <img src="img/luis-ponce.jpg" alt="Foto de Luis Filipi Ponce ao lado do logo neon da IBM" width="400" height="400" loading="lazy">
+              </div>
+              <span class="creator-avatar-badge">Dev</span>
+            </div>
+            <div class="creator-main-info">
+              <h3 class="creator-name">
+                Luis Filipi Ponce
+                <span class="creator-role-tag">Estagiário IBM</span>
+              </h3>
+              <div class="creator-subtitle">Dev Iniciante no Mundo da Computação · 18 anos</div>
+              <p class="creator-bio-text">
+                Estudante formado com <strong>Ensino Médio e Técnico</strong> integrado na <strong>Escola Estadual de Hortolândia (ETEC Hortolândia)</strong>, atualmente atuando como <strong>Estagiário na IBM</strong>. Apaixonado pelo universo da tecnologia, ciência da computação e educação, com o objetivo de construir soluções acessíveis e ajudar estudantes e iniciantes a dominarem a base algorítmica e lógica antes da sintaxe de qualquer linguagem de programação.
+              </p>
+            </div>
+          </div>
+
+          <!-- Grid com dados estruturados do criador -->
+          <div class="creator-info-grid">
+            <div class="creator-info-box">
+              <div class="creator-info-icon">🎂</div>
+              <div>
+                <div class="creator-info-label">Idade</div>
+                <div class="creator-info-val">18 Anos</div>
+                <span class="creator-info-sub">Jovem talento em tecnologia</span>
+              </div>
+            </div>
+
+            <div class="creator-info-box">
+              <div class="creator-info-icon">🎓</div>
+              <div>
+                <div class="creator-info-label">Formação Escolar / Técnica</div>
+                <div class="creator-info-val">ETEC Hortolândia</div>
+                <span class="creator-info-sub">Ensino Médio com Técnico integrado na Escola Estadual</span>
+              </div>
+            </div>
+
+            <div class="creator-info-box">
+              <div class="creator-info-icon">💼</div>
+              <div>
+                <div class="creator-info-label">Atuação Profissional</div>
+                <div class="creator-info-val">Estagiário na IBM</div>
+                <span class="creator-info-sub">Experiência corporativa & inovação tecnológica</span>
+              </div>
+            </div>
+
+            <div class="creator-info-box">
+              <div class="creator-info-icon">🚀</div>
+              <div>
+                <div class="creator-info-label">Perfil & Foco</div>
+                <div class="creator-info-val">Dev Iniciante em Computação</div>
+                <span class="creator-info-sub">Lógica, Algoritmos, Web, DevOps & Software</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="creator-quote-block">
+            <p class="creator-quote-text">
+              "Acredito que qualquer pessoa pode aprender a programar quando a lógica de pensamento é construída de maneira sólida, visual e pedagógica. Este site é a consolidação desse aprendizado compartilhado com a comunidade."
+            </p>
+          </div>
+
+          <div class="creator-tags-list">
+            <span class="creator-tag-chip">🧠 Lógica de Programação Pura</span>
+            <span class="creator-tag-chip">🐍 Python</span>
+            <span class="creator-tag-chip">🌐 JavaScript & TypeScript</span>
+            <span class="creator-tag-chip">⚙️ C & C++</span>
+            <span class="creator-tag-chip">☕ Java</span>
+            <span class="creator-tag-chip">🏦 COBOL</span>
+            <span class="creator-tag-chip">🗄️ SQL & Bancos de Dados</span>
+            <span class="creator-tag-chip">🐙 Git & GitHub</span>
+            <span class="creator-tag-chip">🐳 DevOps & Docker</span>
+            <span class="creator-tag-chip">🤖 IA & Machine Learning</span>
+            <span class="creator-tag-chip">🏛️ ETEC Hortolândia</span>
+            <span class="creator-tag-chip">🔵 IBM</span>
+          </div>
+        </div>
+      </section>
+
 
     </main>
   </div>
@@ -5916,6 +6973,14 @@ app.<span class="fn">post</span>(<span class="str">"/api/tarefas"</span>, autent
       <div class="footer-brand">
         <h4>🎓 Ponce Metodologias & Dev</h4>
         <p>Portal educacional unindo rigor pedagógico, metodologias ativas e o ensino aprofundado de lógica, linguagens de programação, TypeScript, IA/ML, DevOps e engenharia de software moderna.</p>
+        
+        <div style="margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color);">
+          <h5 style="font-size:0.8rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-light); margin-bottom:0.5rem;">👨‍💻 Criado por:</h5>
+          <p style="font-size:0.88rem; color:var(--text-main); font-weight:700; margin-bottom:0.25rem;">Luis Filipi Ponce (18 anos)</p>
+          <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.5; margin:0;">
+            Ensino Médio com Técnico na Escola Estadual de Hortolândia (<strong>ETEC Hortolândia</strong>) · <strong>Estagiário na IBM</strong> · Dev iniciante no mundo da computação.
+          </p>
+        </div>
       </div>
       <div class="footer-col">
         <h5>Linguagens & Tecnologias</h5>
@@ -5934,6 +6999,7 @@ app.<span class="fn">post</span>(<span class="str">"/api/tarefas"</span>, autent
       <div class="footer-col">
         <h5>Conteúdo Especial</h5>
         <ul class="footer-links">
+          <li><a href="#sobre-criador">👨‍💻 Sobre o Criador (Luis Ponce)</a></li>
           <li><a href="#ia-machine-learning">🤖 IA & Machine Learning</a></li>
           <li><a href="#devops-engenharia">🛠️ DevOps & Docker</a></li>
           <li><a href="#github-git">🐙 Git & GitHub na Prática</a></li>
@@ -5947,12 +7013,13 @@ app.<span class="fn">post</span>(<span class="str">"/api/tarefas"</span>, autent
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2025–2026 Ponce Metodologias & Dev — Excelência no Ensino Ativo, Lógica, Linguagens, IA/ML e DevOps. | <a href="#cookies-modal" data-open-cookies="true" style="color:inherit; text-decoration:underline;">Configurações de Cookies & Privacidade</a>
+      &copy; 2025–2026 Ponce Metodologias & Dev — Idealizado e Desenvolvido por <strong>Luis Filipi Ponce</strong> (18 anos · ETEC Hortolândia · Estagiário IBM) | <a href="#cookies-modal" data-open-cookies="true" style="color:inherit; text-decoration:underline;">Configurações de Cookies & Privacidade</a>
     </div>
   </footer>
 
   <script src="js/cookies.js"></script>
   <script src="js/app.js"></script>
   <script src="js/pwa.js"></script>
+  <script src="js/acesso-rapido.js" defer></script>
 </body>
 </html>

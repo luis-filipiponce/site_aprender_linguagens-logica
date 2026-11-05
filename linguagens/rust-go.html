@@ -1027,8 +1027,8 @@
 
   <!-- 1. FIXED HEADER -->
   <header class="site-header">
-    <a href="../index.html" class="header-logo">
-      <span>🎓</span> Ponce Metodologias &amp; Dev
+    <a href="../index.html" class="header-logo" title="Ponce Lógica e Metodologias Dev">
+      <span>🎓</span> Ponce Lógica &amp; Metodologias Dev
     </a>
 
     <div class="header-title-wrap">
@@ -1036,9 +1036,14 @@
       <span class="header-tag" id="headerDynamicBadge">Memory Safe</span>
     </div>
 
-    <a href="../index.html" class="btn-back">
-      ← Voltar
-    </a>
+    <div class="header-actions" style="display:flex;gap:8px;align-items:center;">
+      <a href="../index.html" class="btn-back" onclick="if(window.history.length>1){window.history.back();return false;}" title="Voltar um passo para trás">
+        ← Voltar
+      </a>
+      <a href="../index.html" class="btn-back" title="Ponce Lógica e Metodologias Dev (Início)">
+        🏠 Início
+      </a>
+    </div>
   </header>
 
   <main>
@@ -3561,5 +3566,6 @@
 
     })();
   </script>
+  <script src="../js/acesso-rapido.js" defer></script>
 </body>
 </html>

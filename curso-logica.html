@@ -82,7 +82,8 @@
       <div class="nav-scroll-container" id="nav-scroll-container">
         <button class="nav-scroll-arrow left" id="nav-scroll-left" aria-label="Rolar para esquerda" title="Rolar para esquerda">‹</button>
         <nav class="nav-links" id="header-nav-links">
-          <a href="index.html" class="nav-link">← Voltar ao Portal</a>
+          <a href="index.html" class="nav-link" onclick="if(window.history.length>1){window.history.back();return false;}" title="Voltar um passo para trás">← Voltar</a>
+          <a href="index.html" class="nav-link" title="Ponce Lógica e Metodologias Dev (Início)">🏠 Início Portal</a>
           <a href="#curso-dashboard" class="nav-link">Meu Progresso</a>
           <a href="#curso-modules-track" class="nav-link">22 Módulos & Mestria</a>
           <a href="#curso-module-content" class="nav-link">Aula Atual</a>
@@ -165,11 +166,21 @@
         </div>
 
         <!-- TRILHA HORIZONTAL DOS 22 MÓDULOS -->
-        <div>
-          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-            Trilha de Aprendizagem Progressiva (22 Módulos — Fundamentos, Avançado & Mestria em CS):
+        <div class="curso-modules-track-container">
+          <div class="curso-track-header-bar" id="curso-track-header-bar">
+            <div class="curso-track-title-group">
+              <span class="curso-track-icon">🧭</span>
+              <span class="curso-track-title">Trilha de Aprendizagem (22 Módulos)</span>
+              <span class="curso-track-curr-badge" id="curso-track-curr-badge">Carregando...</span>
+            </div>
+            <div class="curso-track-legend">
+              <span class="legend-item"><span class="legend-dot dot-active"></span> Atual</span>
+              <span class="legend-item"><span class="legend-dot dot-mastered"></span> Dominado</span>
+              <span class="legend-item"><span class="legend-dot dot-review"></span> Revisão</span>
+              <span class="legend-item"><span class="legend-dot dot-pending"></span> Pendente</span>
+            </div>
           </div>
-          <div class="curso-modules-track" id="curso-modules-track">
+          <div class="curso-modules-track" id="curso-modules-track" role="tablist" aria-label="Módulos do Curso de Lógica">
             <!-- Preenchido dinamicamente com botões dos 22 módulos -->
           </div>
         </div>
@@ -267,7 +278,9 @@
 
   <footer style="text-align:center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 3rem;">
     <p>
-      <a href="index.html" style="color:var(--primary); font-weight:600;">← Voltar ao Portal</a>
+      <a href="index.html" onclick="if(window.history.length>1){window.history.back();return false;}" style="color:var(--primary); font-weight:600;">← Voltar</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="index.html" style="color:var(--primary); font-weight:600;">🏠 Início (Ponce Lógica &amp; Metodologias Dev)</a>
       &nbsp;&nbsp;|&nbsp;&nbsp;
       <a href="questoes.html" style="color:var(--primary); font-weight:600;">🧩 Banco de Questões →</a>
       &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -478,6 +491,9 @@
     }
   </script>
 
+  <!-- NOTIFICAÇÃO TOAST DE TRANSIÇÃO DE MÓDULO -->
+  <div id="curso-modulo-toast" class="curso-modulo-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
   <!-- BOTÃO LATERAL ESQUERDO — IR PARA AS QUESTÕES -->
   <a href="questoes.html" class="btn-lateral-questoes" title="Ir para o Banco de Questões" aria-label="Ir para o Banco de Questões">
     <span class="blq-icon">🧩</span>
@@ -509,5 +525,6 @@
       </div>
     </div>
   </div>
+  <script src="js/acesso-rapido.js" defer></script>
 </body>
 </html>

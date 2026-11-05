@@ -5,7 +5,7 @@
  */
 
 // CACHE_NAME é atualizado automaticamente por scripts/versionar-sw.mjs (npm run build)
-const CACHE_NAME = 'ponce-logica-73cff15046';
+const CACHE_NAME = 'ponce-logica-5f0d06f300';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -30,6 +30,7 @@ const ASSETS_TO_CACHE = [
   './js/curso-logica-dados.js',
   './js/curso-logica-extras.js',
   './js/figuras-modulos.js',
+  './js/acesso-rapido.js',
   './img/modulos/modulo-01.svg',
   './img/modulos/modulo-02.svg',
   './img/modulos/modulo-03.svg',

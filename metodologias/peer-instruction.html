@@ -501,9 +501,12 @@ footer {
 <body>
 
 <header class="site-header">
-  <a class="logo" href="../index.html">🎓 Ponce Metodologias &amp; Dev</a>
+  <a class="logo" href="../index.html" title="Ponce Lógica e Metodologias Dev">🎓 Ponce Lógica &amp; Metodologias Dev</a>
   <div class="header-title">💬 Peer Instruction</div>
-  <a class="btn-back" href="../index.html#metodologias-ativas">← Voltar</a>
+  <div class="header-actions" style="display:flex;gap:8px;align-items:center;">
+    <a class="btn-back" href="../index.html#metodologias-ativas" onclick="if(window.history.length>1){window.history.back();return false;}" title="Voltar um passo para trás">← Voltar</a>
+    <a class="btn-back" href="../index.html" title="Ponce Lógica e Metodologias Dev (Início)">🏠 Início</a>
+  </div>
 </header>
 
 <nav class="subnav" aria-label="Navegação da página">
@@ -1348,5 +1351,6 @@ REGISTRO: anote o percentual de acertos antes e depois do debate.</code></pre>
   });
 })();
 </script>
+  <script src="../js/acesso-rapido.js" defer></script>
 </body>
 </html>

@@ -66,7 +66,8 @@
     </div>
     <div class="header-right">
       <nav class="nav-links">
-        <a href="index.html" class="nav-link">← Portal</a>
+        <a href="index.html" class="nav-link" onclick="if(window.history.length>1){window.history.back();return false;}" title="Voltar um passo para trás">← Voltar</a>
+        <a href="index.html" class="nav-link" title="Ponce Lógica e Metodologias Dev (Início)">🏠 Início Portal</a>
         <a href="curso-logica.html" class="nav-link">🚀 Curso de Lógica</a>
         <a href="aprenda-programacao/index.html" class="nav-link">📚 Aprenda</a>
       </nav>
@@ -200,7 +201,9 @@
 
   <footer style="text-align:center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top:2rem;">
     <p>
-      <a href="index.html" style="color:var(--primary); font-weight:600;">← Voltar ao Portal</a>
+      <a href="index.html" onclick="if(window.history.length>1){window.history.back();return false;}" style="color:var(--primary); font-weight:600;">← Voltar</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="index.html" style="color:var(--primary); font-weight:600;">🏠 Início (Ponce Lógica &amp; Metodologias Dev)</a>
       &nbsp;&nbsp;|&nbsp;&nbsp;
       <a href="curso-logica.html" style="color:var(--primary); font-weight:600;">🚀 Curso de Lógica (22 Módulos) →</a>
       &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -250,5 +253,6 @@
       }
     })();
   </script>
+  <script src="js/acesso-rapido.js" defer></script>
 </body>
 </html>

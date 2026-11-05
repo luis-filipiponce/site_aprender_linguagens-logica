@@ -22,7 +22,8 @@
     <h1>Você está offline</h1>
     <p>Esta página não está salva no seu dispositivo. As páginas abaixo já foram baixadas e funcionam sem internet.</p>
     <ul>
-      <li><a href="./index.html">Início</a></li>
+      <li><a href="javascript:history.back()" onclick="if(window.history.length>1){window.history.back();return false;}">← Voltar (1 passo)</a></li>
+      <li><a href="./index.html">🏠 Início — Ponce Lógica e Metodologias Dev</a></li>
       <li><a href="./curso-logica.html">Curso de Lógica (22 módulos)</a></li>
       <li><a href="./questoes.html">Banco de questões</a></li>
     </ul>

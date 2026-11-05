@@ -504,31 +504,103 @@
     }
   }
 
+  let toastTimer = null;
+  function mostrarToastTransicao(modulo) {
+    if (typeof document === 'undefined') return;
+    const toast = document.getElementById('curso-modulo-toast');
+    if (!toast) return;
+
+    const prog = StorageManager.carregarProgresso();
+    const p = prog[modulo.id] || {};
+    let statusText = 'Aula em Andamento';
+    let statusIcon = '📍';
+    if (p.estado === 'Domínio demonstrado') {
+      statusText = `Domínio Demonstrado (Nota: ${p.ultimaNota}/100)`;
+      statusIcon = '✅';
+    } else if (p.estado === 'Precisa de revisão') {
+      statusText = `Precisa de Revisão (Nota: ${p.ultimaNota}/100)`;
+      statusIcon = '⚠️';
+    }
+
+    toast.innerHTML = `
+      <div class="toast-inner">
+        <span class="toast-icon">${statusIcon}</span>
+        <div class="toast-body">
+          <div class="toast-title">Módulo ${modulo.id} de ${MODULOS_LOGICA.length}: ${escHtml(modulo.titulo)}</div>
+          <div class="toast-sub">[${escHtml(modulo.nivel)}] • ${statusText}</div>
+        </div>
+      </div>
+    `;
+
+    toast.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3500);
+  }
+
   function renderizarListaModulos() {
     const elTrack = document.getElementById('curso-modules-track');
     const elQuickSelect = document.getElementById('curso-quick-select');
+    const elBadge = document.getElementById('curso-track-curr-badge');
     if (!elTrack) return;
 
     const prog = StorageManager.carregarProgresso();
+    const currModulo = MODULOS_LOGICA.find(m => m.id === moduloSelecionado) || MODULOS_LOGICA[0];
+
+    if (elBadge) {
+      elBadge.innerHTML = `📍 Aula Atual: <strong>Módulo ${currModulo.id} — ${escHtml(currModulo.titulo.length > 30 ? currModulo.titulo.slice(0, 28) + '...' : currModulo.titulo)}</strong>`;
+    }
 
     elTrack.innerHTML = MODULOS_LOGICA.map(m => {
       const p = prog[m.id] || {};
-      const statusClass = p.estado === 'Domínio demonstrado' ? 'status-mastered' : p.estado === 'Precisa de revisão' ? 'status-review' : '';
-      const activeClass = m.id === moduloSelecionado ? 'active' : '';
+      const isMastered = p.estado === 'Domínio demonstrado';
+      const isReview = p.estado === 'Precisa de revisão';
+      const isCurrent = m.id === moduloSelecionado;
+      const statusClass = isMastered ? 'status-mastered' : isReview ? 'status-review' : '';
+      const activeClass = isCurrent ? 'active' : '';
       const isAdv = m.id >= 18;
+
+      let iconHTML = '<span class="pill-status-dot"></span>';
+      let titleStatus = 'Não iniciado';
+      let activeBadgeHTML = '';
+
+      if (isMastered) {
+        iconHTML = '<span class="pill-status-icon" style="color:#10b981;">✓</span>';
+        titleStatus = `Dominado (${p.ultimaNota || 100}/100)`;
+      } else if (isReview) {
+        iconHTML = '<span class="pill-status-icon" style="color:#f59e0b;">⚠️</span>';
+        titleStatus = `Precisa de revisão (${p.ultimaNota || 0}/100)`;
+      } else if (isCurrent) {
+        iconHTML = '<span class="pill-status-icon">📍</span>';
+        titleStatus = 'Módulo em estudo (aula atual)';
+      }
+
+      if (isCurrent) {
+        activeBadgeHTML = '<span class="pill-active-badge">ATUAL</span>';
+      }
+
       return `
-        <button class="curso-mod-pill ${activeClass} ${statusClass}" onclick="CursoLogicaApp.selecionarModulo(${m.id})">
-          <span class="pill-status-dot"></span>
+        <button class="curso-mod-pill ${activeClass} ${statusClass}"
+                role="tab"
+                aria-selected="${isCurrent ? 'true' : 'false'}"
+                aria-current="${isCurrent ? 'step' : 'false'}"
+                title="Módulo ${m.id}: ${escHtml(m.titulo)} (${escHtml(m.nivel)}) — ${titleStatus}"
+                onclick="CursoLogicaApp.selecionarModulo(${m.id})">
+          ${iconHTML}
           <span>${m.id}. ${m.titulo.split(' ')[0]} ${isAdv ? '⚡' : ''}</span>
+          ${activeBadgeHTML}
         </button>
       `;
     }).join('');
 
     if (elQuickSelect && elQuickSelect.children.length <= 1) {
       elQuickSelect.innerHTML = MODULOS_LOGICA.map(m =>
-        `<option value="${m.id}" ${m.id === moduloSelecionado ? 'selected' : ''}>[${m.nivel}] Módulo ${m.id}: ${m.titulo}</option>`
+        `<option value="${m.id}">[${m.nivel}] Módulo ${m.id}: ${m.titulo}</option>`
       ).join('');
     }
+    // Mantém o seletor rápido sincronizado com o módulo em estudo
+    if (elQuickSelect) /** @type {HTMLSelectElement} */ (elQuickSelect).value = String(moduloSelecionado);
   }
 
   function escHtml(s) {
@@ -621,6 +693,34 @@
     const extra = renderizarExtras(modulo);
     const figuraHTML = renderizarFigura(modulo);
 
+    const prog = StorageManager.carregarProgresso();
+    const pAtual = prog[modulo.id] || {};
+    const isMastered = pAtual.estado === 'Domínio demonstrado';
+    const isReview = pAtual.estado === 'Precisa de revisão';
+
+    const prevModulo = MODULOS_LOGICA.find(m => m.id === moduloSelecionado - 1);
+    const nextModulo = MODULOS_LOGICA.find(m => m.id === moduloSelecionado + 1);
+
+    const progressoTrilha = Math.round((modulo.id / MODULOS_LOGICA.length) * 100);
+
+    let themeClass = 'theme-iniciante';
+    if (modulo.id >= 18) {
+      themeClass = 'theme-especialista';
+    } else if (modulo.nivel === 'Avançado') {
+      themeClass = 'theme-avancado';
+    } else if (modulo.nivel === 'Intermediário') {
+      themeClass = 'theme-intermediario';
+    }
+
+    let statusHeroBadgeHTML = '';
+    if (isMastered) {
+      statusHeroBadgeHTML = `<span class="mod-hero-status-pill hero-mastered">🏆 DOMINADO (${pAtual.ultimaNota || 100}/100)</span>`;
+    } else if (isReview) {
+      statusHeroBadgeHTML = `<span class="mod-hero-status-pill hero-review">⚠️ EM REVISÃO (${pAtual.ultimaNota || 0}/100)</span>`;
+    } else {
+      statusHeroBadgeHTML = `<span class="mod-hero-status-pill hero-current">📍 AULA ATUAL (EM ESTUDO)</span>`;
+    }
+
     const exBasico = modulo.exemplos.basico;
     const exMid = modulo.exemplos.intermediario;
     const exAdv = modulo.exemplos.avancado;
@@ -690,15 +790,42 @@
 
     container.innerHTML = `
       <div class="curso-module-card">
-        <div class="mod-header">
-          <div>
-            <div class="mod-badge-row">
-              <span class="lang-badge-pill" style="background:var(--grad-primary); color:#fff;">${escHtml(modulo.badge)}</span>
-              <span class="lang-badge-pill" style="background:#ecfdf5; color:#065f46;">Nível: ${escHtml(modulo.nivel)}</span>
-              <span class="lang-badge-pill" style="background:#f5f3ff; color:#6d28d9;">Ciência da Computação Pura</span>
+
+        <!-- SUPER HERO BANNER: IDENTIFICAÇÃO VISUAL MÁXIMA DO MÓDULO -->
+        <div class="mod-hero-header ${themeClass}">
+          <div class="mod-hero-top">
+            <div class="mod-hero-tags">
+              <span class="mod-hero-tag mod-hero-num">MÓDULO ${String(modulo.id).padStart(2, '0')} DE ${MODULOS_LOGICA.length}</span>
+              <span class="mod-hero-tag">${escHtml(modulo.nivel).toUpperCase()}</span>
+              <span class="mod-hero-tag">${escHtml(modulo.badge)}</span>
             </div>
-            <h2 class="mod-title">${escHtml(modulo.titulo)}</h2>
-            <p class="mod-subtitle">${escHtml(modulo.subtitulo)}</p>
+            <div class="mod-hero-status-wrap">
+              ${statusHeroBadgeHTML}
+            </div>
+          </div>
+
+          <h2 class="mod-hero-title">Módulo ${modulo.id}: ${escHtml(modulo.titulo)}</h2>
+          <p class="mod-hero-subtitle">${escHtml(modulo.subtitulo)}</p>
+
+          <div class="mod-hero-footer-bar">
+            <div class="mod-hero-progress-group">
+              <div class="mod-hero-progress-labels">
+                <span>Trilha de Lógica Pura: <strong>Módulo ${modulo.id} de ${MODULOS_LOGICA.length}</strong></span>
+                <span><strong>${progressoTrilha}% da formação</strong></span>
+              </div>
+              <div class="mod-hero-progress-track">
+                <div class="mod-hero-progress-fill" style="width: ${progressoTrilha}%;"></div>
+              </div>
+            </div>
+
+            <div class="mod-hero-nav-actions">
+              <button class="mod-hero-nav-btn" ${prevModulo ? `onclick="CursoLogicaApp.selecionarModulo(${prevModulo.id})" title="Voltar ao Módulo ${prevModulo.id}: ${escHtml(prevModulo.titulo)}"` : 'disabled'}>
+                ‹ Módulo Anterior
+              </button>
+              <button class="mod-hero-nav-btn" ${nextModulo ? `onclick="CursoLogicaApp.selecionarModulo(${nextModulo.id})" title="Avançar ao Módulo ${nextModulo.id}: ${escHtml(nextModulo.titulo)}"` : 'disabled'}>
+                Próximo Módulo ›
+              </button>
+            </div>
           </div>
         </div>
 
@@ -857,6 +984,37 @@
           </div>
         </div>
 
+        <!-- Navegação entre módulos -->
+        <div class="mod-nav-footer">
+          ${prevModulo ? `
+            <button class="quick-nav-btn mod-nav-btn-prev" onclick="CursoLogicaApp.selecionarModulo(${prevModulo.id})" title="Voltar ao Módulo ${prevModulo.id}: ${escHtml(prevModulo.titulo)}">
+              <span>◀</span>
+              <span>Módulo ${prevModulo.id}: <strong>${escHtml(prevModulo.titulo.length > 24 ? prevModulo.titulo.slice(0, 22) + '...' : prevModulo.titulo)}</strong></span>
+            </button>
+          ` : `
+            <button class="quick-nav-btn mod-nav-btn-prev" disabled>
+              <span>◀</span> <span>Início da Formação</span>
+            </button>
+          `}
+
+          <div class="mod-footer-current-info">
+            <span class="mod-footer-curr-chip">Módulo ${modulo.id} de ${MODULOS_LOGICA.length}</span>
+            <span class="mod-footer-level-chip">${escHtml(modulo.nivel)}</span>
+          </div>
+
+          ${nextModulo ? `
+            <button class="quick-nav-btn mod-nav-btn-next" onclick="CursoLogicaApp.selecionarModulo(${nextModulo.id})" title="Avançar ao Módulo ${nextModulo.id}: ${escHtml(nextModulo.titulo)}">
+              <span>Próximo: Módulo ${nextModulo.id} (<strong>${escHtml(nextModulo.titulo.length > 24 ? nextModulo.titulo.slice(0, 22) + '...' : nextModulo.titulo)}</strong>)</span>
+              <span>▶</span>
+            </button>
+          ` : `
+            <button class="quick-nav-btn mod-nav-btn-cert" onclick="CursoLogicaApp.emitirCertificado()">
+              <span>🏆 Concluir e Emitir Certificado</span>
+              <span>▶</span>
+            </button>
+          `}
+        </div>
+
       </div>
     `;
 
@@ -902,15 +1060,46 @@
       window.location.href = 'curso-logica.html?modulo=' + (targetId || 1);
     },
 
-    selecionarModulo: function (id) {
-      moduloSelecionado = parseInt(id, 10);
+    selecionarModulo: function (id, skipToast) {
+      const parsedId = parseInt(id, 10);
+      if (isNaN(parsedId) || parsedId < 1 || parsedId > MODULOS_LOGICA.length) return;
+
+      const mudouModulo = moduloSelecionado !== parsedId;
+      moduloSelecionado = parsedId;
       renderizarListaModulos();
       renderizarModuloDetalhe();
+
+      if (!skipToast && mudouModulo) {
+        const mod = MODULOS_LOGICA.find(m => m.id === moduloSelecionado);
+        if (mod) mostrarToastTransicao(mod);
+      }
+
+      const elCard = /** @type {HTMLElement | null} */ (document.querySelector('.curso-module-card'));
+      if (elCard) {
+        elCard.classList.remove('mod-transition-active');
+        void elCard.offsetWidth; // força reflow do browser para reiniciar a animação
+        elCard.classList.add('mod-transition-active');
+      }
+
+      try {
+        if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
+          const url = new URL(window.location.href);
+          url.searchParams.set('modulo', String(moduloSelecionado));
+          window.history.replaceState(null, '', url.toString());
+        }
+      } catch (e) {
+        // Silencia em ambientes onde history API é restrita
+      }
 
       const elSection = document.getElementById('curso-module-content');
       if (elSection) {
         elSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+    },
+
+    navegarRelativo: function (delta) {
+      const alvo = moduloSelecionado + delta;
+      if (alvo >= 1 && alvo <= MODULOS_LOGICA.length) this.selecionarModulo(alvo);
     },
 
     navegarModuloRapido: function () {
@@ -1026,9 +1215,36 @@
         </div>
       `).join('');
 
+      let celebrationHTML = '';
+      if (aval.estado === 'Domínio demonstrado') {
+        const nextMod = MODULOS_LOGICA.find(m => m.id === moduloSelecionado + 1);
+        celebrationHTML = `
+          <div class="ai-mastery-banner">
+            <div class="ai-mastery-content">
+              <span class="ai-mastery-icon">🎉</span>
+              <div>
+                <h4 class="ai-mastery-title">Módulo ${moduloSelecionado} Dominado com Sucesso!</h4>
+                <p class="ai-mastery-desc">Sua explicação demonstrou compreensão profunda e rigor conceitual aprovados pela IA.</p>
+              </div>
+            </div>
+            ${nextMod ? `
+              <button class="ai-mastery-next-btn" onclick="CursoLogicaApp.selecionarModulo(${nextMod.id})">
+                <span>Avançar para o Módulo ${nextMod.id}: <strong>${escHtml(nextMod.titulo.length > 25 ? nextMod.titulo.slice(0, 23) + '...' : nextMod.titulo)}</strong></span>
+                <span>➔</span>
+              </button>
+            ` : `
+              <button class="ai-mastery-next-btn" onclick="CursoLogicaApp.emitirCertificado()">
+                <span>🏆 Trilha Completa Concluída! Emitir Certificado</span>
+                <span>➔</span>
+              </button>
+            `}
+          </div>
+        `;
+      }
+
       fbArea.innerHTML = `
         <div class="ai-feedback-response">
-          
+          ${celebrationHTML}
           <div class="ai-section-box ai-sec-i">
             <div class="ai-sec-title">📊 Seção I · Avaliação Multidimensional da Compreensão & Rigor</div>
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
