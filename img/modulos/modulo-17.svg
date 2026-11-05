@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Pipeline de regras do e-commerce</title>
+<desc id="d">Pedido passa por cinco etapas em ordem: estoque, cupom, frete, antifraude e pagamento. Cada etapa pode rejeitar o pedido e interromper o fluxo.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker><marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#dc2626"/></marker></defs>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 17 — Integrando tudo: pipeline de pedido</text>
+<g stroke-width="2" fill="#fff" stroke="#6366f1">
+<rect x="14" y="70" width="104" height="60" rx="8"/><rect x="136" y="70" width="104" height="60" rx="8"/><rect x="258" y="70" width="104" height="60" rx="8"/><rect x="380" y="70" width="104" height="60" rx="8"/><rect x="502" y="70" width="124" height="60" rx="8"/>
+</g>
+<g class="c b"><text x="66" y="95">1. Estoque</text><text x="188" y="95">2. Cupom</text><text x="310" y="95">3. Frete</text><text x="432" y="95">4. Antifraude</text><text x="564" y="95">5. Pagamento</text></g>
+<g class="c m"><text x="66" y="115">há itens?</text><text x="188" y="115">é válido?</text><text x="310" y="115">calcular</text><text x="432" y="115">risco baixo?</text><text x="564" y="115">cobrar e emitir</text></g>
+<g stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"><path d="M118 100H134M240 100H256M362 100H378M484 100H500"/></g>
+<g stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="5 3" marker-end="url(#r)"><path d="M66 130V176M188 130V176M432 130V176"/></g>
+<rect x="14" y="176" width="480" height="40" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+<text x="254" y="201" class="c b" style="fill:#991b1b">Rejeição: interrompe o fluxo e informa o motivo (sem cobrar)</text>
+<text x="30" y="246" class="b">Checklist de integração</text>
+<g class="m"><text x="30" y="266">• Cada regra tem entrada, saída e pré-condição explícitas.</text><text x="30" y="284">• A ordem muda o resultado: o antifraude vem antes de cobrar.</text><text x="30" y="302">• Teste cada etapa isolada e depois o pedido completo, nas bordas.</text></g>
+</svg>

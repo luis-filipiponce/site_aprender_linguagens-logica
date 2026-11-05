@@ -17,25 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initBackToTop();
   initFeynmanTool();
   initNavDragToScroll();
-  registerServiceWorker();
 });
-
-// ────────────────────────────────────────────────────────────────────────────
-// REGISTRO DE SERVICE WORKER PWA (OFFLINE CACHING)
-// ────────────────────────────────────────────────────────────────────────────
-function registerServiceWorker() {
-  if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => {
-          console.log('✅ [PWA] Service Worker registrado com sucesso no escopo:', reg.scope);
-        })
-        .catch(err => {
-          console.warn('⚠️ [PWA] Falha ao registrar Service Worker:', err);
-        });
-    });
-  }
-}
 
 // ────────────────────────────────────────────────────────────────────────────
 // NAVEGAÇÃO HORIZONTAL COM ARRASTE (DRAG TO SCROLL & SETAS)
@@ -636,7 +618,8 @@ let cardFlipped = false;
    ========================================================================== */
 
 function initTheme() {
-  const savedTheme = localStorage.getItem("edumet-theme") || "light";
+  const cookieTheme = typeof PonceCookies !== 'undefined' ? PonceCookies.getCookie('ponce_theme') : null;
+  const savedTheme = cookieTheme || localStorage.getItem("edumet-theme") || "light";
   document.documentElement.setAttribute("data-theme", savedTheme);
 
   const themeBtn = document.getElementById("theme-toggle-btn");
@@ -650,6 +633,12 @@ function initTheme() {
 
       document.documentElement.setAttribute("data-theme", next);
       localStorage.setItem("edumet-theme", next);
+      if (typeof PonceCookies !== 'undefined') {
+        const consent = PonceCookies.getConsent();
+        if (!consent || consent.preferences) {
+          PonceCookies.setCookie('ponce_theme', next);
+        }
+      }
       updateThemeIcon(next);
     });
     updateThemeIcon(savedTheme);
@@ -716,11 +705,13 @@ const SPOTLIGHT_INDEX = [
   { id: 'mod-13', title: 'Módulo 13: Validação, Casos de Teste & Depuração Lógica', category: 'logica', catLabel: 'Lógica Pura', icon: '🧪', desc: 'Procura de contraexemplos, boundary testing e identificação de causas-raiz.', link: 'curso-logica.html?modulo=13', target: '_self', keywords: 'testes debug depuracao boundary casos extremos contraexemplos' },
   { id: 'mod-14', title: 'Módulo 14: Prova de Correção, Invariantes & Lógica de Hoare', category: 'logica', catLabel: 'Lógica Pura', icon: '📐', desc: 'Pré/pós-condições formais, triplas de Hoare {P} C {Q} e prova por indução.', link: 'curso-logica.html?modulo=14', target: '_self', keywords: 'hoare correcao formal invariante terminacao inducao' },
   { id: 'mod-15', title: 'Módulo 15: Complexidade, Eficiência & Análise Big O', category: 'logica', catLabel: 'Lógica Pura', icon: '📈', desc: 'Classes O(1), O(log n), O(n), O(n²), melhor, médio e pior caso.', link: 'curso-logica.html?modulo=15', target: '_self', keywords: 'big o complexidade assintotica eficiencia algoritmos cormen' },
-  { id: 'mod-18', title: 'Módulo 18: Estruturas de Dados Abstratas (Pilhas, Filas, Grafos)', category: 'logica', catLabel: 'Lógica Pura', icon: '🗂️', desc: 'LIFO, FIFO, Listas Ligadas, Árvores Binárias de Busca e Grafos.', link: 'curso-logica.html?modulo=18', target: '_self', keywords: 'pilhas filas arvores grafos linked list bst fila pilha' },
-  { id: 'mod-19', title: 'Módulo 19: Recursão, Divisão & Conquista e Teorema Mestre', category: 'logica', catLabel: 'Lógica Pura', icon: '🌀', desc: 'Pilha de chamadas, caso base e cálculo de recorrências T(n)=aT(n/b)+f(n).', link: 'curso-logica.html?modulo=19', target: '_self', keywords: 'recursao teorema mestre divisao e conquista arvore de chamada' },
-  { id: 'mod-20', title: 'Módulo 20: Paradigmas de Algoritmos (Gulosos, Backtracking, DP)', category: 'logica', catLabel: 'Lógica Pura', icon: '💎', desc: 'Algoritmos Gulosos, Mochila, Memoization e Programação Dinâmica.', link: 'curso-logica.html?modulo=20', target: '_self', keywords: 'programacao dinamica dp backtracking gulosos memoization' },
-  { id: 'mod-21', title: 'Módulo 21: Computabilidade, Autômatos & Máquinas de Turing', category: 'logica', catLabel: 'Lógica Pura', icon: '🤖', desc: 'Autômatos Finitos, Problema da Parada (Halting Problem) e Alan Turing.', link: 'curso-logica.html?modulo=21', target: '_self', keywords: 'turing automatos computabilidade halting problem maquina de turing' },
-  { id: 'mod-22', title: 'Módulo 22: Classes de Complexidade (P vs NP & NP-Completude)', category: 'logica', catLabel: 'Lógica Pura', icon: '🏆', desc: 'Problemas de decisão, NP-Difícil, Teorema de Cook-Levin e SAT.', link: 'curso-logica.html?modulo=22', target: '_self', keywords: 'p vs np np-completo cook levin sat reducoes' },
+  { id: 'mod-16', title: 'Módulo 16: Raciocínio Lógico Avançado Aplicado à Programação', category: 'logica', catLabel: 'Lógica Pura', icon: '🧠', desc: 'Múltiplas restrições simultâneas, eliminação de hipóteses, matrizes de decisão e problemas complexos.', link: 'curso-logica.html?modulo=16', target: '_self', keywords: 'raciocinio logico avancado restricoes hipoteses matriz de decisao problemas complexos' },
+  { id: 'mod-17', title: 'Módulo 17: Desafios Integradores e Avaliação Global de Domínio', category: 'logica', catLabel: 'Lógica Pura', icon: '🏁', desc: 'Síntese de todos os fundamentos: modelar, estruturar, modularizar, testar e justificar.', link: 'curso-logica.html?modulo=17', target: '_self', keywords: 'desafios integradores avaliacao global dominio sintese projeto final' },
+  { id: 'mod-18', title: 'Módulo 18: Recursão Avançada, Relações de Recorrência e Teorema Mestre', category: 'logica', catLabel: 'Lógica Pura', icon: '🌀', desc: 'Pilha de chamadas, recursão de cauda (Tail Recursion), árvores de recursão e o Teorema Mestre de Cormen.', link: 'curso-logica.html?modulo=18', target: '_self', keywords: 'recursao recorrencia teorema mestre tail recursion pilha de chamadas arvore de recursao cormen' },
+  { id: 'mod-19', title: 'Módulo 19: Paradigmas Avançados: Divisão & Conquista, Programação Dinâmica e Gulosos', category: 'logica', catLabel: 'Lógica Pura', icon: '💎', desc: 'Subestrutura ótima, subproblemas sobrepostos, Memoization (Top-Down) vs Tabulação (Bottom-Up) e Matroides.', link: 'curso-logica.html?modulo=19', target: '_self', keywords: 'programacao dinamica dp gulosos divisao e conquista memoization tabulacao matroides backtracking' },
+  { id: 'mod-20', title: 'Módulo 20: Lógica de Hoare, Métodos Formais e Verificação Axiomática', category: 'logica', catLabel: 'Lógica Pura', icon: '📐', desc: 'Triplas de Hoare {P} C {Q}, pré-condição mais fraca (wp), regras de inferência e prova de correção de software.', link: 'curso-logica.html?modulo=20', target: '_self', keywords: 'hoare metodos formais verificacao axiomatica wp precondicao mais fraca prova de correcao' },
+  { id: 'mod-21', title: 'Módulo 21: Teoria da Computação, Máquinas de Turing e Decidibilidade', category: 'logica', catLabel: 'Lógica Pura', icon: '🤖', desc: 'Autômatos Finitos (DFA/NFA), Máquina de Turing de fita infinita, Tese de Church-Turing e o Problema da Parada.', link: 'curso-logica.html?modulo=21', target: '_self', keywords: 'turing automatos dfa nfa decidibilidade church halting problem parada maquina de turing' },
+  { id: 'mod-22', title: 'Módulo 22: Classes de Complexidade (P vs NP), Reduções e Análise Amortizada', category: 'logica', catLabel: 'Lógica Pura', icon: '🏆', desc: 'Classes P, NP, NP-Completo (Cook-Levin), Redução Polinomial de Karp e Análise Amortizada (Método do Potencial).', link: 'curso-logica.html?modulo=22', target: '_self', keywords: 'p vs np np-completo cook levin karp sat reducoes analise amortizada potencial' },
 
   // ── LINGUAGENS DE PROGRAMAÇÃO ──
   { id: 'lang-py', title: 'Python — A Lógica da Legibilidade e Indentação', category: 'linguagens', catLabel: 'Linguagem', icon: '🐍', desc: 'Tipagem dinâmica, dicionários, list comprehensions, closures e POO.', link: '#lang-python', keywords: 'python listas dicionarios tuplas pandas decorators' },
@@ -734,6 +725,7 @@ const SPOTLIGHT_INDEX = [
   { id: 'lang-php', title: 'PHP — A Lógica Server-Side e Processamento HTTP', category: 'linguagens', catLabel: 'Linguagem', icon: '🐘', desc: 'Ciclo Request/Response, Superglobais ($_POST, $_GET), PDO e POO Moderna.', link: '#lang-php', keywords: 'php backend server http pdo web dynamic' },
   { id: 'lang-db', title: 'Banco de Dados — Modelagem, SGBD e Índices B-Tree', category: 'linguagens', catLabel: 'Linguagem', icon: '🏛️', desc: 'MySQL, PostgreSQL, Normalização (1FN a 3FN), Chaves e Transações ACID.', link: '#lang-banco-dados', keywords: 'banco de dados mysql postgresql sgbd acid btree normalizacao' },
   { id: 'lang-rust', title: 'Rust & Go — A Lógica da Concorrência e Memory Safety', category: 'linguagens', catLabel: 'Linguagem', icon: '🦀', desc: 'Ownership/Borrow Checker em Rust e Goroutines/Channels em Go.', link: '#lang-rust-go', keywords: 'rust go golang ownership borrow checker goroutines channels' },
+  { id: 'dev-git', title: 'Git & GitHub — Controle de Versão, Branches, PRs e Simulador', category: 'ferramentas', catLabel: 'Ferramenta & DevOps', icon: '🐙', desc: 'Central de conhecimento completa: Dicionário de comandos, Terminal simulador das 4 áreas, Pull Requests, Fork e Quiz.', link: '#github-git', keywords: 'git github versionamento commit push pull branch merge pr pull request stash rebase cherry-pick conflito' },
 
   // ── METODOLOGIAS & PEDAGOGIA ──
   { id: 'met-peer', title: 'Peer Instruction (Instrução por Pares - Eric Mazur)', category: 'metodologias', catLabel: 'Metodologia', icon: '👥', desc: 'Concepções alternativas, votação de Concept Tests e discussão entre pares.', link: '#metodologias-ativas', keywords: 'peer instruction mazur pares votacao concept test metodologias' },
@@ -1641,6 +1633,94 @@ function initCodeComparison() {
   updateView();
 }
 
+/* ==========================================================================
+   EXECUÇÃO ISOLADA DE CÓDIGO DO USUÁRIO (Web Worker + timeout)
+   O código roda fora da thread principal: sem acesso a DOM/localStorage e
+   com encerramento forçado (worker.terminate) em caso de laço infinito.
+   ========================================================================== */
+const USER_CODE_TIMEOUT_MS = 2000;
+
+const USER_CODE_WORKER_SOURCE = `
+"use strict";
+const _blocked = ["fetch", "XMLHttpRequest", "WebSocket", "importScripts", "indexedDB", "caches"];
+const _fmt = (a, pretty) => {
+  if (typeof a !== "object" || a === null) return String(a);
+  try { return JSON.stringify(a, null, pretty ? 2 : 0); } catch (_) { return String(a); }
+};
+self.onmessage = (e) => {
+  const { code, fnName, tests, varNames, pretty } = e.data;
+  _blocked.forEach((k) => { try { self[k] = undefined; } catch (_) {} });
+  const logs = [];
+  const sandboxConsole = {
+    log: (...a) => logs.push({ type: "log", text: a.map((x) => _fmt(x, pretty)).join(" ") }),
+    warn: (...a) => logs.push({ type: "warn", text: a.map((x) => _fmt(x, false)).join(" ") }),
+    error: (...a) => logs.push({ type: "error", text: a.map((x) => _fmt(x, false)).join(" ") })
+  };
+  const out = { logs, error: null, results: null, vars: null };
+  try {
+    if (fnName) {
+      const userFn = new Function("console", code + "\\n; return " + fnName + ";")(sandboxConsole);
+      if (typeof userFn !== "function") {
+        throw new Error("A função '" + fnName + "' não foi declarada corretamente.");
+      }
+      out.results = tests.map((t) => {
+        try {
+          return { actual: JSON.stringify(userFn(...t.input)) };
+        } catch (err) {
+          return { error: String(err && err.message ? err.message : err) };
+        }
+      });
+    } else {
+      new Function("console", code)(sandboxConsole);
+      if (varNames && varNames.length) {
+        try {
+          const body = code + "\\nreturn { " + varNames.map((v) => v + ": typeof " + v + " !== 'undefined' ? " + v + " : undefined").join(", ") + " };";
+          const vars = new Function("console", body)({ log() {}, warn() {}, error() {} });
+          out.vars = Object.entries(vars).map(([k, v]) => ({
+            name: k,
+            type: Array.isArray(v) ? "array" : typeof v,
+            value: typeof v === "object" ? _fmt(v, false) : String(v)
+          }));
+        } catch (_) { /* inspetor opcional */ }
+      }
+    }
+  } catch (err) {
+    out.error = String(err && err.message ? err.message : err);
+  }
+  self.postMessage(out);
+};
+`;
+
+/**
+ * Executa código do usuário em um Web Worker descartável.
+ * @param {{code:string, fnName?:string, tests?:Array, varNames?:string[], pretty?:boolean}} job
+ * @returns {Promise<{logs:Array, error:string|null, results:Array|null, vars:Array|null, timedOut:boolean}>}
+ */
+function runUserCode(job, timeoutMs = USER_CODE_TIMEOUT_MS) {
+  return new Promise((resolve) => {
+    const url = URL.createObjectURL(new Blob([USER_CODE_WORKER_SOURCE], { type: "text/javascript" }));
+    const worker = new Worker(url);
+    let finished = false;
+
+    const finish = (payload) => {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timer);
+      worker.terminate();
+      URL.revokeObjectURL(url);
+      resolve({ logs: [], error: null, results: null, vars: null, timedOut: false, ...payload });
+    };
+
+    const timer = setTimeout(() => {
+      finish({ error: `Tempo limite excedido (${timeoutMs / 1000}s). Verifique se há um laço infinito.`, timedOut: true });
+    }, timeoutMs);
+
+    worker.onmessage = (e) => finish(e.data);
+    worker.onerror = (e) => finish({ error: e.message || "Erro de execução no worker." });
+    worker.postMessage(job);
+  });
+}
+
 function initCodeRunner() {
   const runBtn = document.getElementById("run-code-btn");
   const editor = document.getElementById("live-editor");
@@ -1648,24 +1728,16 @@ function initCodeRunner() {
 
   if (!runBtn || !editor || !consoleOutput) return;
 
-  runBtn.addEventListener("click", () => {
-    const code = editor.value;
+  runBtn.addEventListener("click", async () => {
     consoleOutput.textContent = "⏳ Executando...\n";
 
-    // Create safe console mock
-    const logs = [];
-    const customConsole = {
-      log: (...args) => logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ')),
-      error: (...args) => logs.push("❌ ERRO: " + args.join(' ')),
-      warn: (...args) => logs.push("⚠️ AVISO: " + args.join(' '))
-    };
+    const res = await runUserCode({ code: editor.value });
+    const lines = res.logs.map((l) => (l.type === "error" ? "❌ ERRO: " : l.type === "warn" ? "⚠️ AVISO: " : "") + l.text);
 
-    try {
-      const runFunction = new Function("console", code);
-      runFunction(customConsole);
-      consoleOutput.textContent = logs.length > 0 ? logs.join("\n") : "✅ Código executado com sucesso (sem saída no console).";
-    } catch (err) {
-      consoleOutput.textContent = "❌ Erro de Execução / Sintaxe:\n" + err.message;
+    if (res.error) {
+      consoleOutput.textContent = "❌ Erro de Execução / Sintaxe:\n" + res.error;
+    } else {
+      consoleOutput.textContent = lines.length > 0 ? lines.join("\n") : "✅ Código executado com sucesso (sem saída no console).";
     }
   });
 }
@@ -1985,52 +2057,47 @@ function initChallengeArena() {
     loadChallenge(e.target.value);
   });
 
-  runBtn.addEventListener("click", () => {
+  runBtn.addEventListener("click", async () => {
     const challenge = codingChallenges[currentSelectedChallenge];
     if (!challenge) return;
 
-    const userCode = editorEl.value;
-    resultsContainer.innerHTML = "⏳ Executando bateria de testes...\n";
+    resultsContainer.textContent = "⏳ Executando bateria de testes...\n";
 
-    try {
-      // Create user function in isolated sandbox
-      const fnName = challenge.fn;
+    // Código do usuário roda em Web Worker com timeout (sem acesso ao DOM)
+    const res = await runUserCode({
+      code: editorEl.value,
+      fnName: challenge.fn,
+      tests: challenge.tests.map((t) => ({ input: t.input }))
+    });
 
-      const runner = new Function(`${userCode}; return ${fnName};`);
-      const userFn = runner();
-
-      if (typeof userFn !== "function") {
-        throw new Error(`A função '${fnName}' não foi declarada corretamente.`);
-      }
-
-      let passedCount = 0;
-      let logs = [];
-
-      challenge.tests.forEach((test, index) => {
-        try {
-          const actual = userFn(...test.input);
-          // Comparação profunda via JSON (cobre primitivos, arrays e objetos)
-          const passed = JSON.stringify(actual) === JSON.stringify(test.expected);
-
-          if (passed) {
-            passedCount++;
-            logs.push(`✅ [PASS] Caso ${index + 1}: ${test.label} => ${JSON.stringify(actual)}`);
-          } else {
-            logs.push(`❌ [FAIL] Caso ${index + 1}: ${test.label}\n    Esperado: ${JSON.stringify(test.expected)}\n    Recebido: ${JSON.stringify(actual)}`);
-          }
-        } catch (testErr) {
-          logs.push(`❌ [ERRO] Caso ${index + 1}: ${test.label} disparou erro: ${testErr.message}`);
-        }
-      });
-
-      const summaryColor = passedCount === challenge.tests.length ? "#4ade80" : "#f87171";
-      const summaryText = `\n=========================================\nRELATÓRIO: ${passedCount} de ${challenge.tests.length} testes aprovados (${Math.round((passedCount/challenge.tests.length)*100)}%)\n=========================================`;
-
-      resultsContainer.innerHTML = logs.join("\n") + `<span style="color:${summaryColor}; font-weight:bold;">${summaryText}</span>`;
-
-    } catch (err) {
-      resultsContainer.textContent = `❌ Erro de Sintaxe ou Execução:\n${err.message}`;
+    if (res.error || !res.results) {
+      resultsContainer.textContent = `❌ Erro de Sintaxe ou Execução:\n${res.error || "Falha desconhecida."}`;
+      return;
     }
+
+    let passedCount = 0;
+    const logs = [];
+
+    challenge.tests.forEach((test, index) => {
+      const r = res.results[index];
+      if (r.error) {
+        logs.push(`❌ [ERRO] Caso ${index + 1}: ${test.label} disparou erro: ${r.error}`);
+        return;
+      }
+      // Comparação profunda via JSON (cobre primitivos, arrays e objetos)
+      const expected = JSON.stringify(test.expected);
+      if (r.actual === expected) {
+        passedCount++;
+        logs.push(`✅ [PASS] Caso ${index + 1}: ${test.label} => ${r.actual}`);
+      } else {
+        logs.push(`❌ [FAIL] Caso ${index + 1}: ${test.label}\n    Esperado: ${expected}\n    Recebido: ${r.actual}`);
+      }
+    });
+
+    const summaryColor = passedCount === challenge.tests.length ? "#4ade80" : "#f87171";
+    const summaryText = `\n=========================================\nRELATÓRIO: ${passedCount} de ${challenge.tests.length} testes aprovados (${Math.round((passedCount/challenge.tests.length)*100)}%)\n=========================================`;
+
+    resultsContainer.innerHTML = escapeHtml(logs.join("\n")) + `<span style="color:${summaryColor}; font-weight:bold;">${summaryText}</span>`;
   });
 
   loadChallenge("fatorial");
@@ -3370,78 +3437,44 @@ function initInteractiveSandbox() {
   }
 
   // Executar código
-  runBtn.addEventListener("click", () => {
+  runBtn.addEventListener("click", async () => {
     const code = editor.value;
     terminal.innerHTML = "";
     if (varsTableBody) varsTableBody.innerHTML = "";
 
-    const logs = [];
+    // Nomes de variáveis para o inspetor
+    const varRegex = /(?:let|const|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
+    const varNames = [];
+    let match;
+    while ((match = varRegex.exec(code)) !== null) {
+      if (!varNames.includes(match[1])) varNames.push(match[1]);
+    }
+
     const startTime = performance.now();
+    // Execução isolada em Web Worker com timeout
+    const res = await runUserCode({ code, varNames: varsTableBody ? varNames : [], pretty: true });
+    const elapsed = (performance.now() - startTime).toFixed(2);
+    if (timeBadge) timeBadge.textContent = `${elapsed} ms`;
 
-    const customConsole = {
-      log: (...args) => {
-        const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ');
-        logs.push({ type: 'log', text: msg });
-      },
-      warn: (...args) => {
-        const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
-        logs.push({ type: 'warn', text: msg });
-      },
-      error: (...args) => {
-        const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
-        logs.push({ type: 'error', text: msg });
-      }
-    };
+    if (res.error) {
+      terminal.innerHTML = `<span class="term-error">❌ Erro de Sintaxe / Execução:\n${escapeHtml(res.error)}</span>`;
+      return;
+    }
 
-    try {
-      const runner = new Function("console", code);
-      runner(customConsole);
-      const endTime = performance.now();
-      const elapsed = (endTime - startTime).toFixed(2);
+    if (res.logs.length === 0) {
+      terminal.innerHTML = `<span class="term-success">✅ Código executado com sucesso em ${elapsed}ms (nenhum console.log disparado).</span>`;
+    } else {
+      terminal.innerHTML = res.logs.map(l => {
+        if (l.type === 'error') return `<span class="term-error">❌ ${escapeHtml(l.text)}</span>`;
+        if (l.type === 'warn') return `<span class="term-warn">⚠️ ${escapeHtml(l.text)}</span>`;
+        return `<span class="term-log">${escapeHtml(l.text)}</span>`;
+      }).join("\n");
+    }
 
-      if (timeBadge) timeBadge.textContent = `${elapsed} ms`;
-
-      if (logs.length === 0) {
-        terminal.innerHTML = `<span class="term-success">✅ Código executado com sucesso em ${elapsed}ms (nenhum console.log disparado).</span>`;
-      } else {
-        terminal.innerHTML = logs.map(l => {
-          if (l.type === 'error') return `<span class="term-error">❌ ${escapeHtml(l.text)}</span>`;
-          if (l.type === 'warn') return `<span class="term-warn">⚠️ ${escapeHtml(l.text)}</span>`;
-          return `<span class="term-log">${escapeHtml(l.text)}</span>`;
-        }).join("\n");
-      }
-
-      // Tenta extrair variáveis simples para o inspetor
-      if (varsTableBody) {
-        try {
-          const varRegex = /(?:let|const|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
-          let match;
-          const varNames = [];
-          while ((match = varRegex.exec(code)) !== null) {
-            if (!varNames.includes(match[1])) varNames.push(match[1]);
-          }
-
-          if (varNames.length > 0) {
-            const inspectCode = code + `\nreturn { ${varNames.map(v => `${v}: typeof ${v} !== 'undefined' ? ${v} : undefined`).join(', ')} };`;
-            const inspectRunner = new Function(inspectCode);
-            const inspectedVars = inspectRunner();
-
-            varsTableBody.innerHTML = Object.entries(inspectedVars).map(([k, v]) => {
-              const type = Array.isArray(v) ? 'array' : typeof v;
-              const valStr = typeof v === 'object' ? JSON.stringify(v) : String(v);
-              return `<tr><td><strong>${escapeHtml(k)}</strong></td><td><span class="badge" style="font-size:0.72rem;">${type}</span></td><td><code>${escapeHtml(valStr)}</code></td></tr>`;
-            }).join('');
-          }
-        } catch (_) {
-          // inspetor opcional
-        }
-      }
-
-    } catch (err) {
-      const endTime = performance.now();
-      const elapsed = (endTime - startTime).toFixed(2);
-      if (timeBadge) timeBadge.textContent = `${elapsed} ms`;
-      terminal.innerHTML = `<span class="term-error">❌ Erro de Sintaxe / Execução:\n${escapeHtml(err.message)}</span>`;
+    if (varsTableBody && res.vars) {
+      varsTableBody.innerHTML = res.vars.map(v =>
+        `<tr><td><strong>${escapeHtml(v.name)}</strong></td><td><span class="badge" style="font-size:0.72rem;">${escapeHtml(v.type)}</span></td><td><code>${escapeHtml(v.value)}</code></td></tr>`
+      ).join('');
     }
   });
 
@@ -3483,4 +3516,749 @@ window.switchProjectTab = function(tabId) {
 // Inicialização automática
 document.addEventListener("DOMContentLoaded", () => {
   initInteractiveSandbox();
+});
+
+/* ==========================================================================
+   CENTRAL DE CONHECIMENTO INTERATIVA: GIT & GITHUB LAB
+   ========================================================================== */
+
+const gitCommandsDatabase = [
+  // Básico & Setup
+  {
+    cat: "basico",
+    badge: "Setup",
+    badgeColor: "#6366f1",
+    title: "Configurar Identidade Global",
+    cmd: "git config --global user.name \"Seu Nome\"\ngit config --global user.email \"seu@email.com\"",
+    desc: "Define o nome e e-mail que assinarão todos os seus commits.",
+    when: "Na primeira vez que instalar o Git no computador."
+  },
+  {
+    cat: "basico",
+    badge: "Inicialização",
+    badgeColor: "#6366f1",
+    title: "Iniciar Repositório Local",
+    cmd: "git init",
+    desc: "Cria a pasta oculta .git e transforma a pasta atual em um repositório versionado.",
+    when: "Ao começar um novo projeto na sua máquina."
+  },
+  {
+    cat: "basico",
+    badge: "Download",
+    badgeColor: "#6366f1",
+    title: "Clonar Repositório Remoto",
+    cmd: "git clone https://github.com/usuario/repo.git",
+    desc: "Baixa uma cópia idêntica de um projeto do GitHub com todo o histórico de commits.",
+    when: "Para começar a trabalhar em um repositório existente."
+  },
+  {
+    cat: "basico",
+    badge: "Diagnóstico",
+    badgeColor: "#10b981",
+    title: "Verificar Estado dos Arquivos",
+    cmd: "git status",
+    desc: "Mostra quais arquivos foram criados, modificados ou colocados no Staging.",
+    when: "A todo momento antes de rodar add ou commit."
+  },
+  {
+    cat: "basico",
+    badge: "Staging",
+    badgeColor: "#f59e0b",
+    title: "Adicionar Alterações ao Stage",
+    cmd: "git add .",
+    desc: "Prepara todos os arquivos modificados e novos para o próximo commit.",
+    when: "Quando você terminou uma alteração e quer incluí-la no commit."
+  },
+  {
+    cat: "basico",
+    badge: "Gravação",
+    badgeColor: "#3b82d4",
+    title: "Gravar Commit com Mensagem",
+    cmd: "git commit -m \"feat: adiciona componente de login\"",
+    desc: "Salva uma foto permanente (snapshot) dos arquivos que estavam no stage.",
+    when: "Após agrupar mudanças lógicas e atômicas."
+  },
+  {
+    cat: "basico",
+    badge: "Histórico",
+    badgeColor: "#8b5cf6",
+    title: "Ver Histórico de Commits",
+    cmd: "git log --oneline --graph --decorate -n 10",
+    desc: "Exibe os últimos commits de forma compacta e visual com árvores de branch.",
+    when: "Para auditar quem fez o que e quando."
+  },
+
+  // Branches & Merge
+  {
+    cat: "branches",
+    badge: "Ramificação",
+    badgeColor: "#10b981",
+    title: "Criar e Mudar para Nova Branch",
+    cmd: "git switch -c feature/minha-tela",
+    desc: "Cria uma nova ramificação isolada e muda para ela em uma única instrução moderna.",
+    when: "Ao iniciar qualquer nova tarefa ou correção."
+  },
+  {
+    cat: "branches",
+    badge: "Navegação",
+    badgeColor: "#10b981",
+    title: "Alternar entre Branches",
+    cmd: "git switch main",
+    desc: "Muda a branch de trabalho atual para a branch especificada.",
+    when: "Para alternar entre a linha principal e features."
+  },
+  {
+    cat: "branches",
+    badge: "Listagem",
+    badgeColor: "#10b981",
+    title: "Listar Todas as Branches",
+    cmd: "git branch -a",
+    desc: "Lista todas as branches locais e remotas (origin).",
+    when: "Para conferir ramificações disponíveis."
+  },
+  {
+    cat: "branches",
+    badge: "Integração",
+    badgeColor: "#f59e0b",
+    title: "Mesclar Branches (Merge)",
+    cmd: "git merge feature/minha-tela",
+    desc: "Une o histórico e as alterações da branch indicada na branch atual.",
+    when: "Quando a feature foi testada e está pronta para ir para a main."
+  },
+  {
+    cat: "branches",
+    badge: "Limpeza",
+    badgeColor: "#ef4444",
+    title: "Deletar Branch Mesclada",
+    cmd: "git branch -d feature/minha-tela",
+    desc: "Remove a branch local após ela já ter sido integrada à main.",
+    when: "Para manter o repositório limpo e organizado."
+  },
+
+  // Sincronização & Remoto
+  {
+    cat: "remoto",
+    badge: "Conexão",
+    badgeColor: "#6366f1",
+    title: "Vincular Repositório Remoto",
+    cmd: "git remote add origin https://github.com/user/repo.git",
+    desc: "Associa o repositório local ao link remoto no GitHub sob o apelido 'origin'.",
+    when: "Após criar o repositório no GitHub para conectar com o local."
+  },
+  {
+    cat: "remoto",
+    badge: "Envio",
+    badgeColor: "#a855f7",
+    title: "Enviar Commits ao GitHub (Push)",
+    cmd: "git push -u origin main",
+    desc: "Envia os commits locais para o servidor remoto e define upstream com a flag -u.",
+    when: "No primeiro envio da branch para o GitHub."
+  },
+  {
+    cat: "remoto",
+    badge: "Atualização",
+    badgeColor: "#3b82d4",
+    title: "Baixar e Mesclar Alterações (Pull)",
+    cmd: "git pull",
+    desc: "Executa fetch + merge automáticos, trazendo as novidades do remoto para sua máquina.",
+    when: "Antes de começar o dia ou antes de abrir um PR."
+  },
+  {
+    cat: "remoto",
+    badge: "Consulta",
+    badgeColor: "#3b82d4",
+    title: "Buscar Novidades sem Mesclar",
+    cmd: "git fetch origin",
+    desc: "Baixa os ponteiros do remoto sem alterar seus arquivos de trabalho locais.",
+    when: "Para inspecionar o que mudou no GitHub com segurança."
+  },
+
+  // Desfazer & Recuperação
+  {
+    cat: "desfazer",
+    badge: "Descarte",
+    badgeColor: "#ef4444",
+    title: "Descartar Edição Local não Salva",
+    cmd: "git restore nome-do-arquivo.ext",
+    desc: "Descarta todas as modificações não commitadas feitas em um arquivo específico.",
+    when: "Quando fez testes que não deram certo e quer voltar ao último commit."
+  },
+  {
+    cat: "desfazer",
+    badge: "Unstage",
+    badgeColor: "#f59e0b",
+    title: "Tirar do Stage sem Perder Código",
+    cmd: "git restore --staged nome-do-arquivo.ext",
+    desc: "Remove o arquivo da Staging Area, mantendo as edições intactas no disco.",
+    when: "Se você rodou `git add` em um arquivo que não deveria entrar no commit agora."
+  },
+  {
+    cat: "desfazer",
+    badge: "Edição",
+    badgeColor: "#10b981",
+    title: "Corrigir Mensagem do Último Commit",
+    cmd: "git commit --amend -m \"feat: mensagem corrigida\"",
+    desc: "Altera o último commit sem criar um commit extra no histórico.",
+    when: "Se esqueceu um arquivo ou digitou a mensagem de commit com erro de português."
+  },
+  {
+    cat: "desfazer",
+    badge: "Stash",
+    badgeColor: "#8b5cf6",
+    title: "Guardar Trabalho no Bolso (Stash)",
+    cmd: "git stash\ngit stash pop",
+    desc: "Guarda alterações não finalizadas em uma pilha temporária para liberar o branch.",
+    when: "Para trocar de branch urgentemente sem precisar commitar código quebrado."
+  },
+  {
+    cat: "desfazer",
+    badge: "Reversão",
+    badgeColor: "#3b82d4",
+    title: "Reverter Commit Público (Revert)",
+    cmd: "git revert <hash-do-commit>",
+    desc: "Cria um novo commit que desfaz exatamente as alterações do commit anterior de forma segura.",
+    when: "Para desfazer um bug já enviado ao GitHub sem reescrever o histórico compartilhado."
+  },
+  {
+    cat: "desfazer",
+    badge: "Cherry-Pick",
+    badgeColor: "#e11d48",
+    title: "Puxar Commit Específico",
+    cmd: "git cherry-pick <hash-do-commit>",
+    desc: "Aplica apenas um commit pontual de outra branch na sua branch atual.",
+    when: "Para importar um hotfix de outra branch sem mesclar a branch inteira."
+  },
+
+  // GitHub CLI (gh)
+  {
+    cat: "gh",
+    badge: "Auth",
+    badgeColor: "#0f172a",
+    title: "Login no GitHub pelo Terminal",
+    cmd: "gh auth login",
+    desc: "Realiza a autenticação segura do seu terminal com sua conta do GitHub via navegador ou token.",
+    when: "Na primeira vez usando a ferramenta oficial GitHub CLI."
+  },
+  {
+    cat: "gh",
+    badge: "Repo",
+    badgeColor: "#0f172a",
+    title: "Criar Repositório no GitHub via CLI",
+    cmd: "gh repo create meu-projeto --public --source=. --push",
+    desc: "Cria o repositório remoto no GitHub, vincula ao diretório atual e faz o push inicial.",
+    when: "Para publicar um projeto no GitHub sem nem abrir o navegador."
+  },
+  {
+    cat: "gh",
+    badge: "Pull Request",
+    badgeColor: "#0f172a",
+    title: "Criar Pull Request pelo Terminal",
+    cmd: "gh pr create --title \"feat: nova feature\" --body \"Descrição detalhada\"",
+    desc: "Abre um Pull Request oficial no GitHub diretamente da sua branch atual.",
+    when: "Quando você terminou sua feature e quer solicitar revisão aos colegas."
+  },
+  {
+    cat: "gh",
+    badge: "Issues",
+    badgeColor: "#0f172a",
+    title: "Listar Issues e PRs Abertos",
+    cmd: "gh issue list\ngh pr list",
+    desc: "Mostra a listagem de tarefas e solicitações de pull request abertas no repositório.",
+    when: "Para planejar o que desenvolver a seguir."
+  }
+];
+
+// Estado do Simulador de Git
+const gitSimState = {
+  branch: "main",
+  branches: ["main"],
+  workingFiles: [
+    { name: "app.js", status: "modified" },
+    { name: "index.html", status: "untracked" }
+  ],
+  stagedFiles: [],
+  localCommits: [
+    { hash: "a1b2c3d", message: "initial commit" }
+  ],
+  remoteCommits: [
+    { hash: "a1b2c3d", message: "initial commit" }
+  ],
+  stashList: []
+};
+
+// Quiz de Git & GitHub
+const gitQuizData = [
+  {
+    id: "gq1",
+    question: "1. Qual é a principal diferença conceitual entre Git e GitHub?",
+    options: [
+      { text: "A) Git é uma linguagem de programação e GitHub é o seu compilador.", correct: false },
+      { text: "B) Git é uma ferramenta local de controle de versão; GitHub é uma plataforma de hospedagem e colaboração na nuvem.", correct: true },
+      { text: "C) Git só funciona no Windows e GitHub só funciona no Linux.", correct: false },
+      { text: "D) Não há diferença; são apenas dois nomes para o mesmo programa.", correct: false }
+    ],
+    feedback: "✅ Correto! O Git opera localmente no seu computador mesmo sem internet. O GitHub adiciona a camada de rede, hospedagem, Pull Requests, Issues e automação na nuvem."
+  },
+  {
+    id: "gq2",
+    question: "2. O que acontece quando você executa o comando `git add .`?",
+    options: [
+      { text: "A) Os arquivos são enviados diretamente para o servidor remoto do GitHub.", correct: false },
+      { text: "B) Todos os arquivos modificados e novos são movidos para a Staging Area (preparação para commit).", correct: true },
+      { text: "C) Todos os arquivos do projeto são apagados e restaurados.", correct: false },
+      { text: "D) Uma nova branch é criada automaticamente.", correct: false }
+    ],
+    feedback: "✅ Exato! `git add` apenas coloca as alterações na Staging Area (Index). Elas só são registradas no histórico local após o `git commit`."
+  },
+  {
+    id: "gq3",
+    question: "3. Qual é a forma mais segura de desfazer um commit que já foi enviado (pushed) para o GitHub compartilhado?",
+    options: [
+      { text: "A) `git reset --hard HEAD~1` seguido de um `git push --force`.", correct: false },
+      { text: "B) `git revert <hash-do-commit>`, criando um novo commit que anula o anterior de forma limpa.", correct: true },
+      { text: "C) Deletar a pasta `.git` inteira.", correct: false },
+      { text: "D) Apagar o repositório no GitHub e criar outro do zero.", correct: false }
+    ],
+    feedback: "✅ Perfeito! `git revert` é o método seguro para equipes porque não altera o histórico público existente — ele cria um novo commit inverso."
+  },
+  {
+    id: "gq4",
+    question: "4. Para que serve o comando `git stash` no fluxo diário?",
+    options: [
+      { text: "A) Para enviar o código para produção imediatamente.", correct: false },
+      { text: "B) Para salvar temporariamente alterações inacabadas no bolso e deixar a branch limpa sem commitar.", correct: true },
+      { text: "C) Para deletar branches antigas.", correct: false },
+      { text: "D) Para renomear o autor do repositório.", correct: false }
+    ],
+    feedback: "✅ Correto! O stash permite engavetar modificações provisórias para que você possa trocar de branch ou puxar atualizações sem perder nada."
+  },
+  {
+    id: "gq5",
+    question: "5. O que significa quando ocorre um Conflito de Merge (Merge Conflict)?",
+    options: [
+      { text: "A) O Git identificou que duas pessoas alteraram as mesmas linhas no mesmo arquivo de formas divergentes.", correct: true },
+      { text: "B) O computador ficou sem espaço em disco.", correct: false },
+      { text: "C) A chave SSH expirou durante o upload.", correct: false },
+      { text: "D) O arquivo README.md foi esquecido na raiz.", correct: false }
+    ],
+    feedback: "✅ Exato! O Git não sabe automaticamente qual versão escolher (a sua ou a da outra branch) e insere marcadores (`<<<<<<<`, `=======`, `>>>>>>>`) para que um humano decida."
+  }
+];
+
+let currentGitCategoryFilter = "all";
+
+// Alternar abas da Central Git
+window.switchGitTab = function(paneId) {
+  const btns = document.querySelectorAll(".git-tab-btn");
+  const panes = document.querySelectorAll(".git-pane");
+
+  btns.forEach(b => b.classList.remove("active"));
+  panes.forEach(p => p.classList.remove("active"));
+
+  const targetPane = document.getElementById(paneId);
+  if (targetPane) targetPane.classList.add("active");
+
+  btns.forEach(b => {
+    if (b.getAttribute("onclick")?.includes(paneId)) {
+      b.classList.add("active");
+    }
+  });
+};
+
+// Renderizar Cards de Comandos
+function renderGitCommands() {
+  const container = document.getElementById("git-cmd-cards-container");
+  if (!container) return;
+
+  const searchInput = document.getElementById("git-cmd-search-input");
+  const query = (searchInput?.value || "").toLowerCase().trim();
+
+  const filtered = gitCommandsDatabase.filter(c => {
+    const matchesCat = currentGitCategoryFilter === "all" || c.cat === currentGitCategoryFilter;
+    const matchesQuery = !query || 
+      c.title.toLowerCase().includes(query) || 
+      c.cmd.toLowerCase().includes(query) || 
+      c.desc.toLowerCase().includes(query) ||
+      c.when.toLowerCase().includes(query);
+    return matchesCat && matchesQuery;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+        <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔍</p>
+        <p style="font-size: 1rem; font-weight: 700;">Nenhum comando encontrado para "${escapeHtml(query)}"</p>
+        <p style="font-size: 0.85rem;">Tente buscar por 'commit', 'branch', 'push', 'stash', 'desfazer' ou use os filtros acima.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(c => `
+    <div class="git-cmd-card">
+      <div>
+        <span class="git-cmd-badge" style="background:${c.badgeColor}20; color:${c.badgeColor}; border:1px solid ${c.badgeColor}40;">
+          ${c.badge}
+        </span>
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">${c.title}</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.6rem;">${c.desc}</p>
+      </div>
+
+      <div>
+        <div class="git-cmd-code-row">
+          <code class="git-cmd-code">${escapeHtml(c.cmd)}</code>
+          <button class="git-cmd-copy-btn" onclick="copyGitCommand(this, \`${escapeHtml(c.cmd)}\`)">Copiar</button>
+        </div>
+        <small style="font-size: 0.76rem; color: var(--text-light); display: block; margin-top: 0.4rem;">
+          💡 <strong>Quando usar:</strong> ${c.when}
+        </small>
+      </div>
+    </div>
+  `).join("");
+}
+
+window.filterGitCommands = function() {
+  renderGitCommands();
+};
+
+window.setGitCategoryFilter = function(cat) {
+  currentGitCategoryFilter = cat;
+  document.querySelectorAll(".git-chip-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.cat === cat);
+  });
+  renderGitCommands();
+};
+
+window.copyGitCommand = function(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = "✅ Copiado!";
+    btn.style.background = "#10b981";
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = "";
+    }, 2000);
+  });
+};
+
+// ─── Pipeline & Simulador Visual do Git ────────────────────────────────────────
+
+function updateGitPipelineUI() {
+  // 1. Working Directory
+  const workingFilesEl = document.getElementById("zone-working-files");
+  const workingCountEl = document.getElementById("badge-working-count");
+  if (workingFilesEl && workingCountEl) {
+    workingCountEl.textContent = `${gitSimState.workingFiles.length} modificado${gitSimState.workingFiles.length === 1 ? '' : 's'}`;
+    if (gitSimState.workingFiles.length === 0) {
+      workingFilesEl.innerHTML = `<span style="font-size:0.8rem; color:var(--text-light); font-style:italic;">Diretório de trabalho limpo.</span>`;
+    } else {
+      workingFilesEl.innerHTML = gitSimState.workingFiles.map(f => `
+        <div class="git-file-item">
+          <span>📄 ${f.name}</span>
+          <span class="git-file-status ${f.status}">${f.status === 'untracked' ? 'Untracked' : 'Modified'}</span>
+        </div>
+      `).join("");
+    }
+  }
+
+  // 2. Staging Area
+  const stagingFilesEl = document.getElementById("zone-staging-files");
+  const stagingCountEl = document.getElementById("badge-staging-count");
+  if (stagingFilesEl && stagingCountEl) {
+    stagingCountEl.textContent = `${gitSimState.stagedFiles.length} staged`;
+    if (gitSimState.stagedFiles.length === 0) {
+      stagingFilesEl.innerHTML = `<span style="font-size:0.8rem; color:var(--text-light); font-style:italic;">Nenhum arquivo no stage. Use git add.</span>`;
+    } else {
+      stagingFilesEl.innerHTML = gitSimState.stagedFiles.map(f => `
+        <div class="git-file-item">
+          <span>📦 ${f.name}</span>
+          <span class="git-file-status staged">Staged</span>
+        </div>
+      `).join("");
+    }
+  }
+
+  // 3. Local Repository
+  const localCommitsEl = document.getElementById("zone-local-commits");
+  const localBadgeEl = document.getElementById("badge-local-commits");
+  const branchLabelEl = document.getElementById("sim-current-branch-label");
+  const promptTextEl = document.getElementById("git-sim-prompt-text");
+
+  if (branchLabelEl) branchLabelEl.textContent = gitSimState.branch;
+  if (promptTextEl) promptTextEl.textContent = `user@dev:~/projeto (${gitSimState.branch}) $`;
+
+  if (localCommitsEl && localBadgeEl) {
+    localBadgeEl.textContent = `${gitSimState.localCommits.length} commit${gitSimState.localCommits.length === 1 ? '' : 's'}`;
+    localCommitsEl.innerHTML = gitSimState.localCommits.slice(-3).reverse().map((c, i) => `
+      <div class="git-file-item">
+        <span>🔷 ${c.hash} ${c.message}</span>
+        <span class="git-file-status committed">${i === 0 ? 'HEAD' : 'Commit'}</span>
+      </div>
+    `).join("");
+  }
+
+  // 4. Remote Repository
+  const remoteCommitsEl = document.getElementById("zone-remote-commits");
+  const remoteBadgeEl = document.getElementById("badge-remote-commits");
+  if (remoteCommitsEl && remoteBadgeEl) {
+    const isSynced = gitSimState.remoteCommits.length === gitSimState.localCommits.length;
+    remoteBadgeEl.textContent = isSynced ? "Sincronizado" : `${gitSimState.localCommits.length - gitSimState.remoteCommits.length} commits à frente`;
+    remoteBadgeEl.style.background = isSynced ? "#a855f7" : "#f59e0b";
+
+    remoteCommitsEl.innerHTML = gitSimState.remoteCommits.slice(-3).reverse().map(c => `
+      <div class="git-file-item">
+        <span>🌐 origin/${gitSimState.branch}: ${c.hash}</span>
+        <span class="git-file-status pushed">${c.message}</span>
+      </div>
+    `).join("");
+  }
+}
+
+function appendGitTerminalLog(cmd, output, isError = false) {
+  const term = document.getElementById("git-sim-output");
+  if (!term) return;
+
+  const prompt = `<span style="color:#10b981; font-weight:bold;">$ ${escapeHtml(cmd)}</span>\n`;
+  const body = isError 
+    ? `<span style="color:#f87171;">${escapeHtml(output)}</span>\n\n`
+    : `<span style="color:#f1f5f9;">${escapeHtml(output)}</span>\n\n`;
+
+  term.innerHTML += prompt + body;
+  term.scrollTop = term.scrollHeight;
+}
+
+window.execGitSimCommand = function(cmd) {
+  const cleanCmd = cmd.trim();
+  if (!cleanCmd) return;
+
+  if (cleanCmd === "clear") {
+    const term = document.getElementById("git-sim-output");
+    if (term) term.innerHTML = "";
+    return;
+  }
+
+  if (cleanCmd === "edit") {
+    gitSimState.workingFiles.push({ name: `feature-${Math.floor(Math.random()*900 + 100)}.js`, status: "modified" });
+    appendGitTerminalLog("edit", "📝 [Simulador] Novo arquivo editado no disco (Working Directory). Rode 'git status' para inspecionar.");
+    updateGitPipelineUI();
+    return;
+  }
+
+  if (cleanCmd === "git status") {
+    let out = `On branch ${gitSimState.branch}\n`;
+    if (gitSimState.stagedFiles.length > 0) {
+      out += `Changes to be committed:\n  (use "git restore --staged <file>..." to unstage)\n`;
+      gitSimState.stagedFiles.forEach(f => out += `\tnew file/modified: ${f.name}\n`);
+    }
+    if (gitSimState.workingFiles.length > 0) {
+      out += `Changes not staged for commit:\n  (use "git add <file>..." to update what will be committed)\n`;
+      gitSimState.workingFiles.forEach(f => out += `\tmodified: ${f.name}\n`);
+    }
+    if (gitSimState.stagedFiles.length === 0 && gitSimState.workingFiles.length === 0) {
+      out += `nothing to commit, working tree clean`;
+    }
+    appendGitTerminalLog(cleanCmd, out);
+    return;
+  }
+
+  if (cleanCmd.startsWith("git add")) {
+    if (gitSimState.workingFiles.length === 0) {
+      appendGitTerminalLog(cleanCmd, "Nenhum arquivo no working directory para adicionar.");
+      return;
+    }
+    gitSimState.stagedFiles.push(...gitSimState.workingFiles);
+    gitSimState.workingFiles = [];
+    appendGitTerminalLog(cleanCmd, `✅ Arquivos preparados no Staging Area com sucesso. Prontos para commit.`);
+    updateGitPipelineUI();
+    return;
+  }
+
+  if (cleanCmd.startsWith("git commit")) {
+    if (gitSimState.stagedFiles.length === 0) {
+      appendGitTerminalLog(cleanCmd, "error: nothing to commit (use 'git add' to track/stage files)", true);
+      return;
+    }
+    const hash = Math.random().toString(16).substring(2, 9);
+    const msgMatch = cleanCmd.match(/-m\s+["']([^"']+)["']/);
+    const msg = msgMatch ? msgMatch[1] : "commit de atualização";
+    gitSimState.localCommits.push({ hash, message: msg });
+    const count = gitSimState.stagedFiles.length;
+    gitSimState.stagedFiles = [];
+    appendGitTerminalLog(cleanCmd, `[${gitSimState.branch} ${hash}] ${msg}\n ${count} file(s) changed, insertions(+)`);
+    updateGitPipelineUI();
+    return;
+  }
+
+  if (cleanCmd.startsWith("git push")) {
+    if (gitSimState.localCommits.length === gitSimState.remoteCommits.length) {
+      appendGitTerminalLog(cleanCmd, "Everything up-to-date com origin/" + gitSimState.branch);
+      return;
+    }
+    gitSimState.remoteCommits = [...gitSimState.localCommits];
+    appendGitTerminalLog(cleanCmd, `Enumerating objects: 5, done.\nWriting objects: 100% (5/5), done.\nTo https://github.com/user/projeto.git\n   main -> main (Up to date)`);
+    updateGitPipelineUI();
+    return;
+  }
+
+  if (cleanCmd.startsWith("git switch -c") || cleanCmd.startsWith("git checkout -b")) {
+    const parts = cleanCmd.split(" ");
+    const newBranch = parts[parts.length - 1];
+    gitSimState.branch = newBranch;
+    if (!gitSimState.branches.includes(newBranch)) gitSimState.branches.push(newBranch);
+    appendGitTerminalLog(cleanCmd, `Switched to a new branch '${newBranch}'`);
+    updateGitPipelineUI();
+    return;
+  }
+
+  if (cleanCmd.startsWith("git switch") || cleanCmd.startsWith("git checkout")) {
+    const parts = cleanCmd.split(" ");
+    const targetBranch = parts[parts.length - 1];
+    gitSimState.branch = targetBranch;
+    if (!gitSimState.branches.includes(targetBranch)) gitSimState.branches.push(targetBranch);
+    appendGitTerminalLog(cleanCmd, `Switched to branch '${targetBranch}'`);
+    updateGitPipelineUI();
+    return;
+  }
+
+  if (cleanCmd.startsWith("git merge")) {
+    const parts = cleanCmd.split(" ");
+    const branchToMerge = parts[parts.length - 1];
+    appendGitTerminalLog(cleanCmd, `Updating ${gitSimState.branch}...\nFast-forward\n Merged branch '${branchToMerge}' into ${gitSimState.branch} without conflicts!`);
+    updateGitPipelineUI();
+    return;
+  }
+
+  if (cleanCmd === "git stash") {
+    if (gitSimState.workingFiles.length === 0 && gitSimState.stagedFiles.length === 0) {
+      appendGitTerminalLog(cleanCmd, "No local changes to save");
+      return;
+    }
+    gitSimState.stashList.push({
+      working: [...gitSimState.workingFiles],
+      staged: [...gitSimState.stagedFiles]
+    });
+    gitSimState.workingFiles = [];
+    gitSimState.stagedFiles = [];
+    appendGitTerminalLog(cleanCmd, `Saved working directory and index state WIP on ${gitSimState.branch}`);
+    updateGitPipelineUI();
+    return;
+  }
+
+  if (cleanCmd === "git stash pop") {
+    if (gitSimState.stashList.length === 0) {
+      appendGitTerminalLog(cleanCmd, "error: No stash entries found.", true);
+      return;
+    }
+    const popped = gitSimState.stashList.pop();
+    gitSimState.workingFiles.push(...popped.working);
+    gitSimState.stagedFiles.push(...popped.staged);
+    appendGitTerminalLog(cleanCmd, `On ${gitSimState.branch}: Dropped refs/stash@{0} e restaurou as alterações pendentes.`);
+    updateGitPipelineUI();
+    return;
+  }
+
+  if (cleanCmd === "git restore ." || cleanCmd.startsWith("git restore")) {
+    gitSimState.workingFiles = [];
+    appendGitTerminalLog(cleanCmd, "Modificações não salvas foram descartadas.");
+    updateGitPipelineUI();
+    return;
+  }
+
+  if (cleanCmd === "git log") {
+    const out = gitSimState.localCommits.slice().reverse().map(c => `commit ${c.hash} (HEAD -> ${gitSimState.branch})\nAuthor: Seu Nome <seu@email.com>\n\n    ${c.message}\n`).join("\n");
+    appendGitTerminalLog(cleanCmd, out);
+    return;
+  }
+
+  // Comando genérico
+  appendGitTerminalLog(cleanCmd, `Comando executado: ${cleanCmd}`);
+};
+
+window.handleGitSimSubmit = function(e) {
+  e.preventDefault();
+  const input = document.getElementById("git-sim-cmd-input");
+  if (!input) return;
+  const val = input.value.trim();
+  if (val) {
+    execGitSimCommand(val);
+    input.value = "";
+  }
+};
+
+window.resetGitSimulator = function() {
+  gitSimState.branch = "main";
+  gitSimState.branches = ["main"];
+  gitSimState.workingFiles = [
+    { name: "app.js", status: "modified" },
+    { name: "index.html", status: "untracked" }
+  ];
+  gitSimState.stagedFiles = [];
+  gitSimState.localCommits = [{ hash: "a1b2c3d", message: "initial commit" }];
+  gitSimState.remoteCommits = [{ hash: "a1b2c3d", message: "initial commit" }];
+  gitSimState.stashList = [];
+  
+  const term = document.getElementById("git-sim-output");
+  if (term) {
+    term.innerHTML = "Estado reiniciado com sucesso.\nDigite um comando Git (ex: 'git status', 'git add .', 'git commit') para começar.";
+  }
+  updateGitPipelineUI();
+};
+
+// ─── Quiz de Git & GitHub ───────────────────────────────────────────────────
+
+function initGitQuiz() {
+  const container = document.getElementById("git-quiz-questions-container");
+  if (!container) return;
+
+  container.innerHTML = gitQuizData.map(q => `
+    <div class="git-quiz-card" id="git-card-${q.id}">
+      <h4 style="font-size:1.15rem; font-weight:700; color:var(--text-main); margin-bottom:0.75rem;">${q.question}</h4>
+      <div class="git-quiz-options">
+        ${q.options.map((opt, idx) => `
+          <button class="git-quiz-opt-btn" onclick="answerGitQuiz('${q.id}', ${idx}, ${opt.correct})">
+            ${opt.text}
+          </button>
+        `).join("")}
+      </div>
+      <div class="git-quiz-feedback" id="git-feedback-${q.id}"></div>
+    </div>
+  `).join("");
+}
+
+window.answerGitQuiz = function(questionId, optionIndex, isCorrect) {
+  const card = document.getElementById(`git-card-${questionId}`);
+  if (!card) return;
+
+  const buttons = card.querySelectorAll(".git-quiz-opt-btn");
+  const feedbackBox = document.getElementById(`git-feedback-${questionId}`);
+  const qData = gitQuizData.find(q => q.id === questionId);
+
+  buttons.forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === optionIndex) {
+      btn.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+  });
+
+  if (feedbackBox) {
+    feedbackBox.style.display = "block";
+    if (isCorrect) {
+      feedbackBox.style.background = "rgba(22, 163, 74, 0.12)";
+      feedbackBox.style.color = "#16a34a";
+      feedbackBox.style.border = "1px solid rgba(22, 163, 74, 0.3)";
+      feedbackBox.innerHTML = qData.feedback;
+    } else {
+      feedbackBox.style.background = "rgba(225, 29, 72, 0.12)";
+      feedbackBox.style.color = "#e11d48";
+      feedbackBox.style.border = "1px solid rgba(225, 29, 72, 0.3)";
+      feedbackBox.innerHTML = `❌ Resposta Incorreta. Revise o conceito!<br>${qData.feedback}`;
+    }
+  }
+};
+
+// Inicialização automática do Git Lab
+document.addEventListener("DOMContentLoaded", () => {
+  renderGitCommands();
+  updateGitPipelineUI();
+  initGitQuiz();
 });

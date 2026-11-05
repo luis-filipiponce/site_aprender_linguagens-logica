@@ -376,6 +376,33 @@
 [data-theme="dark"] .ex-mid   { background: #78350f; color: #fde68a; }
 [data-theme="dark"] .ex-adv   { background: #7f1d1d; color: #fecaca; }
 
+/* Exemplo Visual (figura SVG do módulo) */
+.modulo-figura {
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.modulo-figura img {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: var(--radius-sm);
+}
+
+.modulo-figura figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 /* Blocos de Pseudocódigo e Raciocínio */
 .logic-pseudo-block {
   background: #0f172a;

@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      # Os arquivos gerados (js/curso-logica-dados.js, js/curso-logica-extras.js e a
+      # versão do cache em sw.js) devem estar commitados e iguais ao resultado do build.
+      - name: Arquivos gerados em dia
+        run: git diff --exit-code -- js/curso-logica-dados.js js/curso-logica-extras.js sw.js
+      - run: npm audit --audit-level=high

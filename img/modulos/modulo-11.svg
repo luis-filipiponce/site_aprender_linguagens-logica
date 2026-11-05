@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Decomposição de um caixa eletrônico</title>
+<desc id="d">Um problema grande, Caixa Eletrônico, decomposto em quatro subproblemas em sequência: autenticar, validar saldo, dispensar e atualizar. Cada um oculta seus detalhes por abstração.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 11 — Decompor e abstrair</text>
+<rect x="210" y="50" width="220" height="44" rx="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+<text x="320" y="77" class="c b">Sacar dinheiro</text>
+<g stroke="#94a3b8" stroke-width="2" fill="none"><path d="M320 94V114M85 114H555M85 114V134M245 114V134M405 114V134M555 114V134" /></g>
+<g stroke-width="2" fill="#fff" stroke="#6366f1">
+<rect x="20" y="134" width="130" height="64" rx="8"/><rect x="180" y="134" width="130" height="64" rx="8"/><rect x="340" y="134" width="130" height="64" rx="8"/><rect x="490" y="134" width="130" height="64" rx="8"/>
+</g>
+<g class="c b"><text x="85" y="162">1. Autenticar</text><text x="245" y="162">2. Validar saldo</text><text x="405" y="162">3. Dispensar</text><text x="555" y="162">4. Atualizar</text></g>
+<g class="c m"><text x="85" y="182">cartão + senha</text><text x="245" y="182">saldo ≥ valor?</text><text x="405" y="182">cédulas</text><text x="555" y="182">novo saldo</text></g>
+<rect x="20" y="240" width="600" height="60" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<text x="320" y="264" class="c b">Abstração: quem chama "Validar saldo" não precisa saber COMO ele consulta o banco.</text>
+<text x="320" y="286" class="c m">Cada parte pode ser testada e reutilizada sozinha — o mesmo molde serve para outros problemas.</text>
+</svg>

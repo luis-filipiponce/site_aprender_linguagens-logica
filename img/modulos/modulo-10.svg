@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Fluxograma com decisão e laço</title>
+<desc id="d">Fluxograma com Início, entrada de temperatura, losango temp maior que 37,5 com caminhos Sim para Febre e Não para Normal, ambos indo ao Fim. À direita, a legenda das formas.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 10 — Fluxograma: febre ou normal</text>
+<rect x="150" y="44" width="100" height="30" rx="15" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="200" y="64" class="c b">Início</text>
+<path d="M180 100H245L230 128H165Z" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="205" y="119" class="c">Ler temp</text>
+<path d="M200 74V100M200 128V150" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M200 150L270 190L200 230L130 190Z" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><text x="200" y="195" class="c b">temp &gt; 37,5?</text>
+<path d="M270 190H330" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/><text x="300" y="182" class="c b">Sim</text>
+<path d="M200 230V252" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/><text x="215" y="244" class="b">Não</text>
+<rect x="332" y="174" width="110" height="32" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/><text x="387" y="195" class="c">"Febre"</text>
+<rect x="145" y="254" width="110" height="32" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="200" y="275" class="c">"Normal"</text>
+<path d="M387 206V270H257" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<text x="387" y="304" class="c m">ambos os ramos se unem em Fim</text>
+<g stroke-width="2">
+<rect x="470" y="50" width="150" height="250" rx="8" fill="#fff" stroke="#cbd5e1"/>
+<rect x="490" y="78" width="60" height="22" rx="11" fill="#dcfce7" stroke="#16a34a"/>
+<path d="M498 118H550L545 140H493Z" fill="#dbeafe" stroke="#2563eb"/>
+<rect x="490" y="160" width="60" height="22" rx="3" fill="#fee2e2" stroke="#dc2626"/>
+<path d="M520 198L550 218L520 238L490 218Z" fill="#fef3c7" stroke="#d97706"/>
+</g>
+<text x="545" y="68" class="c b">Legenda</text>
+<text x="585" y="94" class="m" style="text-anchor:middle">Início/Fim</text><text x="585" y="134" class="m" style="text-anchor:middle">Entrada</text><text x="585" y="176" class="m" style="text-anchor:middle">Processo</text><text x="585" y="222" class="m" style="text-anchor:middle">Decisão</text>
+<text x="545" y="280" class="c m">Laço = seta volta</text><text x="545" y="294" class="c m">ao losango</text>
+</svg>

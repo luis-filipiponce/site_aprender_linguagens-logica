@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Fibonacci recursivo versus programação dinâmica</title>
+<desc id="d">À esquerda, árvore de chamadas de Fib(5) com os subproblemas Fib(3) e Fib(2) repetidos e destacados. À direita, a tabela de programação dinâmica preenchida uma vez, de Fib(0) a Fib(5).</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 19 — Subproblemas repetidos</text>
+<line x1="345" y1="44" x2="345" y2="300" stroke="#cbd5e1" stroke-dasharray="4 4"/>
+<text x="175" y="54" class="c b" style="fill:#991b1b">Recursão ingênua — O(2ⁿ)</text>
+<g stroke="#94a3b8" stroke-width="1.5" fill="none"><path d="M175 84L105 124M175 84L245 124M105 124L65 164M105 124L145 164M245 124L205 164M245 124L285 164M145 164L130 204M145 164L160 204M205 164L190 204M205 164L220 204"/></g>
+<g stroke-width="2" font-size="12">
+<circle cx="175" cy="76" r="16" fill="#e0e7ff" stroke="#6366f1"/>
+<circle cx="105" cy="116" r="16" fill="#e0e7ff" stroke="#6366f1"/><circle cx="245" cy="116" r="16" fill="#fecaca" stroke="#dc2626"/>
+<circle cx="65" cy="156" r="16" fill="#e0e7ff" stroke="#6366f1"/><circle cx="145" cy="156" r="16" fill="#fecaca" stroke="#dc2626"/><circle cx="205" cy="156" r="16" fill="#fff" stroke="#6366f1"/><circle cx="285" cy="156" r="16" fill="#fff" stroke="#6366f1"/>
+<circle cx="130" cy="196" r="14" fill="#fff" stroke="#6366f1"/><circle cx="160" cy="196" r="14" fill="#fff" stroke="#6366f1"/><circle cx="190" cy="196" r="14" fill="#fff" stroke="#6366f1"/><circle cx="220" cy="196" r="14" fill="#fff" stroke="#6366f1"/>
+</g>
+<g class="c" font-size="12"><text x="175" y="81">F5</text><text x="105" y="121">F4</text><text x="245" y="121">F3</text><text x="65" y="161">F3</text><text x="145" y="161">F2</text><text x="205" y="161">F2</text><text x="285" y="161">F1</text><text x="130" y="201" font-size="11">F1</text><text x="160" y="201" font-size="11">F0</text><text x="190" y="201" font-size="11">F1</text><text x="220" y="201" font-size="11">F0</text></g>
+<text x="175" y="240" class="c m">F3 e F2 (vermelho) são recalculados</text>
+<text x="175" y="258" class="c m">várias vezes — o custo explode.</text>
+<text x="495" y="54" class="c b" style="fill:#166534">DP tabulada — O(n)</text>
+<g stroke="#16a34a" stroke-width="2">
+<g fill="#dcfce7"><rect x="360" y="96" width="42" height="36"/><rect x="402" y="96" width="42" height="36"/><rect x="444" y="96" width="42" height="36"/><rect x="486" y="96" width="42" height="36"/><rect x="528" y="96" width="42" height="36"/><rect x="570" y="96" width="42" height="36"/></g>
+</g>
+<g class="c m"><text x="381" y="88">0</text><text x="423" y="88">1</text><text x="465" y="88">2</text><text x="507" y="88">3</text><text x="549" y="88">4</text><text x="591" y="88">5</text></g>
+<g class="c b"><text x="381" y="120">0</text><text x="423" y="120">1</text><text x="465" y="120">1</text><text x="507" y="120">2</text><text x="549" y="120">3</text><text x="591" y="120">5</text></g>
+<text x="486" y="164" class="c m">tabela[i] = tabela[i−1] + tabela[i−2]</text>
+<text x="486" y="186" class="c m">cada valor calculado uma única vez</text>
+<rect x="360" y="212" width="252" height="52" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+<text x="486" y="234" class="c b">Fib(40): ~330 milhões de chamadas</text><text x="486" y="252" class="c m">contra 40 somas com DP.</text>
+<text x="320" y="296" class="c m">Programação dinâmica = guardar a resposta de cada subproblema para não repeti-la.</text>
+</svg>

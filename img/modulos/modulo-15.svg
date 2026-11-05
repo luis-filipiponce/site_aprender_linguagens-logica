@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Crescimento de O(1), O(log n), O(n) e O(n²)</title>
+<desc id="d">Gráfico de linhas com o número de operações para n de 1 a 8: O(1) constante, O(log n) quase plano, O(n) linear e O(n²) crescendo rapidamente. À direita, um exemplo de cada classe.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 15 — Como o custo cresce com n</text>
+<rect x="50" y="50" width="340" height="220" fill="#fff" stroke="#cbd5e1"/>
+<g stroke="#e2e8f0"><path d="M50 94H390M50 138H390M50 182H390M50 226H390"/></g>
+<path d="M50 50V270H390" stroke="#475569" stroke-width="2" fill="none"/>
+<polyline points="50,266.6 390,266.6" fill="none" stroke="#16a34a" stroke-width="3"/>
+<polyline points="50,266.6 98.6,263.2 147.1,261.2 195.7,259.8 244.3,258.7 292.9,257.8 341.4,257 390,256.4" fill="none" stroke="#0891b2" stroke-width="3"/>
+<polyline points="50,266.6 98.6,263.2 147.1,259.8 195.7,256.4 244.3,253 292.9,249.6 341.4,246.2 390,242.8" fill="none" stroke="#d97706" stroke-width="3"/>
+<polyline points="50,266.6 98.6,256.4 147.1,239.4 195.7,215.6 244.3,185 292.9,147.6 341.4,103.4 390,52.4" fill="none" stroke="#dc2626" stroke-width="3"/>
+<g class="m"><text x="50" y="288" style="text-anchor:middle">1</text><text x="390" y="288" style="text-anchor:middle">8</text><text x="44" y="62" style="text-anchor:end">ops</text></g>
+<text x="220" y="304" class="c m">tamanho da entrada (n) →</text>
+<rect x="420" y="56" width="14" height="14" fill="#16a34a"/><rect x="420" y="108" width="14" height="14" fill="#0891b2"/><rect x="420" y="160" width="14" height="14" fill="#d97706"/><rect x="420" y="212" width="14" height="14" fill="#dc2626"/>
+<text x="442" y="68" class="b">O(1)</text><text x="442" y="86" class="m">lista[0]</text>
+<text x="442" y="120" class="b">O(log n)</text><text x="442" y="138" class="m">busca binária</text>
+<text x="442" y="172" class="b">O(n)</text><text x="442" y="190" class="m">varrer a lista</text>
+<text x="442" y="224" class="b">O(n²)</text><text x="442" y="242" class="m">laços aninhados</text>
+<text x="420" y="270" class="m">Para n = 1.000.000: log₂ n ≈ 20</text>
+<text x="420" y="288" class="m">operações; n² = 10¹².</text>
+</svg>

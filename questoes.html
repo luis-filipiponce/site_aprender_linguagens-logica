@@ -7,6 +7,7 @@
   <meta name="description" content="Banco de questões de lógica de programação com 4 níveis: Iniciante, Intermediário, Avançado e Expert. +100 questões com correção e explicação imediata. Ponce Metodologias."/>
   <meta name="theme-color" content="#6366f1"/>
   <link rel="manifest" href="manifest.json"/>
+  <link rel="canonical" href="https://ponce.dev.br/questoes.html"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%23ffffff'>🧠</text></svg>"/>
 
   <!-- Open Graph / Redes Sociais -->
@@ -35,11 +36,12 @@
 
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/questoes.css"/>
+  <link rel="stylesheet" href="css/cookies.css"/>
 </head>
 <body>
 
   <!-- Link de Acessibilidade: Pular para o Conteúdo Principal -->
-  <a href=".qz-wrap" class="skip-link">Pular para as questões</a>
+  <a href="#qz-main" class="skip-link">Pular para as questões</a>
 
   <!-- Barra de Progresso de Leitura -->
   <div id="scroll-indicator"></div>
@@ -72,7 +74,7 @@
     </div>
   </header>
 
-  <main class="qz-wrap">
+  <main class="qz-wrap" id="qz-main">
 
     <!-- HERO -->
     <div class="qz-head">
@@ -201,12 +203,16 @@
       <a href="index.html" style="color:var(--primary); font-weight:600;">← Voltar ao Portal</a>
       &nbsp;&nbsp;|&nbsp;&nbsp;
       <a href="curso-logica.html" style="color:var(--primary); font-weight:600;">🚀 Curso de Lógica (22 Módulos) →</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="#cookies-modal" data-open-cookies="true" style="color:var(--primary); font-weight:600;">🍪 Preferências de Cookies</a>
     </p>
     <p style="margin-top:0.75rem;">© 2025–2026 Ponce Metodologias & Dev — Ensino Rigoroso de Lógica de Programação Pura.</p>
   </footer>
 
+  <script src="js/cookies.js"></script>
   <script src="js/questoes-dados.js"></script>
   <script src="js/questoes.js"></script>
+  <script src="js/pwa.js"></script>
   <script>
     (function () {
       // Tema claro/escuro
@@ -217,6 +223,12 @@
         doc.setAttribute('data-theme', next);
         btn.textContent = next === 'dark' ? '☀️' : '🌙';
         try { localStorage.setItem('ponce-theme', next); } catch(e) {}
+        if (typeof PonceCookies !== 'undefined') {
+          var consent = PonceCookies.getConsent();
+          if (!consent || consent.preferences) {
+            PonceCookies.setCookie('ponce_theme', next);
+          }
+        }
       });
       // Restaurar tema salvo
       try {

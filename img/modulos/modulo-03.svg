@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Troca de valores com variável auxiliar</title>
+<desc id="d">Quatro estados sucessivos de A, B e aux ao executar aux recebe A, A recebe B, B recebe aux, partindo de A igual a 5 e B igual a 9. Abaixo, o erro de não usar auxiliar.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 3 — Sequência importa: o swap</text>
+<text x="90" y="64" class="c b">início</text><text x="235" y="64" class="c b">aux ← A</text><text x="380" y="64" class="c b">A ← B</text><text x="525" y="64" class="c b">B ← aux</text>
+<text x="162" y="64" class="c m">▶</text><text x="307" y="64" class="c m">▶</text><text x="452" y="64" class="c m">▶</text>
+<g stroke-width="2" stroke="#6366f1">
+<rect x="40" y="82" width="100" height="36" rx="6" fill="#fff"/><rect x="40" y="128" width="100" height="36" rx="6" fill="#fff"/><rect x="40" y="174" width="100" height="36" rx="6" fill="#fff"/>
+<rect x="185" y="82" width="100" height="36" rx="6" fill="#fff"/><rect x="185" y="128" width="100" height="36" rx="6" fill="#fff"/><rect x="185" y="174" width="100" height="36" rx="6" fill="#fef3c7" stroke="#d97706"/>
+<rect x="330" y="82" width="100" height="36" rx="6" fill="#fef3c7" stroke="#d97706"/><rect x="330" y="128" width="100" height="36" rx="6" fill="#fff"/><rect x="330" y="174" width="100" height="36" rx="6" fill="#fff"/>
+<rect x="475" y="82" width="100" height="36" rx="6" fill="#fff"/><rect x="475" y="128" width="100" height="36" rx="6" fill="#fef3c7" stroke="#d97706"/><rect x="475" y="174" width="100" height="36" rx="6" fill="#fff"/>
+</g>
+<g class="c b">
+<text x="90" y="105">A = 5</text><text x="90" y="151">B = 9</text><text x="90" y="197">aux = ?</text>
+<text x="235" y="105">A = 5</text><text x="235" y="151">B = 9</text><text x="235" y="197">aux = 5</text>
+<text x="380" y="105">A = 9</text><text x="380" y="151">B = 9</text><text x="380" y="197">aux = 5</text>
+<text x="525" y="105">A = 9</text><text x="525" y="151">B = 5</text><text x="525" y="197">aux = 5</text>
+</g>
+<rect x="40" y="240" width="535" height="56" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+<text x="307" y="262" class="c b" style="fill:#991b1b">Sem auxiliar: A ← B; B ← A</text>
+<text x="307" y="282" class="c m">termina com A = 9 e B = 9 — o valor original de A (5) foi sobrescrito e perdido.</text>
+</svg>

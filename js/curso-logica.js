@@ -296,6 +296,44 @@
       } catch (e) {
         return [];
       }
+    },
+
+    /**
+     * Valida e normaliza um arquivo de progresso importado.
+     * Aceita apenas ids de módulos existentes e campos com os tipos esperados;
+     * qualquer outro dado do arquivo é descartado.
+     * @param {any} data
+     * @returns {{progresso: Object, historico: Array} | null} null se o formato for inválido
+     */
+    validarImportacao: function (data) {
+      if (!data || typeof data !== 'object' || !data.progresso || typeof data.progresso !== 'object') return null;
+      const ESTADOS = ['Não iniciado', 'Em andamento', 'Precisa de revisão', 'Domínio demonstrado'];
+      const progresso = {};
+      let validos = 0;
+      MODULOS_LOGICA.forEach(m => {
+        const p = data.progresso[m.id];
+        if (!p || typeof p !== 'object') return;
+        const nota = Number(p.ultimaNota);
+        progresso[m.id] = {
+          estado: ESTADOS.includes(p.estado) ? p.estado : 'Não iniciado',
+          exerciciosFeitos: Array.isArray(p.exerciciosFeitos) ? p.exerciciosFeitos.map(String).slice(0, 200) : [],
+          acertos: Number.isFinite(Number(p.acertos)) ? Math.max(0, Number(p.acertos)) : 0,
+          tentativas: Number.isFinite(Number(p.tentativas)) ? Math.max(0, Number(p.tentativas)) : 0,
+          ultimaNota: p.ultimaNota !== null && p.ultimaNota !== undefined && Number.isFinite(nota) ? Math.min(100, Math.max(0, nota)) : null,
+          ultimaAtualizacao: typeof p.ultimaAtualizacao === 'string' ? p.ultimaAtualizacao.slice(0, 40) : null
+        };
+        validos++;
+      });
+      if (validos === 0) return null;
+      const historico = (Array.isArray(data.historico) ? data.historico : []).slice(0, 50).map(h => ({
+        data: String((h && h.data) || '').slice(0, 40),
+        moduloId: Number(h && h.moduloId) || 0,
+        moduloTitulo: String((h && h.moduloTitulo) || '').slice(0, 200),
+        texto: String((h && h.texto) || '').slice(0, 5000),
+        nota: Number(h && h.nota) || 0,
+        estado: ESTADOS.includes(h && h.estado) ? h.estado : 'Não iniciado'
+      }));
+      return { progresso, historico };
     }
   };
 
@@ -344,15 +382,15 @@
       elView.innerHTML = `
         <div class="state-var-row">
           <strong>Ação / Transição de Estado:</strong>
-          <span style="color:var(--primary);font-weight:700;">${item.acao}</span>
+          <span style="color:var(--primary);font-weight:700;">${escHtml(item.acao)}</span>
         </div>
         <div class="state-var-row">
           <strong>Estado Formal da Memória / Prova:</strong>
-          <code style="background:#0f172a;color:#38bdf8;padding:0.2rem 0.5rem;border-radius:4px;">${item.estado}</code>
+          <code style="background:#0f172a;color:#38bdf8;padding:0.2rem 0.5rem;border-radius:4px;">${escHtml(item.estado)}</code>
         </div>
         <div class="state-var-row">
           <strong>Auditoria Pedagógica:</strong>
-          <span style="color:var(--text-muted);">${item.obs}</span>
+          <span style="color:var(--text-muted);">${escHtml(item.obs)}</span>
         </div>
       `;
     }
@@ -561,11 +599,27 @@
     return { motivacao, glossario, resolvido, praticas, dicas };
   }
 
+  // Exemplo visual do módulo (dados em js/figuras-modulos.js; imagem em img/modulos/)
+  function renderizarFigura(modulo) {
+    const fig = (global.CURSO_LOGICA_FIGURAS || {})[modulo.id];
+    if (!fig) return '';
+    const arquivo = 'img/modulos/modulo-' + String(modulo.id).padStart(2, '0') + '.svg';
+    return `
+      <div class="pedagogy-section">
+        <h4 class="pedagogy-title"><span class="ped-icon">🖼️</span> Exemplo Visual: ${escHtml(fig.titulo)}</h4>
+        <figure class="modulo-figura">
+          <img src="${arquivo}" alt="${escHtml(fig.alt)}" width="640" height="320" loading="lazy" decoding="async">
+          <figcaption>${escHtml(fig.legenda)}</figcaption>
+        </figure>
+      </div>`;
+  }
+
   function renderizarModuloDetalhe() {
     const modulo = MODULOS_LOGICA.find(m => m.id === moduloSelecionado);
     const container = document.getElementById('curso-module-content');
     if (!container || !modulo) return;
     const extra = renderizarExtras(modulo);
+    const figuraHTML = renderizarFigura(modulo);
 
     const exBasico = modulo.exemplos.basico;
     const exMid = modulo.exemplos.intermediario;
@@ -573,15 +627,15 @@
 
     const errosHTML = modulo.errosComuns.map(e => `
       <div style="background:rgba(239, 68, 68, 0.08); border-left:4px solid #ef4444; padding:0.8rem 1rem; border-radius:var(--radius-sm); margin-bottom:0.6rem;">
-        <strong style="color:#b91c1c;">❌ Erro Comum:</strong> ${e.erro}
-        <br><strong style="color:#15803d;">✅ Correção Rigorosa:</strong> ${e.correcao}
+        <strong style="color:#b91c1c;">❌ Erro Comum:</strong> ${escHtml(e.erro)}
+        <br><strong style="color:#15803d;">✅ Correção Rigorosa:</strong> ${escHtml(e.correcao)}
       </div>
     `).join('');
 
     const exerciciosHTML = modulo.exercicios.map(ex => {
       const opcoesHTML = ex.opcoes.map((op, idx) => `
         <button class="ex-opt-btn" onclick="CursoLogicaApp.responderExercicio('${ex.id}', ${idx}, ${ex.correta}, '${encodeURIComponent(ex.pista)}', '${encodeURIComponent(ex.justificativa)}')">
-          <span style="font-weight:700;">${String.fromCharCode(65 + idx)})</span> ${op}
+          <span style="font-weight:700;">${String.fromCharCode(65 + idx)})</span> ${escHtml(op)}
         </button>
       `).join('');
 
@@ -590,7 +644,7 @@
           <div class="ex-header">
             <span class="lang-badge-pill" style="background:#e0e7ff; color:#3730a3;">Exercício de Aplicação e Rigor</span>
           </div>
-          <p style="font-weight:600; color:var(--text-main); line-height:1.6;">${ex.enunciado}</p>
+          <p style="font-weight:600; color:var(--text-main); line-height:1.6;">${escHtml(ex.enunciado)}</p>
           <div class="ex-options-list">${opcoesHTML}</div>
           <div id="ex-fb-${ex.id}" class="ex-feedback-box" style="display:none;"></div>
         </div>
@@ -639,25 +693,25 @@
         <div class="mod-header">
           <div>
             <div class="mod-badge-row">
-              <span class="lang-badge-pill" style="background:var(--grad-primary); color:#fff;">${modulo.badge}</span>
-              <span class="lang-badge-pill" style="background:#ecfdf5; color:#065f46;">Nível: ${modulo.nivel}</span>
+              <span class="lang-badge-pill" style="background:var(--grad-primary); color:#fff;">${escHtml(modulo.badge)}</span>
+              <span class="lang-badge-pill" style="background:#ecfdf5; color:#065f46;">Nível: ${escHtml(modulo.nivel)}</span>
               <span class="lang-badge-pill" style="background:#f5f3ff; color:#6d28d9;">Ciência da Computação Pura</span>
             </div>
-            <h2 class="mod-title">${modulo.titulo}</h2>
-            <p class="mod-subtitle">${modulo.subtitulo}</p>
+            <h2 class="mod-title">${escHtml(modulo.titulo)}</h2>
+            <p class="mod-subtitle">${escHtml(modulo.subtitulo)}</p>
           </div>
         </div>
 
         <!-- 4.1 Objetivo da Aula -->
         <div class="pedagogy-section" style="border-top:none; margin-top:0.5rem; padding-top:0;">
           <h4 class="pedagogy-title"><span class="ped-icon">🎯</span> 4.1 Objetivo da Aprendizagem</h4>
-          <div class="ped-box ped-objective">${modulo.objetivo}</div>
+          <div class="ped-box ped-objective">${escHtml(modulo.objetivo)}</div>
         </div>
 
         <!-- 4.2 Introdução Intuitiva -->
         <div class="pedagogy-section">
           <h4 class="pedagogy-title"><span class="ped-icon">💡</span> 4.2 Introdução Intuitiva (Analogia & Modelo Mental)</h4>
-          <div class="ped-box ped-intuitive">${modulo.introducaoIntuitiva}</div>
+          <div class="ped-box ped-intuitive">${escHtml(modulo.introducaoIntuitiva)}</div>
         </div>
 
         ${extra.motivacao}
@@ -665,10 +719,12 @@
         <!-- 4.3 Explicação Conceitual Aprofundada -->
         <div class="pedagogy-section">
           <h4 class="pedagogy-title"><span class="ped-icon">📘</span> 4.3 Explicação Conceitual Aprofundada & Rigor Teórico</h4>
-          <div class="ped-box ped-deep" style="white-space:pre-line;">${modulo.explicacaoAprofundada}</div>
+          <div class="ped-box ped-deep" style="white-space:pre-line;">${escHtml(modulo.explicacaoAprofundada)}</div>
         </div>
 
         ${extra.glossario}
+
+        ${figuraHTML}
 
         ${extra.resolvido}
 
@@ -680,18 +736,18 @@
           <div class="examples-grid">
             <div class="example-card">
               <span class="example-badge ex-basic">Exemplo 1 · Básico</span>
-              <strong style="color:var(--text-main);">${exBasico.titulo}</strong>
-              <p style="font-size:0.88rem; color:var(--text-muted); margin:0;">${exBasico.descricao}</p>
+              <strong style="color:var(--text-main);">${escHtml(exBasico.titulo)}</strong>
+              <p style="font-size:0.88rem; color:var(--text-muted); margin:0;">${escHtml(exBasico.descricao)}</p>
             </div>
             <div class="example-card">
               <span class="example-badge ex-mid">Exemplo 2 · Intermediário</span>
-              <strong style="color:var(--text-main);">${exMid.titulo}</strong>
-              <p style="font-size:0.88rem; color:var(--text-muted); margin:0;">${exMid.descricao}</p>
+              <strong style="color:var(--text-main);">${escHtml(exMid.titulo)}</strong>
+              <p style="font-size:0.88rem; color:var(--text-muted); margin:0;">${escHtml(exMid.descricao)}</p>
             </div>
             <div class="example-card">
               <span class="example-badge ex-adv">Exemplo 3 · Análise Avançada</span>
-              <strong style="color:var(--text-main);">${exAdv.titulo}</strong>
-              <p style="font-size:0.88rem; color:var(--text-muted); margin:0;">${exAdv.descricao}</p>
+              <strong style="color:var(--text-main);">${escHtml(exAdv.titulo)}</strong>
+              <p style="font-size:0.88rem; color:var(--text-muted); margin:0;">${escHtml(exAdv.descricao)}</p>
             </div>
           </div>
         </div>
@@ -701,7 +757,7 @@
           <h4 class="pedagogy-title"><span class="ped-icon">🪜</span> 4.5 Metodologia Passo a Passo</h4>
           <div class="ped-box" style="background:var(--bg-main);">
             <ol style="margin:0; padding-left:1.2rem; line-height:1.7;">
-              ${modulo.passoAPasso.map(p => `<li>${p}</li>`).join('')}
+              ${modulo.passoAPasso.map(p => `<li>${escHtml(p)}</li>`).join('')}
             </ol>
           </div>
         </div>
@@ -718,11 +774,11 @@
           <div class="comparison-container">
             <div class="sol-box sol-correct">
               <strong style="color:#166534; display:block; margin-bottom:0.5rem;">✅ Abordagem Rigorosa & Otimizada:</strong>
-              <p style="margin:0; font-size:0.9rem; color:var(--text-main);">${modulo.comparacaoSolucoes.boa}</p>
+              <p style="margin:0; font-size:0.9rem; color:var(--text-main);">${escHtml(modulo.comparacaoSolucoes.boa)}</p>
             </div>
             <div class="sol-box sol-flawed">
               <strong style="color:#991b1b; display:block; margin-bottom:0.5rem;">❌ Abordagem Ingênua ou Limitada:</strong>
-              <p style="margin:0; font-size:0.9rem; color:var(--text-main);">${modulo.comparacaoSolucoes.ruim}</p>
+              <p style="margin:0; font-size:0.9rem; color:var(--text-main);">${escHtml(modulo.comparacaoSolucoes.ruim)}</p>
             </div>
           </div>
         </div>
@@ -746,7 +802,7 @@
             <div class="sim-display-grid">
               <div>
                 <div style="font-size:0.82rem; font-weight:700; margin-bottom:0.4rem; color:var(--text-muted); text-transform:uppercase;">Pseudocódigo Conceitual / Formal:</div>
-                <pre class="logic-pseudo-block">${modulo.pseudocodigo}</pre>
+                <pre class="logic-pseudo-block">${escHtml(modulo.pseudocodigo)}</pre>
               </div>
               <div>
                 <div style="font-size:0.82rem; font-weight:700; margin-bottom:0.4rem; color:var(--text-muted); text-transform:uppercase;">Inspeção de Estado / Memória:</div>
@@ -774,7 +830,7 @@
               <div>
                 <h3 style="margin:0; font-size:1.2rem; font-weight:800; color:var(--text-main);">4.11 Tutora IA: Explique com Suas Próprias Palavras</h3>
                 <p style="margin:0.25rem 0 0 0; font-size:0.88rem; color:var(--text-muted);">
-                  Explique o raciocínio deste módulo em detalhes. A inteligência artificial avaliará seus acertos, identificará lacunas conceituais e gerará o relatório pedagógico completo em 9 seções obrigatórias (A até I).
+                  Explique o raciocínio deste módulo em detalhes. A Tutora é um avaliador automático por regras e palavras-chave (roda no seu navegador, sem modelo de linguagem): ela confere conceitos esperados, aponta lacunas e gera o relatório em 9 seções (A até I). Use como apoio de estudo, não como nota oficial.
                 </p>
               </div>
             </div>
@@ -797,7 +853,7 @@
         <div class="pedagogy-section">
           <h4 class="pedagogy-title"><span class="ped-icon">📌</span> 4.12 Resumo e Síntese Teórica</h4>
           <div class="ped-box" style="background:var(--bg-main); border-left:4px solid var(--accent-green);">
-            <strong>Conceito Central Dominado:</strong> ${modulo.explicacaoIdealIA}
+            <strong>Conceito Central Dominado:</strong> ${escHtml(modulo.explicacaoIdealIA)}
           </div>
         </div>
 
@@ -885,13 +941,13 @@
       if (!elDisp) return;
 
       if (res.erro) {
-        elDisp.innerHTML = `<span style="color:#ef4444;">⚠️ ${res.erro}</span>`;
+        elDisp.innerHTML = `<span style="color:#ef4444;">⚠️ ${escHtml(res.erro)}</span>`;
       } else {
         elDisp.innerHTML = `
-          <strong>Resultado da Análise Assintótica:</strong> Recorrencia T(n) = ${res.a}T(n/${res.b}) + Θ(n^${res.p})
-          <br>Classificação: <span class="lang-badge-pill" style="background:var(--primary); color:#fff; font-size:0.85rem;">${res.caso}</span>
-          <br><strong style="font-size:1.15rem; color:var(--primary); display:block; margin:0.4rem 0;">Complexidade: ${res.resultado}</strong>
-          <small style="color:var(--text-muted);">${res.explicacao}</small>
+          <strong>Resultado da Análise Assintótica:</strong> Recorrencia T(n) = ${escHtml(res.a)}T(n/${escHtml(res.b)}) + Θ(n^${escHtml(res.p)})
+          <br>Classificação: <span class="lang-badge-pill" style="background:var(--primary); color:#fff; font-size:0.85rem;">${escHtml(res.caso)}</span>
+          <br><strong style="font-size:1.15rem; color:var(--primary); display:block; margin:0.4rem 0;">Complexidade: ${escHtml(res.resultado)}</strong>
+          <small style="color:var(--text-muted);">${escHtml(res.explicacao)}</small>
         `;
       }
     },
@@ -908,12 +964,12 @@
         fb.style.background = '#dcfce7';
         fb.style.border = '1px solid #10b981';
         fb.style.color = '#14532d';
-        fb.innerHTML = `<strong>🎉 Resposta Exata e Provada!</strong><br>${justificativa}`;
+        fb.innerHTML = `<strong>🎉 Resposta Exata e Provada!</strong><br>${escHtml(justificativa)}`;
       } else {
         fb.style.background = '#fee2e2';
         fb.style.border = '1px solid #ef4444';
         fb.style.color = '#7f1d1d';
-        fb.innerHTML = `<strong>⚠️ Atenção: Resposta Incorreta.</strong><br><em>Pista:</em> ${pista}<br><small style="color:var(--text-muted); margin-top:0.4rem; display:block;">Reavalie as premissas e tente outra alternativa.</small>`;
+        fb.innerHTML = `<strong>⚠️ Atenção: Resposta Incorreta.</strong><br><em>Pista:</em> ${escHtml(pista)}<br><small style="color:var(--text-muted); margin-top:0.4rem; display:block;">Reavalie as premissas e tente outra alternativa.</small>`;
       }
     },
 
@@ -930,7 +986,7 @@
       if (res.status === 'insuficiente') {
         fbArea.innerHTML = `
           <div style="background:#fef3c7; border-left:4px solid #f59e0b; padding:1.25rem; border-radius:var(--radius-md); color:#92400e; margin-top:1rem; line-height:1.6;">
-            <strong>⚠️ Resposta Muito Curta ou Incompleta:</strong><br>${res.mensagem}
+            <strong>⚠️ Resposta Muito Curta ou Incompleta:</strong><br>${escHtml(res.mensagem)}
           </div>
         `;
         return;
@@ -942,7 +998,7 @@
             <div style="display:flex; align-items:center; gap:0.5rem; font-size:1.05rem; font-weight:800; margin-bottom:0.4rem;">
               <span>🛑</span> Texto Desconexo / Sem Relação com Tecnologia ou Lógica
             </div>
-            <p style="margin:0 0 0.5rem 0; font-size:0.95rem;">${res.mensagem}</p>
+            <p style="margin:0 0 0.5rem 0; font-size:0.95rem;">${escHtml(res.mensagem)}</p>
             <div style="background:#fff; border:1px solid #fecaca; border-radius:6px; padding:0.6rem 0.8rem; font-size:0.85rem; color:#7f1d1d;">
               <strong>Dica da Tutora IA:</strong> Para ser avaliado, seu texto precisa explicar o raciocínio, regras, transformações ou termos do módulo (ex: entradas, saídas, condições, repetições, variáveis, premissas ou algoritmos).
             </div>
@@ -961,7 +1017,7 @@
       const dimensoesHTML = aval.dimensoes.map(d => `
         <div class="dim-item">
           <div style="display:flex; justify-content:space-between;">
-            <span>${d.nome}</span>
+            <span>${escHtml(d.nome)}</span>
             <strong>${d.valor}%</strong>
           </div>
           <div class="dim-bar-wrap">
@@ -977,54 +1033,54 @@
             <div class="ai-sec-title">📊 Seção I · Avaliação Multidimensional da Compreensão & Rigor</div>
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
               <span class="lang-badge-pill" style="background:var(--primary); color:#fff; font-size:0.9rem;">
-                Status: ${aval.estado}
+                Status: ${escHtml(aval.estado)}
               </span>
               <span style="font-size:1.1rem; font-weight:800; color:var(--primary);">
                 Nota Global: ${aval.notaGeral} / 100
               </span>
             </div>
             <div class="ai-dimension-grid">${dimensoesHTML}</div>
-            <p style="margin:0.75rem 0 0 0; font-size:0.88rem; color:var(--text-main);"><strong>Recomendação Pedagógica:</strong> ${aval.recomendacao}</p>
+            <p style="margin:0.75rem 0 0 0; font-size:0.88rem; color:var(--text-main);"><strong>Recomendação Pedagógica:</strong> ${escHtml(aval.recomendacao)}</p>
           </div>
 
           <div class="ai-section-box ai-sec-a">
             <div class="ai-sec-title" style="color:#065f46;">✅ Seção A · O Que Você Compreendeu Corretamente</div>
-            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main);">${sec.A_compreendido}</p>
+            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main);">${escHtml(sec.A_compreendido)}</p>
           </div>
 
           <div class="ai-section-box ai-sec-b">
             <div class="ai-sec-title" style="color:#991b1b;">🔍 Seção B · Pontos Que Precisam de Correção ou Complemento</div>
-            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main); white-space:pre-line;">${sec.B_pontosCorrecao}</p>
+            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main); white-space:pre-line;">${escHtml(sec.B_pontosCorrecao)}</p>
           </div>
 
           <div class="ai-section-box ai-sec-c">
             <div class="ai-sec-title" style="color:#92400e;">💡 Seção C · Explicação do Raciocínio e Equívocos Teóricos</div>
-            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main);">${sec.C_explicacaoErro}</p>
+            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main);">${escHtml(sec.C_explicacaoErro)}</p>
           </div>
 
           <div class="ai-section-box ai-sec-d">
             <div class="ai-sec-title" style="color:#0e7490;">🚀 Seção D · Como Melhorar Seu Raciocínio (Passo a Passo Formal)</div>
-            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main); white-space:pre-line;">${sec.D_comoMelhorar}</p>
+            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main); white-space:pre-line;">${escHtml(sec.D_comoMelhorar)}</p>
           </div>
 
           <div class="ai-section-box ai-sec-e">
             <div class="ai-sec-title" style="color:#3730a3;">📖 Seção E · Explicação Conceitualmente Correta (Referência Canônica)</div>
-            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main);">${sec.E_explicacaoCorreta}</p>
+            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main);">${escHtml(sec.E_explicacaoCorreta)}</p>
           </div>
 
           <div class="ai-section-box ai-sec-f">
             <div class="ai-sec-title" style="color:#5b21b6;">⚖️ Seção F · Comparação Entre Sua Resposta e o Modelo Ideal</div>
-            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main);">${sec.F_comparacao}</p>
+            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main);">${escHtml(sec.F_comparacao)}</p>
           </div>
 
           <div class="ai-section-box ai-sec-g">
             <div class="ai-sec-title" style="color:#065f46;">🌱 Seção G · Exemplo Avançado de Consolidação</div>
-            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main);">${sec.G_exemploConsolidacao}</p>
+            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main);">${escHtml(sec.G_exemploConsolidacao)}</p>
           </div>
 
           <div class="ai-section-box ai-sec-h">
             <div class="ai-sec-title" style="color:#9f1239;">❓ Seção H · Pergunta de Verificação de Aprendizagem</div>
-            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main); font-weight:600;">${sec.H_perguntaVerificacao}</p>
+            <p style="margin:0; font-size:0.92rem; line-height:1.6; color:var(--text-main); font-weight:600;">${escHtml(sec.H_perguntaVerificacao)}</p>
           </div>
 
         </div>
@@ -1052,7 +1108,8 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
       } catch (err) {
-        alert('Erro ao exportar progresso: ' + err.message);
+        console.warn('Erro ao exportar progresso', err);
+        alert('Não foi possível exportar o progresso.');
       }
     },
 
@@ -1061,17 +1118,17 @@
       input.type = 'file';
       input.accept = '.json,application/json';
       input.onchange = (e) => {
-        const file = e.target.files && e.target.files[0];
+        const alvo = /** @type {HTMLInputElement} */ (e.target);
+        const file = alvo.files && alvo.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = (event) => {
           try {
-            const data = JSON.parse(event.target.result);
-            if (data && data.progresso && typeof data.progresso === 'object') {
-              localStorage.setItem('ponce_curso_logica_progresso', JSON.stringify(data.progresso));
-              if (data.historico) {
-                localStorage.setItem('ponce_curso_logica_historico', JSON.stringify(data.historico));
-              }
+            const data = JSON.parse(String(event.target.result));
+            const valido = StorageManager.validarImportacao(data);
+            if (valido) {
+              localStorage.setItem(StorageManager.KEY_PROGRESSO, JSON.stringify(valido.progresso));
+              localStorage.setItem(StorageManager.KEY_HISTORICO, JSON.stringify(valido.historico));
               alert('🎉 Progresso importado com sucesso!');
               renderizarDashboard();
               renderizarListaModulos();
@@ -1080,7 +1137,8 @@
               alert('⚠️ Arquivo JSON inválido ou não reconhecido.');
             }
           } catch (parseErr) {
-            alert('❌ Erro ao ler arquivo JSON: ' + parseErr.message);
+            console.warn('Erro ao ler arquivo de progresso', parseErr);
+            alert('❌ Não foi possível ler o arquivo. Verifique se é um JSON exportado por este site.');
           }
         };
         reader.readAsText(file);
@@ -1088,17 +1146,27 @@
       input.click();
     },
 
-    emitirCertificado: function () {
+    emitirCertificado: async function () {
       const prog = StorageManager.carregarProgresso();
-      const concluidos = Object.values(prog).filter(p => p.status === 'Concluído').length;
-      const notas = Object.values(prog).map(p => p.nota || 0).filter(n => n > 0);
-      const media = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length).toFixed(1) : 0;
+      const concluidos = Object.values(prog).filter(p => p.estado === 'Domínio demonstrado').length;
+      const notas = Object.values(prog).map(p => p.ultimaNota || 0).filter(n => n > 0);
+      // ultimaNota está em 0–100; o certificado exibe a média em 0–10
+      const media = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length / 10).toFixed(1) : 0;
       
       const nomeAluno = prompt('Digite seu Nome Completo para constar no Certificado:', 'Estudante de Lógica Pura');
       if (!nomeAluno) return;
 
-      const hashVerificacao = 'PONCE-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-' + Date.now().toString(36).toUpperCase();
       const dataHoje = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+      // SHA-256 (Web Crypto) sobre nome, progresso, notas, data e nonce aleatório seguro.
+      // Web Crypto só existe em contexto seguro (https ou localhost).
+      let hashVerificacao = 'Indisponível (requer https ou localhost)';
+      if (global.crypto && global.crypto.subtle) {
+        const nonce = global.crypto.getRandomValues(new Uint32Array(2)).join('-');
+        const base = JSON.stringify({ nome: nomeAluno, progresso: prog, data: dataHoje, nonce });
+        const resumo = await global.crypto.subtle.digest('SHA-256', new TextEncoder().encode(base));
+        hashVerificacao = Array.from(new Uint8Array(resumo)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
 
       let modalCert = document.getElementById('ponce-modal-certificado');
       if (!modalCert) {
@@ -1117,25 +1185,25 @@
           </div>
           <div id="certificado-print-area" style="text-align:center; padding:1rem;">
             <div style="font-size:2.8rem; margin-bottom:0.5rem;">🎓</div>
-            <h2 style="font-size:1.8rem; letter-spacing:2px; text-transform:uppercase; color:#312e81; margin-bottom:0.5rem;">CERTIFICADO DE MESTRIA EM LÓGICA PURA</h2>
+            <h2 style="font-size:1.8rem; letter-spacing:2px; text-transform:uppercase; color:#312e81; margin-bottom:0.5rem;">CERTIFICADO DE PARTICIPAÇÃO · LÓGICA PURA</h2>
             <p style="font-size:1rem; color:#64748b; margin-bottom:2rem;">PONCE METODOLOGIAS & DESENVOLVIMENTO DE SOFTWARE</p>
             
             <p style="font-size:1.15rem; line-height:1.8; margin-bottom:1.5rem;">
-              Certificamos para os devidos fins acadêmicos e profissionais que<br>
-              <strong style="font-size:1.6rem; color:#4338ca; border-bottom:2px solid #818cf8; padding-bottom:0.2rem; display:inline-block; margin:0.5rem 0;">${nomeAluno}</strong><br>
-              concluiu com êxito a formação rigorosa e progressiva de <strong>Lógica de Programação Pura & Fundamentos de Ciência da Computação</strong>, totalizando <strong>80 horas de estudos teóricos, provas de correção formal e práticas algorítmicas</strong>.
+              Declaração de participação, autoemitida pelo próprio aluno neste site, de que<br>
+              <strong style="font-size:1.6rem; color:#4338ca; border-bottom:2px solid #818cf8; padding-bottom:0.2rem; display:inline-block; margin:0.5rem 0;">${escHtml(nomeAluno)}</strong><br>
+              estudou o curso <strong>Lógica de Programação Pura & Fundamentos de Ciência da Computação</strong> (carga horária de referência: <strong>80 horas</strong>). Este documento não possui validade acadêmica ou profissional.
             </p>
 
             <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin:1.5rem 0; font-size:0.9rem;">
-              <div><strong>Módulos Praticados:</strong><br>${concluidos} de 22 Módulos</div>
-              <div><strong>Desempenho Cognitivo:</strong><br>${media > 0 ? media + '/10' : 'Formativo'}</div>
-              <div><strong>Carga Horária:</strong><br>80 Horas</div>
+              <div><strong>Módulos com domínio demonstrado:</strong><br>${concluidos} de ${MODULOS_LOGICA.length} Módulos</div>
+              <div><strong>Média das notas da Tutora:</strong><br>${Number(media) > 0 ? media + '/10' : 'Formativo'}</div>
+              <div><strong>Carga Horária de referência:</strong><br>80 Horas</div>
             </div>
 
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2.5rem; font-size:0.85rem; color:#64748b; border-top:1px solid #cbd5e1; padding-top:1.25rem;">
               <div><strong>Data de Emissão:</strong><br>${dataHoje}</div>
-              <div style="text-align:center;"><strong>Coordenação Pedagógica:</strong><br>Ponce Metodologias & Dev</div>
-              <div style="text-align:right;"><strong>Autenticidade / Hash:</strong><br><code>${hashVerificacao}</code></div>
+              <div style="text-align:center;"><strong>Emitido por:</strong><br>Ponce Metodologias & Dev (curso aberto)</div>
+              <div style="text-align:right;"><strong>Identificador (SHA-256 local, sem verificação externa):</strong><br><code style="word-break:break-all; font-size:0.7rem;">${escHtml(hashVerificacao)}</code></div>
             </div>
           </div>
           
@@ -1158,13 +1226,7 @@
       const container = document.getElementById('curso-logica-pura-app');
       if (container) {
         global.CursoLogicaApp.init();
-      }
-
-      // Registro do Service Worker
-      if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      }
-    });
+      }    });
   }
 
 })(typeof window !== 'undefined' ? window : global);

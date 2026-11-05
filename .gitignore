@@ -1,0 +1,13 @@
+﻿node_modules/
+.env
+.env.*
+.bob/
+backup_*/
+dist/
+*.log
+.DS_Store
+Thumbs.db
+
+# Repositorio Git aninhado (clone auxiliar)
+site_aprender_linguagens-logica/
+

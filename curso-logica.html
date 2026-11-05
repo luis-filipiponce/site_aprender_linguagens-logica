@@ -7,6 +7,7 @@
   <meta name="description" content="Curso aprofundado, progressivo e interativo de Lógica de Programação Pura e Ciência da Computação com 22 módulos, Teorema Mestre, Programação Dinâmica, Lógica de Hoare, Máquinas de Turing e Inteligência Artificial que avalia suas próprias palavras."/>
   <meta name="theme-color" content="#6366f1"/>
   <link rel="manifest" href="manifest.json"/>
+  <link rel="canonical" href="https://ponce.dev.br/curso-logica.html"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%23ffffff'>🧠</text></svg>"/>
 
   <!-- Open Graph / Redes Sociais -->
@@ -41,6 +42,7 @@
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/curso-logica.css"/>
   <link rel="stylesheet" href="css/questoes.css"/>
+  <link rel="stylesheet" href="css/cookies.css"/>
 </head>
 <body>
 
@@ -264,13 +266,23 @@
   </div>
 
   <footer style="text-align:center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 3rem;">
-    <p>© Ponce Metodologias & Dev — Ensino Rigoroso de Lógica de Programação Pura.</p>
+    <p>
+      <a href="index.html" style="color:var(--primary); font-weight:600;">← Voltar ao Portal</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="questoes.html" style="color:var(--primary); font-weight:600;">🧩 Banco de Questões →</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="#cookies-modal" data-open-cookies="true" style="color:var(--primary); font-weight:600;">🍪 Preferências de Cookies</a>
+    </p>
+    <p style="margin-top:0.75rem;">© Ponce Metodologias & Dev — Ensino Rigoroso de Lógica de Programação Pura.</p>
   </footer>
 
   <!-- Scripts -->
+  <script src="js/cookies.js"></script>
   <script src="js/curso-logica-dados.js"></script>
   <script src="js/curso-logica-extras.js"></script>
+  <script src="js/figuras-modulos.js"></script>
   <script src="js/curso-logica.js"></script>
+  <script src="js/pwa.js"></script>
   <script>
     // Tema claro / escuro (mesma chave do site principal)
     const themeBtn = document.getElementById('theme-toggle-btn');
@@ -284,6 +296,12 @@
         const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         applyTheme(next);
         localStorage.setItem('edumet-theme', next);
+        if (typeof PonceCookies !== 'undefined') {
+          const consent = PonceCookies.getConsent();
+          if (!consent || consent.preferences) {
+            PonceCookies.setCookie('ponce_theme', next);
+          }
+        }
       });
     }
 

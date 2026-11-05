@@ -315,7 +315,7 @@
   <section class="hero" style="border-bottom:1px solid var(--border);">
     <div class="hero-inner">
       <span class="badge">Interpretada / Server-Side Web</span>
-      <div class="hero-title">🐘 PHP</div>
+      <h1 class="hero-title">🐘 PHP</h1>
       <p class="hero-subtitle">
         A linguagem que <strong>alimenta 77% da web</strong> — o server-side scripting mais usado do planeta.
         Criada em <strong>1994</strong> por Rasmus Lerdorf, evoluiu de scripts simples a uma plataforma
@@ -454,11 +454,11 @@
 
         <!-- 1 -->
         <div class="acc-item open">
-          <button class="acc-header">
+          <button class="acc-header" type="button" aria-expanded="true" aria-controls="acc-php-1" id="acc-php-btn-1">
             Variáveis &amp; Tipos
             <span class="acc-arrow">▼</span>
           </button>
-          <div class="acc-body">
+          <div class="acc-body" id="acc-php-1" role="region" aria-labelledby="acc-php-btn-1">
             <p>PHP usa tipagem dinâmica por padrão. Com <code>declare(strict_types=1)</code> você ativa tipagem estrita em type hints, garantindo que erros de tipo sejam capturados em tempo de execução.</p>
             <div class="code-wrap">
               <button class="copy-btn">Copiar</button>
@@ -493,11 +493,11 @@
 
         <!-- 2 -->
         <div class="acc-item">
-          <button class="acc-header">
+          <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-php-2" id="acc-php-btn-2">
             Superglobais
             <span class="acc-arrow">▼</span>
           </button>
-          <div class="acc-body">
+          <div class="acc-body" id="acc-php-2" role="region" aria-labelledby="acc-php-btn-2">
             <p>PHP disponibiliza variáveis superglobais que estão acessíveis em qualquer escopo: <code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>, <code>$_COOKIE</code>, <code>$_SERVER</code> e <code>$_FILES</code>.</p>
             <div class="code-wrap">
               <button class="copy-btn">Copiar</button>
@@ -527,11 +527,11 @@
 
         <!-- 3 -->
         <div class="acc-item">
-          <button class="acc-header">
+          <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-php-3" id="acc-php-btn-3">
             PDO &amp; Banco de Dados
             <span class="acc-arrow">▼</span>
           </button>
-          <div class="acc-body">
+          <div class="acc-body" id="acc-php-3" role="region" aria-labelledby="acc-php-btn-3">
             <p>PDO (PHP Data Objects) oferece uma interface unificada para múltiplos bancos de dados. Use sempre <em>Prepared Statements</em> para prevenir SQL Injection.</p>
             <div class="code-wrap">
               <button class="copy-btn">Copiar</button>
@@ -558,11 +558,11 @@
 
         <!-- 4 -->
         <div class="acc-item">
-          <button class="acc-header">
+          <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-php-4" id="acc-php-btn-4">
             Orientação a Objetos
             <span class="acc-arrow">▼</span>
           </button>
-          <div class="acc-body">
+          <div class="acc-body" id="acc-php-4" role="region" aria-labelledby="acc-php-btn-4">
             <p>PHP suporta POO completa: classes, interfaces, traits, classes abstratas, herança, polimorfismo, encapsulamento e PHP 8.1+ enums e fibras.</p>
             <div class="code-wrap">
               <button class="copy-btn">Copiar</button>
@@ -602,11 +602,11 @@
 
         <!-- 5 -->
         <div class="acc-item">
-          <button class="acc-header">
+          <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-php-5" id="acc-php-btn-5">
             Tratamento de Erros
             <span class="acc-arrow">▼</span>
           </button>
-          <div class="acc-body">
+          <div class="acc-body" id="acc-php-5" role="region" aria-labelledby="acc-php-btn-5">
             <p>PHP moderno usa exceptions e tipos de erro estruturados. Crie exceptions customizadas, use <code>finally</code> e configure um handler global com <code>set_exception_handler()</code>.</p>
             <div class="code-wrap">
               <button class="copy-btn">Copiar</button>
@@ -638,11 +638,11 @@
 
         <!-- 6 -->
         <div class="acc-item">
-          <button class="acc-header">
+          <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-php-6" id="acc-php-btn-6">
             Composer &amp; PSR
             <span class="acc-arrow">▼</span>
           </button>
-          <div class="acc-body">
+          <div class="acc-body" id="acc-php-6" role="region" aria-labelledby="acc-php-btn-6">
             <p>Composer é o gerenciador de pacotes padrão do PHP. As PSRs (PHP Standards Recommendations) garantem interoperabilidade: PSR-4 para autoloading, PSR-11 para containers de injeção de dependências.</p>
             <div class="code-wrap">
               <button class="copy-btn">Copiar</button>
@@ -682,11 +682,11 @@ composer dump-autoload
 
         <!-- 7 -->
         <div class="acc-item">
-          <button class="acc-header">
+          <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-php-7" id="acc-php-btn-7">
             Operadores Relacionais, Lógicos, Spaceship &amp; Ternário
             <span class="acc-arrow">▼</span>
           </button>
-          <div class="acc-body">
+          <div class="acc-body" id="acc-php-7" role="region" aria-labelledby="acc-php-btn-7">
             <p>PHP oferece operadores estritos (<code>===</code>, <code>!==</code>) e não estritos. O operador <strong>Spaceship</strong> (<code>$a &lt;=&gt; $b</code>) retorna <code>-1</code>, <code>0</code> ou <code>1</code>. Além do operador ternário tradicional <code>cond ? a : b</code>, o PHP inclui o <strong>Elvis operator</strong> (<code>$a ?: $b</code>) e o <strong>Null Coalescing</strong> (<code>$a ?? $b</code>).</p>
             <div class="code-wrap">
               <button class="copy-btn">Copiar</button>
@@ -710,11 +710,11 @@ composer dump-autoload
 
         <!-- 8 -->
         <div class="acc-item">
-          <button class="acc-header">
+          <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-php-8" id="acc-php-btn-8">
             Conversão de Tipos (Type Casting &amp; Juggling)
             <span class="acc-arrow">▼</span>
           </button>
-          <div class="acc-body">
+          <div class="acc-body" id="acc-php-8" role="region" aria-labelledby="acc-php-btn-8">
             <p>O PHP possui coerção automática (<em>type juggling</em>) e <strong>casting explícito</strong> usando <code>(int)</code>, <code>(float)</code>, <code>(string)</code>, <code>(bool)</code>, <code>(array)</code> ou <code>(object)</code>. Funções como <code>intval()</code>, <code>strval()</code> e <code>boolval()</code> também estão disponíveis.</p>
             <div class="code-wrap">
               <button class="copy-btn">Copiar</button>
@@ -736,11 +736,11 @@ composer dump-autoload
 
         <!-- 9 -->
         <div class="acc-item">
-          <button class="acc-header">
+          <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-php-9" id="acc-php-btn-9">
             Laços de Repetição (foreach, for, while, do-while)
             <span class="acc-arrow">▼</span>
           </button>
-          <div class="acc-body">
+          <div class="acc-body" id="acc-php-9" role="region" aria-labelledby="acc-php-btn-9">
             <p>O laço <code>foreach</code> é a estrutura mais poderosa do PHP para percorrer arrays indexados e associativos (chave =&gt; valor). <code>for</code>, <code>while</code> e <code>do-while</code> completam os mecanismos de iteração.</p>
             <div class="code-wrap">
               <button class="copy-btn">Copiar</button>
@@ -767,11 +767,11 @@ composer dump-autoload
 
         <!-- 10 -->
         <div class="acc-item">
-          <button class="acc-header">
+          <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-php-10" id="acc-php-btn-10">
             Wrappers, Value Objects &amp; Backed Enums
             <span class="acc-arrow">▼</span>
           </button>
-          <div class="acc-body">
+          <div class="acc-body" id="acc-php-10" role="region" aria-labelledby="acc-php-btn-10">
             <p>Em PHP, <strong>Wrappers</strong> são implementados através de <em>Value Objects</em> (classes imutáveis que encapsulam primitivos e aplicam validações de domínio), <em>Backed Enums</em> (PHP 8.1+) e wrappers de estruturas como <code>\ArrayObject</code>.</p>
             <div class="code-wrap">
               <button class="copy-btn">Copiar</button>
@@ -1556,8 +1556,12 @@ composer dump-autoload
     btn.addEventListener('click', () => {
       const item = btn.closest('.acc-item');
       const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
+      document.querySelectorAll('.acc-item').forEach(i => {
+        i.classList.remove('open');
+        const b = i.querySelector('.acc-header');
+        if (b) b.setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
     });
   });
 

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Testes de valores limite</title>
+<desc id="d">Reta numérica de notas escolares de menos 0,1 a 10,1 com os seis valores de teste: menos 0,1 e 10,1 inválidos; 0,0; 0,1; 9,9 e 10,0 válidos. Abaixo, o erro de usar maior em vez de maior ou igual para 6,0.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 13 — Teste nas bordas</text>
+<rect x="30" y="76" width="90" height="40" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+<rect x="120" y="76" width="400" height="40" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<rect x="520" y="76" width="90" height="40" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+<text x="75" y="101" class="c b" style="fill:#991b1b">inválido</text><text x="320" y="101" class="c b" style="fill:#166534">válido: 0 ≤ nota ≤ 10</text><text x="565" y="101" class="c b" style="fill:#991b1b">inválido</text>
+<g fill="#4f46e5"><circle cx="105" cy="146" r="6" fill="#dc2626"/><circle cx="120" cy="146" r="6"/><circle cx="140" cy="146" r="6"/><circle cx="500" cy="146" r="6"/><circle cx="520" cy="146" r="6"/><circle cx="535" cy="146" r="6" fill="#dc2626"/></g>
+<g stroke="#475569" stroke-width="1.5"><path d="M105 120V140M120 120V140M140 120V140M500 120V140M520 120V140M535 120V140"/></g>
+<g class="c m"><text x="95" y="172">−0,1</text><text x="125" y="188">0,0</text><text x="152" y="172">0,1</text><text x="488" y="172">9,9</text><text x="515" y="188">10,0</text><text x="548" y="172">10,1</text></g>
+<text x="320" y="146" class="c m">… valores do meio quase nunca revelam bugs …</text>
+<rect x="30" y="208" width="580" height="92" rx="8" fill="#fff" stroke="#d97706" stroke-width="2"/>
+<text x="46" y="232" class="b">Bug típico:</text>
+<text x="130" y="232" style="font-family:Consolas,monospace">SE nota &gt; 6 ENTÃO "Aprovado"</text>
+<text x="46" y="256">Teste nota = 6,0 → resultado: Reprovado, mas o enunciado dizia "6 ou mais".</text>
+<text x="46" y="280" class="b" style="fill:#166534">Correção: nota &gt;= 6. Os testes de borda (ex.: 6,0) expõem a troca de &gt; por &gt;=.</text>
+</svg>

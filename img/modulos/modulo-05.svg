@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Tabela de rastreamento de variáveis</title>
+<desc id="d">Tabela com cinco comandos e o valor de a, b e total após cada um; a célula alterada em cada linha aparece destacada. Termina com a igual a 8, b igual a 8 e total igual a 16.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 5 — Rastreando o estado das variáveis</text>
+<g stroke="#94a3b8" stroke-width="1.5">
+<rect x="35" y="48" width="50" height="34" fill="#e0e7ff"/><rect x="85" y="48" width="220" height="34" fill="#e0e7ff"/><rect x="305" y="48" width="100" height="34" fill="#e0e7ff"/><rect x="405" y="48" width="100" height="34" fill="#e0e7ff"/><rect x="505" y="48" width="100" height="34" fill="#e0e7ff"/>
+<g fill="#fff">
+<rect x="35" y="82" width="50" height="34"/><rect x="85" y="82" width="220" height="34"/><rect x="305" y="82" width="100" height="34" fill="#fef3c7"/><rect x="405" y="82" width="100" height="34"/><rect x="505" y="82" width="100" height="34"/>
+<rect x="35" y="116" width="50" height="34"/><rect x="85" y="116" width="220" height="34"/><rect x="305" y="116" width="100" height="34"/><rect x="405" y="116" width="100" height="34" fill="#fef3c7"/><rect x="505" y="116" width="100" height="34"/>
+<rect x="35" y="150" width="50" height="34"/><rect x="85" y="150" width="220" height="34"/><rect x="305" y="150" width="100" height="34" fill="#fef3c7"/><rect x="405" y="150" width="100" height="34"/><rect x="505" y="150" width="100" height="34"/>
+<rect x="35" y="184" width="50" height="34"/><rect x="85" y="184" width="220" height="34"/><rect x="305" y="184" width="100" height="34"/><rect x="405" y="184" width="100" height="34"/><rect x="505" y="184" width="100" height="34" fill="#fef3c7"/>
+<rect x="35" y="218" width="50" height="34"/><rect x="85" y="218" width="220" height="34"/><rect x="305" y="218" width="100" height="34"/><rect x="405" y="218" width="100" height="34" fill="#fef3c7"/><rect x="505" y="218" width="100" height="34"/>
+</g></g>
+<g class="c b">
+<text x="60" y="70">#</text><text x="195" y="70">comando</text><text x="355" y="70">a</text><text x="455" y="70">b</text><text x="555" y="70">total</text>
+</g>
+<g class="c">
+<text x="60" y="104">1</text><text x="60" y="138">2</text><text x="60" y="172">3</text><text x="60" y="206">4</text><text x="60" y="240">5</text>
+<text x="355" y="104">5</text><text x="455" y="104">?</text><text x="555" y="104">?</text>
+<text x="355" y="138">5</text><text x="455" y="138">12</text><text x="555" y="138">?</text>
+<text x="355" y="172">8</text><text x="455" y="172">12</text><text x="555" y="172">?</text>
+<text x="355" y="206">8</text><text x="455" y="206">12</text><text x="555" y="206">16</text>
+<text x="355" y="240">8</text><text x="455" y="240">8</text><text x="555" y="240">16</text>
+</g>
+<g>
+<text x="95" y="104">a ← 5</text><text x="95" y="138">b ← 12</text><text x="95" y="172">a ← a + 3</text><text x="95" y="206">total ← a * 2</text><text x="95" y="240">b ← total − a</text>
+</g>
+<text x="320" y="285" class="c m">Célula amarela = valor que mudou. A seta ← grava um valor; não compara.</text>
+</svg>

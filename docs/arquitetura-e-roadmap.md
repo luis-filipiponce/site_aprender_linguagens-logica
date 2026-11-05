@@ -57,7 +57,25 @@ npm test                  # build + tests/test_suite.js
 >
 > Ordem de carregamento no HTML: `curso-logica-dados.js` → `curso-logica-extras.js` → `curso-logica.js`.
 
-### Sprint 3: Certificação & Sandbox de Código (Próximos Passos)
-- [ ] Emissão de certificado digital de domínio cognitivo com hash criptográfico SHA-256.
-- [ ] Sandbox interativo de execução de pseudocódigo no navegador.
+### Sprint 3: Certificação & Sandbox de Código (Parcialmente concluído)
+- [x] Emissão de certificado de domínio cognitivo com hash SHA-256 (Web Crypto, `emitirCertificado` em `js/curso-logica.js`). Só funciona em https ou localhost.
+- [x] Sandbox de execução de código JavaScript no navegador (`runUserCode` em `js/app.js`, Web Worker com timeout de 2 s).
+- [ ] Sandbox interativo de **pseudocódigo** (interpretador próprio, com passo a passo da memória).
 - [ ] Integração com backend Node.js seguro para chamadas a modelos de IA generativa (watsonx.ai / LLMs).
+
+### Sprint 4: Qualidade, Segurança e PWA (Parcialmente concluído)
+- [x] Importação de progresso corrigida (usava chaves antigas) e validada por `StorageManager.validarImportacao`.
+- [x] Certificado corrigido (lia campos inexistentes) e reescrito como declaração de participação autoemitida.
+- [x] Conteúdo dos módulos e feedback dos exercícios passam por `escHtml` antes de `innerHTML`.
+- [x] `tests/test_suite.js` encerra com código 1 quando algum teste falha (o CI antes não pegava falhas).
+- [x] `scripts/verificar-site.mjs`: links internos, `lang`/`viewport`/`title`/um `h1`, `rel="noopener"` e cobertura do `sw.js`.
+- [x] Service Worker: `CACHE_NAME` por hash (`scripts/versionar-sw.mjs`), `offline.html` de fallback, aviso de nova versão e registro único em `js/pwa.js`.
+- [x] `manifest.json` com `id`, `lang`, `categories`; `robots.txt` e `sitemap.xml`; `canonical` nas 3 páginas principais.
+- [x] `aprenda-programacao/`: `meta description`, `<main>`, link "pular", foco visível e `prefers-reduced-motion`.
+- [x] `aria-expanded`/`aria-controls` nos acordeões de `cpp.html` e `php.html`; `h1` único em `php.html` e `rust-go.html`.
+- [ ] Remover `onclick`/`style` inline (121 `onclick` e 262 `style=` em `index.html`) para aplicar CSP sem `unsafe-inline`.
+- [ ] CSP nas páginas restantes (com `worker-src blob:` por causa do sandbox).
+- [ ] Extrair CSS/JS repetido das 12 páginas de linguagens e 8 de metodologias.
+- [ ] Dividir `js/app.js` em módulos ES.
+- [ ] Testes E2E (Playwright): aula → exercício → certificado, offline e mobile.
+- [ ] Módulo de Estruturas de Dados e Grafos (pilha, fila, BFS/DFS) para cobrir lacunas do banco de questões.

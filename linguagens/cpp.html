@@ -759,11 +759,11 @@
 
       <!-- RAII -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-1" id="acc-cpp-btn-1" onclick="toggleAcc(this)">
           <span>⚙️ &nbsp;RAII &amp; Smart Pointers</span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-1" role="region" aria-labelledby="acc-cpp-btn-1">
           <div class="acc-content">
             <p><strong style="color:var(--text)">Resource Acquisition Is Initialization</strong> — o padrão mais importante de C++. Recursos (memória, arquivos, sockets) são vinculados ao ciclo de vida de objetos. Quando o objeto sai de escopo, o destrutor libera automaticamente o recurso.</p>
             <div class="code-block">
@@ -792,11 +792,11 @@
 
       <!-- Templates -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-2" id="acc-cpp-btn-2" onclick="toggleAcc(this)">
           <span>🧬 &nbsp;Templates &amp; Generics</span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-2" role="region" aria-labelledby="acc-cpp-btn-2">
           <div class="acc-content">
             <p>Templates permitem escrever código genérico que é <strong style="color:var(--text)">instanciado em tempo de compilação</strong>, resultando em zero custo de runtime — diferente de generics via type erasure de outras linguagens.</p>
             <div class="code-block">
@@ -828,11 +828,11 @@ T <span class="fn">max_val</span>(T a, T b) { <span class="kw">return</span> a >
 
       <!-- Move Semantics -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-3" id="acc-cpp-btn-3" onclick="toggleAcc(this)">
           <span>⚡ &nbsp;Move Semantics &amp; Perfect Forwarding</span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-3" role="region" aria-labelledby="acc-cpp-btn-3">
           <div class="acc-content">
             <p>Introduzido no C++11, move semantics permite <strong style="color:var(--text)">transferir ownership de recursos</strong> sem cópia — fundamental para performance com objetos grandes como vetores e strings.</p>
             <div class="code-block">
@@ -867,11 +867,11 @@ vec.<span class="fn">push_back</span>(std::<span class="fn">move</span>(buf)); <
 
       <!-- STL -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-4" id="acc-cpp-btn-4" onclick="toggleAcc(this)">
           <span>📦 &nbsp;STL — Containers, Algorithms, Iterators</span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-4" role="region" aria-labelledby="acc-cpp-btn-4">
           <div class="acc-content">
             <p>A Standard Template Library oferece estruturas de dados e algoritmos prontos, todos com complexidade garantida pelo padrão e sem overhead de abstração.</p>
             <div class="code-block">
@@ -902,11 +902,11 @@ scores[<span class="st">"Alice"</span>] = <span class="nm">95</span>;
 
       <!-- Concorrência -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-5" id="acc-cpp-btn-5" onclick="toggleAcc(this)">
           <span>🔀 &nbsp;Concorrência — <code>std::thread</code>, mutex, atomic</span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-5" role="region" aria-labelledby="acc-cpp-btn-5">
           <div class="acc-content">
             <p>C++11 trouxe suporte nativo a threads, mutexes e operações atômicas diretamente no padrão — sem dependência de APIs do sistema operacional.</p>
             <div class="code-block">
@@ -939,11 +939,11 @@ std::<span class="ty">mutex</span> mtx;
 
       <!-- Polimorfismo -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-6" id="acc-cpp-btn-6" onclick="toggleAcc(this)">
           <span>🏛️ &nbsp;Polimorfismo &amp; <code>virtual</code></span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-6" role="region" aria-labelledby="acc-cpp-btn-6">
           <div class="acc-content">
             <p>C++ suporta polimorfismo em tempo de execução via vtables e <code style="color:var(--accent)">virtual</code>, além de polimorfismo estático via templates (zero overhead). A palavra-chave <code style="color:var(--accent)">override</code> (C++11) torna a intenção explícita e segura.</p>
             <div class="code-block">
@@ -974,11 +974,11 @@ std::<span class="ty">unique_ptr</span>&lt;<span class="ty">Shape</span>&gt; s =
 
       <!-- Operadores -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-7" id="acc-cpp-btn-7" onclick="toggleAcc(this)">
           <span>⚖️ &nbsp;Operadores, Spaceship (<code>&lt;=&gt;</code>) &amp; Ternário</span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-7" role="region" aria-labelledby="acc-cpp-btn-7">
           <div class="acc-content">
             <p>Além dos operadores lógicos (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>) e do operador ternário (<code>cond ? a : b</code>), o C++20 introduziu o <strong>Three-Way Comparison Operator</strong> (conhecido como <strong>Spaceship Operator</strong> <code>&lt;=&gt;</code>), que gera automaticamente os 6 operadores relacionais (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>).</p>
             <div class="code-block">
@@ -1011,11 +1011,11 @@ std::<span class="ty">unique_ptr</span>&lt;<span class="ty">Shape</span>&gt; s =
 
       <!-- Condições & if constexpr -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-8" id="acc-cpp-btn-8" onclick="toggleAcc(this)">
           <span>🚦 &nbsp;Condições, <code>if</code> com Inicializador &amp; <code>if constexpr</code></span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-8" role="region" aria-labelledby="acc-cpp-btn-8">
           <div class="acc-content">
             <p>O C++17 trouxe <code>if</code> com inicializador integrado para limitar o escopo de variáveis. Já o <code>if constexpr</code> avalia a condição em <strong>tempo de compilação</strong>, descartando o ramo não utilizado sem gerar código de máquina.</p>
             <div class="code-block">
@@ -1048,11 +1048,11 @@ std::<span class="ty">map</span>&lt;<span class="kw">int</span>, std::<span clas
 
       <!-- Conversão de Tipos (Castings Modernos) -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-9" id="acc-cpp-btn-9" onclick="toggleAcc(this)">
           <span>🔄 &nbsp;Conversão de Tipos — <code>static_cast</code>, <code>dynamic_cast</code></span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-9" role="region" aria-labelledby="acc-cpp-btn-9">
           <div class="acc-content">
             <p>C++ desaconselha casts de estilo C <code>(tipo)x</code> em favor de 4 operadores explícitos e seguros: <code>static_cast</code> (conversões bem definidas em compile-time), <code>dynamic_cast</code> (downcasting seguro em tempo de execução com RTTI), <code>const_cast</code> (remover constância) e <code>reinterpret_cast</code> (reinterpretação bruta de bits).</p>
             <div class="code-block">
@@ -1079,11 +1079,11 @@ std::<span class="ty">map</span>&lt;<span class="kw">int</span>, std::<span clas
 
       <!-- Laços de Repetição -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-10" id="acc-cpp-btn-10" onclick="toggleAcc(this)">
           <span>🔁 &nbsp;Laços de Repetição &amp; Range-based <code>for</code></span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-10" role="region" aria-labelledby="acc-cpp-btn-10">
           <div class="acc-content">
             <p>O <strong>range-based for</strong> (<code>for (auto&amp;&amp; item : container)</code>) é a forma idiomática e segura de percorrer coleções da STL sem perigo de erros de índice fora do limite (out-of-bounds).</p>
             <div class="code-block">
@@ -1112,11 +1112,11 @@ std::<span class="ty">vector</span>&lt;std::<span class="ty">string</span>&gt; s
 
       <!-- Exceções & std::expected -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-11" id="acc-cpp-btn-11" onclick="toggleAcc(this)">
           <span>🛡️ &nbsp;Tratamento de Exceções &amp; <code>std::expected</code> (C++23)</span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-11" role="region" aria-labelledby="acc-cpp-btn-11">
           <div class="acc-content">
             <p>C++ suporta o bloco tradicional <code>try / catch / throw</code> com garantia de RAII (destrutores rodam automaticamente no desenrolar da pilha). Para código de altíssima performance onde exceções são desativadas (como em Game Dev), o C++23 introduziu <code>std::expected&lt;T, E&gt;</code> para erros do tipo monadic.</p>
             <div class="code-block">
@@ -1148,11 +1148,11 @@ std::<span class="ty">expected</span>&lt;<span class="kw">double</span>, std::<s
 
       <!-- Wrappers em C++ -->
       <div class="acc-item">
-        <button class="acc-trigger" onclick="toggleAcc(this)">
+        <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-cpp-12" id="acc-cpp-btn-12" onclick="toggleAcc(this)">
           <span>🎁 &nbsp;Wrappers Modernos — <code>std::optional</code>, <code>std::reference_wrapper</code></span>
-          <span class="acc-arrow">▾</span>
+          <span class="acc-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="acc-body">
+        <div class="acc-body" id="acc-cpp-12" role="region" aria-labelledby="acc-cpp-btn-12">
           <div class="acc-content">
             <p>O padrão de tipos embrulho (Wrappers) em C++ moderno é provido por tipos utilitários da STL como <code>std::optional&lt;T&gt;</code> (embrulha um valor ou estado vazio <code>std::nullopt</code> sem alocação de heap), <code>std::variant&lt;Ts...&gt;</code> (união tipada segura) e <code>std::reference_wrapper&lt;T&gt;</code> (permite guardar referências em containers STL).</p>
             <div class="code-block">
@@ -1772,12 +1772,14 @@ catch_discover_tests(testes)
     document.querySelectorAll('.acc-item.open').forEach(function(el) {
       el.classList.remove('open');
       el.querySelector('.acc-body').style.maxHeight = '0';
+      el.querySelector('.acc-trigger').setAttribute('aria-expanded', 'false');
     });
 
     // Open clicked if was closed
     if (!isOpen) {
       item.classList.add('open');
       body.style.maxHeight = body.scrollHeight + 'px';
+      btn.setAttribute('aria-expanded', 'true');
     }
   }
 

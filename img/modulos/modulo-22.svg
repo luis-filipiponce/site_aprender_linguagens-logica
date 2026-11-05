@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Classes P, NP e NP-completo, e explosão fatorial</title>
+<desc id="d">Diagrama de conjuntos: P dentro de NP, com NP-completo na borda de NP, assumindo P diferente de NP. À direita, a tabela de crescimento: 10 cidades têm 3,6 milhões de rotas, 20 cidades têm cerca de 2,4 quintilhões.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 22 — P, NP e NP-completo (se P ≠ NP)</text>
+<ellipse cx="170" cy="170" rx="150" ry="115" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+<ellipse cx="120" cy="190" rx="75" ry="60" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<ellipse cx="250" cy="140" rx="62" ry="50" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+<text x="170" y="70" class="c b">NP (verificável em tempo polinomial)</text>
+<text x="120" y="188" class="c b">P</text><text x="120" y="206" class="c m">ordenar, buscar</text>
+<text x="250" y="136" class="c b">NP-completo</text><text x="250" y="154" class="c m">TSP, 3-SAT</text>
+<text x="250" y="170" class="c m">Clique, Cobertura</text>
+<text x="170" y="300" class="c m">Uma redução de 3-SAT a um problema Y o torna NP-difícil.</text>
+<rect x="350" y="48" width="260" height="210" rx="8" fill="#fff" stroke="#cbd5e1"/>
+<text x="480" y="72" class="c b">Rotas do caixeiro viajante: n!</text>
+<g stroke="#94a3b8" stroke-width="1.5"><path d="M350 84H610M350 122H610M350 160H610M350 198H610M350 236H610M480 84V258"/></g>
+<g class="c b"><text x="415" y="106">cidades</text><text x="545" y="106">rotas (n!)</text></g>
+<g class="c"><text x="415" y="145">5</text><text x="545" y="145">120</text>
+<text x="415" y="183">10</text><text x="545" y="183">3.628.800</text>
+<text x="415" y="221">20</text><text x="545" y="221" style="fill:#991b1b;font-weight:700">≈ 2,4 × 10¹⁸</text>
+<text x="415" y="252">30</text><text x="545" y="252" style="fill:#991b1b;font-weight:700">≈ 2,7 × 10³²</text></g>
+<text x="480" y="284" class="c m">Verificar UM roteiro custa só O(n): ele é "fácil de checar".</text>
+<text x="480" y="302" class="c m">Encontrar o melhor é o difícil.</text>
+</svg>

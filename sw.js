@@ -4,23 +4,54 @@
  * ============================================================================
  */
 
-const CACHE_NAME = 'ponce-logica-v11';
+// CACHE_NAME é atualizado automaticamente por scripts/versionar-sw.mjs (npm run build)
+const CACHE_NAME = 'ponce-logica-73cff15046';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './curso-logica.html',
   './questoes.html',
+  './offline.html',
   './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-512-maskable.png',
   './css/style.css',
   './css/curso-logica.css',
   './css/interfaces.css',
   './css/questoes.css',
+  './css/cookies.css',
+  './js/cookies.js',
+  './js/pwa.js',
   './js/questoes.js',
   './js/questoes-dados.js',
   './js/app.js',
   './js/curso-logica.js',
   './js/curso-logica-dados.js',
   './js/curso-logica-extras.js',
+  './js/figuras-modulos.js',
+  './img/modulos/modulo-01.svg',
+  './img/modulos/modulo-02.svg',
+  './img/modulos/modulo-03.svg',
+  './img/modulos/modulo-04.svg',
+  './img/modulos/modulo-05.svg',
+  './img/modulos/modulo-06.svg',
+  './img/modulos/modulo-07.svg',
+  './img/modulos/modulo-08.svg',
+  './img/modulos/modulo-09.svg',
+  './img/modulos/modulo-10.svg',
+  './img/modulos/modulo-11.svg',
+  './img/modulos/modulo-12.svg',
+  './img/modulos/modulo-13.svg',
+  './img/modulos/modulo-14.svg',
+  './img/modulos/modulo-15.svg',
+  './img/modulos/modulo-16.svg',
+  './img/modulos/modulo-17.svg',
+  './img/modulos/modulo-18.svg',
+  './img/modulos/modulo-19.svg',
+  './img/modulos/modulo-20.svg',
+  './img/modulos/modulo-21.svg',
+  './img/modulos/modulo-22.svg',
   './linguagens/python.html',
   './linguagens/javascript.html',
   './linguagens/java.html',
@@ -39,13 +70,33 @@ const ASSETS_TO_CACHE = [
   './metodologias/estudo-de-caso.html',
   './metodologias/gamificacao.html',
   './metodologias/design-thinking.html',
-  './metodologias/steam-maker.html'
+  './metodologias/steam-maker.html',
+  './aprenda-programacao/index.html',
+  './aprenda-programacao/css/global.css',
+  './aprenda-programacao/css/home.css',
+  './aprenda-programacao/js/main.js',
+  './aprenda-programacao/pages/algoritmos.html',
+  './aprenda-programacao/pages/banco.html',
+  './aprenda-programacao/pages/carreira.html',
+  './aprenda-programacao/pages/devops.html',
+  './aprenda-programacao/pages/estruturas.html',
+  './aprenda-programacao/pages/linguagens.html',
+  './aprenda-programacao/pages/logica.html',
+  './aprenda-programacao/pages/paradigmas.html',
+  './aprenda-programacao/pages/web.html',
+  './guia-metodologias/index.html',
+  './guia-metodologias/style.css',
+  './resumo-metodologia/index.html',
+  './resumo-metodologia/style.css'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
+      // Tolerante a falhas: um recurso ausente nao derruba a instalacao inteira
+      return Promise.allSettled(
+        ASSETS_TO_CACHE.map((url) => cache.add(url))
+      );
     }).then(() => self.skipWaiting())
   );
 });
@@ -60,29 +111,40 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Stale-while-revalidate: responde do cache e atualiza em segundo plano
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
+  const request = event.request;
+  if (request.method !== 'GET') return;
+  if (new URL(request.url).origin !== self.location.origin) return;
 
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
+  const isHtml = request.mode === 'navigate' || request.headers.get('accept')?.includes('text/html');
+
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(request, { ignoreSearch: isHtml });
+
+    const networkFetch = fetch(request).then((response) => {
+      if (response && response.status === 200 && response.type === 'basic') {
+        cache.put(request, response.clone());
       }
-      return fetch(event.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-          return networkResponse;
-        }
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
-        });
-        return networkResponse;
-      }).catch(() => {
-        // Fallback offline se for navegação HTML
-        if (event.request.headers.get('accept')?.includes('text/html')) {
-          return caches.match('./curso-logica.html') || caches.match('./index.html');
-        }
-      });
-    })
-  );
+      return response;
+    });
+
+    if (cached) {
+      // Atualiza em segundo plano; falhas de rede sao ignoradas
+      event.waitUntil(networkFetch.catch(() => {}));
+      return cached;
+    }
+
+    try {
+      return await networkFetch;
+    } catch (_) {
+      if (isHtml) {
+        return (await caches.match('./offline.html')) ||
+               (await caches.match('./index.html')) ||
+               Response.error();
+      }
+      return Response.error();
+    }
+  })());
 });

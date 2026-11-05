@@ -1,6 +1,6 @@
 # Relatório Contínuo de Mudanças, Melhorias e Opções de Evolução
 **Projeto:** Ponce Metodologias & Curso Completo de Lógica de Programação Pura  
-**Data de Atualização:** Março de 2025  
+**Data de Atualização:** Novembro de 2026
 **Autor:** IBM Bob — Engenharia de Software & Design Pedagógico
 
 ---
@@ -55,3 +55,31 @@
 ├── manifest.json           # Manifesto PWA
 └── sw.js                   # Service Worker Offline
 ```
+
+---
+
+## 4. Atualização: correções e melhorias (Sprint 4)
+
+**Bugs corrigidos**
+- Importar progresso gravava em chaves antigas (`ponce_curso_logica_progresso`) e nada aparecia; agora usa as chaves v2 e valida o arquivo.
+- O certificado lia `status`/`nota`, que não existem no progresso, e sempre mostrava 0 módulos. Agora usa `estado` e `ultimaNota` (nota 0–100 convertida para 0–10).
+- O link "Pular para as questões" em `questoes.html` apontava para um seletor CSS (`.qz-wrap`) em vez de `#id`.
+- O CI não falhava com testes quebrados (a suíte não definia código de saída).
+
+**Segurança**
+- Conteúdo dos módulos, exercícios, trace e feedback da Tutora passam por `escHtml` antes de `innerHTML` (um campo já continha `<Saldo >= Compra?>`).
+- Arquivo importado é normalizado: só ids de módulos existentes, estados permitidos, notas limitadas a 0–100 e textos truncados.
+- Mensagens de erro internas deixaram de ser exibidas em `alert`.
+
+**Transparência**
+- Certificado reescrito como declaração de participação autoemitida, sem validade acadêmica.
+- A Tutora IA passou a ser descrita como avaliador por regras e palavras-chave.
+
+**PWA, SEO e acessibilidade**
+- Cache do Service Worker versionado por hash; `offline.html`; aviso de nova versão; registro único em `js/pwa.js`.
+- `robots.txt`, `sitemap.xml`, `canonical`, `manifest.json` com `id`/`lang`/`categories`.
+- `aprenda-programacao/`: `meta description`, `<main>`, link "pular", foco visível, `prefers-reduced-motion`.
+- Foco visível em campos com `outline: none`; `aria-expanded` nos acordeões de C++ e PHP; `h1` único em PHP e Rust/Go.
+
+**Verificação automática**
+- `scripts/verificar-site.mjs` (links, metadados, cache offline) roda no `typecheck`; o CI confere que os arquivos gerados estão em dia.

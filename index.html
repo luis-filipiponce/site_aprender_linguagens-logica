@@ -7,6 +7,7 @@
   <meta name="description" content="Guia completo com metodologias ativas de ensino, neurociência, Taxonomia de Bloom e ensinamentos aprofundados de Linguagens de Programação (Python, JS, Java, C, C++, COBOL, HTML, SQL, Rust, Go) com lógica prévia detalhada para cada uma."/>
   <meta name="theme-color" content="#6366f1"/>
   <link rel="manifest" href="manifest.json"/>
+  <link rel="canonical" href="https://ponce.dev.br/"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%23ffffff'>🧠</text></svg>"/>
 
   <!-- Open Graph / Redes Sociais -->
@@ -33,6 +34,7 @@
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/curso-logica.css"/>
   <link rel="stylesheet" href="css/interfaces.css"/>
+  <link rel="stylesheet" href="css/cookies.css"/>
 </head>
 <body>
 
@@ -106,6 +108,11 @@
           <li class="sidebar-item">
             <a href="#hero" class="active">
               <span>🏠</span> Visão Geral & Métricas
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#novidades">
+              <span>✨</span> O que há de novo
             </a>
           </li>
         </ul>
@@ -223,7 +230,7 @@
           <li class="sidebar-item">
             <a href="#sandbox-interativo">
               <span>💻</span> <strong>Sandbox & Terminal Interativo</strong>
-              <span class="sidebar-badge" style="background:var(--grad-primary);color:#fff;">Live Code</span>
+              <span class="sidebar-badge" style="background:var(--grad-primary);color:#fff;">Novo · Seguro</span>
             </a>
           </li>
           <li class="sidebar-item">
@@ -319,6 +326,7 @@
           <a href="#comparador-sintaxe" class="btn btn-outline">🔄 Comparador de Sintaxe</a>
         </div>
 
+
         <!-- ====================================================================
              CAMPO DE REDIRECIONAMENTO NA MESMA PÁGINA PARA O CURSO DE LÓGICA
              ==================================================================== -->
@@ -349,11 +357,11 @@
               <option value="15">Módulo 15: Complexidade, Eficiência e Notação Big O</option>
               <option value="16">Módulo 16: Raciocínio Lógico Avançado Aplicado</option>
               <option value="17">Módulo 17: Desafios Integradores & Avaliação Final</option>
-              <option value="18">Módulo 18: Estruturas de Dados Abstratas (Pilhas, Filas, Grafos)</option>
-              <option value="19">Módulo 19: Recursão, Divisão & Conquista e Teorema Mestre</option>
-              <option value="20">Módulo 20: Paradigmas (Gulosos, Backtracking e Dinâmica)</option>
-              <option value="21">Módulo 21: Computabilidade, Autômatos e Máquinas de Turing</option>
-              <option value="22">Módulo 22: Classes de Complexidade (P vs NP e NP-Completos)</option>
+              <option value="18">Módulo 18: Recursão Avançada, Recorrências e Teorema Mestre</option>
+              <option value="19">Módulo 19: Paradigmas Avançados (Divisão & Conquista, DP e Gulosos)</option>
+              <option value="20">Módulo 20: Lógica de Hoare e Métodos Formais</option>
+              <option value="21">Módulo 21: Teoria da Computação, Turing e Decidibilidade</option>
+              <option value="22">Módulo 22: Classes de Complexidade (P vs NP), Reduções e Amortizada</option>
             </select>
             <button class="quick-nav-btn" onclick="window.location.href='curso-logica.html?modulo=' + document.getElementById('curso-quick-select-hero').value" style="background:var(--grad-primary); color:#fff; border:none; padding:0.65rem 1.5rem; border-radius:var(--radius-md); font-weight:700; cursor:pointer; font-size:0.95rem;">
               ⚡ Acessar Módulo (Na Mesma Página) →
@@ -380,6 +388,36 @@
           </div>
         </div>
       </section>
+      <!-- ====================================================================
+           NOVIDADES DA ATUALIZAÇÃO
+           ==================================================================== -->
+      <section class="content-section" id="novidades">
+        <div class="section-header">
+          <span class="section-badge badge-green">Novo</span>
+          <h2 class="section-title">✨ O que temos de novo nessa atualização</h2>
+          <p class="section-desc">Veja as principais melhorias desta versão do portal.</p>
+        </div>
+
+        <ul class="novidades-list">
+          <li><strong>Central Git &amp; GitHub:</strong> nova seção com fundamentos, dicionário de comandos pesquisável, terminal simulador das 4 áreas do Git (com pipeline visual), guia de PRs, Forks e conflitos, e um quiz de fixação.</li>
+          <li><strong>Módulos 18 a 22 no curso:</strong> Recursão e Teorema Mestre, Paradigmas Avançados, Lógica de Hoare, Teoria da Computação e Classes de Complexidade (P vs NP). Todos já aparecem na lista de módulos.</li>
+          <li><strong>Certificado com hash SHA-256:</strong> o certificado de conclusão agora traz um código de verificação criptográfico. Requer https ou localhost.</li>
+          <li><strong>Exemplo Visual em cada módulo:</strong> cada um dos 22 módulos do curso ganhou uma figura SVG ilustrando o ponto mais importante, com descrição textual para acessibilidade.</li>
+          <li><strong>Privacidade e cookies (LGPD):</strong> banner de consentimento com personalização por categoria (essenciais, preferências e progresso) e painel mostrando o que está salvo no seu navegador. Acessível pelo rodapé em “Preferências de Cookies”.</li>
+          <li><strong>Busca rápida (Ctrl + K) corrigida:</strong> lista os 22 módulos do curso com os títulos corretos e também encontra a Central Git &amp; GitHub.</li>
+          <li><strong>Editor e Sandbox mais seguros:</strong> seu código roda em um ambiente isolado (Web Worker), com limite de 2 segundos. Um laço infinito não trava mais a página.</li>
+          <li><strong>Certificado mais seguro:</strong> o nome digitado e o código de verificação passam por escape de HTML antes de entrar no certificado, evitando injeção de código.</li>
+          <li><strong>Mais conteúdo offline:</strong> as seções Aprenda Programação, Guia de Metodologias e Resumo de Metodologia funcionam sem internet. As páginas se atualizam sozinhas em segundo plano quando há conexão, e a instalação do cache tolera arquivos ausentes.</li>
+          <li><strong>Instalável como aplicativo:</strong> novos ícones PNG permitem instalar o site no celular ou no computador. Quando há uma versão nova, um aviso aparece para você atualizar.</li>
+          <li><strong>Importar progresso corrigido:</strong> o arquivo importado agora é validado, e o certificado passa a contar corretamente os módulos concluídos e a nota.</li>
+          <li><strong>Melhor presença nos buscadores:</strong> <code>sitemap.xml</code>, <code>robots.txt</code> e links canônicos adicionados às páginas principais.</li>
+          <li><strong>Acessibilidade:</strong> botões com rótulos para leitores de tela e respeito à preferência de reduzir animações do sistema.</li>
+          <li><strong>Qualidade automatizada:</strong> 528 testes e verificação de tipos rodam a cada push via GitHub Actions, junto com <code>npm audit</code> para vulnerabilidades nas dependências.</li>
+          <li><strong>Documentação renovada:</strong> README com instruções de execução, estrutura de pastas e segurança, além de roadmap e relatório de melhorias atualizados.</li>
+        </ul>
+      </section>
+
+
 
       <!-- ====================================================================
            2. SEÇÃO DE LÓGICA DE PROGRAMAÇÃO FUNDAMENTAL
@@ -492,7 +530,7 @@
       </section>
 
       <!-- ====================================================================
-           2B. CURSO COMPLETO DE LÓGICA DE PROGRAMAÇÃO PURA (17 MÓDULOS)
+           2B. CURSO COMPLETO DE LÓGICA DE PROGRAMAÇÃO PURA (22 MÓDULOS)
            ==================================================================== -->
       <section class="content-section" id="curso-logica-pura">
         <div class="section-header">
@@ -503,8 +541,8 @@
           </p>
         </div>
 
-        <!-- BANNER DE ACESSO AO CURSO COMPLETO EM NOVA TELA -->
-        <div class="curso-quick-nav-bar" id="campo-redirecionamento-rapido">
+        <!-- BANNER DE ACESSO AO CURSO COMPLETO (interface única em curso-logica.html) -->
+        <div class="curso-quick-nav-bar">
           <div class="quick-nav-title">
             <span style="font-size:1.6rem;">🚀</span>
             <div>
@@ -514,56 +552,9 @@
           </div>
           <div class="quick-nav-controls">
             <a href="curso-logica.html" class="quick-nav-btn" style="background:var(--grad-primary); text-decoration:none; padding:0.75rem 1.5rem; font-size:1rem; box-shadow:var(--shadow-md); color:#fff; font-weight:700; border-radius:var(--radius-md);">
-              🌐 Acessar Curso Completo na Mesma Página →
+              🌐 Acessar Curso Completo →
             </a>
           </div>
-        </div>
-
-        <!-- CONTAINER DO APLICATIVO DO CURSO -->
-        <div id="curso-logica-pura-app" class="curso-logica-container">
-
-          <!-- DASHBOARD DE PROGRESSO -->
-          <div class="curso-dashboard-card" id="curso-dashboard">
-            <div class="dashboard-header">
-              <div class="dashboard-title-group">
-                <h3><span>📊</span> Painel de Evolução do Aluno</h3>
-                <p>Acompanhamento multidimensional em tempo real de domínio conceitual e exercícios.</p>
-              </div>
-            </div>
-
-            <!-- Métricas -->
-            <div class="dashboard-stats-grid" id="curso-dash-stats"></div>
-
-            <!-- Alerta de Recomendação Inteligente -->
-            <div class="dash-recommendation-alert" id="curso-dash-recommendation">
-              💡 Carregando recomendações personalizadas da tutora IA...
-            </div>
-          </div>
-
-          <!-- TRILHA DOS 22 MÓDULOS -->
-          <div>
-            <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
-              Trilha Progressiva de Aprendizagem (22 Módulos — Fundamentos à Mestria Avançada):
-            </div>
-            <div class="curso-modules-track" id="curso-modules-track"></div>
-          </div>
-
-          <!-- ÁREA DO MÓDULO SELECIONADO -->
-          <div id="curso-module-content"></div>
-
-          <!-- SHELF DE REFERÊNCIAS BIBLIOGRÁFICAS -->
-          <div class="books-section" style="margin-top:2.5rem;">
-            <h5 class="books-section-title">📚 Referências Científicas e Didáticas Essenciais</h5>
-            <div class="books-shelf">
-              <div class="book-card"><span class="book-emoji">💡</span><p class="book-title">How to Solve It</p><p class="book-author">George Pólya — Princeton</p><p class="book-desc">A metodologia clássica de 4 etapas para decomposição e resolução heurística de problemas computacionais.</p><span class="book-level ini">Iniciante</span></div>
-              <div class="book-card"><span class="book-emoji">🧠</span><p class="book-title">How to Prove It</p><p class="book-author">Daniel J. Velleman — Cambridge</p><p class="book-desc">Fundamentos de lógica proposicional formal, deduções rigorosas, negações e técnicas de prova.</p><span class="book-level ini">Iniciante</span></div>
-              <div class="book-card"><span class="book-emoji">🏛️</span><p class="book-title">Discrete Mathematics and Its Applications</p><p class="book-author">Kenneth H. Rosen — McGraw-Hill</p><p class="book-desc">Tabelas-verdade, Leis de De Morgan, indução matemática e invariantes de repetição.</p><span class="book-level mid">Intermediário</span></div>
-              <div class="book-card"><span class="book-emoji">👑</span><p class="book-title">Algoritmos: Teoria e Prática (CLRS)</p><p class="book-author">Cormen et al. — MIT Press</p><p class="book-desc">A bíblia dos algoritmos: análise assintótica Big-O, provas de invariantes e correção formal.</p><span class="book-level ref">Referência</span></div>
-              <div class="book-card"><span class="book-emoji">⚙️</span><p class="book-title">Lógica de Programação</p><p class="book-author">Forbellone & Eberspächer — Pearson</p><p class="book-desc">A referência acadêmica clássica para modularização, tabelas de trace e pseudocódigo.</p><span class="book-level ini">Iniciante</span></div>
-              <div class="book-card"><span class="book-emoji">📘</span><p class="book-title">The Art of Computer Programming</p><p class="book-author">Donald E. Knuth — Addison-Wesley</p><p class="book-desc">O clássico monumental que fundou a análise sistemática e o determinismo de algoritmos.</p><span class="book-level adv">Avançado</span></div>
-            </div>
-          </div>
-
         </div>
 
       </section>
@@ -4467,261 +4458,394 @@ tabuada.forEach(linha => console.log(linha));
            ==================================================================== -->
       <section class="content-section" id="github-git">
         <div class="section-header">
-          <span class="section-badge badge-purple">Controle de Versão & Colaboração</span>
-          <h2 class="section-title">🐙 Git & GitHub — Do Básico aos Comandos Mais Utilizados</h2>
+          <span class="section-badge badge-purple">Central de Conhecimento Interativa</span>
+          <h2 class="section-title">🐙 Git & GitHub — Do Zero ao Domínio Profissional</h2>
           <p class="section-desc">
-            O Git é o sistema de controle de versão distribuído mais utilizado no mundo, e o GitHub é a plataforma central onde equipes colaboram, revisam código e publicam software. Domine o ciclo de vida dos arquivos, estratégias de branches e os comandos indispensáveis para o dia a dia.
+            O <strong>Git</strong> é o motor de controle de versão distribuído mais utilizado no mundo, e o <strong>GitHub</strong> é a nuvem onde mais de 100 milhões de desenvolvedores colaboram, revisam código, publicam projetos de código aberto e constroem seus portfólios. Explore guias didáticos, um dicionário de comandos pesquisável, um terminal simulador das 4 áreas e desafios práticos.
           </p>
         </div>
 
-        <!-- Cards Didáticos: Conceitos Fundamentais -->
-        <div class="didactic-grid" style="margin-bottom: 2rem;">
-          <div class="didactic-card">
-            <div class="didactic-card-icon">📂</div>
-            <h4>As 4 Áreas do Git</h4>
-            <p><strong>1. Working Directory:</strong> arquivos locais editados. <strong>2. Staging Area (Index):</strong> arquivos preparados via <code>git add</code>. <strong>3. Local Repo:</strong> commits gravados no histórico local. <strong>4. Remote Repo (GitHub):</strong> repositório sincronizado na nuvem.</p>
+        <!-- Estatísticas & Badges Rápidos -->
+        <div class="hero-stats-grid" style="margin-bottom: 1.75rem;">
+          <div class="stat-box">
+            <span class="stat-num">Git vs GitHub</span>
+            <span class="stat-label">Controle local distribuído (Git) + Nuvem & Colaboração (GitHub)</span>
           </div>
-          <div class="didactic-card">
-            <div class="didactic-card-icon">🌿</div>
-            <h4>Branches & Isolamento</h4>
-            <p>Ramificações permitem desenvolver novas features ou correções de bugs sem impactar o código principal (<code>main</code>). Use <code>git switch -c feature/nome</code> para criar ramificações isoladas e seguras.</p>
+          <div class="stat-box">
+            <span class="stat-num">4 Áreas</span>
+            <span class="stat-label">Working Directory ➔ Staging ➔ Local Repo ➔ Remote GitHub</span>
           </div>
-          <div class="didactic-card">
-            <div class="didactic-card-icon">🔀</div>
-            <h4>Pull Requests & Code Review</h4>
-            <p>No GitHub, o <strong>Pull Request (PR)</strong> é a solicitação para mesclar alterações da sua branch na principal. Permite revisão em equipe, testes automatizados via CI/CD e discussão antes do merge.</p>
+          <div class="stat-box">
+            <span class="stat-num">30+ Comandos</span>
+            <span class="stat-label">Branches, Cherry-Pick, Revert, Stash, Conflitos e GitHub CLI</span>
           </div>
-          <div class="didactic-card">
-            <div class="didactic-card-icon">⚡</div>
-            <h4>GitHub CLI (gh)</h4>
-            <p>A linha de comando oficial do GitHub para autenticar, criar repositórios, abrir PRs e acompanhar Issues diretamente do terminal sem precisar abrir o navegador.</p>
+          <div class="stat-box">
+            <span class="stat-num">Simulador</span>
+            <span class="stat-label">Terminal interativo com pipeline visual de arquivos em tempo real</span>
           </div>
         </div>
 
-        <!-- Seção de Código e Comandos Mais Usados -->
-        <div class="language-section-card">
-          <div class="topic-divider"><span>1. Configuração Inicial e Início de Projetos</span></div>
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang-label">Terminal / Bash — Configuração e Inicialização</span>
-              <button class="copy-code-btn">Copiar Código</button>
+        <!-- Abas de Navegação da Seção Git & GitHub -->
+        <div class="git-tabs-nav" id="git-tabs-navigation">
+          <button class="git-tab-btn active" onclick="switchGitTab('git-pane-fundamentos')">
+            <span>🎓</span> 1. Fundamentos & Início
+          </button>
+          <button class="git-tab-btn" onclick="switchGitTab('git-pane-comandos')">
+            <span>📖</span> 2. Dicionário de Comandos
+          </button>
+          <button class="git-tab-btn" onclick="switchGitTab('git-pane-simulador')">
+            <span>🧪</span> 3. Terminal & Simulador Visual
+          </button>
+          <button class="git-tab-btn" onclick="switchGitTab('git-pane-fluxos')">
+            <span>🔀</span> 4. PRs, Forks & Conflitos
+          </button>
+          <button class="git-tab-btn" onclick="switchGitTab('git-pane-quiz')">
+            <span>🧩</span> 5. Quiz & Fixação
+          </button>
+        </div>
+
+        <!-- ====================================================================
+             ABA 1: FUNDAMENTOS & PRIMEIROS PASSOS
+             ==================================================================== -->
+        <div class="git-pane active" id="git-pane-fundamentos">
+          <div class="language-section-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem;">
+              <div>
+                <span class="lang-badge-pill" style="background:#f3e8ff; color:#7e22ce;">Fundamentos Teóricos & Práticos</span>
+                <h3 style="font-size:1.5rem; font-weight:800; margin-top:0.4rem; color:var(--text-main);">🧠 Compreendendo Git vs GitHub e o Modelo Mental</h3>
+              </div>
+              <span style="font-size:0.85rem; color:var(--text-light); font-weight:600;">Criado em 2005 por Linus Torvalds</span>
             </div>
-            <pre><code><span class="cmt"># Configurar identidade global</span>
-<span class="fn">git config</span> --global user.name <span class="str">"Seu Nome"</span>
-<span class="fn">git config</span> --global user.email <span class="str">"seu-email@exemplo.com"</span>
+
+            <div class="didactic-grid" style="margin-bottom: 1.5rem;">
+              <div class="didactic-card">
+                <div class="didactic-card-icon">💻</div>
+                <h4>O que é Git?</h4>
+                <p>É uma ferramenta de linha de comando que roda <strong>localmente no seu computador</strong>. Ela tira "instantâneos" (commits) de todo o histórico do seu código, calcula diferenças (diffs) e gerencia branches sem precisar de internet.</p>
+              </div>
+
+              <div class="didactic-card">
+                <div class="didactic-card-icon">🐙</div>
+                <h4>O que é GitHub?</h4>
+                <p>É uma <strong>plataforma de hospedagem na nuvem</strong> para repositórios Git. Além de guardar cópias seguras do seu código, adiciona recursos de equipe: Pull Requests, Code Reviews, Issues, GitHub Actions (CI/CD) e GitHub Pages.</p>
+              </div>
+
+              <div class="didactic-card">
+                <div class="didactic-card-icon">📸</div>
+                <h4>Snapshots vs Deltas</h4>
+                <p>Sistemas antigos guardavam apenas as linhas alteradas (deltas). O Git salva uma fotografia completa do estado dos arquivos em cada commit, usando hashes SHA-1/SHA-256 para integridade criptográfica absoluta.</p>
+              </div>
+
+              <div class="didactic-card">
+                <div class="didactic-card-icon">🔑</div>
+                <h4>Autenticação (SSH & PAT)</h4>
+                <p>Para enviar código ao GitHub com segurança, utilize chaves <strong>SSH (ed25519)</strong> ou <strong>Personal Access Tokens (PAT)</strong>. O GitHub não aceita mais senhas de conta normais para operações de push no terminal.</p>
+              </div>
+            </div>
+
+            <!-- As 4 Áreas do Git Explicadas -->
+            <div class="topic-divider"><span>O Pipeline das 4 Áreas do Git</span></div>
+            <div class="lang-topic-grid" style="margin-bottom:1.5rem;">
+              <div class="deep-box" style="border-left: 4px solid #ef4444;">
+                <h4 style="color:#ef4444;">1. Working Directory (Espaço de Trabalho)</h4>
+                <p>Onde seus arquivos residem no disco rígido. Qualquer arquivo que você criar, editar ou apagar no VS Code/editor começa aqui como <em>Untracked</em> ou <em>Modified</em>.</p>
+                <code style="font-size:0.8rem; background:rgba(239,68,68,0.1); padding:0.2rem 0.4rem; border-radius:4px;">git status</code>
+              </div>
+
+              <div class="deep-box" style="border-left: 4px solid #f59e0b;">
+                <h4 style="color:#f59e0b;">2. Staging Area (Área de Preparação / Index)</h4>
+                <p>O "palco" onde você seleciona quais modificações exatas farão parte do próximo commit. Permite organizar commits atômicos e limpos.</p>
+                <code style="font-size:0.8rem; background:rgba(245,158,11,0.1); padding:0.2rem 0.4rem; border-radius:4px;">git add &lt;arquivo&gt;</code>
+              </div>
+
+              <div class="deep-box" style="border-left: 4px solid #3b82d4;">
+                <h4 style="color:#3b82d4;">3. Local Repository (Repositório Local)</h4>
+                <p>O banco de dados interno na pasta <code>.git</code>. Quando você faz commit, as alterações saem do Staging e viram um registro permanente no histórico da sua máquina.</p>
+                <code style="font-size:0.8rem; background:rgba(59,130,246,0.1); padding:0.2rem 0.4rem; border-radius:4px;">git commit -m "msg"</code>
+              </div>
+
+              <div class="deep-box" style="border-left: 4px solid #a855f7;">
+                <h4 style="color:#a855f7;">4. Remote Repository (GitHub / Nuvem)</h4>
+                <p>O servidor remoto (ex: <code>origin/main</code>). Onde você sincroniza seus commits locais para backup e para que seus colegas de equipe possam baixar.</p>
+                <code style="font-size:0.8rem; background:rgba(168,85,247,0.1); padding:0.2rem 0.4rem; border-radius:4px;">git push / git pull</code>
+              </div>
+            </div>
+
+            <!-- Passo a Passo: Configuração Inicial e Primeiro Commit -->
+            <div class="topic-divider"><span>Guia Rápido: Configuração Inicial & Primeiro Repositório</span></div>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang-label">Passo a Passo no Terminal — Da Instalação ao Primeiro Push</span>
+                <button class="copy-code-btn">Copiar Código</button>
+              </div>
+              <pre><code><span class="cmt"># 1. Configurar sua identidade global (apenas na 1ª vez)</span>
+<span class="fn">git config</span> --global user.name <span class="str">"Seu Nome Completo"</span>
+<span class="fn">git config</span> --global user.email <span class="str">"seu-email@dominio.com"</span>
 <span class="fn">git config</span> --global init.defaultBranch <span class="str">main</span>
 
-<span class="cmt"># Iniciar um novo repositório local</span>
+<span class="cmt"># 2. Criar uma nova pasta e inicializar o repositório</span>
+<span class="fn">mkdir</span> meu-primeiro-projeto
+<span class="fn">cd</span> meu-primeiro-projeto
 <span class="fn">git init</span>
 
-<span class="cmt"># Clonar um repositório existente do GitHub</span>
-<span class="fn">git clone</span> <span class="str">https://github.com/usuario/repositorio.git</span></code></pre>
-          </div>
-
-          <div class="topic-divider"><span>2. Ciclo Básico: Status, Stage e Commit</span></div>
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang-label">Terminal / Bash — Ciclo Diário de Modificações</span>
-              <button class="copy-code-btn">Copiar Código</button>
-            </div>
-            <pre><code><span class="cmt"># 1. Verificar arquivos modificados ou novos</span>
+<span class="cmt"># 3. Criar arquivo inicial e verificar estado</span>
+<span class="fn">echo</span> <span class="str">"# Meu Primeiro Repositório"</span> > README.md
 <span class="fn">git status</span>
 
-<span class="cmt"># 2. Adicionar arquivo específico ou todos para a área de preparação (staging)</span>
-<span class="fn">git add</span> index.html
-<span class="fn">git add</span> .
+<span class="cmt"># 4. Adicionar ao staging e gravar o primeiro commit</span>
+<span class="fn">git add</span> README.md
+<span class="fn">git commit</span> -m <span class="str">"feat: initial commit com README"</span>
 
-<span class="cmt"># 3. Gravar commit com mensagem clara e padronizada</span>
-<span class="fn">git commit</span> -m <span class="str">"feat: adiciona seção de comandos do GitHub"</span>
-
-<span class="cmt"># 4. Ver histórico resumido de commits</span>
-<span class="fn">git log</span> --oneline --graph --decorate -n 5</code></pre>
-          </div>
-
-          <div class="topic-divider"><span>3. Ramificações (Branches) e Fusão (Merge)</span></div>
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang-label">Terminal / Bash — Gerenciamento de Branches</span>
-              <button class="copy-code-btn">Copiar Código</button>
+<span class="cmt"># 5. Conectar ao repositório criado no GitHub e enviar</span>
+<span class="fn">git remote add</span> origin <span class="str">https://github.com/seu-usuario/meu-primeiro-projeto.git</span>
+<span class="fn">git branch</span> -M main
+<span class="fn">git push</span> -u origin main</code></pre>
             </div>
-            <pre><code><span class="cmt"># Criar e mudar para uma nova branch imediatamente</span>
-<span class="fn">git switch</span> -c feature/nova-funcionalidade
-
-<span class="cmt"># Alternar entre branches existentes</span>
-<span class="fn">git switch</span> main
-
-<span class="cmt"># Mesclar a branch na branch atual (ex: estando na main)</span>
-<span class="fn">git merge</span> feature/nova-funcionalidade
-
-<span class="cmt"># Deletar branch local que já foi mesclada</span>
-<span class="fn">git branch</span> -d feature/nova-funcionalidade</code></pre>
           </div>
+        </div>
 
-          <div class="topic-divider"><span>4. Sincronização com o GitHub (Push & Pull)</span></div>
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang-label">Terminal / Bash — Interação com o Repositório Remoto</span>
-              <button class="copy-code-btn">Copiar Código</button>
+        <!-- ====================================================================
+             ABA 2: DICIONÁRIO DE COMANDOS COM BUSCA & FILTROS
+             ==================================================================== -->
+        <div class="git-pane" id="git-pane-comandos">
+          <div class="language-section-card">
+            <div class="section-header" style="margin-bottom:1rem; text-align:left;">
+              <h3 style="font-size:1.4rem; font-weight:800; color:var(--text-main);">📖 Dicionário de Comandos Git & GitHub</h3>
+              <p class="section-desc">Pesquise por qualquer comando ou palavra-chave (ex: <em>desfazer, branch, commit, cherry-pick, tag, gh, conflito, remote</em>) ou filtre por categoria.</p>
             </div>
-            <pre><code><span class="cmt"># Conectar repositório local a um repositório remoto no GitHub</span>
-<span class="fn">git remote add</span> origin <span class="str">https://github.com/usuario/repositorio.git</span>
 
-<span class="cmt"># Enviar commits pela primeira vez configurando a branch de rastreamento (-u)</span>
-<span class="fn">git push</span> -u origin main
+            <!-- Toolbar de Busca e Filtros -->
+            <div class="git-search-toolbar">
+              <input type="text" id="git-cmd-search-input" class="git-search-input" placeholder="🔍 Digite para buscar comandos (ex: push, stash, branch, amend, reset)..." oninput="filterGitCommands()" />
+              <div class="git-filter-chips" id="git-filter-chips">
+                <button class="git-chip-btn active" data-cat="all" onclick="setGitCategoryFilter('all')">Todos</button>
+                <button class="git-chip-btn" data-cat="basico" onclick="setGitCategoryFilter('basico')">Básico & Setup</button>
+                <button class="git-chip-btn" data-cat="branches" onclick="setGitCategoryFilter('branches')">Branches & Merge</button>
+                <button class="git-chip-btn" data-cat="remoto" onclick="setGitCategoryFilter('remoto')">Sincronização & Remoto</button>
+                <button class="git-chip-btn" data-cat="desfazer" onclick="setGitCategoryFilter('desfazer')">Desfazer & Recuperar</button>
+                <button class="git-chip-btn" data-cat="gh" onclick="setGitCategoryFilter('gh')">GitHub CLI (`gh`)</button>
+              </div>
+            </div>
 
-<span class="cmt"># Enviar commits subsequentes</span>
-<span class="fn">git push</span>
-
-<span class="cmt"># Baixar e integrar alterações mais recentes do GitHub</span>
-<span class="fn">git pull</span></code></pre>
+            <!-- Grid de Cards de Comandos Renderizados Dinamicamente -->
+            <div class="git-cmd-cards-grid" id="git-cmd-cards-container">
+              <!-- Renderizado via JavaScript (initGitInteractiveLab) -->
+            </div>
           </div>
+        </div>
 
-          <div class="topic-divider"><span>5. Desfazer Alterações e Stash (Trabalho Temporário)</span></div>
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang-label">Terminal / Bash — Desfazer, Restaurar e Stash</span>
-              <button class="copy-code-btn">Copiar Código</button>
+        <!-- ====================================================================
+             ABA 3: TERMINAL & SIMULADOR VISUAL DAS 4 ÁREAS
+             ==================================================================== -->
+        <div class="git-pane" id="git-pane-simulador">
+          <div class="language-section-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
+              <div>
+                <span class="lang-badge-pill" style="background:#dcfce7; color:#15803d;">Laboratório Prático Interativo</span>
+                <h3 style="font-size:1.4rem; font-weight:800; margin-top:0.3rem; color:var(--text-main);">🧪 Simulador Visual do Pipeline do Git</h3>
+              </div>
+              <button class="btn btn-outline" style="font-size:0.85rem; padding:0.4rem 0.85rem;" onclick="resetGitSimulator()">🔄 Reiniciar Estado</button>
             </div>
-            <pre><code><span class="cmt"># Descartar alterações locais não salvas em um arquivo</span>
-<span class="fn">git restore</span> nome-do-arquivo.html
+            <p style="font-size:0.92rem; color:var(--text-muted); margin-bottom:1rem;">
+              Clique nos botões de comando ou digite no terminal abaixo para ver em tempo real os arquivos transitando entre as 4 áreas do Git (Working Directory ➔ Staging Area ➔ Repositório Local ➔ GitHub Remoto).
+            </p>
 
-<span class="cmt"># Remover arquivo da área de staging (mantendo as alterações locais)</span>
-<span class="fn">git restore</span> --staged nome-do-arquivo.html
+            <!-- Botões de Ação Rápida no Simulador -->
+            <div class="git-quick-buttons">
+              <button class="git-quick-btn" onclick="execGitSimCommand('git status')">git status</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('git add .')">git add .</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('git commit -m &quot;feat: nova tela de login&quot;')">git commit</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('git push origin main')">git push</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('git switch -c feature/auth')">git switch -c feature/auth</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('git switch main')">git switch main</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('git merge feature/auth')">git merge</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('git stash')">git stash</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('git stash pop')">git stash pop</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('git restore .')">git restore .</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('git log')">git log</button>
+              <button class="git-quick-btn" onclick="execGitSimCommand('edit')">✏️ Simular Edição de Arquivo</button>
+            </div>
 
-<span class="cmt"># Guardar trabalho em andamento temporariamente sem commitar</span>
-<span class="fn">git stash</span>
+            <!-- Pipeline Visual das 4 Áreas -->
+            <div class="git-pipeline-container" id="git-pipeline-view">
+              <!-- 1. Working Directory -->
+              <div class="git-zone-card zone-working">
+                <div class="git-zone-header">
+                  <span class="git-zone-title">📁 1. Working Directory</span>
+                  <span id="badge-working-count" class="badge" style="background:#ef4444; color:#fff; font-size:0.75rem;">1 modificado</span>
+                </div>
+                <div class="git-files-list" id="zone-working-files">
+                  <div class="git-file-item">
+                    <span>📄 app.js</span>
+                    <span class="git-file-status modified">Modified</span>
+                  </div>
+                </div>
+              </div>
 
-<span class="cmt"># Recuperar as alterações guardadas no stash</span>
-<span class="fn">git stash pop</span></code></pre>
+              <!-- 2. Staging Area -->
+              <div class="git-zone-card zone-staging">
+                <div class="git-zone-header">
+                  <span class="git-zone-title">📦 2. Staging Area</span>
+                  <span id="badge-staging-count" class="badge" style="background:#f59e0b; color:#fff; font-size:0.75rem;">0 staged</span>
+                </div>
+                <div class="git-files-list" id="zone-staging-files">
+                  <span style="font-size:0.8rem; color:var(--text-light); font-style:italic;">Nenhum arquivo no stage. Use git add.</span>
+                </div>
+              </div>
+
+              <!-- 3. Local Repository -->
+              <div class="git-zone-card zone-local">
+                <div class="git-zone-header">
+                  <span class="git-zone-title">💾 3. Local Repo (<span id="sim-current-branch-label">main</span>)</span>
+                  <span id="badge-local-commits" class="badge" style="background:#3b82d4; color:#fff; font-size:0.75rem;">1 commit</span>
+                </div>
+                <div class="git-files-list" id="zone-local-commits">
+                  <div class="git-file-item">
+                    <span>🔷 a1b2c3d initial commit</span>
+                    <span class="git-file-status committed">HEAD</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4. GitHub Remote -->
+              <div class="git-zone-card zone-remote">
+                <div class="git-zone-header">
+                  <span class="git-zone-title">🐙 4. GitHub Remote</span>
+                  <span id="badge-remote-commits" class="badge" style="background:#a855f7; color:#fff; font-size:0.75rem;">Sincronizado</span>
+                </div>
+                <div class="git-files-list" id="zone-remote-commits">
+                  <div class="git-file-item">
+                    <span>🌐 origin/main: a1b2c3d</span>
+                    <span class="git-file-status pushed">Up-to-date</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Terminal Simulador Interativo -->
+            <div class="git-cli-terminal">
+              <div class="git-cli-header">
+                <div class="terminal-dots">
+                  <span class="terminal-dot red"></span>
+                  <span class="terminal-dot yellow"></span>
+                  <span class="terminal-dot green"></span>
+                </div>
+                <span style="color:#94a3b8; font-size:0.8rem; font-family:var(--font-mono);">git-simulated-bash v2.44</span>
+                <span style="color:#10b981; font-size:0.78rem; font-family:var(--font-mono); font-weight:700;">● Online</span>
+              </div>
+              <div class="git-cli-body" id="git-sim-output">
+Bem-vindo ao Simulador Interativo de Git!
+Digite um comando Git (ex: 'git status', 'git add .', 'git commit -m "msg"', 'git push') ou clique nos botões acima.
+              </div>
+              <form class="git-cli-input-row" onsubmit="handleGitSimSubmit(event)">
+                <span class="git-cli-prompt" id="git-sim-prompt-text">user@dev:~/projeto (main) $</span>
+                <input type="text" id="git-sim-cmd-input" class="git-cli-input" placeholder="Digite um comando git..." autocomplete="off" />
+                <button type="submit" class="btn btn-primary" style="padding:0.35rem 0.85rem; font-size:0.8rem;">Executar</button>
+              </form>
+            </div>
           </div>
+        </div>
 
-          <div class="topic-divider"><span>6. GitHub CLI (`gh`) — Comandos Produtivos</span></div>
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang-label">Terminal / Bash — Linha de Comando Oficial do GitHub</span>
-              <button class="copy-code-btn">Copiar Código</button>
+        <!-- ====================================================================
+             ABA 4: PRS, FORKS, CONFLITOS & GITHUB NO MUNDO REAL
+             ==================================================================== -->
+        <div class="git-pane" id="git-pane-fluxos">
+          <div class="language-section-card">
+            <div class="section-header" style="text-align:left; margin-bottom:1.25rem;">
+              <span class="lang-badge-pill" style="background:#e0e7ff; color:#4338ca;">Colaboração & Mercado de Trabalho</span>
+              <h3 style="font-size:1.5rem; font-weight:800; margin-top:0.4rem; color:var(--text-main);">🔀 GitHub no Mundo Real: Pull Requests, Fork & Conflitos</h3>
+              <p class="section-desc">Entenda como equipes de alta performance colaboram diariamente em empresas e projetos Open Source pelo GitHub.</p>
             </div>
-            <pre><code><span class="cmt"># Login interativo com o GitHub</span>
-<span class="fn">gh auth login</span>
 
-<span class="cmt"># Criar novo repositório no GitHub diretamente da pasta atual e fazer o push</span>
-<span class="fn">gh repo create</span> meu-projeto --public --source=. --push
+            <!-- O Fluxo de Contribuição Open Source (Fork & PR) -->
+            <div class="topic-divider"><span>O Fluxo Padrão de Contribuição (Fork & Pull Request)</span></div>
+            <div class="didactic-grid" style="margin-bottom:1.5rem;">
+              <div class="didactic-card">
+                <div class="didactic-card-icon">🍴</div>
+                <h4>1. Fork do Repositório</h4>
+                <p>Cria uma cópia idêntica do repositório original na sua própria conta do GitHub, permitindo fazer alterações livremente sem permissão de escrita no original.</p>
+              </div>
 
-<span class="cmt"># Criar um Pull Request direto pelo terminal</span>
-<span class="fn">gh pr create</span> --title <span class="str">"feat: nova funcionalidade"</span> --body <span class="str">"Descrição detalhada das mudanças"</span>
+              <div class="didactic-card">
+                <div class="didactic-card-icon">🌿</div>
+                <h4>2. Branch de Feature</h4>
+                <p>Nunca faça alterações diretamente na branch <code>main</code>. Crie uma branch específica: <code>git switch -c feature/correcao-bug</code>.</p>
+              </div>
 
-<span class="cmt"># Listar Pull Requests e Issues abertas</span>
-<span class="fn">gh pr list</span>
-<span class="fn">gh issue list</span></code></pre>
-          </div>
+              <div class="didactic-card">
+                <div class="didactic-card-icon">📝</div>
+                <h4>3. Commits Descritivos</h4>
+                <p>Escreva mensagens de commit curtas e claras seguindo <em>Conventional Commits</em> (ex: <code>feat:</code>, <code>fix:</code>, <code>docs:</code>, <code>refactor:</code>).</p>
+              </div>
 
-          <div class="topic-divider"><span>7. Como Resolver Conflitos de Merge Passo a Passo</span></div>
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang-label">Guia Prático — Anatomia e Resolução de Conflitos no Git</span>
-              <button class="copy-code-btn">Copiar Código</button>
+              <div class="didactic-card">
+                <div class="didactic-card-icon">🚀</div>
+                <h4>4. Abertura do Pull Request</h4>
+                <p>No GitHub, clique em <strong>"Compare & pull request"</strong>. Descreva o que mudou, o porquê, vincule issues (ex: <code>Fixes #123</code>) e anexe capturas de tela se houver UI.</p>
+              </div>
             </div>
-            <pre><code><span class="cmt"># 1. Quando ocorre um conflito ao rodar 'git merge' ou 'git pull':</span>
-<span class="cmt"># O Git pausa o merge e marca os arquivos conflitantes com delimitadores:</span>
 
-<span class="str">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
-<span class="kw">const</span> apiUrl = <span class="str">"https://api.producao.com/v1"</span>; <span class="cmt">// Sua alteração atual na branch local</span>
+            <!-- Anatomia e Resolução de Conflitos de Merge -->
+            <div class="topic-divider"><span>Como Resolver Conflitos de Merge sem Pânico</span></div>
+            <div class="code-block" style="margin-bottom:1.5rem;">
+              <div class="code-header">
+                <span class="code-lang-label">Guia Visual — Marcadores de Conflito no Código</span>
+                <button class="copy-code-btn">Copiar Código</button>
+              </div>
+              <pre><code><span class="cmt"># 1. Quando duas pessoas alteram a mesma linha de um arquivo, o Git gera marcadores:</span>
+
+<span class="str">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (Sua alteração na branch atual)</span>
+<span class="kw">const</span> API_BASE_URL = <span class="str">"https://api.v2.empresa.com"</span>;
 <span class="str">=======</span>
-<span class="kw">const</span> apiUrl = <span class="str">"https://api.novo-gateway.com/v2"</span>; <span class="cmt">// Alteração que veio da outra branch</span>
-<span class="str">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/novo-gateway</span>
+<span class="kw">const</span> API_BASE_URL = <span class="str">"https://gateway-novo.empresa.com"</span>;
+<span class="str">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/nova-api (Alteração da outra branch)</span>
 
-<span class="cmt"># 2. Como resolver:</span>
-<span class="cmt"># - Abra o arquivo no editor, escolha a versão correta (ou combine as duas) e apague os marcadores (&lt;&lt;&lt;, ===, &gt;&gt;&gt;)</span>
-<span class="cmt"># - Salve o arquivo e marque como resolvido:</span>
-<span class="fn">git add</span> nome-do-arquivo.js
+<span class="cmt"># 2. Resolução em 3 passos:</span>
+<span class="cmt"># Passo A: Abra o arquivo no VS Code e escolha a versão correta (ou combine as duas)</span>
+<span class="cmt"># Passo B: Apague manualmente os marcadores &lt;&lt;&lt;&lt;&lt;&lt;&lt;, ======= e &gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+<span class="cmt"># Passo C: Salve o arquivo e finalize o merge:</span>
+<span class="fn">git add</span> arquivo-conflitante.js
 <span class="fn">git commit</span> -m <span class="str">"fix: resolve conflito de URL da API"</span>
 
-<span class="cmt"># Se precisar desistir do merge e voltar ao estado seguro anterior:</span>
+<span class="cmt"># Se precisar cancelar o merge e voltar ao estado seguro anterior:</span>
 <span class="fn">git merge</span> --abort</code></pre>
-          </div>
-
-          <div class="topic-divider"><span>8. Comandos Salva-Vidas no Dia a Dia</span></div>
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang-label">Terminal / Bash — Comandos Avançados de Recuperação e Produtividade</span>
-              <button class="copy-code-btn">Copiar Código</button>
             </div>
-            <pre><code><span class="cmt"># Corrigir a mensagem ou arquivos do ÚLTIMO commit (sem criar novo commit)</span>
-<span class="fn">git commit</span> --amend -m <span class="str">"feat: mensagem corrigida"</span>
 
-<span class="cmt"># Desfazer o último commit mantendo todas as alterações salvas nos arquivos (safe)</span>
-<span class="fn">git reset</span> --soft HEAD~1
+            <!-- GitHub Actions & GitHub Pages -->
+            <div class="topic-divider"><span>Recursos Poderosos do GitHub</span></div>
+            <div class="lang-topic-grid">
+              <div class="deep-box">
+                <h4>🤖 GitHub Actions (CI/CD)</h4>
+                <p>Automatize a execução de testes unitários, linting e deploys automáticos em servidores toda vez que alguém fizer push ou abrir um Pull Request (arquivos <code>.github/workflows/*.yml</code>).</p>
+              </div>
 
-<span class="cmt"># Puxar apenas UM commit específico de outra branch para a sua</span>
-<span class="fn">git cherry-pick</span> a1b2c3d
+              <div class="deep-box">
+                <h4>🌐 GitHub Pages</h4>
+                <p>Hospedagem estática gratuita com HTTPS automático para seus sites HTML/CSS/JS e documentações diretamente de uma branch do seu repositório.</p>
+              </div>
 
-<span class="cmt"># Reverter um commit público criando um novo commit com o inverso (seguro para equipes)</span>
-<span class="fn">git revert</span> a1b2c3d
-
-<span class="cmt"># Ver diferenças exatas linha por linha antes de commitar</span>
-<span class="fn">git diff</span></code></pre>
-          </div>
-
-          <div class="topic-divider"><span>Boas Práticas e Padrões Essenciais</span></div>
-          <div class="lang-topic-grid">
-            <div class="deep-box">
-              <h4>📋 Conventional Commits</h4>
-              <p>Mantenha um histórico limpo e padronizado: <code>feat:</code> (nova feature), <code>fix:</code> (correção de bug), <code>docs:</code> (documentação), <code>refactor:</code> (refatoração), <code>test:</code> (testes) e <code>chore:</code> (tarefas e dependências).</p>
-            </div>
-            <div class="deep-box">
-              <h4>🔀 Pull Requests Profissionais</h4>
-              <p>Descreva o <strong>Porquê</strong> e o <strong>Como</strong> da mudança, anexe prints se houver alteração de interface, vincule a issue (ex: <code>Closes #42</code>) e solicite review antes do merge.</p>
-            </div>
-            <div class="deep-box">
-              <h4>🚫 Arquivo .gitignore & Segurança</h4>
-              <p>Nunca envie dependências ou credenciais. Inclua sempre: <code>node_modules/</code>, <code>.env</code>, <code>dist/</code>, <code>*.pem</code> e chaves de API.</p>
+              <div class="deep-box">
+                <h4>⭐ README de Perfil Incrível</h4>
+                <p>Crie um repositório especial com o <strong>mesmo nome do seu usuário</strong> (ex: <code>seu-usuario/seu-usuario</code>) com um <code>README.md</code> para personalizar a capa do seu perfil com bio, tecnologias e estatísticas.</p>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div class="best-practice-box">
-            <h5>✅ Tabela Rápida de Comandos Mais Utilizados</h5>
-            <div style="overflow-x: auto; margin-top: 0.75rem;">
-              <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
-                <thead>
-                  <tr style="border-bottom: 2px solid var(--border-color); background: rgba(99, 102, 241, 0.05);">
-                    <th style="padding: 0.6rem 0.8rem;">Ação Desejada</th>
-                    <th style="padding: 0.6rem 0.8rem;">Comando Git</th>
-                    <th style="padding: 0.6rem 0.8rem;">O que faz?</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.6rem 0.8rem;"><strong>Status</strong></td>
-                    <td style="padding: 0.6rem 0.8rem;"><code>git status</code></td>
-                    <td style="padding: 0.6rem 0.8rem;">Mostra o estado atual das alterações e staging</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.6rem 0.8rem;"><strong>Preparar Tudo</strong></td>
-                    <td style="padding: 0.6rem 0.8rem;"><code>git add .</code></td>
-                    <td style="padding: 0.6rem 0.8rem;">Adiciona todas as mudanças para o próximo commit</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.6rem 0.8rem;"><strong>Gravar Commit</strong></td>
-                    <td style="padding: 0.6rem 0.8rem;"><code>git commit -m "msg"</code></td>
-                    <td style="padding: 0.6rem 0.8rem;">Salva um snapshot no histórico local</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.6rem 0.8rem;"><strong>Criar Branch</strong></td>
-                    <td style="padding: 0.6rem 0.8rem;"><code>git switch -c nome</code></td>
-                    <td style="padding: 0.6rem 0.8rem;">Cria e muda para uma nova branch em uma etapa</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.6rem 0.8rem;"><strong>Enviar ao GitHub</strong></td>
-                    <td style="padding: 0.6rem 0.8rem;"><code>git push</code></td>
-                    <td style="padding: 0.6rem 0.8rem;">Envia os commits locais para o repositório remoto</td>
-                  </tr>
-                  <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.6rem 0.8rem;"><strong>Atualizar Local</strong></td>
-                    <td style="padding: 0.6rem 0.8rem;"><code>git pull</code></td>
-                    <td style="padding: 0.6rem 0.8rem;">Baixa e mescla as alterações mais recentes do GitHub</td>
-                  </tr>
-                </tbody>
-              </table>
+        <!-- ====================================================================
+             ABA 5: QUIZ FORMATIVO & DESAFIOS DE FIXAÇÃO DE GIT
+             ==================================================================== -->
+        <div class="git-pane" id="git-pane-quiz">
+          <div class="language-section-card">
+            <div class="section-header" style="text-align:left; margin-bottom:1.25rem;">
+              <span class="lang-badge-pill" style="background:#fef3c7; color:#b45309;">Avaliação Formativa Interativa</span>
+              <h3 style="font-size:1.5rem; font-weight:800; margin-top:0.4rem; color:var(--text-main);">🧩 Quiz Prático de Git & GitHub</h3>
+              <p class="section-desc">Teste seus conhecimentos e descubra se você domina as pegadinhas e os comandos essenciais do dia a dia.</p>
+            </div>
+
+            <!-- Container do Quiz de Git -->
+            <div id="git-quiz-questions-container">
+              <!-- Renderizado dinamicamente via JS -->
             </div>
           </div>
         </div>
@@ -5736,14 +5860,14 @@ app.<span class="fn">post</span>(<span class="str">"/api/tarefas"</span>, autent
   </div>
 
   <!-- BOTÃO FLUTUANTE DE BUSCA RÁPIDA (SPOTLIGHT / CTRL+K) -->
-  <button class="btn-floating-quick-search" id="btn-floating-quick-search" title="Abrir Busca Rápida Instantânea (Ctrl + K)">
+  <button class="btn-floating-quick-search" id="btn-floating-quick-search" aria-label="Abrir busca rápida (Ctrl + K)" title="Abrir Busca Rápida Instantânea (Ctrl + K)">
     <span>🔍</span>
     <span>Busca Rápida</span>
     <kbd>Ctrl K</kbd>
   </button>
 
   <!-- BOTÃO VOLTAR AO TOPO -->
-  <button class="btn-back-top" id="back-to-top-btn" title="Voltar ao Topo">↑</button>
+  <button class="btn-back-top" id="back-to-top-btn" aria-label="Voltar ao topo" title="Voltar ao Topo">↑</button>
 
   <!-- ====================================================================
        MODAL SPOTLIGHT SEARCH INSTANTÂNEO (COMMAND PALETTE GLOBAL)
@@ -5754,8 +5878,8 @@ app.<span class="fn">post</span>(<span class="str">"/api/tarefas"</span>, autent
       <!-- Cabeçalho de Busca -->
       <div class="spotlight-search-header">
         <span class="spotlight-search-icon">🔍</span>
-        <input type="text" id="spotlight-input-field" class="spotlight-input" placeholder="Digite para encontrar qualquer conteúdo (Ex: Python, Ponteiros, Big O, Hoare, Bloom...)" autocomplete="off"/>
-        <span class="spotlight-esc-badge" id="spotlight-close-esc" title="Fechar Busca">ESC</span>
+        <input type="text" id="spotlight-input-field" class="spotlight-input" aria-label="Buscar conteúdo" placeholder="Digite para encontrar qualquer conteúdo (Ex: Python, Ponteiros, Big O, Hoare, Bloom...)" autocomplete="off"/>
+        <span class="spotlight-esc-badge" id="spotlight-close-esc" role="button" tabindex="0" aria-label="Fechar busca" title="Fechar Busca">ESC</span>
       </div>
 
       <!-- Barra de Filtros por Categoria -->
@@ -5818,15 +5942,17 @@ app.<span class="fn">post</span>(<span class="str">"/api/tarefas"</span>, autent
           <li><a href="#taxonomia-bloom">📊 Taxonomia de Bloom</a></li>
           <li><a href="questoes.html">🧩 Banco de Questões</a></li>
           <li><a href="curso-logica.html">🚀 Curso de Lógica Pura</a></li>
+          <li><a href="#cookies-modal" data-open-cookies="true">🍪 Preferências de Cookies</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2025–2026 Ponce Metodologias & Dev — Excelência no Ensino Ativo, Lógica, Linguagens, IA/ML e DevOps.
+      &copy; 2025–2026 Ponce Metodologias & Dev — Excelência no Ensino Ativo, Lógica, Linguagens, IA/ML e DevOps. | <a href="#cookies-modal" data-open-cookies="true" style="color:inherit; text-decoration:underline;">Configurações de Cookies & Privacidade</a>
     </div>
   </footer>
 
+  <script src="js/cookies.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/curso-logica.js"></script>
+  <script src="js/pwa.js"></script>
 </body>
 </html>

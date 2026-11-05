@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Execução de um laço ENQUANTO</title>
+<desc id="d">Tabela de rastreamento do laço que soma de 1 a 5: em cada iteração c e soma mudam, até c valer 6 e o teste falhar, com soma final 15. Ao lado, o erro off-by-one usando menor em vez de menor ou igual.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 9 — Iterações do laço ENQUANTO c &lt;= 5</text>
+<g stroke="#94a3b8" stroke-width="1.5">
+<g fill="#e0e7ff"><rect x="30" y="46" width="90" height="32"/><rect x="120" y="46" width="70" height="32"/><rect x="190" y="46" width="90" height="32"/><rect x="280" y="46" width="90" height="32"/></g>
+<g fill="#fff">
+<rect x="30" y="78" width="90" height="32"/><rect x="120" y="78" width="70" height="32"/><rect x="190" y="78" width="90" height="32"/><rect x="280" y="78" width="90" height="32"/>
+<rect x="30" y="110" width="90" height="32"/><rect x="120" y="110" width="70" height="32"/><rect x="190" y="110" width="90" height="32"/><rect x="280" y="110" width="90" height="32"/>
+<rect x="30" y="142" width="90" height="32"/><rect x="120" y="142" width="70" height="32"/><rect x="190" y="142" width="90" height="32"/><rect x="280" y="142" width="90" height="32"/>
+<rect x="30" y="174" width="90" height="32"/><rect x="120" y="174" width="70" height="32"/><rect x="190" y="174" width="90" height="32"/><rect x="280" y="174" width="90" height="32"/>
+<rect x="30" y="206" width="90" height="32"/><rect x="120" y="206" width="70" height="32"/><rect x="190" y="206" width="90" height="32"/><rect x="280" y="206" width="90" height="32"/>
+<rect x="30" y="238" width="90" height="32" fill="#fee2e2" stroke="#dc2626"/><rect x="120" y="238" width="70" height="32" fill="#fee2e2" stroke="#dc2626"/><rect x="190" y="238" width="90" height="32" fill="#fee2e2" stroke="#dc2626"/><rect x="280" y="238" width="90" height="32" fill="#fee2e2" stroke="#dc2626"/>
+</g></g>
+<g class="c b"><text x="75" y="67">iteração</text><text x="155" y="67">c</text><text x="235" y="67">soma</text><text x="325" y="67">c ≤ 5?</text></g>
+<g class="c">
+<text x="75" y="99">início</text><text x="155" y="99">1</text><text x="235" y="99">0</text><text x="325" y="99">sim</text>
+<text x="75" y="131">1</text><text x="155" y="131">2</text><text x="235" y="131">1</text><text x="325" y="131">sim</text>
+<text x="75" y="163">2</text><text x="155" y="163">3</text><text x="235" y="163">3</text><text x="325" y="163">sim</text>
+<text x="75" y="195">3</text><text x="155" y="195">4</text><text x="235" y="195">6</text><text x="325" y="195">sim</text>
+<text x="75" y="227">4</text><text x="155" y="227">5</text><text x="235" y="227">10</text><text x="325" y="227">sim</text>
+<text x="75" y="259">5</text><text x="155" y="259">6</text><text x="235" y="259" class="b">15</text><text x="325" y="259" class="b">NÃO: sai</text>
+</g>
+<text x="200" y="295" class="c m">c cresce a cada volta → o laço termina (variante)</text>
+<rect x="400" y="46" width="215" height="224" rx="8" fill="#fff" stroke="#d97706" stroke-width="2"/>
+<text x="507" y="72" class="c b" style="fill:#92400e">Erro off-by-one</text>
+<text x="507" y="100" class="c m">ENQUANTO c &lt; 5</text>
+<text x="507" y="124" class="c m">usa &lt; em vez de &lt;=</text>
+<text x="507" y="156" class="c">c = 1,2,3,4 → 4 voltas</text>
+<text x="507" y="182" class="c b" style="fill:#991b1b">soma = 10 (esperado 15)</text>
+<text x="507" y="214" class="c m">Teste sempre o último</text>
+<text x="507" y="232" class="c m">valor do intervalo.</text>
+</svg>

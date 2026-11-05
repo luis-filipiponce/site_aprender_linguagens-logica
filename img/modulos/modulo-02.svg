@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Ciclo de resolução de problemas de Pólya</title>
+<desc id="d">Quatro etapas em sequência: entender, planejar, executar e revisar, com uma seta de retorno da revisão para o entendimento.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 2 — O ciclo de Pólya</text>
+<rect x="15" y="70" width="130" height="130" rx="10" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+<rect x="175" y="70" width="130" height="130" rx="10" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+<rect x="335" y="70" width="130" height="130" rx="10" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+<rect x="495" y="70" width="130" height="130" rx="10" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+<text x="80" y="100" class="c b">1. Entender</text>
+<text x="80" y="130" class="c m">Quais são as</text><text x="80" y="148" class="c m">entradas, saídas</text><text x="80" y="166" class="c m">e restrições?</text>
+<text x="240" y="100" class="c b">2. Planejar</text>
+<text x="240" y="130" class="c m">Decomponha e</text><text x="240" y="148" class="c m">escolha uma</text><text x="240" y="166" class="c m">estratégia</text>
+<text x="400" y="100" class="c b">3. Executar</text>
+<text x="400" y="130" class="c m">Escreva o</text><text x="400" y="148" class="c m">algoritmo passo</text><text x="400" y="166" class="c m">a passo</text>
+<text x="560" y="100" class="c b">4. Revisar</text>
+<text x="560" y="130" class="c m">Teste os casos</text><text x="560" y="148" class="c m">limite e compare</text><text x="560" y="166" class="c m">com o esperado</text>
+<path d="M145 135H173" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M305 135H333" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M465 135H493" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M560 200V245H80V203" stroke="#d97706" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#a)"/>
+<text x="320" y="268" class="c m">se o resultado falhar, volte e refine o entendimento</text>
+<text x="320" y="300" class="c m">Evita o padrão "digitar primeiro, entender depois".</text>
+</svg>

@@ -105,5 +105,18 @@ type ExtrasCurso = Record<IdModulo, ExtraModulo>;
 
 declare var CURSO_LOGICA_EXTRAS: ExtrasCurso | undefined;
 
+/** Figura SVG de um módulo (arquivo img/modulos/modulo-NN.svg). */
+interface FiguraModulo {
+  titulo: string;
+  /** Descrição textual da imagem (acessibilidade). */
+  alt: string;
+  legenda: string;
+}
+
+/** Uma figura por módulo: o compilador falha se algum faltar. */
+type FigurasCurso = Record<IdModulo, FiguraModulo>;
+
+declare var CURSO_LOGICA_FIGURAS: FigurasCurso | undefined;
+
 /** Gerado por scripts/build-conteudo.mjs a partir de content/modulos/*.json. */
 declare var CURSO_LOGICA_MODULOS: Modulo[] | undefined;

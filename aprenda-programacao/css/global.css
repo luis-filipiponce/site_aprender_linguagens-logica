@@ -414,3 +414,23 @@ pre, .code-block {
     gap: 8px;
   }
 }
+
+/* ── Acessibilidade ─────────────────────────────────────────── */
+.skip-link {
+  position: absolute; left: 0.75rem; top: -4rem; z-index: 3000;
+  background: var(--dark); color: var(--white); padding: 0.6rem 1rem;
+  border-radius: var(--radius); font-weight: 700; text-decoration: none;
+}
+.skip-link:focus { top: 0.75rem; }
+
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--blue); outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+}

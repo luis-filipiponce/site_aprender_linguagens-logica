@@ -68,16 +68,10 @@
 - **Iniciante Q03 (silogismo):** o padrão "Todo M é P; x é M; logo x é P" está no Módulo 1. A palavra "silogismo" não.
 - **Intermediário Q21 (pilha):** o curso só define pilha como LIFO no glossário do Módulo 17. As operações push/pop não são ensinadas.
 
-## 5. Inconsistência encontrada no site (não corrigida)
+## 5. Inconsistência na busca do portal (corrigida)
 
-Na busca do portal, `js/app.js` (linhas 597–601) lista módulos que não correspondem aos módulos reais:
+A lista de módulos da busca em `js/app.js` já corresponde aos 22 módulos reais (`mod-16` a `mod-22` conferem com o curso).
 
-| Entrada na busca | Módulo real no curso |
-|---|---|
-| Módulo 18: Estruturas de Dados Abstratas (Pilhas, Filas, Grafos) | Módulo 18 é Recursão e Teorema Mestre. **Não existe módulo de estruturas de dados.** |
-| Módulo 19: Recursão... | Módulo 19 é Paradigmas Avançados. |
-| Módulo 20: Paradigmas... | Módulo 20 é Lógica de Hoare. |
-| Módulo 21: Computabilidade | Confere. |
-| Módulo 22: P vs NP | Confere. |
+## 6. Contagem atual do banco
 
-Os módulos 16 e 17 também não aparecem nessa busca.
+Após a revisão, o banco recebeu novas questões. Contagem atual (conforme `tests/test_suite.js`): iniciante 29, intermediário 33, avançado 31 e expert 28, totalizando 121. A tabela da seção "Resultado" acima reflete o estado no momento da revisão.

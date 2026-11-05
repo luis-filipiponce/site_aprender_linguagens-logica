@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Tabelas-verdade de E, OU e implicação</title>
+<desc id="d">Tabela com as quatro combinações de P e Q e os resultados de P E Q, P OU Q e P implica Q. A linha P verdadeiro e Q falso é a única em que a implicação é falsa.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}.v{fill:#166534;font-weight:700}.f{fill:#991b1b;font-weight:700}</style>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 7 — Tabela-verdade</text>
+<g stroke="#94a3b8" stroke-width="1.5">
+<g fill="#e0e7ff"><rect x="60" y="48" width="80" height="36"/><rect x="140" y="48" width="80" height="36"/><rect x="220" y="48" width="110" height="36"/><rect x="330" y="48" width="110" height="36"/><rect x="440" y="48" width="140" height="36"/></g>
+<g fill="#fff">
+<rect x="60" y="84" width="80" height="36"/><rect x="140" y="84" width="80" height="36"/><rect x="220" y="84" width="110" height="36"/><rect x="330" y="84" width="110" height="36"/><rect x="440" y="84" width="140" height="36"/>
+<rect x="60" y="120" width="80" height="36"/><rect x="140" y="120" width="80" height="36"/><rect x="220" y="120" width="110" height="36"/><rect x="330" y="120" width="110" height="36"/><rect x="440" y="120" width="140" height="36" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/>
+<rect x="60" y="156" width="80" height="36"/><rect x="140" y="156" width="80" height="36"/><rect x="220" y="156" width="110" height="36"/><rect x="330" y="156" width="110" height="36"/><rect x="440" y="156" width="140" height="36"/>
+<rect x="60" y="192" width="80" height="36"/><rect x="140" y="192" width="80" height="36"/><rect x="220" y="192" width="110" height="36"/><rect x="330" y="192" width="110" height="36"/><rect x="440" y="192" width="140" height="36"/>
+</g></g>
+<g class="c b"><text x="100" y="71">P</text><text x="180" y="71">Q</text><text x="275" y="71">P E Q</text><text x="385" y="71">P OU Q</text><text x="510" y="71">P → Q</text></g>
+<g class="c">
+<text x="100" y="107" class="v">V</text><text x="180" y="107" class="v">V</text><text x="275" y="107" class="v">V</text><text x="385" y="107" class="v">V</text><text x="510" y="107" class="v">V</text>
+<text x="100" y="143" class="v">V</text><text x="180" y="143" class="f">F</text><text x="275" y="143" class="f">F</text><text x="385" y="143" class="v">V</text><text x="510" y="143" class="f">F</text>
+<text x="100" y="179" class="f">F</text><text x="180" y="179" class="v">V</text><text x="275" y="179" class="f">F</text><text x="385" y="179" class="v">V</text><text x="510" y="179" class="v">V</text>
+<text x="100" y="215" class="f">F</text><text x="180" y="215" class="f">F</text><text x="275" y="215" class="f">F</text><text x="385" y="215" class="f">F</text><text x="510" y="215" class="v">V</text>
+</g>
+<text x="320" y="256" class="c b" style="fill:#991b1b">A implicação só é falsa quando P é V e Q é F.</text>
+<text x="320" y="278" class="c m">Com P falso, "P → Q" é verdadeira: premissa falsa não invalida a regra.</text>
+<text x="320" y="300" class="c m">De Morgan: ¬(A E B) ≡ (¬A OU ¬B)</text>
+</svg>

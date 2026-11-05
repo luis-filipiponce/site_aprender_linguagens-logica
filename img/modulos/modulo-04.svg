@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="t d">
+<title id="t">Modelo IPO: entrada, processamento e saída</title>
+<desc id="d">Cálculo de salário líquido: entradas valor_hora 20 e horas 100; processamento calcula bruto 2000, imposto 220 e líquido 1780; saída é 1780.</desc>
+<style>text{font-family:'Segoe UI',Arial,sans-serif;font-size:14px;fill:#1e293b}.t{font-size:16px;font-weight:700}.m{font-size:12px;fill:#475569}.b{font-weight:700}.c{text-anchor:middle}</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
+<rect width="640" height="320" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="20" y="28" class="t">Módulo 4 — Modelo IPO: salário líquido</text>
+<rect x="20" y="70" width="170" height="140" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<rect x="235" y="70" width="170" height="140" rx="10" fill="#fff" stroke="#6366f1" stroke-width="2"/>
+<rect x="450" y="70" width="170" height="140" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+<text x="105" y="98" class="c b">ENTRADA</text>
+<text x="105" y="135" class="c">valor_hora = 20</text><text x="105" y="160" class="c">horas_mes = 100</text>
+<text x="320" y="98" class="c b">PROCESSAMENTO</text>
+<text x="320" y="128" class="c m">bruto = 20 × 100</text><text x="320" y="152" class="c m">imposto = bruto × 0,11</text><text x="320" y="176" class="c m">líquido = bruto − imposto</text>
+<text x="535" y="98" class="c b">SAÍDA</text>
+<text x="535" y="135" class="c m">salario_liquido</text><text x="535" y="165" class="c b" style="font-size:24px">1780</text>
+<path d="M190 140H233" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<path d="M405 140H448" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<text x="320" y="232" class="c m">bruto = 2000 → imposto = 220 → líquido = 1780</text>
+<rect x="110" y="256" width="420" height="40" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+<text x="320" y="281" class="c b">Valide antes de processar: horas ≥ 0 e valor_hora &gt; 0</text>
+</svg>
