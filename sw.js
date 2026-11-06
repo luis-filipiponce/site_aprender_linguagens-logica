@@ -5,7 +5,7 @@
  */
 
 // CACHE_NAME é atualizado automaticamente por scripts/versionar-sw.mjs (npm run build)
-const CACHE_NAME = 'ponce-logica-5f0d06f300';
+const CACHE_NAME = 'ponce-logica-dc2c077db3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
